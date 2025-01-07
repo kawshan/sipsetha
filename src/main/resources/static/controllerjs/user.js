@@ -174,10 +174,10 @@ const userFormRefill = (ob, rowIndex) => {
     textUserName.value = user.username;
 
     textPassword.value=""
-    textPassword.disabled=true;
+    // textPassword.disabled=true;
 
     textRePassword.value="";
-    textRePassword.disabled=true;
+    // textRePassword.disabled=true;
 
     textEmail.value=user.email;
     selectStatus.value=user.status;
@@ -346,10 +346,10 @@ const checkUserUpdateFormErrors = () => {
         errors = errors + 'user name cannot be empty \n'
         textUserName.classList.add('is-invalid');
     }
-    // if (user.password == null) {
-    //     errors = errors + 'password cannot be empty \n'
-    //     textPassword.classList.add('is-invalid');
-    // }
+    if (user.password == null) {
+        errors = errors + 'password cannot be empty \n'
+        textPassword.classList.add('is-invalid');
+    }
     // if (user.repassword == null) {
     //     errors = errors + 're password cannot be empty \n'
     //     textRePassword.classList.add('is-invalid');
@@ -415,6 +415,12 @@ const checkUserFormUpdate = ()=>{
     if (user.status != oldUser.status){
         updates=updates+'status is changed \n';
     }
+
+
+    if (user.password != oldUser.password){
+        updates=updates+' password is changed \n';
+    }
+
 
     if (user.roles.length != oldUser.roles.length){ // user roles kiyana array eke length eka samana nadda balanawa old user object eke thiyene roles array eke length ekata
         updates=updates+'user roles are changed \n';    // ehema nam updates kiyana varibale ekata add karagannawa in other words concat kara gannawa user roles are changed kiyala

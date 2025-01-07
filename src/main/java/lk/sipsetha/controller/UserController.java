@@ -110,7 +110,9 @@ public class UserController {
 
 
         try {
-            user.setPassword(extUser.getPassword());
+//            user.setPassword(extUser.getPassword());
+//            user.setPassword(user.getPassword());
+            user.setPassword(bCryptPasswordEncoder.encode(user.getPassword()));
             userDao.save(user);
             return "ok";
         } catch (Exception e) {

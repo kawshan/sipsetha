@@ -70,7 +70,7 @@ public class EmployeeController {
     }
 
     @PostMapping(value = "/employeeform")
-    @Transactional  //methana table dekak access karana nisa data base prashna enna puluwan ehema unoth roll back karanna one vena nisa thama meka dannne
+   // @Transactional  //methana table dekak access karana nisa data base prashna enna puluwan ehema unoth roll back karanna one vena nisa thama meka dannne
     public String save(@RequestBody Employee employee) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         HashMap<String,Boolean> getUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(), "employee");
@@ -138,7 +138,7 @@ public class EmployeeController {
         }
     }
 
-    @Transactional    //methanath dependency ekak thiyenawa eka thamai employee delete karanakota eyata adala user account ekak thiyenawanam eke status eka delete karanawa                                                                                                                                                      //mekata ai damme uda methoda eka transactional nisa ethana eka scilently fall kiyana error eka awa eka nathi karanna thama me dewani method ekata transactional damme link for this error ->https://stackoverflow.com/questions/19302196/transaction-marked-as-rollback-only-how-do-i-find-the-cause
+  //  @Transactional    //methanath dependency ekak thiyenawa eka thamai employee delete karanakota eyata adala user account ekak thiyenawanam eke status eka delete karanawa                                                                                                                                                      //mekata ai damme uda methoda eka transactional nisa ethana eka scilently fall kiyana error eka awa eka nathi karanna thama me dewani method ekata transactional damme link for this error ->https://stackoverflow.com/questions/19302196/transaction-marked-as-rollback-only-how-do-i-find-the-cause
     @DeleteMapping
     public String deleteEmployee(@RequestBody Employee employee) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

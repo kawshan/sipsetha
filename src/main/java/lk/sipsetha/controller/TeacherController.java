@@ -7,6 +7,7 @@ import lk.sipsetha.entity.Teacher;
 import lk.sipsetha.entity.TeacherStatus;
 import lk.sipsetha.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -38,7 +39,7 @@ public class TeacherController {
         if (!getLoggedUserPrivilege.get("select")){
             return null;
         }
-        return  dao.findAll();
+        return  dao.findAll(Sort.by(Sort.Direction.DESC,"id"));
     }
 
     @GetMapping(value = "/teacherform")

@@ -59,11 +59,22 @@ public class PaymentController {
         if (!getLoggedUserPrivilege.get("insert")){
             return "cannot perform save student .. you don't have privileges";
         }
-        //existing and duplicate
-        Payment exPayment=dao.checkDuplicateByStudentMonthAndRegistration(payment.getStudent_id().getId(),payment.getMonth(),payment.getStudentregistration_id().getId());
-        if (exPayment!=null){
-            return "cannot perform payment because it already exists";
+
+
+        System.out.println(payment.getPaymentcategory_id().getName());
+        if (payment.getPaymentcategory_id().getName().equals("admission")){
+            System.out.println("inside inner admission condition");
+            //need to duplicate check
+        }else {
+            //existing and duplicate
+            Payment exPayment=dao.checkDuplicateByStudentMonthAndRegistration(payment.getStudent_id().getId(),payment.getMonth(),payment.getStudentregistration_id().getId());
+            if (exPayment!=null){
+                return "cannot perform payment because it already exists";
+            }
         }
+
+
+
 
 
         //operators

@@ -7,6 +7,7 @@ import lk.sipsetha.entity.ClassOffering;
 import lk.sipsetha.entity.ClassOfferingStatus;
 import lk.sipsetha.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,7 @@ public class ClassOfferingController {
 //        if (!getLoggedUserPrivileges.get("select")){
 //            return null;
 //        }
-        return dao.findAll();
+        return dao.findAll(Sort.by(Sort.Direction.DESC,"id"));
     }
 
     @GetMapping(value = "/classofferingform")

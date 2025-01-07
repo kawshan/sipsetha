@@ -114,6 +114,8 @@
 
 
             <div class="modal-content">
+
+
                 <div class="modal-header" style="background-color: #044800; color: whitesmoke">
                     <h2 class="h2">
                         class offering
@@ -137,69 +139,87 @@
                         </div>
                         <!--                    required mark end-->
 
-<!--                        class name start-->
+
+                        <!--            teacher start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
-                                <label for="textClassName" class="form-label fw-bold">class name <i class="text-danger">*</i> </label>
-                            </div>
-                            <div class="col-md-6">
-                                <input type="text" id="textClassName" class="form-control text-center" required placeholder="enter class name" onkeyup="textValidator(this,'','classOffering','classname')">
-                            </div>
-                        </div>
-<!--                        class name end-->
-
-
-                        <!--            fees start-->
-                        <div class="row mt-2">
-                            <div class="col-md-6">
-                                <label for="textFees" class="form-label fw-bold">
-                                    fees <i class="text-danger">*</i>
+                                <label for="selectTeacher" class="form-label fw-bold">teacher <i class="text-danger">*</i>
                                 </label>
                             </div>
                             <div class="col-md-6">
-                                <input type="text" id="textFees" class="form-control text-center" required placeholder="enter fees amount" onkeyup="textValidator(this,'^[1-9][0-9]{3,6}[.][0][0]$','classOffering','fees')">
+                                <select id="selectTeacher" class="form-select text-center" required onchange="selectDBValidator(this,'','classOffering','teacher_id')">
+
+                                </select>
                             </div>
                         </div>
-                        <!--            fees end-->
+                        <!--            teacher end-->
 
 
-
-                        <!--            duration start-->
+                        <!--            subject start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
-                                <label for="textDuration" class="form-label fw-bold">
-                                    duration <i class="text-danger">*</i>
+                                <label for="selectSubject" class="form-label fw-bold">
+                                    subject <span class="text-danger">*</span>
                                 </label>
                             </div>
                             <div class="col-md-6">
-                                <input type="number" id="textDuration" class="form-control text-center" required placeholder="enter duration" onkeyup="textValidator(this,'^[1-8]{1}[.][0-5][0-9]$','classOffering','duration')">
+                                <!--                                input group start-->
+                                <div class="input-group">
+                                    <select  id="selectSubject" class="form-select text-center" required onchange="selectDBValidator(this,'','classOffering','subject_id')">
+
+                                    </select>
+                                    <span>
+                                            <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample"
+                                               role="button">new</a>
+                                        </span>
+                                </div>
+                                <!--                                    input group start-->
+
+                                <!--  collapse designation form    -->
+                                <div class="collapse mt-2" id="collapseExample">
+                                    <div class="card card-body">
+                                        <form onsubmit="return false" id="SubjectForm">
+                                            <div class="row">
+                                                <label for="textSubjectName" class="col-4 fw-bold">subject</label>
+                                                <div class="col-8">
+                                                    <input type="text" class="form-control"
+                                                           placeholder="enter subject name "
+                                                           id="textSubjectName"
+                                                           onkeyup="textValidator(this,'^[A-za-z]{3,20}$','subjectob','name')">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <button class="btn btn-success" onclick="buttonSubjectSubmit()">
+                                                        add
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!--  collapse designation form end-->
+
+
                             </div>
                         </div>
-                        <!--            duration end-->
+                        <!--            subject end-->
 
-<!--                        service charge start-->
+
+                        <!--            grade start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
-                                <label for="textServiceCharge" class="form-label fw-bold">service charge <i class="text-danger"></i> </label>
+                                <label for="selectGrade" class="form-label fw-bold">
+                                    grade <i class="text-danger">*</i>
+                                </label>
                             </div>
                             <div class="col-md-6">
-                                <input type="text" id="textServiceCharge" class="form-control text-center" required placeholder="enter service charge" onkeyup="textValidator(this,'^[0-9]{2}$','classOffering','servicecharge')">
+                                <select  id="selectGrade" class="form-select text-center" required onchange="selectDBValidator(this,'','classOffering','grade_id');">
+
+                                </select>
                             </div>
                         </div>
-<!--                        service charge end-->
-
-
-<!--                        class type start-->
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="selectClassType" class="form-label fw-bold">class type <i class="text-danger">*</i> </label>
-                            </div>
-                            <div class="col-md-6">
-                                <select id="selectClassType" class="form-select text-center" required onchange="selectDBValidator(this,'','classOffering','classtype_id')"></select>
-                            </div>
-                        </div>
-<!--                        class type start-->
-
+                        <!--            grade end-->
 
                         <!--          academic  year start-->
                         <div class="row mt-2">
@@ -207,17 +227,17 @@
                                 <label for="SelectAcademicYear" class="form-label fw-bold">academic year <i class="text-danger">*</i></label>
                             </div>
                             <div class="col-md-6">
-<!--                                input group start-->
-                                    <div class="input-group">
-                                        <select id="SelectAcademicYear" class="form-select text-center" required onchange="selectDBValidator(this,'','classOffering','academicyear_id')">
+                                <!--                                input group start-->
+                                <div class="input-group">
+                                    <select id="SelectAcademicYear" class="form-select text-center" required onchange="selectDBValidator(this,'','classOffering','academicyear_id')">
 
-                                        </select>
-                                        <span>
+                                    </select>
+                                    <span>
                                             <i class="btn btn-primary" data-bs-toggle="collapse" href="#collapseAcademicYear"
                                                role="button">add</i>
                                         </span>
-                                    </div>
-<!--                                input group end-->
+                                </div>
+                                <!--                                input group end-->
 
                                 <!--  collapse academic year form  start  -->
                                 <div class="collapse mt-2" id="collapseAcademicYear">
@@ -260,86 +280,73 @@
 
 
 
-                        <!--            subject start-->
-                        <div class="row mt-2">
+                        <!--                        class type start-->
+                        <div class="row">
                             <div class="col-md-6">
-                                <label for="selectSubject" class="form-label fw-bold">
-                                    subject <span class="text-danger">*</span>
-                                </label>
+                                <label for="selectClassType" class="form-label fw-bold">class type <i class="text-danger">*</i> </label>
                             </div>
                             <div class="col-md-6">
-<!--                                input group start-->
-                                    <div class="input-group">
-                                        <select  id="selectSubject" class="form-select text-center" required onchange="selectDBValidator(this,'','classOffering','subject_id')">
+                                <select id="selectClassType" class="form-select text-center" required onchange="selectDBValidator(this,'','classOffering','classtype_id')"></select>
+                            </div>
+                        </div>
+                        <!--                        class type start-->
 
-                                        </select>
-                                        <span>
-                                            <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample"
-                                               role="button">new</a>
-                                        </span>
-                                    </div>
-<!--                                    input group start-->
 
-                                <!--  collapse designation form    -->
-                                <div class="collapse mt-2" id="collapseExample">
-                                    <div class="card card-body">
-                                        <form onsubmit="return false" id="SubjectForm">
-                                            <div class="row">
-                                                <label for="textSubjectName" class="col-4 fw-bold">subject</label>
-                                                <div class="col-8">
-                                                    <input type="text" class="form-control"
-                                                           placeholder="enter subject name "
-                                                           id="textSubjectName"
-                                                           onkeyup="textValidator(this,'^[A-za-z]{3,20}$','subjectob','name')">
-                                                </div>
-                                            </div>
-                                            <div class="row">
-                                                <div class="col-12">
-                                                    <button class="btn btn-success" onclick="buttonSubjectSubmit()">
-                                                        add
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
+                        <!--                        class name start-->
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="textClassName" class="form-label fw-bold">class name <i class="text-danger">*</i> </label>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <input type="text" id="textClassName" class="form-control text-center" required placeholder="enter class name" onkeyup="textValidator(this,'','classOffering','classname')">
+                                    <button type="button" id="btnGenerateClassName" class="btn btn-success" onclick="generateClassName()">generate class name</button>
                                 </div>
-                                <!--  collapse designation form end-->
-
 
                             </div>
                         </div>
-                        <!--            subject end-->
+                        <!--                        class name end-->
 
 
-                        <!--            teacher start-->
+                        <!--            fees start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
-                                <label for="selectTeacher" class="form-label fw-bold">teacher <i class="text-danger">*</i>
+                                <label for="textFees" class="form-label fw-bold">
+                                    fees <i class="text-danger">*</i>
                                 </label>
                             </div>
                             <div class="col-md-6">
-                                <select id="selectTeacher" class="form-select text-center" required onchange="selectDBValidator(this,'','classOffering','teacher_id')">
-
-                                </select>
+                                <input type="text" id="textFees" class="form-control text-center" required placeholder="enter fees amount" onkeyup="textValidator(this,'^[1-9][0-9]{3,6}[.][0][0]$','classOffering','fees')">
                             </div>
                         </div>
-                        <!--            teacher end-->
+                        <!--            fees end-->
 
 
-                        <!--            grade start-->
+
+                        <!--            duration start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
-                                <label for="selectGrade" class="form-label fw-bold">
-                                    grade <i class="text-danger">*</i>
+                                <label for="textDuration" class="form-label fw-bold">
+                                    duration <i class="text-danger">*</i>
                                 </label>
                             </div>
                             <div class="col-md-6">
-                                <select  id="selectGrade" class="form-select text-center" required onchange="selectDBValidator(this,'','classOffering','grade_id')">
-
-                                </select>
+                                <input type="number" id="textDuration" class="form-control text-center" required placeholder="enter duration" onkeyup="textValidator(this,'^[1-8]{1}[.][0-5][0-9]$','classOffering','duration')">
                             </div>
                         </div>
-                        <!--            grade end-->
+                        <!--            duration end-->
+
+<!--                        service charge start-->
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="textServiceCharge" class="form-label fw-bold">service charge <i class="text-danger"></i> </label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" id="textServiceCharge" class="form-control text-center" required placeholder="enter service charge" onkeyup="textValidator(this,'^[0-9]{2}$','classOffering','servicecharge')">
+                            </div>
+                        </div>
+<!--                        service charge end-->
+
 
 
                         <!--            class offering status start-->
@@ -356,6 +363,7 @@
                             </div>
                         </div>
                         <!--            class offering status end-->
+
 
 
                         <!--                        note start-->

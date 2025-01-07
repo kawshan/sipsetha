@@ -25,7 +25,7 @@ public class WebConfiguration {
                     .requestMatchers("/error").permitAll()
                     .requestMatchers("/dashboard").hasAnyAuthority("admin","manager","assistant-manager","cashier","employee","card-checker")
                     .requestMatchers("/privilege/**").hasAnyAuthority("admin","manager","assistant-manager","cashier","employee","card-checker")//methana danna une api privilege controller eke privilege module ekata privilege thiyenawada balannath privilege check karana nisa?
-                    .requestMatchers("/user/**").hasAnyAuthority("admin","manager","assistant-manager")
+                    .requestMatchers("/user/**").hasAnyAuthority("admin","manager","assistant-manager","cashier")
                     .requestMatchers("/employee/**").hasAnyAuthority("admin","manager","assistant-manager")
                     .requestMatchers("/student/**").hasAnyAuthority("admin","manager","assistant-manager","cashier","card-checker")
                     .requestMatchers("/guardian/**").hasAnyAuthority("admin","manager","assistant-manager","cashier")

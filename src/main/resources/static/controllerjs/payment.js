@@ -236,8 +236,10 @@ const btnStudentPaymentSubmit = () => {
 
                 setTimeout(function () {
                     clickRadioButton(); //mili seconds 500 parakku kara ee mokada hariyata refresh payment table eka load vela enna one nisa
-                }, 500)
+                    unClickRadioButton();   //radio button eke un check karanna one nisa thama meka karanna
+                }, 500);
                 printBTNPayment.className = 'd-none';
+
             } else {
                 alert("save not complete you might have some errors \n " + postServerResponse);
             }
@@ -571,6 +573,11 @@ const getPaymentCategory = (fieldId) => {
 const clickRadioButton = () => {
     tableStudentPayment.children[1].children[0].children[6].children[0].click();    //table eke check box eka eka auto click venna hadanawa
     printBTNPayment.click();    //print button eka click karanwa;
+}
+
+
+const unClickRadioButton = () => {
+    tableStudentPayment.children[1].children[0].children[6].children[0].checked=false;    //table eke check box eka eka auto click venna hadanawa
 }
 
 const generateMaxMonth = () => {

@@ -217,10 +217,8 @@ const deleteClass = (ob,rowIndex)=>{
             if (deleteServerResponse == 'ok'){
                 alert("delete successfull");
                 refreshClassOfferingTable()
-                // Swal.fire({ title:'delete successful', icon:'success'});
             }else {
                 alert('delete was unsuccessful you might have following errors \n' + deleteServerResponse)
-                // Swal.fire({ title: 'delete unsuccessful you might have following errors \n'+deleteServerResponse, icon: 'error'});
             }
         }
     },500)

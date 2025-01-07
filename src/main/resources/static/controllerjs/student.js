@@ -130,51 +130,51 @@ const refreshStudentForm = () => {
 
         switch (balanceYear) {
             case 8:
-                console.log("grade is 8");
+                console.log("age is 8");
                 fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','grade-three');
                 break;
             case 9:
-                console.log("grade is 9");
+                console.log("age is 9");
                 fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','grade-four');
                 break;
             case 10:
-                console.log("grade is 10");
+                console.log("age is 10");
                 fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','grade-five');
                 break;
             case 11:
-                console.log("grade is 11");
+                console.log("age is 11");
                 fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','grade-six');
                 break;
             case 12:
-                console.log("grade is 12");
+                console.log("age is 12");
                 fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','grade-seven');
                 break;
             case 13:
-                console.log("grade is 13");
+                console.log("age is 13");
                 fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','grade-eight');
                 break;
             case 14:
-                console.log("grade is 14");
+                console.log("age is 14");
                 fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','grade-nine');
                 break;
             case 15:
-                console.log("grade is 15");
+                console.log("age is 15");
                 fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','grade-ten');
                 break;
             case 16:
-                console.log("grade is 16");
+                console.log("age is 16");
                 fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','grade-eleven');
                 break;
             case 17:
-                console.log("grader is 17");
+                console.log("age is 17");
                 fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','grade-twevel');
                 break;
             case 18:
-                console.log("grade is 18");
+                console.log("age is 18");
                 fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','grade-thirteen');
                 break;
             default:
-                console.log("more than 19");
+                console.log("age than 19");
                 fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','grade-thirteen');
 
         }

@@ -247,7 +247,46 @@ const btnDeleteStudentRegistration = (ob,rowIndex)=>{
 }
 
 
+const printStudentRegistrationFullTable = ()=>{
+    $("#printStudentRegistrationModel").modal('show');
+    StudentRegistrations = ajaxGetRequest("/studentregistration/findall")
 
+    displayProperty=[
+        {dataType:"text",propertyName:"fee"},
+        {dataType:"function",propertyName:getStudentName},
+        {dataType:"function",propertyName:getClassOffering},
+        {dataType:"function",propertyName:getRegistardType},
+        {dataType:"function",propertyName:getRegistrationStatus}
+    ]
+
+    fillDataIntoTable(printStudentRegistrationTable,StudentRegistrations,displayProperty,"",false)
+
+
+}
+
+
+
+const modalPrintButton = ()=>{
+    console.log("model print working");
+    let newWindow = window.open();
+    newWindow.document.write(
+        "<head>\n" +
+        "    <link rel=\"stylesheet\" href=\"/bootstrap-5.2.3/css/bootstrap.min.css\">\n" +
+        "    <script src=\"/bootstrap-5.2.3/js/bootstrap.bundle.min.js\"></script>\n" +
+        "    <link rel=\"stylesheet\" href=\"/style/common.css\">\n" +
+        "    <link rel=\"stylesheet\" href=\"/style/button.css\">\n" +
+        "    <link rel=\"stylesheet\" href=\"/style/employee.css\">\n" +
+        "</head>\n" +
+        "<body>"+printStudentRegistrationTable.outerHTML+"</body> "
+    );
+    setTimeout(function (){ //settime out ekkk dunne uda table eka naththam print ui ea hariyata load venna one nisa thama minisecond 500 dunna ookooma bootstrap load vela ganata enna one nisa
+        newWindow.stop();   //load vena eka nawaththuwa
+        newWindow.print();  //print eka call kra
+        newWindow.close();  //print rka open vela close krama close venawa
+    },500)
+
+
+}
 
 
 

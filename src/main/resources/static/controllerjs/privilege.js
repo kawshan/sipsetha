@@ -18,7 +18,7 @@ window.addEventListener('load', () => {
 //define function for refresh privilege table
 const refreshPrivilegeTable = () => {
     //privilege data array for testing before spring project
-    privileges = ajaxGetRequest("/privilege/findall")
+    privileges = ajaxGetRequest("/privilege/findall");
 
     // display property array list
     displayProperty = [
@@ -361,7 +361,49 @@ const buttonPrivilegeUpdate = ()=>{
 }
 
 
+const printPrivilegeFullTable = ()=>{
+    $("#printPrivilegeModel").modal('show');
 
+    privileges = ajaxGetRequest("/privilege/findall")
+
+    // display property array list
+    displayProperty = [
+        {dataType: 'function', propertyName: getRole},
+        {dataType: 'function', propertyName: getModule},
+        {dataType: 'function', propertyName: getSelect},
+        {dataType: 'function', propertyName: getInsert},
+        {dataType: 'function', propertyName: getUpdate},
+        {dataType: 'function', propertyName: getDelete},
+    ];
+
+    fillDataIntoTable(printPrivilegeTable, privileges, displayProperty, "",false);
+
+
+}
+
+
+
+const modalPrintButton = ()=>{
+    console.log("model print working");
+    let newWindow = window.open();
+    newWindow.document.write(
+        "<head>\n" +
+        "    <link rel=\"stylesheet\" href=\"/bootstrap-5.2.3/css/bootstrap.min.css\">\n" +
+        "    <script src=\"/bootstrap-5.2.3/js/bootstrap.bundle.min.js\"></script>\n" +
+        "    <link rel=\"stylesheet\" href=\"/style/common.css\">\n" +
+        "    <link rel=\"stylesheet\" href=\"/style/button.css\">\n" +
+        "    <link rel=\"stylesheet\" href=\"/style/employee.css\">\n" +
+        "</head>\n" +
+        "<body>"+printPrivilegeTable.outerHTML+"</body> "
+    );
+    setTimeout(function (){ //settime out ekkk dunne uda table eka naththam print ui ea hariyata load venna one nisa thama minisecond 500 dunna ookooma bootstrap load vela ganata enna one nisa
+        newWindow.stop();   //load vena eka nawaththuwa
+        newWindow.print();  //print eka call kra
+        newWindow.close();  //print rka open vela close krama close venawa
+    },500)
+
+
+}
 
 
 

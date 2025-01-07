@@ -57,7 +57,7 @@ const refreshClassOfferingTable = () => {
     displayProperty=[
         {dataType: 'text',propertyName:'classname'},
         {dataType:'text',propertyName:'fees'},
-        {dataType:'text',propertyName:'duration'},
+        {dataType:'function',propertyName:getDuration},
         {dataType:'text',propertyName:'servicecharge'},
 
         {dataType:'function',propertyName:getClassType},
@@ -68,13 +68,17 @@ const refreshClassOfferingTable = () => {
 
     ];
 
-    fillDataIntoTable(tableClass,classOfferings,displayProperty,true)
+    fillDataIntoTable(tableClass,classOfferings,displayProperty,"",true)
 
 };
 
 // const checkPrivileges = (innerOB)=>{
 //     if (innerOB.)
 // }
+
+const getDuration=(ob)=>{
+    return parseFloat(ob.duration).toFixed(2);
+}
 
 
 //create function for getClassStatus
@@ -94,7 +98,7 @@ const getSubject = (ob)=>{
 
 //create function for getTeacher
 const getTeacher = (ob)=>{
-    return ob.teacher_id.name;
+    return ob.teacher_id.fullname;
 }
 //create function for getGrade
 const getGrade = (ob)=>{
@@ -260,10 +264,6 @@ const classSubmit = ()=>{
         }
     }else {
         alert('you might have some errors \n'+errors);
-        // swal.fire({
-        //     title:'you might have some errors \n '+errors,
-        //     icon:'error'
-        // });
     }
 
 }
@@ -333,8 +333,49 @@ const buttonFormUpdate = ()=>{
 
 }
 
+const printClassOfferingFullTable = ()=>{
+    $("#printClassOfferingModel").modal('show');
+    classOfferings=ajaxGetRequest("/classoffering/findall")
+
+    displayProperty=[
+        {dataType: 'text',propertyName:'classname'},
+        {dataType:'text',propertyName:'fees'},
+        {dataType:'text',propertyName:getDuration},
+        {dataType:'text',propertyName:'servicecharge'},
+
+        {dataType:'function',propertyName:getClassType},
+        {dataType:'function',propertyName:getAcademicYear},
+        {dataType:'function',propertyName:getSubject},
+        {dataType:'function',propertyName:getTeacher},
+        {dataType:'function',propertyName:getGrade},
+
+    ];
+
+    fillDataIntoTable(printClassOfferingTable,classOfferings,displayProperty,"",false)
+
+}
+
+const modalPrintButton = ()=>{
+    console.log("model print working");
+    let newWindow = window.open();
+    newWindow.document.write(
+        "<head>\n" +
+        "    <link rel=\"stylesheet\" href=\"/bootstrap-5.2.3/css/bootstrap.min.css\">\n" +
+        "    <script src=\"/bootstrap-5.2.3/js/bootstrap.bundle.min.js\"></script>\n" +
+        "    <link rel=\"stylesheet\" href=\"/style/common.css\">\n" +
+        "    <link rel=\"stylesheet\" href=\"/style/button.css\">\n" +
+        "    <link rel=\"stylesheet\" href=\"/style/employee.css\">\n" +
+        "</head>\n" +
+        "<body>"+printClassOfferingTable.outerHTML+"</body> "
+    );
+    setTimeout(function (){ //settime out ekkk dunne uda table eka naththam print ui ea hariyata load venna one nisa thama minisecond 500 dunna ookooma bootstrap load vela ganata enna one nisa
+        newWindow.stop();   //load vena eka nawaththuwa
+        newWindow.print();  //print eka call kra
+        newWindow.close();  //print rka open vela close krama close venawa
+    },500)
 
 
+}
 
 
 

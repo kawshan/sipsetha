@@ -12,61 +12,116 @@
         <div class="col-md-12">
             <h1 class="h1 text-center"
                 style="background-color: #044800; color: whitesmoke; padding: 25px; border-radius: 30px">
-                 dashboard for sipsetha institute
+                dashboard for sipsetha institute
             </h1>
         </div>
     </div>
     <!--    title area end-->
 
-    <!-- student employee teacher class start -->
+    <!--    first row start-->
     <div class="row mt-2" style="padding: 5%">
-        <div class="col-md-3">
-            <img src="/icons/student.png" alt="student image"
-                 style="border-radius: 10%; border: 2px solid black; padding: 10px" onclick="console.log('student'); window.open('http://localhost:8080/student/studentform','_self');">
-            <h5 class="fw-bold">student management</h5>
-        </div>
+        <h1 class="h1 fw-bold" style="padding: 5px; margin-bottom: 30px">administration section</h1>
         <div class="col-md-3">
             <img src="/icons/employee.png" alt="employee image"
-                 style="border-radius: 10%; border: 2px solid black; padding: 10px" onclick="console.log('employee'); window.open('http://localhost:8080/employee/employeeform','_self');">
+                 style="border-radius: 10%; border: 2px solid black; padding: 10px"
+                 onclick="console.log('employee'); window.open('/employee/employeeform','_self');">
             <h5 class="fw-bold">employee management</h5>
         </div>
+
         <div class="col-md-3">
-            <img src="/icons/teacher.png" alt="teacher image"
-                 style="border-radius: 10%; border: 2px solid black; padding: 10px;" onclick="console.log('teacher')">
-            <h5 class="fw-bold">teacher management</h5>
+            <img src="/icons/user.png" alt="user image"
+                 style="border-radius: 10%; border: 2px solid black; padding: 10px;"
+                 onclick="console.log('user'); window.open('http://localhost:8080/user/userform','_self');">
+            <h5 class="fw-bold">user management</h5>
         </div>
+
+
+        <div class="col-md-3">
+            <img src="/icons/privilege.png" alt="privilege image"
+                 style="border-radius: 10%; border: 2px solid black; padding: 10px;"
+                 onclick="console.log('privilege'); window.open('http://localhost:8080/privilege/privilegeform','_self');">
+            <h5 class="fw-bold">privilege management</h5>
+        </div>
+
+
+    </div>
+    <!--    first row end-->
+
+
+    <!-- second row start -->
+    <div class="row mt-2" style="padding: 5%">
+        <h1 class="h1 fw-bold" style="padding: 5px; margin-bottom: 30px">student section</h1>
+        <div class="col-md-3">
+            <img src="/icons/student.png" alt="student image"
+                 style="border-radius: 10%; border: 2px solid black; padding: 10px"
+                 onclick="console.log('student'); window.open('/student/studentform','_self');">
+            <h5 class="fw-bold">student management</h5>
+        </div>
+
+        <div class="col-md-3">
+            <img src="/icons/parent.png" alt="parent image"
+                 style="border-radius: 10%; border: 2px solid black; padding: 10px;"
+                 onclick="console.log('parent'); window.open('/guardian/guardianform','_self');">
+            <h5 class="fw-bold">guardian management</h5>
+        </div>
+
+        <div class="col-md-3">
+            <img src="/icons/writing.png" alt="writing image"
+                 style="border-radius: 10%; border: 2px solid black; padding: 10px;"
+                 onclick="console.log('parent'); window.open('/studentregistration/studentregistrationform','_self');">
+            <h5 class="fw-bold">student registration</h5>
+        </div>
+
+        <div class="col-md-3">
+            <img src="/icons/payment.png" alt="payment image"
+                 style="border-radius: 10%; border: 2px solid black; padding: 10px;"
+                 onclick="console.log('payment'); window.open('/payment/paymentform','_self')">
+            <h5 class="fw-bold">payment management</h5>
+        </div>
+
+    </div>
+    <!-- second row  finish -->
+
+    <!--    third row start-->
+    <div class="row mt-2" style="padding: 5%">
+        <h1 class="h1 fw-bold" style="padding: 5px; margin-bottom: 30px">class section</h1>
+        <div class="col-md-3">
+            <img src="/icons/hall.png" alt="class management"
+                 style="border-radius: 10%; border: 2px solid black; padding: 10px;" onclick="console.log('class'); window.open('/classhall/classhallform','_self')">
+            <h5 class="fw-bold">class hall management</h5>
+        </div>
+
         <div class="col-md-3">
             <img src="/icons/class.png" alt="class management"
-                 style="border-radius: 10%; border: 2px solid black; padding: 10px;" onclick="console.log('class')">
-            <h5 class="fw-bold">class management</h5>
+                 style="border-radius: 10%; border: 2px solid black; padding: 10px;" onclick="console.log('class'); window.open('/classoffering/classofferingform','_self')">
+            <h5 class="fw-bold">class offering</h5>
         </div>
-    </div>
-    <!-- student employee teacher class start -->
 
-    <!--    second row start-->
-    <div class="row mt-2" style="padding: 5%">
-    <div class="col-md-3">
-        <img src="/icons/payment.png" alt="payment image"
-             style="border-radius: 10%; border: 2px solid black; padding: 10px;" onclick="console.log('payment')">
-        <h5 class="fw-bold">payment management</h5>
+        <div class="col-md-3">
+            <img src="/icons/allocation.png" alt="class management"
+                 style="border-radius: 10%; border: 2px solid black; padding: 10px;" onclick="console.log('class'); window.open('/classroomallocation/classroomallocationform','_self')">
+            <h5 class="fw-bold">class room allocation</h5>
+        </div>
+
+        <div class="col-md-3"></div>
     </div>
-    <div class="col-md-3">
-        <img src="/icons/privilege.png" alt="privilege image"
-             style="border-radius: 10%; border: 2px solid black; padding: 10px;" onclick="console.log('privilege'); window.open('http://localhost:8080/privilege/privilegeform','_self');">
-        <h5 class="fw-bold">privilege management</h5>
+    <!--    third row end-->
+
+
+    <!--    forth row start-->
+    <div class="row mt-2" style="padding: 5%" >
+        <h1 class="h1 fw-bold" style="padding: 5px; margin-bottom: 30px">teacher section</h1>
+        <div class="col-md-3">
+            <img src="/icons/teacher.png" alt="teacher image"
+                 style="border-radius: 10%; border: 2px solid black; padding: 10px;" onclick="console.log('teacher'); window.open('/teacher/teacherform','_self')">
+            <h5 class="fw-bold">teacher management</h5>
+        </div>
+
+        <div class="col-md-3"></div>
+        <div class="col-md-3"></div>
+        <div class="col-md-3"></div>
     </div>
-    <div class="col-md-3">
-        <img src="/icons/user.png" alt="user image"
-             style="border-radius: 10%; border: 2px solid black; padding: 10px;" onclick="console.log('user'); window.open('http://localhost:8080/user/userform','_self');">
-        <h5 class="fw-bold">user management</h5>
-    </div>
-    <div class="col-md-3">
-        <img src="/icons/parent.png" alt="parent image" style="border-radius: 10%; border: 2px solid black; padding: 10px;"
-             onclick="console.log('parent'); window.open('http://localhost:8080/guardian/guardianform','_self');">
-        <h5 class="fw-bold">guardian management</h5>
-    </div>
-    </div>
-    <!--    second row end-->
+    <!--    forth row end-->
 
 
 </div>

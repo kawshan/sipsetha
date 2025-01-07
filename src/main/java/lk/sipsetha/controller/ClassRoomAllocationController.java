@@ -5,11 +5,13 @@ import lk.sipsetha.dao.ClassRoomAllocationDao;
 import lk.sipsetha.entity.AllocationStatus;
 import lk.sipsetha.entity.ClassroomAllocation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 
@@ -33,7 +35,7 @@ public class ClassRoomAllocationController {
         if (!getLoggedUserPrivilege.get("select")){
             return null;
         }
-        return dao.findAll();
+        return dao.findAll(Sort.by(Sort.Direction.DESC,"id"));
     }
 
     @GetMapping(value = "/classroomallocationform")
@@ -57,6 +59,7 @@ public class ClassRoomAllocationController {
         //existing and duplicate
         //operator
         try {
+            classroomAllocation.setAddeddatetime(LocalDateTime.now());
             dao.save(classroomAllocation);
             return "ok";
         }catch (Exception e){

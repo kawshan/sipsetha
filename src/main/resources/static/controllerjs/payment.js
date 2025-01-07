@@ -46,6 +46,12 @@ const refreshPaymentForm = () => {
     studentPaymentForm.reset();
     payment = new Object();
 
+    paymentcategories=ajaxGetRequest("/paymentcategory/findall")
+    fillDataIntoSelect(selectPaymentCategory,'select payment category',paymentcategories,'name');
+
+    studentRegistrations=ajaxGetRequest("/studentregistration/findall")
+    fillDataIntoSelect(selectStudentRegistration,'select student registrations',studentRegistrations,'indexnumber');
+
 
     payTypes = ajaxGetRequest("/paytype/findall");
     fillDataIntoSelect(selectPayType, 'select pay type', payTypes, 'name');
@@ -104,6 +110,10 @@ const refillPaymentForm = (ob, rowIndex) => {
     textStudent.value = payment.student_id.stunum + " " + payment.student_id.firstname;
     console.log(JSON.stringify(textStudent.value));
 
+    fillDataIntoSelect(studentregistration_id,'select student registration',studentRegistrations,'indexnumber',ob.studentregistration_id.indexnumber);
+
+
+    fillDataIntoSelect(selectPaymentCategory,'select payment category',paymentcategories,'name',ob.paymentcategory_id.name)
 
 }
 
@@ -111,6 +121,14 @@ const refillPaymentForm = (ob, rowIndex) => {
 //define function for check errors
 const checkErrors = () => {
     let errors = "";
+
+    if (payment.studentregistration_id== null) {
+        errors = errors + "registration cannot be empty \n";
+    }
+
+    if (payment.paymentcategory_id== null) {
+        errors = errors + "payment category cannot be empty \n";
+    }
 
     if (payment.fees == null) {
         errors = errors + "fees cannot be empty \n";
@@ -139,6 +157,15 @@ const checkErrors = () => {
 //define function for check updates
 const checkUpdates = () => {
     let updates = "";
+
+    if (payment.studentregistration_id.indexnumber != payment.studentregistration_id.indexnumber) {
+        errors = errors + "registration is changed \n";
+    }
+
+    if (payment.paymentcategory_id.name != payment.paymentcategory_id.name) {
+        errors = errors + "payment is changed \n";
+    }
+
 
     if (payment.fees != oldPayment.fees) {
         updates = updates + "fees is updated \n";
@@ -174,6 +201,8 @@ const btnStudentRegistrationSubmit = () => {
     let errors = checkErrors();
     if (errors == "") {
         let userConfirm = confirm("Are you sure to add this following student registration \n"
+            + "\n student registration is " + payment.studentregistration_id.indexnumber
+            + "\n payment category is " + payment.paymentcategory_id.name
             + "\n paytype is " + payment.paytype_id.name
             + "\n student is " + payment.student_id.firstname
             + "\n fees is " + payment.fees
@@ -235,6 +264,8 @@ const deletePaymentButton = (ob, rowIndex) => {
             + "card number is \n" + ob.cardno
             + "pay type is \n" + ob.paytype_id.name
             + "student is \n" + ob.student_id.firstname
+            + "student registration is \n" + ob.studentregistration_id.indexnumber
+            + "payment category is \n" + ob.paymentcategory_id.name
         );
         if (userConfirm) {
             let deleteServerResponse = ajaxDeleteRequest("/payment", ob);

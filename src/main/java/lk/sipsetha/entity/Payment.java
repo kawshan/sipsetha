@@ -57,9 +57,19 @@ public class Payment {
     @ManyToOne
     @JoinColumn(name = "paytype_id" ,referencedColumnName = "id")
     private PayType paytype_id;
+
     @ManyToOne
     @JoinColumn(name = "student_id" ,referencedColumnName = "id")
     private Student student_id;
+
+    @ManyToOne
+    @JoinColumn(name = "studentregistration_id",referencedColumnName = "id")
+    private StudentRegistration studentregistration_id;
+
+    @ManyToOne
+    @JoinColumn(name = "paymentcategory_id",referencedColumnName = "id")
+    private PaymentCategory paymentcategory_id;
+
 
 
 

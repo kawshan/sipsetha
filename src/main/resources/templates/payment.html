@@ -123,6 +123,37 @@
                         </div>
                         <!--                    required mark end-->
 
+
+
+                        <!--                        student start-->
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="textStudent" class="form-label fw-bold">select student <i
+                                        class="text-danger">*</i> </label>
+                            </div>
+                            <div class="col-md-6">
+<!--                                <select id="selectStudent" class="form-select text-center" required onchange="selectDBValidator(this,'','payment','student_id')"> </select>-->
+                                <input type="text" id="textStudent" list="studentList" required placeholder="select student" class="form-control text-center" onkeyup="dataListValidator(this,'students','payment','student_id','oldPayment','stunum','firstname')">
+                                <datalist id="studentList"></datalist>
+                            </div>
+                        </div>
+                        <!--                        student end-->
+
+
+                        <!--                        pay type start-->
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="selectPayType" class="form-label fw-bold"> pay type <i class="text-danger">*</i> </label>
+                            </div>
+                            <div class="col-md-6">
+                                <select id="selectPayType" class="form-select text-center" required
+                                        onchange="selectDBValidator(this,'','payment','paytype_id')"></select>
+                            </div>
+                        </div>
+                        <!--                        pay type end-->
+
+
+
                         <!--                        fees start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
@@ -208,33 +239,6 @@
                             </div>
                         </div>
                         <!--                        card number end-->
-
-
-                        <!--                        pay type start-->
-                        <div class="row mt-2">
-                            <div class="col-md-6">
-                                <label for="selectPayType" class="form-label fw-bold"> pay type <i class="text-danger">*</i> </label>
-                            </div>
-                            <div class="col-md-6">
-                                <select id="selectPayType" class="form-select text-center" required
-                                        onchange="selectDBValidator(this,'','payment','paytype_id')"></select>
-                            </div>
-                        </div>
-                        <!--                        pay type end-->
-
-
-                        <!--                        student start-->
-                        <div class="row mt-2">
-                            <div class="col-md-6">
-                                <label for="selectStudent" class="form-label fw-bold">select student <i
-                                        class="text-danger">*</i> </label>
-                            </div>
-                            <div class="col-md-6">
-                                <select id="selectStudent" class="form-select text-center" required
-                                        onchange="selectDBValidator(this,'','payment','student_id')"> </select>
-                            </div>
-                        </div>
-                        <!--                        student end-->
 
 
                         <!--                    button start-->

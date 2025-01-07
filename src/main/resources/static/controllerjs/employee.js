@@ -29,7 +29,6 @@ const refreshEmployeeTable = () => {
         {dataType: 'text', propertyName: 'address'},
         {dataType: 'text', propertyName: 'addeddate'},
         {dataType: 'photoarray', propertyName: 'emp_photo'},
-        {dataType: 'function', propertyName: getHasUserAccount},
         {dataType: 'function', propertyName: getEmployeeStatus},
         {dataType: 'function', propertyName: getDesignation},
         {dataType: 'text', propertyName: 'civilstatus'}
@@ -151,18 +150,6 @@ const getEmployeeStatus = (ob) => {
 // create function for get designation
 const getDesignation = (ob) => {
     return ob.designation_id.name;
-}
-
-
-//create function for has user account
-const getHasUserAccount = (ob) => {
-    let user = ajaxGetRequest("/user/byempid/"+ob.id)
-    if (user) {
-    // if (ob.hasuseraccount) {
-        return '<i class="fa-solid fa-circle-check fa-2x text-success"></i>'
-
-    }
-    return '<i class="fa-solid fa-circle-xmark fa-2x text-danger"></i>'
 }
 
 
@@ -682,6 +669,62 @@ const btnClearImageFN = ()=>{
 
 
 
+const validateNicExisting = (fieldId)=>{
+    let nicValue=fieldId.value
+    if (new RegExp('^(([0-9]{9}[VvXxSs])|([0-9]{12}))$').test(nicValue)){
+        console.log("good nic to validate existing");
+
+        let getServerResponse=ajaxGetRequest("/employee/getbynic/"+nicValue);
+        if (getServerResponse==true){
+            divNicText.classList.remove("d-none");
+            divNicText.innerText="nic "+nicValue+" is already exists please recheck"
+            divNicText.style.color="red";
+        }else {
+            divNicText.classList.remove("d-none");
+            divNicText.innerText="nic "+nicValue+" is good it is not previously enterd";
+            divNicText.style.color="green";
+        }
+    }
+}
+
+
+
+const validateMobileExisting = (fieldId)=>{
+    let mobileValue=fieldId.value
+    if (new RegExp('^[0][7][01245678][0-9]{7}$').test(mobileValue)){
+        console.log("good mobile to validate existing");
+
+        let getServerResponse=ajaxGetRequest("/employee/getbymobile/"+mobileValue);
+        if (getServerResponse==true){
+            divMobileText.classList.remove("d-none");
+            divMobileText.innerText="mobile "+mobileValue+" is already exists please recheck";
+            divMobileText.style.color="red";
+        }else {
+            divMobileText.classList.remove("d-none");
+            divMobileText.innerText="mobile "+mobileValue+" is good it is not previously entered";
+            divMobileText.style.color="green";
+        }
+    }
+}
+
+
+const validateEmailExisting = (fieldId)=>{
+    let emailValue=fieldId.value;
+    if (new RegExp('^[A-Za-z0-9]{4,30}[@][a-z]{3,10}[.][a-z]{2,3}$').test(emailValue)){
+        console.log("good email to validate existing");
+
+        let getServerResponse=ajaxGetRequest("/employee/getbyemployeeemail/"+emailValue);
+        if (getServerResponse==true){
+            divEmailText.classList.remove("d-none");
+            divEmailText.innerText="email "+emailValue+" is already exists please recheck";
+            divEmailText.style.color="red";
+        }else {
+            divEmailText.classList.remove("d-none");
+            divEmailText.innerText="email "+emailValue+" is good it is not previously entered";
+            divEmailText.style.color="green";
+        }
+    }
+}
 
 
 

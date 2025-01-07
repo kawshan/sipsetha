@@ -4,6 +4,7 @@ import lk.sipsetha.dao.GuardianDao;
 import lk.sipsetha.dao.UserDao;
 import lk.sipsetha.entity.Guardian;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,7 @@ public class GuardianController {
         if (!getLoggedUserPrivilege.get("select")){
             return null;
         }
-        return guardianDao.findAll();
+        return guardianDao.findAll(Sort.by(Sort.Direction.DESC,"id"));
     }
 
     @GetMapping(value = "/guardianform")

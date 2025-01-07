@@ -22,4 +22,7 @@ public interface EmployeeDao extends JpaRepository<Employee,Integer> {
     @Query("select e from Employee e where e.id not in(select u.employee_id.id from User u where u.employee_id is not null)")
     public List<Employee> getListWithoutUserAccount();
 
+    @Query(value = "select e from Employee e where e.mobile=?1")
+    public Employee getBYMobile(String mobile);
+
 }

@@ -83,6 +83,12 @@ public class EmployeeController {
 
         }
 
+        Employee exEmployeeMobile = dao.getBYMobile(employee.getMobile());
+        if (exEmployeeMobile!=null){
+            return "cannot perform save employee mobile"+employee.getMobile()+" is already exists";
+        }
+
+
         //check email duplicate
         Employee exEmailEmployee = dao.getByEmail(employee.getEmail());
         if (exEmailEmployee != null) {
@@ -129,7 +135,8 @@ public class EmployeeController {
         }
     }
 
-    @DeleteMapping
+    @Transactional  //mekata ai damme uda methoda eka transactional nisa ethana eka scilently fall kiyana error eka awa eka nathi karanna thama me dewani method ekata transactional damme link for this error ->https://stackoverflow.com/questions/19302196/transaction-marked-as-rollback-only-how-do-i-find-the-cause
+    @DeleteMapping  //methanath dependency ekak thiyenawa eka tham employee delete karanakota eyata adala user account ekak thiyenawanam eke status eka delete karanawa
     public String deleteEmployee(@RequestBody Employee employee) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         HashMap<String,Boolean> getUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(), "employee");
@@ -145,6 +152,13 @@ public class EmployeeController {
             employee.setEmployeestatus_id(deleteStatus);
             dao.save(employee);
 
+            //dependancies
+            //need to change user account status if it is exists
+            User extUser = userDao.getUserByEmployee(employee.getId());
+            if (extUser!=null){//ehema user kenek innawa nam
+                extUser.setStatus(false);
+                userDao.save(extUser);
+            }
 
             return "ok";
         } catch (Exception e) {
@@ -189,6 +203,36 @@ public class EmployeeController {
     @GetMapping(value = "/withoutuseraccount")
     public List<Employee> getListWithoutUserAccount(){
         return dao.getListWithoutUserAccount();
+    }
+
+    @GetMapping(value = "/getbynic/{nic}")
+    public Boolean getEmployeeDuplicateFromNic(@PathVariable("nic")String nic){
+        Employee exEmpByNic = dao.getByNic(nic);
+        if (exEmpByNic!=null){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    @GetMapping(value = "/getbymobile/{mobile}")
+    public Boolean getEmployeeByMobile(@PathVariable("mobile") String mobile){
+        Employee exEmpByMobile = dao.getBYMobile(mobile);
+        if (exEmpByMobile!=null){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+    @GetMapping(value = "/getbyemployeeemail/{email}")
+    public Boolean getEmployeeByEmail(@PathVariable("email")String email){
+        Employee exEmployeeEmail= dao.getByEmail(email);
+        if (exEmployeeEmail!=null){
+            return true;
+        }else {
+            return false;
+        }
     }
 
 }

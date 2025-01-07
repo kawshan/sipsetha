@@ -6,6 +6,7 @@ import lk.sipsetha.dao.UserDao;
 import lk.sipsetha.entity.ClassHall;
 import lk.sipsetha.entity.ClassHallStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,7 @@ public class ClassHallController {
         if (!getLoggedUserPrivilege.get("select")){
             return null;
         }
-        return dao.findAll();
+        return dao.findAll(Sort.by(Sort.Direction.DESC,"id"));
     }
 
     @GetMapping(value = "/classhallform")
@@ -97,6 +98,13 @@ public class ClassHallController {
         if (!getLoggedUserPrivilege.get("insert")){
             return "cannot perform save class hall .. you don't have privileges";
         }
+
+        ClassHall exClassHallName = dao.getClasshallByName(classHall.getName());
+        if (exClassHallName!=null){
+            return "cannot perform class hall save "+classHall.getName()+" is already exists";
+        }
+
+
         try {
             classHall.setAddeduserid(userDao.getUserByUserName(auth.getName()).getId());
             classHall.setAddeddatetime(LocalDateTime.now());
@@ -105,6 +113,17 @@ public class ClassHallController {
             return "ok";
         }catch (Exception e){
             return "class hall submit not complete"+e.getMessage();
+        }
+    }
+
+
+    @GetMapping(value = "/checkduplicatebyhallname/{hallname}")
+    public Boolean getHallNameForValidate(@PathVariable("hallname") String hallname){
+        ClassHall exClassHallName = dao.getClasshallByName(hallname);
+        if (exClassHallName!=null){
+            return true;
+        }else {
+            return false;
         }
     }
 

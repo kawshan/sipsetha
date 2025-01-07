@@ -48,14 +48,17 @@
         <div id="divModifyButton" class="d-none">
             <div class="col-md-6">
                 <button type="button" class="btn btn-warning fw-bold"
-                        style="width: 15%; color: whitesmoke; border:1px solid black" onclick="GuardianFormRefill(window['editOb'],window['editRow'])">
+                        style="width: 15%; color: whitesmoke; border:1px solid black"
+                        onclick="GuardianFormRefill(window['editOb'],window['editRow'])">
                     <i class="fa-solid fa-recycle fa-beat"> </i> Edit
                 </button>
                 <button type="button" id="divModifyButtonDelete" class="btn btn-danger fw-bold ms-2 me-2"
-                        style="width: 15%; border: 1px solid black; pointer-events: all" onclick="buttonGuardianDelete(window['editOb'],window['editRow'])">
+                        style="width: 15%; border: 1px solid black; pointer-events: all"
+                        onclick="buttonGuardianDelete(window['editOb'],window['editRow'])">
                     <i class="fa-solid fa-trash fa-beat"></i> Delete
                 </button>
-                <button onclick="printGuardian(window['editOb'],window['editRow'])" type="button" class="btn btn-primary fw-bold"
+                <button onclick="printGuardian(window['editOb'],window['editRow'])" type="button"
+                        class="btn btn-primary fw-bold"
                         style="width: 15%; border:1px solid black">
                     <i class="fa-solid fa-eye fa-beat"></i> Print
                 </button>
@@ -159,6 +162,38 @@
                         </div>
                         <!--                    nic end-->
 
+                        <!--                        gender start-->
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="selectGender" class="form-label fw-bold">Gender</label>
+                            </div>
+                            <div class="col-md-6">
+                                <select id="selectGender" class="form-select text-center"
+                                        onchange="selectValidator(this,'','guardian','gender')">
+                                    <option value="" selected disabled>select an option</option>
+                                    <option value="true">male</option>
+                                    <option value="false">female</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!--                        gender end-->
+
+                        <!--                        guardian type start-->
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="selectGuardianType" class="form-label fw-bold">Guardian Type</label>
+                            </div>
+                            <div class="col-md-6">
+                                <select id="selectGuardianType" class="form-select text-center"
+                                        onchange="selectDBValidator(this,'','guardian','guardiantype_id')">
+                                    <option value="father">father</option>
+                                    <option value="mother">mother</option>
+                                    <option value="other">other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <!--                        guardian type end-->
+
 
                         <!--                    mobile start-->
                         <div class="row mt-2">
@@ -206,38 +241,6 @@
                         </div>
                         <!--                    address end-->
 
-                        <!--                        guardian type start-->
-                        <div class="row mt-2">
-                            <div class="col-md-6">
-                                <label for="selectGuardianType" class="form-label fw-bold">Guardian Type</label>
-                            </div>
-                            <div class="col-md-6">
-                                <select id="selectGuardianType" class="form-select text-center"
-                                        onchange="selectDBValidator(this,'','guardian','guardiantype_id')">
-                                    <option value="father">father</option>
-                                    <option value="mother">mother</option>
-                                    <option value="other">other</option>
-                                </select>
-                            </div>
-                        </div>
-                        <!--                        guardian type end-->
-
-
-                        <!--                        gender start-->
-                        <div class="row mt-2">
-                            <div class="col-md-6">
-                                <label for="selectGender" class="form-label fw-bold">Gender</label>
-                            </div>
-                            <div class="col-md-6">
-                                <select id="selectGender" class="form-select text-center"
-                                        onchange="selectValidator(this,'','guardian','gender')">
-                                    <option value="" selected disabled>select an option</option>
-                                    <option value="true">male</option>
-                                    <option value="false">female</option>
-                                </select>
-                            </div>
-                        </div>
-                        <!--                        gender end-->
 
                         <!--                        work place address start-->
                         <div class="row mt-2">
@@ -326,13 +329,15 @@
                             </div>
                             <div class="col-md-4 text-center">
                                 <button type="button" id="btnGuardUpdate" class="btn btn-warning fw-bold"
-                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%; pointer-events: all" onclick="buttonGuardianUpdate()">
+                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%; pointer-events: all"
+                                        onclick="buttonGuardianUpdate()">
                                     <i class="fa-solid fa-recycle fa-beat"> </i> Update
                                 </button>
                             </div>
                             <div class="col-md-4 text-end">
                                 <button type="submit" id="btnGuardAdd" class="btn btn-primary fw-bold"
-                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%; pointer-events: all" onclick="buttonGuardianAdd()">
+                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%; pointer-events: all"
+                                        onclick="buttonGuardianAdd()">
                                     <i class="fa-solid fa-plus fa-beat"> </i> Add
                                 </button>
                             </div>
@@ -382,7 +387,6 @@
         </div>
     </div>
     <!--print model area end-->
-
 
 
 </div>

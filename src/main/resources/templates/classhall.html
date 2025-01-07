@@ -125,7 +125,8 @@
                             <div class="col-md-8">
                                 <input type="text" id="textName" class="form-control text-center" required
                                        placeholder="enter name"
-                                       onkeyup="textValidator(this,'^[A-Za-z]{3,20}[\\s][A-Za-z]{3,20}$','classhall','name')">
+                                       onkeyup="textValidator(this,'^[A-Za-z]{3,20}[\\s][A-Za-z]{3,20}$','classhall','name'); validateClassHallExisting(this)">
+                                <div id="divClassHallText" class="form-text text-center d-none"></div>
                             </div>
                         </div>
                         <!--name end-->

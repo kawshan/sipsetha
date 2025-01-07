@@ -457,7 +457,23 @@ const modalPrintButton = ()=>{
 
 
 
+const validateClassHallExisting = (fieldId)=>{
+    let classHallValue=fieldId.value;
+    if (new RegExp('^[A-Za-z]{3,20}[\\s][A-Za-z]{3,20}$').test(classHallValue)){
+        console.log("good class hall name to validate existing");
 
+        let getServerResponse=ajaxGetRequest("/classhall/checkduplicatebyhallname/"+classHallValue);
+        if (getServerResponse==true){
+            divClassHallText.classList.remove("d-none");
+            divClassHallText.innerText="class hall "+classHallValue+" is already exists please recheck";
+            divClassHallText.style.color="red";
+        }else {
+            divClassHallText.classList.remove("d-none");
+            divClassHallText.innerText="class hall "+classHallValue+" is good it is not previously entered";
+            divClassHallText.style.color="green";
+        }
+    }
+}
 
 
 

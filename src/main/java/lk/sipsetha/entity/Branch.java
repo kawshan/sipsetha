@@ -1,29 +1,32 @@
 package lk.sipsetha.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "grade")
+@Table(name = "branch")
 @Data
-
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class Grade {
+public class Branch {
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
 
-
     @Column(name = "name")
-    @NotNull
     private String name;
 
+    @Column(name = "bankbranchcode")
+    private String bankbranchcode;
+
+    @ManyToOne
+    @JoinColumn(name = "bank_id",referencedColumnName = "id")
+    private Bank bank_id;
 
 }

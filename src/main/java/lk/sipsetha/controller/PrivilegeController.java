@@ -97,11 +97,11 @@ public class PrivilegeController {
     //define function for get privilege by user module
     public HashMap<String,Boolean> getPrivilegeByUserModule(String username, String modulename){
         HashMap<String,Boolean> userPrivilege = new HashMap<String,Boolean>();
-        if (username.equals("admin")){
+        if (username.equals("Admin")){
             userPrivilege.put("select",true);
-            userPrivilege.put("insert",true);
-            userPrivilege.put("update",true);
-            userPrivilege.put("delete",true);
+            userPrivilege.put("insert",false);
+            userPrivilege.put("update",false);
+            userPrivilege.put("delete",false);
         }else {
             String userPrivi = privilegeDao.getPrivilegeByUserModule(username,modulename);
             String[] userPriviList = userPrivi.split(",");

@@ -177,9 +177,8 @@ const deleteEmployee = (ob, rowIndex) => {
             + '\n status is' + ob.employeestatus_id.name
         );
         if (userConfirm) {
-            let deleteServerResponse = 'ok'
 
-            deleteServerResponse = ajaxDeleteRequest("/employee",ob)
+           const deleteServerResponse = ajaxDeleteRequest("/employee",ob)
 
             if (deleteServerResponse == 'ok') {
                 // alert("delete successfull")

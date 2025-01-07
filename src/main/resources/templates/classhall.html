@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{head :: headModulesFragment}"></head>
+
+<head>
+    <script src="/controllerjs/classhall.js"></script>
+</head>
+
+<body style="background-color: #E0E9DD">
+<div th:replace="~{navbar :: navbarFragment}"></div>
+
+<div class="container-fluid">
+
+
+    <!--  title area start-->
+    <div class="row p-2">
+        <div class="col--md-12">
+            <h1 class="h1 text-center"
+                style="background-color: #044800; color: whitesmoke; padding: 25px; border-radius: 30px">
+                class hall management
+            </h1>
+        </div>
+    </div>
+    <!--  title area end-->
+
+    <!--  title button area start-->
+    <div class="row mt-2">
+        <div class="col-md-8">
+            <div id="divPrintEmployeeTableButton" class="">
+                <button type="button" class="btn fw-bold"
+                        style="background-color: #044800; color: whitesmoke; width: 25%; border: 1px solid black; border-radius: 30px">
+                    <i class="fa-solid fa-print fa-beat"> </i> print class hall table
+                </button>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <button type="button" class="btn fw-bold"
+                    style="background-color: #044800; color: whitesmoke; width: 100%; border: 1px solid black; border-radius: 30px"
+                    data-bs-toggle="modal" data-bs-target="#modalClassHallAdd" data-bs-backdrop="static"
+                    data-bs-keyboard="false">
+                <i class="fa-solid fa-plus fa-beat"></i> add new classhall
+            </button>
+        </div>
+    </div>
+    <!--  title button area end-->
+
+    <!--      edit delete print button start-->
+    <div class="row mt-2">
+        <div id="divModifyButton" class="d-none">
+            <div class="col-md-6">
+                <button type="button" class="btn btn-warning fw-bold"
+                        style="width: 15%; color: whitesmoke; border:1px solid black"
+                        onclick="classHallFormRefill(window['editOb'],window['editRow'])">
+                    <i class="fa-solid fa-recycle fa-beat"> </i> edit
+                </button>
+                <button type="button" class="btn btn-danger fw-bold ms-2 me-2"
+                        style="width: 15%; border: 1px solid black"
+                        onclick="deleteClassHall(window['editOb'],window['editRow'])">
+                    <i class="fa-solid fa-trash fa-beat"></i> delete
+                </button>
+                <button type="button" class="btn btn-primary fw-bold"
+                        style="width: 15%; border:1px solid black"
+                        onclick="printClassHall(window['editOb'],window['editRow'])">
+                    <i class="fa-solid fa-eye fa-beat"></i> print
+                </button>
+            </div>
+        </div>
+    </div>
+    <!--      edit delete print button end-->
+
+    <!--  table area start-->
+    <div class="row mt-5"></div>
+    <table class="table table-bordered table-striped" id="tableClassHall">
+        <thead class="table text-center" style="background-color: #044800; color: whitesmoke">
+        <th>#</th>
+        <th>name</th>
+        <th>location</th>
+        <th>table count</th>
+        <th>benchcount</th>
+        <th>status</th>
+        <th>modify</th>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    <!--  table area end-->
+
+
+    <!--employee modal area start-->
+    <div class="modal modal-xl" id="modalClassHallAdd" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #044800; color: whitesmoke;">
+                    <h2 class="h2">
+                        add new class hall
+                    </h2>
+                    <button type="button" class="btn btn btn-danger"
+                            style="color: whitesmoke; border: 1px solid black; border-radius: 25%;"
+                            data-bs-dismiss="modal">
+                        <i class="fa-solid fa-xmark"> </i> close
+                    </button>
+                </div>
+                <div class="modal-body" style="background-color: #E0E9DD">
+
+                    <form onsubmit="return false" id="classHallForm">
+                        <!--                    required mark start-->
+                        <div class="row mt-2">
+                            <div class="col-md-12 text-start">
+                                <span class="text-danger">required *</span>
+                            </div>
+                        </div>
+                        <!--                    required mark end-->
+
+                        <div class="row mt-2">
+                            <div class="col-md-4">
+                                <label for="textName" class="form-label fw-bold">name <i class="text-danger">*</i> </label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="textName" class="form-control text-center" required placeholder="enter name" onkeyup="textValidator(this,'^[A-Za-z0-9]{3,20}$','classhall','name')">
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-md-4">
+                                <label for="textLocation" class="form-label fw-bold">location <i class="text-danger">*</i></label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="textLocation" class="form-control text-center" required placeholder="enter location " onkeyup="textValidator(this,'^[A-Za-z0-9]{3,10}$','classhall','location')">
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-2">
+                            <div class="col-md-4">
+                                <label for="textMinCount" class="form-label fw-bold">min count <i class="text-danger">*</i> </label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="number" id="textMinCount" class="form-control text-center" required placeholder="enter min count" onkeyup="textValidator(this,'^[0-9]{1,2}$','classhall','mincount')">
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-2">
+                            <div class="col-md-4">
+                                <label for="textMaxCount" class="form-label fw-bold" >max count <i class="text-danger">*</i> </label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="number" id="textMaxCount" class="form-control text-center" required placeholder="enter max count" onkeyup="textValidator(this,'^[0-9]{1,2}$','classhall','maxcount')">
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-2">
+                            <div class="col-md-4">
+                                <label for="textTableCount" class="form-label fw-bold">table count <i class="text-danger">*</i> </label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="number" id="textTableCount" class="form-control text-center" required placeholder="enter table count" onkeyup="textValidator(this,'^[0-9]{1,2}$','classhall','tablecount')">
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-2">
+                            <div class="col-md-4">
+                                <label for="textBenchCount" class="form-label fw-bold">bench count <i class="text-danger">*</i> </label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="number" id="textBenchCount" class="form-control text-center" required placeholder="enter bench count" onkeyup="textValidator(this,'^[0-9]{1,2}$','classhall','benchcount')">
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-md-4">
+                                <label for="textMaxTableCount" class="form-label fw-bold">max table count <i class="text-danger">*</i> </label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="number" class="form-control text-center" id="textMaxTableCount" required placeholder="enter max table count" onkeyup="textValidator(this,'^[0-9]{1,2}$','classhall','maxtablecount')">
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-md-4">
+                                <label for="textMaxBenchCount" class="form-label fa-bold"> max bench count <i class="text-danger">*</i> </label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control text-center" id="textMaxBenchCount" required placeholder="enter max bench count" onkeyup="textValidator(this,'^[0-9]{1,2}$','classhall','maxbenchcount')">
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-md-4">
+                                <label for="textNote" class="form-label fw-bold">note <i class="text-primary">(optional)</i> </label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="textNote" class="form-control text-center" required placeholder="enter note" onkeyup="textValidator(this,'^[A-Za-z]{2,100}$','classhall','note')">
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-md-4">
+                                <label for="selectClassHallStatus" class="form-label fw-bold">class hall status <i class="text-danger">*</i> </label>
+                            </div>
+                            <div class="col-md-8">
+                                <select id="selectClassHallStatus" class="form-select text-center" required onchange="selectDBValidator(this,'','classhall','classhallstatus_id')">
+                                    <option value="" selected disabled>select an option</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!--                    button start-->
+                        <div class="row mt-5">
+                            <div class="col-md-4">
+                                <button type="reset" class="btn btn-danger fw-bold"
+                                        style=" width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%">
+                                    <i class="fa-solid fa-trash fa-beat"> </i> reset
+                                </button>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <button type="button" class="btn btn-warning fw-bold"
+                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%"
+                                        onclick="classHallUpdate()">
+                                    <i class="fa-solid fa-recycle fa-beat"> </i> update
+                                </button>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <button type="submit" class="btn btn-primary fw-bold"
+                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%"
+                                        onclick="classHallSubmit()">
+                                    <i class="fa-solid fa-plus fa-beat"> </i> add
+                                </button>
+                            </div>
+                        </div>
+                        <!--                    button end-->
+
+
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--employee modal area end-->
+
+
+</div>
+</body>
+</html>

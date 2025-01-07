@@ -13,7 +13,7 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" style="color: whitesmoke" aria-current="page" href="#">Home</a>
+                        <a class="nav-link active" style="color: whitesmoke" aria-current="page" href="http://localhost:8080/dashboard">Home</a>
                     </li>
                     <!--                    <li class="nav-item">-->
                     <!--                        <a class="nav-link" href="#">Link</a>-->
@@ -68,29 +68,48 @@
         </div>
         <div class="offcanvas-body" style="background-color: #E0E9DD">
 
-            <div class="btn-group">
-                <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                    Administration section
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="http://localhost:8080/employee/employeeform">employee</a></li>
-                    <li><a class="dropdown-item" href="http://localhost:8080/user/userform">user</a></li>
-                    <li><a class="dropdown-item" href="http://localhost:8080/privilege/privilegeform">privilege</a></li>
-                </ul>
+            <div class="row mt-2">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        Administration section
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="http://localhost:8080/employee/employeeform">employee</a></li>
+                        <li><a class="dropdown-item" href="http://localhost:8080/user/userform">user</a></li>
+                        <li><a class="dropdown-item" href="http://localhost:8080/privilege/privilegeform">privilege</a></li>
+                    </ul>
+                </div>
             </div>
 
 
-            <div class="btn-group mt-2">
-                <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown"
-                        aria-expanded="false">
-                    student Sections
-                </button>
-                <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="http://localhost:8080/student/studentform">student management</a></li>
-                    <li><a class="dropdown-item" href="ttp://localhost:8080/guardian/guardianform">guardian management</a></li>
-                </ul>
+            <div class="row mt-2">
+                <div class="btn-group mt-2">
+                    <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        student Sections
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="http://localhost:8080/student/studentform">student management</a></li>
+                        <li><a class="dropdown-item" href="ttp://localhost:8080/guardian/guardianform">guardian management</a></li>
+                    </ul>
+                </div>
             </div>
+
+            <div class="row mt-2">
+                <div class="btn-group mt-2">
+                    <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        class Sections
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="http://localhost:8080/classhall/classhallform">class hall management</a></li>
+                        <li><a class="dropdown-item" href="ttp://localhost:8080/guardian/guardianform">guardian management</a></li>
+                    </ul>
+                </div>
+            </div>
+
+
 
 
         </div>

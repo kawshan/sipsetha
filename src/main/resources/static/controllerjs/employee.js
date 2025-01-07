@@ -99,7 +99,6 @@ const refreshEmployeeForm = () => {
     }
 
     employeestatuses = ajaxGetRequest("/employeestatus/findall")
-
     fillDataIntoSelect(selectStatus, 'select status', employeestatuses, 'name','working');
     employee.employeestatus_id = JSON.parse(selectStatus.value);
     selectStatus.style.border="2px solid green";

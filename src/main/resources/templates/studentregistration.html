@@ -134,21 +134,19 @@
 
                         <div class="row mt-2">
                             <div class="col-md-6">
-                                <label for="textFee" class="form-label fw-bold"> fee <i class="text-danger">*</i> </label>
+                                <label for="textStudent" class="form-label fw-bold">select student <i class="text-danger">*</i> </label>
                             </div>
                             <div class="col-md-6">
-                                <input type="number" min="1000" max="9999" id="textFee" class="form-control text-center" required placeholder="enter fee" onkeyup="textValidator(this,'^[0-9]{4}[.][0]{2}$','studentRegistration','fee')">
+<!--                                <select id="selectStudent" class="form-select text-center" required onchange="selectDBValidator(this,'','studentRegistration','student_id')"></select>-->
+                                <input type="text" id="textStudent" list="datalistStudent" class="form-control text-center" placeholder="search and select student"
+                                onkeyup="dataListValidator(this,'students','studentRegistration','student_id','oldStudentRegistration','stunum','lastname')"
+                                >
+                                <datalist id="datalistStudent">
+
+                                </datalist>
                             </div>
                         </div>
-                        
-                        <div class="row mt-2">
-                            <div class="col-md-6">
-                                <label for="selectStudent" class="form-label fw-bold">select student <i class="text-danger">*</i> </label>
-                            </div>
-                            <div class="col-md-6">
-                                <select id="selectStudent" class="form-select text-center" required onchange="selectDBValidator(this,'','studentRegistration','student_id')"></select>
-                            </div>
-                        </div>
+
 
                         <div class="row mt-2">
                             <div class="col-md-6">
@@ -158,8 +156,19 @@
                                 <select id="selectClassOffering" class="form-select text-center" required onchange="selectDBValidator(this,'','studentRegistration','classoffering_id')"></select>
                             </div>
                         </div>
+
+
+
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="textFee" class="form-label fw-bold"> fee <i class="text-danger">*</i> </label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" min="1000" max="9999" id="textFee" class="form-control text-center" required placeholder="enter fee" onkeyup="textValidator(this,'^[0-9]{4}[.][0]{2}$','studentRegistration','fee')">
+                            </div>
+                        </div>
                         
-                        
+
                         <div class="row mt-2">
                             <div class="col-md-6">
                                 <label for="selectRegistrationStatus" class="form-label fw-bold">select registration status</label>

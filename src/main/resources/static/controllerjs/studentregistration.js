@@ -97,22 +97,32 @@ const refreshStudentRegistrationForm = ()=>{
     studentRegistration = new Object();
 
     students = ajaxGetRequest("/student/findall");
-    fillDataIntoSelect(selectStudent,'select student',students,'firstname');
+    // fillDataIntoSelectWithTwoAttributes(selectStudent,'select student',students,'stunum','lastname');
+    fillDataIntoDataList(datalistStudent,students,'stunum','lastname');
+
 
     classOfferings = ajaxGetRequest("/classoffering/findall");
-    fillDataIntoSelect(selectClassOffering,'select class offering',classOfferings,'classname');
-
-    registrationstatues = ajaxGetRequest("/registrationstatus/findall");
-    fillDataIntoSelect(selectRegistrationStatus,'select registration statues',registrationstatues,'name');
-
-    registerdTypes = ajaxGetRequest("/registeredtype/findall");
-    fillDataIntoSelect(selectRegisteredType,'select registered type',registerdTypes,'name');
+    // fillDataIntoSelect(selectClassOffering,'select class offering',classOfferings,'classname');
+    fillDataIntoSelectWithTwoAttributes(selectClassOffering,'select class offering',classOfferings,'id','classname')
 
 
-    textFee.style.border="2px solid #ced4da";
-    selectStudent.style.border="2px solid #ced4da";
+
+    selectClassOffering.addEventListener('change',function (event){// select class offering kiyana drop down ekata event listner ekek livva  //Event: The listener waits for the change event, which triggers when a user selects a new option.
+        const selectedValue = event.target.value;   //selected value eka gaththa event.target value eken
+        const selectedObject = JSON.parse(selectedValue);   //json parse use karanne JSON string convert into javaScript object
+        const fees=selectedObject.fees; //json string eka js object ekakta awama ee object eken ona eka apita access karanna puluwan
+        console.log(fees);
+
+        textFee.value=parseFloat(fees).toFixed(2);//flote ekakata convert kata dashama thith 2 k thibba
+        studentRegistration.fee=textFee.value;//student registration object ekata bind kara
+        textFee.style.border="2px solid green"; //green colour kara
+
+    });
+
+
+    textFee.disabled=true;
+    // textFee.value=//class fee eka genna ganna one class offering eka select karahama
     selectClassOffering.style.border="2px solid #ced4da";
-    selectRegistrationStatus.style.border="2px solid #ced4da";
     selectRegisteredType.style.border="2px solid #ced4da";
     textNote.style.border="2px solid #ced4da";
 
@@ -126,6 +136,20 @@ const refreshStudentRegistrationForm = ()=>{
         btnStudentRegDelete.style.cursor='not-allowed';
     }
 
+
+
+    registrationstatues = ajaxGetRequest("/registrationstatus/findall");
+    fillDataIntoSelect(selectRegistrationStatus,'select registration statues',registrationstatues,'name','active');
+    studentRegistration.registrationstatus_id=JSON.parse(selectRegistrationStatus.value);//json string ekak JS object ekata convert karala asiign karanawa
+    selectRegistrationStatus.disabled=true;
+    selectRegistrationStatus.style.border="2px solid green";
+
+
+    registerdTypes = ajaxGetRequest("/registeredtype/findall");
+    fillDataIntoSelect(selectRegisteredType,'select registered type',registerdTypes,'name','normal');
+    studentRegistration.registerdtype_id=JSON.parse(selectRegisteredType.value);
+    selectRegisteredType.style.border="2px solid green";
+
 }
 
 //define function for refill student registration form
@@ -138,7 +162,9 @@ const refillStudentRegistrationForm = (ob,rowIndex)=>{
     textFee.value = studentRegistration.fee;
 
 
-    fillDataIntoSelect(selectStudent,'select student',students,'firstname',studentRegistration.student_id.firstname);
+    textStudent.value=studentRegistration.student_id.stunum+" "+studentRegistration.student_id.firstname;
+
+
 
     fillDataIntoSelect(selectClassOffering,'select class offering',classOfferings,'classname',studentRegistration.classoffering_id.classname);
 
@@ -148,7 +174,7 @@ const refillStudentRegistrationForm = (ob,rowIndex)=>{
 
 
     if (studentRegistration.note != null){
-        textNote.value = studentRegistration.note
+        textNote.value = studentRegistration.note;
     }else {
         textNote.value = "";
     }

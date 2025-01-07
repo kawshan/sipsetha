@@ -79,9 +79,6 @@ const refreshStudentForm = ()=>{
         btnStudentSubmit.style.cursor='not-allowed';
     }
 
-    guardians=ajaxGetRequest("/guardian/findall");
-    fillDataIntoDataList(textGuardianName, guardians,'nic','firstname');
-
     selectStatus.value=true;
     student.status=selectStatus.value;
     selectStatus.style.border="2px solid green";

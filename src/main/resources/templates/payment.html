@@ -146,7 +146,7 @@
                                         class="text-danger">*</i> </label>
                             </div>
                             <div class="col-md-6">
-                                <select id="selectStudentRegistration" class="form-control text-center" onchange="selectDBValidator(this,'','payment','studentregistration_id')"></select>
+                                <select id="selectStudentRegistration" class="form-control text-center" onchange="selectDBValidator(this,'','payment','studentregistration_id'); generateFees(this);"></select>
                             </div>
                         </div>
 <!--                        student registration end-->
@@ -173,7 +173,7 @@
                             </div>
                             <div class="col-md-6">
                                 <select id="selectPayType" class="form-select text-center" required
-                                        onchange="selectDBValidator(this,'','payment','paytype_id')"></select>
+                                        onchange="selectDBValidator(this,'','payment','paytype_id'); disableReferenceANcardNum(this);"></select>
                             </div>
                         </div>
                         <!--                        pay type end-->
@@ -187,7 +187,7 @@
                                 </label>
                             </div>
                             <div class="col-md-6">
-                                <input type="number" min="500" max="9999" id="textFee" class="form-control text-center"
+                                <input type="text" id="textFee" class="form-control text-center"
                                        required placeholder="enter fee"
                                        onkeyup="textValidator(this,'^[0-9]{4}[.][0]{2}$','payment','fees')">
                             </div>
@@ -216,9 +216,9 @@
                                         class="text-danger">*</i> </label>
                             </div>
                             <div class="col-md-6">
-                                <input type="number" id="textPayedAmount" class="form-control text-center" required
+                                <input type="text" id="textPayedAmount" class="form-control text-center" required
                                        placeholder="enter payed amount"
-                                       onkeyup="textValidator(this,'^[0-9]{3,4}[.][0][0]$','payment','payedamount')">
+                                       onkeyup="textValidator(this,'^[1-9][0-9]{3,6}[.][0][0]$','payment','payedamount'); generateBalanceAmount(this);">
                             </div>
                         </div>
                         <!--                        payed amount end-->
@@ -233,7 +233,7 @@
                             <div class="col-md-6">
                                 <input type="text" id="textBalanceAmount" class="form-control text-center" required
                                        placeholder="enter balance amount"
-                                       onkeyup="textValidator(this,'^[0-9]{3,4}[.][0][0]$','payment','balanceamount')">
+                                       onkeyup="textValidator(this,'^[1-9][0-9]{3,6}[.][0][0]$','payment','balanceamount')">
                             </div>
                         </div>
                         <!--                        balance amount end-->

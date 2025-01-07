@@ -76,6 +76,29 @@ const refreshPaymentForm = () => {
         btnStudentPayment.style.cursor = 'not-allowed';
     }
 
+    //the reason behind this disabaling is to generate fee and balance amount
+    textFee.disabled=true;
+    textBalanceAmount.disabled=true
+
+
+    //start of get current month and yar
+    let currentDate=new Date();
+
+    let currentMonth=currentDate.getMonth();
+    if (currentMonth<10){
+        currentMonth="0"+currentMonth;
+    }
+    let currentMonthAndYearValue=currentDate.getFullYear()+"-"+currentMonth;
+    console.log(currentMonthAndYearValue)
+    textMonth.value=currentMonthAndYearValue;
+    payment.month=textMonth.value;
+    textMonth.style.border="2px solid green";
+
+
+
+
+    //end of get current month and yar
+
 
 }
 //define function for student payment refill
@@ -361,12 +384,59 @@ const modalPrintButton = () => {
 }
 
 
+//define function for generate fee when selecting student registrations
+const generateFees = (fieldId)=>{
+    console.log(fieldId.value); //log ekek daagannawa field id eke value eka
+    selectedValue=JSON.parse(fieldId.value);//iita passe json parse karagannawa eekta hethuva convert json string into JS object
+    console.log(selectedValue.classoffering_id.fees+" class offering fee")
+    // console.log(selectedValue.fee+"fee")  //log ekak dagannawa selected value eke fee eka balanna
+    feeFromSelectedValue=selectedValue.classoffering_id.fees; //selected value eken fee eka aragen eka varibale ekakata assign kara gannawa
+    textFee.value=parseFloat(feeFromSelectedValue).toFixed(2);// iita passe text fee kiyana id eke value ekat assign kara gannawa parse flote karala iita passe to fixed karala dahsma thithi dekak thiya gannawa
+    payment.fees=textFee.value; //payment object eke fee ekata textfee kiyana id eka thiyena input field ekan value eka aran assign kara gannawa // in other words bind karagannawa object ekata
+    textFee.style.border="2px solid green";
+
+}
+
+//define function for generate balance amount
+const generateBalanceAmount = (fieldId)=>{
+    if (new RegExp("^[1-9][0-9]{3,6}[.][0][0]$").test(fieldId.value)){//field id eken value eka aran eka regex pattern eken test karanawa eka true nam
+        console.log("ok");
+        let payedAmount=parseFloat(fieldId.value).toFixed(2);  //payed amount ekata field id eke value eka gaththa
+        let feeAmount=parseFloat(textFee.value).toFixed(2);
+        let balanceAmount=payedAmount-feeAmount;
+        console.log(balanceAmount);
+
+        console.log(typeof (balanceAmount)) //testing vidihata type eka verify kara gaththa string da number da kiyala
+        if (balanceAmount<'0'){
+            console.log("not good value");
+            payment.balanceamount=null;
+            textBalanceAmount.style.border="2px solid red";
+        }else {
+            console.log("good value");
+            textBalanceAmount.value=parseFloat(balanceAmount).toFixed(2);
+            payment.balanceamount=textBalanceAmount.value;
+            textBalanceAmount.style.border="2px solid green";
+        }
+
+    }
+}
+
+
+const disableReferenceANcardNum = (fieldId)=>{
+    let selectedValue=JSON.parse(fieldId.value);    //json string ekak JS object ekak bawata convert karanawa
+    console.log(selectedValue.name);
+    if (selectedValue.name=="card"){
+        textReferenceNumber.disabled=false;
+        textCardNumber.disabled=false;
+    }else if (selectedValue.name=="cash"){
+        textReferenceNumber.disabled=true;
+        textCardNumber.disabled=true;
+    }
 
 
 
 
-
-
+}
 
 
 

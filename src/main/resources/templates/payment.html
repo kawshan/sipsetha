@@ -25,8 +25,6 @@
     <!--  title area end-->
 
 
-
-
     <!--  title button area start-->
     <div class="row mt-2">
         <div class="col-md-8">
@@ -48,7 +46,6 @@
         </div>
     </div>
     <!--  title button area end-->
-
 
 
     <!--      edit delete print button start-->
@@ -78,24 +75,17 @@
     <!--      edit delete print button end-->
 
 
-
-
-
-
     <!--  table area start-->
     <div class="row mt-5"></div>
     <table class="table table-bordered table-striped" id="tableStudentPayment">
         <thead class="table text-center" style="background-color: #044800; color: whitesmoke">
         <th>#</th>
-        <th>class code</th>
-        <th>teacher</th>
-        <th>grade</th>
-        <th>subject</th>
-        <th>date</th>
-        <th>class status</th>
-        <th>year</th>
-        <th>duration</th>
-        <th>fees</th>
+        <th>fee</th>
+        <th>month</th>
+        <th>bill number</th>
+        <th>reference number</th>
+        <th>pay type</th>
+        <th>student name</th>
         <th>modify</th>
         </thead>
         <tbody>
@@ -105,11 +95,9 @@
     <!--  table area end-->
 
 
-
     <!--modal area start-->
     <div class="modal modal-xl" id="modalStudentPayment" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog">
-
 
 
             <div class="modal-content">
@@ -136,30 +124,139 @@
                         </div>
                         <!--                    required mark end-->
 
+                        <!--                        fees start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
-                                <label for="textFee" class="form-label fw-bold"> fees <i class="text-danger">*</i> </label>
+                                <label for="textFee" class="form-label fw-bold"> fees <i class="text-danger">*</i>
+                                </label>
                             </div>
                             <div class="col-md-6">
-                                <input type="number" min="500" max="9999" id="textFee" class="form-control text-center" required placeholder="enter fee" onkeyup="textValidator(this,'^[0-9]{4}[.][0]{2}$','payment','fees')">
+                                <input type="number" min="500" max="9999" id="textFee" class="form-control text-center"
+                                       required placeholder="enter fee"
+                                       onkeyup="textValidator(this,'^[0-9]{4}[.][0]{2}$','payment','fees')">
                             </div>
                         </div>
+                        <!--                        fees end-->
+
+
+                        <!--                        month start-->
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="textMonth" class="form-label fw-bold"> month <i class="text-danger">*</i>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="month" id="textMonth" class="form-control text-center" required
+                                       placeholder="enter month" onchange="textValidator(this,'','payment','month'); console.log(this.value)">
+                            </div>
+                        </div>
+                        <!--                        month end-->
+
+
+                        <!--                        payed amount start-->
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="textPayedAmount" class="form-label fw-bold"> payed amount <i
+                                        class="text-danger">*</i> </label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="number" id="textPayedAmount" class="form-control text-center" required
+                                       placeholder="enter payed amount"
+                                       onkeyup="textValidator(this,'^[0-9]{3,4}[.][0][0]$','payment','payedamount')">
+                            </div>
+                        </div>
+                        <!--                        payed amount end-->
+
+
+                        <!--                        balance amount start-->
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="textBalanceAmount" class="form-label fw-bold">balance amount <i
+                                        class="text-danger">*</i> </label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" id="textBalanceAmount" class="form-control text-center" required
+                                       placeholder="enter balance amount"
+                                       onkeyup="textValidator(this,'^[0-9]{3,4}[.][0][0]$','payment','balanceamount')">
+                            </div>
+                        </div>
+                        <!--                        balance amount end-->
+
+                        <!--                        reference number start-->
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="textReferenceNumber" class="form-label fw-bold">reference number <i
+                                        class="text-primary">(optional)</i> </label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" id="textReferenceNumber" class="form-control text-center"
+                                       placeholder="enter reference number"
+                                       onkeyup="textValidator(this,'','payment','referencenumber')">
+                            </div>
+                        </div>
+                        <!--                        reference number end-->
+
+                        <!--                        card number start-->
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="textCardNumber" class="form-label fw-bold"> card number <i
+                                        class="text-primary"> (optional) </i> </label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" class="form-control text-center" id="textCardNumber"
+                                       placeholder="enter card number"
+                                       onkeyup="textValidator(this,'^[0-9]{16}$','payment','cardno')">
+                            </div>
+                        </div>
+                        <!--                        card number end-->
+
+
+                        <!--                        pay type start-->
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="selectPayType" class="form-label fw-bold"> pay type </label>
+                            </div>
+                            <div class="col-md-6">
+                                <select id="selectPayType" class="form-select text-center" required
+                                        onchange="selectDBValidator(this,'','payment','paytype_id')"></select>
+                            </div>
+                        </div>
+                        <!--                        pay type end-->
+
+
+                        <!--                        student start-->
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="selectStudent" class="form-label fw-bold">select student <i
+                                        class="text-danger">*</i> </label>
+                            </div>
+                            <div class="col-md-6">
+                                <select id="selectStudent" class="form-select text-center" required
+                                        onchange="selectDBValidator(this,'','payment','student_id')"> </select>
+                            </div>
+                        </div>
+                        <!--                        student end-->
 
 
                         <!--                    button start-->
                         <div class="row mt-5">
                             <div class="col-md-4">
-                                <button type="reset" class="btn btn-danger fw-bold" style=" width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%">
+                                <button type="reset" class="btn btn-danger fw-bold"
+                                        style=" width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%">
                                     <i class="fa-solid fa-trash fa-beat"> </i> reset
                                 </button>
                             </div>
                             <div class="col-md-4 text-center">
-                                <button type="button" class="btn btn-warning fw-bold" style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%" onclick="buttonFormUpdate()" >
+                                <button type="button" class="btn btn-warning fw-bold"
+                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%"
+                                        onclick="buttonFormUpdate()">
                                     <i class="fa-solid fa-recycle fa-beat"> </i> update
                                 </button>
                             </div>
                             <div class="col-md-4 text-end">
-                                <button type="submit" class="btn btn-primary fw-bold" style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%" onclick="classSubmit()">
+                                <button type="submit" class="btn btn-primary fw-bold"
+                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%"
+                                        onclick="classSubmit()">
                                     <i class="fa-solid fa-plus fa-beat"> </i> add
                                 </button>
                             </div>
@@ -167,10 +264,8 @@
                         <!--                    button end-->
 
 
-
                     </form>
                 </div>
-
 
 
             </div>
@@ -179,12 +274,8 @@
     <!--modal area end-->
 
 
-
-
 </div>
 <!--container fluid end-->
-
-
 
 
 </body>

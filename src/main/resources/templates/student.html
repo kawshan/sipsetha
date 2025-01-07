@@ -53,8 +53,8 @@
                         style="width: 15%; color: whitesmoke; border: 1px solid black;" onclick="studentFormRefill(window['editOb'],window['editRow'])">
                     <i class="fa-solid fa-recycle fa-beat"></i> edit
                 </button>
-                <button type="button" class="btn btn-danger fw-bold"
-                        style=" width: 15%; color: whitesmoke; border: 1px solid black" onclick="deleteStudent(window['editOb'],window['editRow'])">
+                <button type="button" id="divModifyButtonDelete" class="btn btn-danger fw-bold"
+                        style=" width: 15%; color: whitesmoke; border: 1px solid black; pointer-events: all" onclick="deleteStudent(window['editOb'],window['editRow'])">
                     <i class="fa-solid fa-trash fa-beat"></i> delete
                 </button>
                 <button type="button" class="btn btn-primary fw-bold"
@@ -296,14 +296,14 @@
                                 </button>
                             </div>
                             <div class="col-md-4 text-center">
-                                <button type="button" class="btn btn-warning fw-bold"
-                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%" onclick="buttonStudentUpdate()">
+                                <button type="button" id="btnStudentUpdate" class="btn btn-warning fw-bold"
+                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%; pointer-events: all" onclick="buttonStudentUpdate()">
                                     <i class="fa-solid fa-recycle fa-beat"> </i> update
                                 </button>
                             </div>
                             <div class="col-md-4 text-end">
                                 <button type="submit" class="btn btn-primary fw-bold"
-                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%" onclick="studentSubmit()">
+                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%; pointer-events: all" id="btnStudentSubmit" onclick="studentSubmit()">
                                     <i class="fa-solid fa-plus fa-beat"> </i> add
                                 </button>
                             </div>

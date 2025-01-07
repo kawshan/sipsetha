@@ -1,4 +1,5 @@
 window.addEventListener('load',()=>{
+    userPrivilege =ajaxGetRequest("/privilege/byloggeduser/teacher")
 
     refreshTeacherForm()
 
@@ -37,6 +38,16 @@ const refreshTeacherForm = ()=>{
     selectBranch.style.border='2px solid #ced4da';
     selectStatus.style.border='2px solid #ced4da';
 
+    if (!userPrivilege.update){
+        btnTeacherUpdate.disabled=true;
+        btnTeacherUpdate.style.cursor='not-allowed';
+    }
+
+    if (!userPrivilege.delete){
+        btnTeacherAdd.disabled=true;
+        btnTeacherAdd.style.cursor='not-allowed';
+    }
+
 }
 
 
@@ -53,9 +64,20 @@ const refreshTeacherTable = ()=>{
         {dataType:'function',propertyName:getTeacherStatus},
     ];
 
-    fillDataIntoTable(tableTeacher,teachers,displayProperty,true)
+    fillDataIntoTable(tableTeacher,teachers,displayProperty,checkPrivilege,true)
 
 };
+
+const checkPrivilege = (innerOB)=>{
+    if (innerOB.teacherstatus_id.name!='delete'){
+        if (!userPrivilege.delete){
+            divModifyButtonDelete.className='d-none';
+        }
+    }else {
+        divModifyButtonDelete.disabled=true;
+        divModifyButtonDelete.style.cursor='not-allowed';
+    }
+}
 
 
 

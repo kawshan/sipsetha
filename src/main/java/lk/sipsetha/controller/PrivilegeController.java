@@ -59,7 +59,7 @@ public class PrivilegeController {
 //            privilegeDao.delete(privilege);
             extPrivilege.setSel(false);
             extPrivilege.setInst(false);
-            extPrivilege.setUpd(false);
+            extPrivilege.setUpd(false);//in delete mapping
             extPrivilege.setDel(false);
             privilegeDao.save(extPrivilege);
 
@@ -120,9 +120,9 @@ public class PrivilegeController {
         HashMap<String,Boolean> userPrivilege = new HashMap<String,Boolean>();
         if (username.equals("Admin")){
             userPrivilege.put("select",true);
-            userPrivilege.put("insert",false);
-            userPrivilege.put("update",false);
-            userPrivilege.put("delete",false);
+            userPrivilege.put("insert",true);
+            userPrivilege.put("update",true);
+            userPrivilege.put("delete",true);
         }else {
             String userPrivi = privilegeDao.getPrivilegeByUserModule(username,modulename);
             String[] userPriviList = userPrivi.split(",");

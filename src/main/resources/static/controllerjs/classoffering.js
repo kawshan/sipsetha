@@ -1,6 +1,10 @@
 window.addEventListener('load', () => {
     console.log('working');
 
+    //get privileges to check button events
+    userPrivilege =ajaxGetRequest("/privilege/byloggeduser/classoffering")
+
+
     //call refresh class offering form
     refreshClassOfferingForm();
 
@@ -67,6 +71,11 @@ const refreshClassOfferingTable = () => {
     fillDataIntoTable(tableClass,classOfferings,displayProperty,true)
 
 };
+
+// const checkPrivileges = (innerOB)=>{
+//     if (innerOB.)
+// }
+
 
 //create function for getClassStatus
 const getClassType = (ob)=>{

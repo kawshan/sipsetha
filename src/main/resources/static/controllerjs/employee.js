@@ -1,5 +1,6 @@
 window.addEventListener('load', () => {
 
+    userPrivilege =ajaxGetRequest("/privilege/byloggeduser/employee")
 
     //call refresh table function
     refreshEmployeeTable();
@@ -33,9 +34,25 @@ const refreshEmployeeTable = () => {
     ];
 
 
-    fillDataIntoTable(tableEmployee, employees, displayProperty, true)
+    fillDataIntoTable(tableEmployee, employees, displayProperty,checkPrivilege ,true);
+
+
+
+    $('#tableEmployee').dataTable();
 
 };
+
+const checkPrivilege =(innerob)=>{
+    if (innerob.employeestatus_id.name != 'delete'){
+        if (!userPrivilege.delete){
+            divModifyButtonDelete.className='d-none';
+        }
+    }else {
+        divModifyButtonDelete.disabled=true;
+        divModifyButtonDelete.style.cursor='not-allowed'
+    }
+
+}
 
 //define function for refresh employee form
 const refreshEmployeeForm = () => {
@@ -72,6 +89,16 @@ const refreshEmployeeForm = () => {
     selectDesignation.style.border = '1px solid #ced4da';
     selectCivilStatus.style.border = '1px solid #ced4da';
 
+    console.log(userPrivilege);
+    if (!userPrivilege.update){
+        btnEmployeeUpdate.disabled=true;
+        btnEmployeeUpdate.style.cursor="not-allowed";
+    }
+
+    if (!userPrivilege.insert){
+        btnEmployeeAdd.disabled=true;
+        btnEmployeeAdd.style.cursor="not-allowed";
+    }
 
 }
 

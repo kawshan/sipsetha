@@ -1,4 +1,8 @@
 window.addEventListener('load',function (){
+    //get user privileges for check privileges on buttons
+    userPrivilege =ajaxGetRequest("/privilege/byloggeduser/studentregistration");
+
+
     //call refresh student registration form function
     refreshStudentRegistrationForm();
 
@@ -20,9 +24,21 @@ const refreshStudentRegistrationTable = ()=>{
         {dataType:"function",propertyName:getRegistrationStatus}
     ]
 
-    fillDataIntoTable(tableStudentRegistration,StudentRegistrations,displayProperty)
+    fillDataIntoTable(tableStudentRegistration,StudentRegistrations,displayProperty,checkPrivileges,true)
 
 }
+
+const checkPrivileges = (innerOb)=>{
+    if (innerOb.registrationstatus_id.name!="in-active"){
+        if (!userPrivilege.delete){
+            divModifyButtonDelete.className='d-none';
+        }
+    }else {
+        divModifyButtonDelete.disabled=true;
+        divModifyButtonDelete.style.cursor='not-allowed';
+    }
+}
+
 
 const getStudentName = (ob)=>{
     return ob.student_id.firstname;
@@ -63,6 +79,16 @@ const refreshStudentRegistrationForm = ()=>{
     selectRegistrationStatus.style.border="2px solid #ced4da";
     selectRegisteredType.style.border="2px solid #ced4da";
     textNote.style.border="2px solid #ced4da";
+
+    if (!userPrivilege.update){
+        btnStudentRegUpdate.disabled=true;
+        btnStudentRegUpdate.style.cursor='not-allowed';
+    }
+
+    if (!userPrivilege.delete){
+        btnStudentRegDelete.disabled=true;
+        btnStudentRegDelete.style.cursor='not-allowed';
+    }
 
 }
 

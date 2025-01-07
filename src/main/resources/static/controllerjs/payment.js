@@ -1,4 +1,8 @@
 window.addEventListener('load',function (){
+
+    userPrivilege =ajaxGetRequest("/privilege/byloggeduser/studentpayment")
+
+
     //refresh payment form
     refreshPaymentForm()
 
@@ -19,10 +23,11 @@ const refreshPaymentTable = ()=>{
         {dataType:'function',propertyName:getStudentname}
     ];
 
-    fillDataIntoTable(tableStudentPayment,studentPayments,displayProperty,true);
+    fillDataIntoPaymentTable(tableStudentPayment,studentPayments,displayProperty,true);
 
 
 }
+
 
 const getPayType = (rowOb)=>{
     return rowOb.paytype_id.name;
@@ -58,6 +63,14 @@ const refreshPaymentForm = ()=>{
     textCardNumber.style.border="2px solid #ced4da";
     selectPayType.style.border="2px solid #ced4da";
     selectStudent.style.border="2px solid #ced4da";
+
+    btnStudentUpdate.className='d-none';
+
+    if (!userPrivilege.insert){
+        btnStudentPayment.disabled=true;
+        btnStudentPayment.style.cursor='not-allowed';
+    }
+
 
 
 }

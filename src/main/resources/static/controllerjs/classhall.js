@@ -1,4 +1,7 @@
 window.addEventListener('load',()=>{
+    //get privileges to check button events
+    userPrivilege =ajaxGetRequest("/privilege/byloggeduser/classhall")
+
     refreshClassHallForm();
 
     refreshClassHallTable();
@@ -18,8 +21,19 @@ const refreshClassHallTable = ()=>{
         {dataType:'function',propertyName:getClassHallStatus},
     ];
 
-    fillDataIntoTable(tableClassHall,classhalls,displayProperty,true)
+    fillDataIntoTable(tableClassHall,classhalls,displayProperty,checkPrivilege,true)
 
+}
+
+const checkPrivilege = (innerOB)=>{
+    if (innerOB.classhallstatus_id.name!="inactive"){
+        if (!userPrivilege.delete){
+            divModifyButtonDelete.className='d-none';
+        }
+    }else {
+        divModifyButtonDelete.disabled=true;
+        divModifyButtonDelete.style.cursor='not-allowed';
+    }
 }
 
 //define function for get class hall status
@@ -53,6 +67,17 @@ const refreshClassHallForm = ()=>{
     textMaxBenchCount.style.border='2px solid #ced4da';
     textNote.style.border='2px solid #ced4da';
     selectClassHallStatus.style.border='2px solid #ced4da';
+
+    if (!userPrivilege.update){
+        btnClassHallUpdate.disabled=true;
+        btnClassHallUpdate.style.cursor='not-allowed';
+    }
+
+    if (!userPrivilege.insert){
+        btnClassHallAdd.disabled=true;
+        btnClassHallAdd.style.cursor='not-allowed';
+    }
+
 
 };
 

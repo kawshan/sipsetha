@@ -63,7 +63,7 @@ public class TeacherPaymentController {
             return "update teacher payment not complete"+e.getMessage();
         }
     }
-    @PostMapping
+    @DeleteMapping
     public String deleteTeacherPayment(@RequestBody TeacherPayment teacherPayment){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         HashMap<String,Boolean> getLoggedUserPrivileges = privilegeController.getPrivilegeByUserModule(auth.getName(),"teacherpayment");

@@ -1,4 +1,8 @@
 window.addEventListener('load',()=>{
+    //get privileges for button events
+    userPrivilege =ajaxGetRequest("/privilege/byloggeduser/classroomallocation")
+
+
     //call refresh class room allocation
     refreshClassRoomAllocationForm()
 
@@ -22,9 +26,18 @@ const refreshClassRoomAllocationTable = ()=>{
     ];
 
 
-    fillDataIntoTable(tableClassRoomAllocation,classRoomAllocationsList,displayProperty,true);
+    fillDataIntoTable(tableClassRoomAllocation,classRoomAllocationsList,displayProperty,checkPrivileges,true);
 }
-
+const checkPrivileges =(innerOB) =>{
+    if (innerOB.allocationstatus_id.name!="not-available"){
+        if (!userPrivilege.delete){
+            divModifyButtonDelete.className='d-none';
+        }
+    }else {
+        divModifyButtonDelete.disabled=true;
+        divModifyButtonDelete.style.cursor='not-allowed';
+    }
+}
 
 //define refresh class room allocation form
 const refreshClassRoomAllocationForm = ()=>{
@@ -51,6 +64,16 @@ const refreshClassRoomAllocationForm = ()=>{
     selectStartTime.style.border="2px solid #ced4da";
     selectEndTime.style.border="2px solid #ced4da";
     textNote.style.border="2px solid #ced4da";
+
+
+    if (!userPrivilege.update){
+        btnClassRoomAllocationUpdate.disabled=true;
+        btnClassRoomAllocationUpdate.style.cursor='not-allowed';
+    }
+    if (!userPrivilege.insert){
+        btnClassRoomAllocationAdd.disabled=true;
+        btnClassRoomAllocationAdd.style.cursor='not-allowed';
+    }
 
 }
 

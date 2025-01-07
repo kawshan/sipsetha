@@ -1,4 +1,7 @@
 window.addEventListener('load',()=>{
+    //get privileges to check privileges on buttons
+    userPrivilege =ajaxGetRequest("/privilege/byloggeduser/guardian")
+
 
     //call refresh table function
     refreshGuardianTable();
@@ -22,9 +25,19 @@ const refreshGuardianTable = ()=>{
         {dataType:'function',propertyName:getGuardianType},
     ];
 
-    fillDataIntoTable(tableGuardian,guardians,displayProperty,true)
+    fillDataIntoTable(tableGuardian,guardians,displayProperty,checkPrivileges,true)
 
+}
 
+const checkPrivileges = (innerOB)=>{
+    if (innerOB.status!="0"){
+        if (!userPrivilege.delete){
+            divModifyButtonDelete.className='d-none';
+        }
+    }else {
+        divModifyButtonDelete.disabled=true;
+        divModifyButtonDelete.style.cursor='not-allowed'
+    }
 }
 
 //define function for refresh guardian form
@@ -49,6 +62,18 @@ const refreshGuardianForm = ()=>{
     textPosition.style.border='1px solid #ced4da';
     selectStatus.style.border='1px solid #ced4da';
     textNote.style.border='1px solid #ced4da';
+
+    if (!userPrivilege.update){
+        btnGuardUpdate.disabled=true;
+        btnGuardUpdate.style.cursor='not-allowed';
+    }
+
+    if (!userPrivilege.insert){
+        btnGuardAdd.disabled=true
+        btnGuardAdd.style.cursor='not-allowed';
+    }
+
+
 }
 
 //define get guardian function

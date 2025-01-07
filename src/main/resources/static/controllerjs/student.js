@@ -1,5 +1,7 @@
 window.addEventListener('load',()=>{
     // student = new Object();
+    userPrivilege =ajaxGetRequest("/privilege/byloggeduser/student")
+
 
     refreshStudentTable();
 
@@ -23,9 +25,21 @@ const refreshStudentTable = ()=>{
 
     ];
 
-    fillDataIntoTable(tableStudent,students,displayProperty,true)
+    fillDataIntoTable(tableStudent,students,displayProperty,checkPrivilege,true)
 
 }
+
+const checkPrivilege=(innerOb)=>{
+    if (innerOb.status!="0"){
+        if (!userPrivilege.delete){
+            divModifyButtonDelete.className='d-none';
+        }
+    }else {
+        divModifyButtonDelete.disabled=true;
+        divModifyButtonDelete.style.cursor='not-allowed';
+    }
+}
+
 
 //define function for refresh student form
 const refreshStudentForm = ()=>{
@@ -51,6 +65,17 @@ const refreshStudentForm = ()=>{
     selectGrade.style.border='1px solid #ced4da';
     selectStatus.style.border='1px solid #ced4da';
     textNote.style.border='1px solid #ced4da';
+
+    if (!userPrivilege.update){
+        btnStudentUpdate.disabled=true;
+        btnStudentUpdate.style.cursor='not-allowed';
+    }
+
+    if (!userPrivilege.insert){
+        btnStudentSubmit.disabled=true;
+        btnStudentSubmit.style.cursor='not-allowed';
+    }
+
 
 }
 

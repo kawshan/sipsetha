@@ -1,5 +1,7 @@
 window.addEventListener('load', () => {
 
+    userPrivilege =ajaxGetRequest("/privilege/byloggeduser/user")
+
     //call refresh user form function
     refreshUserForm();
 
@@ -21,10 +23,22 @@ const refreshUserTable = () => {
     ];
 
     // call fill data into table common function
-    fillDataIntoTable(tableUser, users, displayProperty, true)
+    fillDataIntoTable(tableUser, users, displayProperty, checkPrivilege,true)
 
 
 }
+
+const checkPrivilege = (innerOb)=>{
+    if (innerOb.status != "0"){
+        if (!userPrivilege.delete){
+            divModifyButtonDelete.className='d-none';
+        }
+    }else {
+        divModifyButtonDelete.disabled=true;
+        divModifyButtonDelete.style.cursor='not-allowed';
+    }
+}
+
 
 //define function for refresh user form
 const refreshUserForm = () => {
@@ -84,6 +98,18 @@ const refreshUserForm = () => {
     textEmail.style.border = '2px solid #ced4da';
     // selectRole.style.border = '2px solid #ced4da';
     selectStatus.style.border = '2px solid #ced4da';
+
+    console.log(userPrivilege)
+    if (!userPrivilege.update){
+        btnUpdateUser.disabled=true;
+        btnUpdateUser.style.cursor="not-allowed";
+    }
+    if (!userPrivilege.insert){
+        btnAddUser.disabled=true;
+        btnAddUser.style.cursor="not-allowed";
+    }
+
+
 }
 
 //create function for get user status

@@ -2,6 +2,8 @@ window.addEventListener('load', () => {
     //create new privilege object
     console.log('working')
 
+    userPrivilege =ajaxGetRequest("/privilege/byloggeduser/privilege")
+
 
     // call refresh privilege table function
     refreshPrivilegeTable();
@@ -28,9 +30,25 @@ const refreshPrivilegeTable = () => {
         {dataType: 'function', propertyName: getDelete},
     ];
 
-    fillDataIntoTable(tablePrivilege, privileges, displayProperty, true)
+    fillDataIntoTable(tablePrivilege, privileges, displayProperty, checkPrivilege,true)
     $('#tablePrivilege').dataTable();
 }
+
+
+const checkPrivilege = (innerOb)=>{
+    if ((innerOb.sel!="0" && innerOb.inst!="0")   && (innerOb.upd!="0"&&innerOb.del!="0")      ){
+        console.log("yyyy")
+        if (!userPrivilege.delete){
+            divModifyButtonDelete.className='d-none';
+        }
+    }else {
+        console.log("ooooo")
+        divModifyButtonDelete.disabled=true;
+        divModifyButtonDelete.style.cursor="not-allowed";
+    }
+}
+
+
 //define function for filter module list by given role id
 const generateModuleList = ()=>{
     modulesByRole = ajaxGetRequest("/module/listbyrole?roleid="+JSON.parse(selectRole.value).id);
@@ -67,6 +85,16 @@ const refreshPrivilegeForm = () => {
     labelUpdate.innerText="not granted";
     labelDelete.innerText="not granted";
 
+    if (!userPrivilege.update){
+        btnUpdatePrivilege.disabled=true;
+        btnUpdatePrivilege.style.cursor="not-allowed";
+    }
+
+    if (!userPrivilege.insert){
+        btnAddPrivilege.disabled=true;
+        btnAddPrivilege.style.cursor="not-allowed";
+
+    }
 
 
 }
@@ -175,8 +203,7 @@ const privilegeFormRefill = (ob, rowIndex) => {
         labelDelete.innerHTML='delete privilege is not granted';
     }
 
-    // end of my codes
-    //refill not complete .......maybe
+
 
 
 }

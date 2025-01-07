@@ -28,7 +28,7 @@ public class PaymentController {
         ModelAndView paymentTypeView = new ModelAndView();
         paymentTypeView.setViewName("payment.html");
         paymentTypeView.addObject("loggedusername",auth.getName());
-        paymentTypeView.addObject("title","student management ui");
+        paymentTypeView.addObject("title","student payment management ui");
         return paymentTypeView;
     }
 

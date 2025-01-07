@@ -125,8 +125,8 @@
                             <div class="col-md-8">
                                 <input type="text" id="textName" class="form-control text-center" required
                                        placeholder="enter name"
-                                       onkeyup="textValidator(this,'^[A-Za-z]{3,20}[\\s][A-Za-z]{3,20}$','classhall','name'); validateClassHallExisting(this)">
-                                <div id="divClassHallText" class="form-text text-center d-none"></div>
+                                       onkeyup="textValidator(this,'^[A-Z][A-Za-z]{2,20}[\\s][A-Z][A-Za-z]{2,20}$','classhall','name');">
+
                             </div>
                         </div>
                         <!--name end-->
@@ -141,7 +141,8 @@
                             <div class="col-md-8">
                                 <input type="text" id="textLocation" class="form-control text-center" required
                                        placeholder="enter location "
-                                       onkeyup="textValidator(this,'^[A-Za-z]{3,20}[\\s][A-Za-z]{3,20}$','classhall','location')">
+                                       onkeyup="textValidator(this,'^[A-Z][A-Za-z]{2,20}[\\s][A-Z][A-Za-z]{2,20}$','classhall','location'); validateClassHallExisting(this)">
+                                <div id="divClassHallText" class="form-text text-center d-none"></div>
                             </div>
                         </div>
                         <!--location end-->
@@ -155,7 +156,7 @@
                             <div class="col-md-8">
                                 <input type="number" id="textMinCount" class="form-control text-center" required
                                        placeholder="enter min count"
-                                       onkeyup="textValidator(this,'^[1-9]{1}[0-9]{1}$','classhall','mincount')">
+                                       onkeyup="textValidator(this,'^[1-9][0-9]{0,4}$','classhall','mincount')">
                             </div>
                         </div>
                         <!--min student count end-->
@@ -169,7 +170,7 @@
                             <div class="col-md-8">
                                 <input type="number" id="textMaxCount" class="form-control text-center" required
                                        placeholder="enter max count"
-                                       onkeyup="textValidator(this,'^^[1-9]{1}[0-9]{1}$','classhall','maxcount')">
+                                       onkeyup="textValidator(this,'^[1-9][0-9]{0,4}$','classhall','maxcount'); validateMaxStudent(this);">
                             </div>
                         </div>
                         <!--max student count-->
@@ -177,13 +178,13 @@
                         <!--table count-->
                         <div class="row mt-2">
                             <div class="col-md-4">
-                                <label for="textTableCount" class="form-label fw-bold">table count <i
+                                <label for="textTableCount" class="form-label fw-bold">Min table count <i
                                         class="text-danger">*</i> </label>
                             </div>
                             <div class="col-md-8">
                                 <input type="number" id="textTableCount" class="form-control text-center" required
                                        placeholder="enter table count"
-                                       onkeyup="textValidator(this,'^[1-9]{1}[0-9]{1}$','classhall','tablecount')">
+                                       onkeyup="textValidator(this,'^[1-9][0-9]{0,4}$','classhall','tablecount')">
                             </div>
                         </div>
                         <!--table count -->
@@ -198,7 +199,7 @@
                             <div class="col-md-8">
                                 <input type="number" class="form-control text-center" id="textMaxTableCount" required
                                        placeholder="enter max table count"
-                                       onkeyup="textValidator(this,'^[1-9]{1}[0-9]{1}$','classhall','maxtablecount')">
+                                       onkeyup="textValidator(this,'^[1-9][0-9]{0,4}$','classhall','maxtablecount')">
                             </div>
                         </div>
                         <!--max table count-->
@@ -206,13 +207,13 @@
                         <!--bench count start-->
                         <div class="row mt-2">
                             <div class="col-md-4">
-                                <label for="textBenchCount" class="form-label fw-bold">bench count <i
+                                <label for="textBenchCount" class="form-label fw-bold">Min bench count <i
                                         class="text-danger">*</i> </label>
                             </div>
                             <div class="col-md-8">
                                 <input type="number" id="textBenchCount" class="form-control text-center" required
                                        placeholder="enter bench count"
-                                       onkeyup="textValidator(this,'^[1-9]{1}[0-9]{1}$','classhall','benchcount')">
+                                       onkeyup="textValidator(this,'^[1-9][0-9]{0,4}$','classhall','benchcount')">
                             </div>
                         </div>
                         <!--bench count end-->
@@ -227,7 +228,7 @@
                             <div class="col-md-8">
                                 <input type="text" class="form-control text-center" id="textMaxBenchCount" required
                                        placeholder="enter max bench count"
-                                       onkeyup="textValidator(this,'^[1-9]{1}[0-9]{1}$','classhall','maxbenchcount')">
+                                       onkeyup="textValidator(this,'^[1-9][0-9]{0,4}$','classhall','maxbenchcount')">
                             </div>
                         </div>
                         <!--max bench count-->

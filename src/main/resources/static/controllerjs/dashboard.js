@@ -1,3 +1,13 @@
+window.addEventListener('load',function (){
+
+    console.log("working dashboard");
+    console.log(roleNavBar.innerText);
+
+    //call customize dash board fucntion
+    customizeDashboard();
+
+})
+
 const refreshProfileEditForm = ()=>{
     loggeduser=ajaxGetRequest("/loggeduser");
     oldloggeduser=null;
@@ -26,4 +36,37 @@ const submitUserSetting = ()=>{
     }else {
         alert("user profile change not successful have some errors \n"+updateServiceResponse);
     }
+}
+
+
+const customizeDashboard = ()=>{
+    let roleValue=roleNavBar.innerText;
+
+    switch (roleValue) {
+        case "admin":
+
+            break;
+        case "manger":
+
+            break;
+        case "cashier":
+            //hide rows in dashbord
+            administrationRow.className="d-none";
+            classRow.className="d-none";
+            teacherRow.className="d-none";
+
+
+            //hide nav bar dropdowns
+            navAdministration.className="d-none";
+            navClass.className="d-none";
+            navTeacher.className="d-none";
+
+            offCanAdministration.className="d-none";
+            offCanClass.className="d-none";
+            offCanTeacher.className="d-none";
+            offCanReports.className="d-none";
+            break;
+    }
+
+
 }

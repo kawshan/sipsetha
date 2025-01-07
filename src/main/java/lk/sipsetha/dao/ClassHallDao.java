@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface ClassHallDao extends JpaRepository<ClassHall,Integer> {
 
-    @Query(value = "select ch from ClassHall ch where ch.name=?1")
-    public ClassHall getClasshallByName(String classhall);
+    @Query(value = "select ch from ClassHall ch where ch.name=?1 and ch.location=?2")
+    public ClassHall getClasshallByNameAndLocation(String classhall,String location);
 
 }

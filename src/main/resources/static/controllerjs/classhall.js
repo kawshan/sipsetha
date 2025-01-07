@@ -458,21 +458,100 @@ const modalPrintButton = ()=>{
 
 
 const validateClassHallExisting = (fieldId)=>{
-    let classHallValue=fieldId.value;
-    if (new RegExp('^[A-Za-z]{3,20}[\\s][A-Za-z]{3,20}$').test(classHallValue)){
-        console.log("good class hall name to validate existing");
+    let classHallValue=textName.value;//class hall eke value eka gannawa
+    let locationValue=fieldId.value;
+    if ((new RegExp('^[A-Z][A-Za-z]{2,20}[\\s][A-Z][A-Za-z]{2,20}$').test(classHallValue)) && (new RegExp('^[A-Z][A-Za-z]{2,20}[\\s][A-Z][A-Za-z]{2,20}$').test(locationValue))){
+        console.log("good class hall amd location name to validate existing");
 
-        let getServerResponse=ajaxGetRequest("/classhall/checkduplicatebyhallname/"+classHallValue);
+        let getServerResponse=ajaxGetRequest("/classhall/checkduplicatebyhallname/"+classHallValue+"/"+locationValue);
         if (getServerResponse==true){
             divClassHallText.classList.remove("d-none");
-            divClassHallText.innerText="class hall "+classHallValue+" is already exists please recheck";
+            divClassHallText.innerHTML="class hall "+"<span class='fw-bold text-danger'>name </span>"+classHallValue+"<span class='fw-bold text-danger'> location </span>"+locationValue+" is already exists please recheck";
+            divClassHallText.classList.add("form-text","text-center","d-inline")
             divClassHallText.style.color="red";
         }else {
             divClassHallText.classList.remove("d-none");
-            divClassHallText.innerText="class hall "+classHallValue+" is good it is not previously entered";
+            divClassHallText.innerHTML="class hall "+"<span class='fw-bold text-success'>name </span>"+classHallValue+"<span class='fw-bold text-success'> location </span>"+locationValue+" is good it is not previously entered";
             divClassHallText.style.color="green";
         }
     }
+}
+
+
+
+
+const validateMaxStudent= (fieldID)=>{
+
+
+    let minValue=parseFloat(textMinCount.value);
+    let maxValue=parseFloat(fieldID.value);
+
+    if ((new RegExp('^[1-9][0-9]{0,4}$').test(minValue)) && new RegExp('^[1-9][0-9]{0,4}$').test(maxValue)){    //new reg exp kiyana eken new regular expression object ekak halda ekata pattern eka deela eka test kiyan function eken test karala thiyenawa ekata pass karla deela thiyenawa values
+        if (maxValue>=minValue){ //max value eka min value ekata wada samanayi ho wadinam
+            console.log("good");
+            textMaxCount.style.border="2px solid green" //border eka dammma
+            classhall.maxcount=maxValue;    //class hall object eke propert eka vena max count ekata bind kara
+
+            //min table count eka
+            let minTableCount=Math.ceil(minValue/4);
+            textTableCount.value=parseFloat(minTableCount);
+            classhall.tablecount=textTableCount.value;
+            textTableCount.style.border='2px solid green';
+
+
+            //min bench count ekata value set karala object ekata bind karanna
+            textBenchCount.value=parseFloat(minTableCount); //mokada bench count ekatath table count eka set kare table ekata bench ekayi
+            classhall.benchcount=textBenchCount.value;
+            textBenchCount.style.border='2px solid green';
+
+
+            //max table count eka
+            let maxTableCount=Math.ceil(maxValue/4);
+            textMaxTableCount.value=parseFloat(maxTableCount);
+            classhall.maxtablecount=textMaxTableCount.value;
+            textMaxTableCount.style.border="2px solid green";
+
+
+            //max bench count ekata value set karala object ekata bind karanna
+            textMaxBenchCount.value=parseFloat(maxTableCount);
+            classhall.maxbenchcount=textMaxBenchCount.value;
+            textMaxBenchCount.style.border="2px solid green";
+
+
+
+
+        }else {
+            console.log("not good")
+            textMaxCount.style.border="2px solid red"
+            classhall.maxcount=null;
+
+            // methana table value tikayi bench value tikayi empty karala object ekata bind vena eka null karala danna one
+
+
+            //table count start
+            textTableCount.value="";    //value eka empty karanwa
+            classhall.tablecount=null;  //object ekata null value eka bind karanawa
+            textTableCount.style.border='2px solid red';    //border eka red karanawa
+
+
+            textBenchCount.value=""
+            classhall.benchcount=null;
+            textBenchCount.style.border='2px solid red';
+
+
+            textMaxTableCount.value="";
+            classhall.maxtablecount=null;
+            textMaxTableCount.style.border="2px solid red";
+
+            textMaxBenchCount.value="";
+            classhall.maxbenchcount=null;
+            textMaxBenchCount.style.border="2px solid red";
+
+
+        }
+    }
+
+
 }
 
 

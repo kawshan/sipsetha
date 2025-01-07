@@ -99,9 +99,9 @@ public class ClassHallController {
             return "cannot perform save class hall .. you don't have privileges";
         }
 
-        ClassHall exClassHallName = dao.getClasshallByName(classHall.getName());
+        ClassHall exClassHallName = dao.getClasshallByNameAndLocation(classHall.getName(),classHall.getLocation());
         if (exClassHallName!=null){
-            return "cannot perform class hall save "+classHall.getName()+" is already exists";
+            return "cannot perform class hall because class hall "+classHall.getName()+" and location "+classHall.getLocation()+" is already exists";
         }
 
 
@@ -117,9 +117,9 @@ public class ClassHallController {
     }
 
 
-    @GetMapping(value = "/checkduplicatebyhallname/{hallname}")
-    public Boolean getHallNameForValidate(@PathVariable("hallname") String hallname){
-        ClassHall exClassHallName = dao.getClasshallByName(hallname);
+    @GetMapping(value = "/checkduplicatebyhallname/{hallname}/{location}")
+    public Boolean getHallNameForValidate(@PathVariable("hallname") String hallname,@PathVariable("location")String location){
+        ClassHall exClassHallName = dao.getClasshallByNameAndLocation(hallname,location);
         if (exClassHallName!=null){
             return true;
         }else {

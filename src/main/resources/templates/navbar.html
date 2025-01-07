@@ -14,17 +14,17 @@
                     aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
+
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-auto">
-
-
 
 
                     <li class="nav-item">
                         <a class="nav-link active" style="color: whitesmoke" aria-current="page" href="http://localhost:8080/dashboard">Home</a>
                     </li>
 
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown" id="navAdministration" >
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false" style="color: whitesmoke">
                             Administration
@@ -36,7 +36,7 @@
                         </ul>
                     </li>
 
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown" id="navStudent">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false" style="color: whitesmoke">
                             student
@@ -53,9 +53,7 @@
 
                     </li>
 
-
-
-                    <li class="nav-item dropdown">
+                    <li class="nav-item dropdown" id="navClass">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false" style="color: whitesmoke">
                             class
@@ -64,6 +62,17 @@
                             <li><a class="dropdown-item" href="/classhall/classhallform">class hall management</a></li>
                             <li><a class="dropdown-item" href="/classoffering/classofferingform">class offering management</a></li>
                             <li><a class="dropdown-item" href="/classroomallocation/classroomallocationform">classroom allocation management</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item dropdown" id="navTeacher">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false" style="color: whitesmoke">
+                            class
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/teacher/teacherform">teacher management</a></li>
+                            <li><a class="dropdown-item" href="/teacherpayment">teacher payment management</a></li>
                         </ul>
                     </li>
 
@@ -77,7 +86,7 @@
 
 
                     <a class="navbar-brand" style="margin-left: 20%; color: whitesmoke;" th:text="${loggedusername}">logged user</a>
-                    <a class="navbar-brand" style="margin-left: 20%; color: whitesmoke;" th:text="${loggeduserrole}">logged role</a>
+                    <a class="navbar-brand" id="roleNavBar" style="margin-left: 20%; color: whitesmoke;" th:text="${loggeduserrole}">logged role</a>
                     <img src="/icons/employee.png" id="imguserPhoto" style="width: 50px; height: 50px; border-radius: 50%">
 
 
@@ -105,7 +114,7 @@
         </div>
         <div class="offcanvas-body" style="background-color: #E0E9DD">
 
-            <div class="row mt-2">
+            <div class="row mt-2" id="offCanAdministration">
                 <div class="btn-group">
                     <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -120,7 +129,7 @@
             </div>
 
 
-            <div class="row mt-2">
+            <div class="row mt-2" id="offCanStudent">
                 <div class="btn-group mt-2">
                     <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -135,7 +144,7 @@
                 </div>
             </div>
 
-            <div class="row mt-2">
+            <div class="row mt-2" id="offCanClass">
                 <div class="btn-group mt-2">
                     <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -151,7 +160,7 @@
 
 
 
-            <div class="row mt-2">
+            <div class="row mt-2" id="offCanTeacher">
                 <div class="btn-group mt-2">
                     <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown"
                             aria-expanded="false">
@@ -165,7 +174,7 @@
             </div>
 
 
-            <div class="row mt-2">
+            <div class="row mt-2" id="offCanReports">
                 <div class="btn-group mt-2">
                     <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
                             aria-expanded="false">

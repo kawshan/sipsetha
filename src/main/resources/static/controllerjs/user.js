@@ -393,26 +393,25 @@ const checkUserFormUpdate = ()=>{
         updates=updates+'status is changed \n';
     }
 
-    // if (user.roles.length != oldUser.roles.length){
-    //     updates=updates+'user roles are changed \n';
-    // }
-    // else {
-    //     let equalCount=0;
-    //     for (let i=0; i<user.roles.length; i++){
-    //         for (let j = 0; j < oldUser.roles.length; j++) {
-    //             if (user.roles[i].name == oldUser.roles[j].name){
-    //                 equalCount=equalCount+1;
-    //                 break;
-    //             }
-    //         }
-    //     }
-    //     if (equalCount != user.roles.length){
-    //         updates=updates+'user role is changed \n';
-    //     }
-    // }
+    if (user.roles.length != oldUser.roles.length){ // user roles kiyana array eke length eka samana nadda balanawa old user object eke thiyene roles array eke length ekata
+        updates=updates+'user roles are changed \n';    // ehema nam updates kiyana varibale ekata add karagannawa in other words concat kara gannawa user roles are changed kiyala
+    }else {     //length eka samana nam pahala tika wada karanawa
+        let equalCount=0;   // equal count eka kiyala varibale eka hadala eka assign kara gannawa 0 kiyala
+        for (let i=0; i<user.roles.length; i++){    // iita passe inner loop ekek liyala thiyenawa user roles eke legth ekata anuwa loop venna kiyala
+            for (let j = 0; j < oldUser.roles.length; j++) {    //meka inner loop ekak old user ge roles tike length ekata loop venna
+                if (user.roles[i].name == oldUser.roles[j].name){   // ee loop ekakadi user ge roles eke name eka samana unoth old user ge roles wala name walata
+                    equalCount=equalCount+1;    // equal count eka ekak wadi venawa
+                    break;  //eeta passe loop eka break karala nawaththala danawa
+                }
+            }
+        }
+        if (equalCount != user.roles.length){   //ee equal count eka user ge roles kiyana array eke length ekata samana naththam
+            updates=updates+'user role is changed \n';  // update message ekata concat karanawa user role is changed kiyala
+        }
+    }
 
 
-    return updates;
+    return updates; //ee ta passe okkoma update tika add vecchcha messaje eka user ta display karanwa
 }
 
 

@@ -19,5 +19,7 @@ public class Designation {
     private Integer id;
     @Column(name = "name")
     private String name;
+    @Column(name = "useraccount")
+    private Boolean useraccount;
 
 }

@@ -14,4 +14,8 @@ public interface RoleDao extends JpaRepository<Role,Integer>{
 //    select * from role as r where r.name <> 'admin';
     @Query(value = "select r from Role r where r.name <> 'admin' ")
     public List<Role> getRoleListWithoutAdmin();
+
+    @Query(value = "select r from Role r where r.name=?1")
+    public Role getByRoleName(String role);
+
 }

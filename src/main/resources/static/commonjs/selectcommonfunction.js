@@ -43,6 +43,7 @@ const fillDataIntoSelectWithTwoAttributes = (fieldId,message,dataList,property,p
 
 }
 
+
 //define function into fill data into data list
 const fillDataIntoDataList = (fieldId,dataList,property,propertyTwo,selectedValue)=>{
     console.log("filll")

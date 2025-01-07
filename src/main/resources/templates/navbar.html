@@ -24,9 +24,9 @@
                             Administration
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="http://localhost:8080/employee/employeeform">employee management</a></li>
-                            <li><a class="dropdown-item" href="http://localhost:8080/user/userform">user management</a></li>
-                            <li><a class="dropdown-item" href="http://localhost:8080/privilege/privilegeform">privilege management</a></li>
+                            <li><a class="dropdown-item" href="employee/employeeform">employee management</a></li>
+                            <li><a class="dropdown-item" href="user/userform">user management</a></li>
+                            <li><a class="dropdown-item" href="privilege/privilegeform">privilege management</a></li>
                         </ul>
                     </li>
 
@@ -36,9 +36,30 @@
                             student
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="http://localhost:8080/student/studentform">Student management</a></li>
-                            <li><a class="dropdown-item" href="http://localhost:8080/guardian/guardianform">Guardian management</a></li>
+                            <li><a class="dropdown-item" href="/student/studentform">Student management</a></li>
+                            <li><a class="dropdown-item" href="/guardian/guardianform">Guardian management</a></li>
+                            <li><a class="dropdown-item" href="/studentregistration/studentregistrationform">student registration management</a></li>
+                            <li><a class="dropdown-item" href="/payment/paymentform">student payment management</a></li>
                         </ul>
+
+
+
+                    </li>
+
+
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false" style="color: whitesmoke">
+                            class
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/classhall/classhallform">class hall management</a></li>
+                            <li><a class="dropdown-item" href="/classoffering/classofferingform">class offering management</a></li>
+                            <li><a class="dropdown-item" href="/classroomallocation/classroomallocationform">classroom allocation management</a></li>
+                        </ul>
+
+
 
                     </li>
 
@@ -75,9 +96,9 @@
                         Administration section
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="http://localhost:8080/employee/employeeform">employee</a></li>
-                        <li><a class="dropdown-item" href="http://localhost:8080/user/userform">user</a></li>
-                        <li><a class="dropdown-item" href="http://localhost:8080/privilege/privilegeform">privilege</a></li>
+                        <li><a class="dropdown-item" href="/employee/employeeform">employee</a></li>
+                        <li><a class="dropdown-item" href="/user/userform">user</a></li>
+                        <li><a class="dropdown-item" href="/privilege/privilegeform">privilege</a></li>
                     </ul>
                 </div>
             </div>
@@ -90,10 +111,10 @@
                         student Sections
                     </button>
                     <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/guardian/guardianform">guardian management</a></li>
                         <li><a class="dropdown-item" href="/student/studentform">student management</a></li>
                         <li><a class="dropdown-item" href="/studentregistration/studentregistrationform">student registration management</a></li>
                         <li><a class="dropdown-item" href="/payment/paymentform">student payment management</a></li>
-                        <li><a class="dropdown-item" href="/guardian/guardianform">guardian management</a></li>
                     </ul>
                 </div>
             </div>
@@ -105,9 +126,9 @@
                         class Sections
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="http://localhost:8080/classhall/classhallform">class hall management</a></li>
-                        <li><a class="dropdown-item" href="http://localhost:8080/classoffering/classofferingform">class offering management</a></li>
-                        <li><a class="dropdown-item" href="http://localhost:8080/classroomallocation/classroomallocationform">classroom allocation management</a></li>
+                        <li><a class="dropdown-item" href="/classhall/classhallform">class hall management</a></li>
+                        <li><a class="dropdown-item" href="/classoffering/classofferingform">class offering management</a></li>
+                        <li><a class="dropdown-item" href="/classroomallocation/classroomallocationform">classroom allocation management</a></li>
                     </ul>
                 </div>
             </div>
@@ -121,7 +142,8 @@
                         teacher Sections
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="http://localhost:8080/teacher/teacherform">teacher management</a></li>
+                        <li><a class="dropdown-item" href="/teacher/teacherform">teacher management</a></li>
+                        <li><a class="dropdown-item" href="/teacherpayment">teacher payment management</a></li>
                     </ul>
                 </div>
             </div>

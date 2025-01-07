@@ -50,6 +50,7 @@ const refreshClassOfferingForm = ()=>{
     selectClassOfferingStatus.style.border='2px solid #ced4da';
 
 
+    textClassName.disabled=true;
 }
 
 
@@ -234,9 +235,26 @@ const printClass = (ob,rowIndex)=>{
 
 }
 
+//define fucntion for generate class name
+const generateClassName = ()=>{
+    console.log(classOffering.subject_id.name)
+    console.log(classOffering.classtype_id.name)
+    console.log(classOffering.academicyear_id.name)
+    console.log(classOffering.teacher_id.fullname)
+    console.log(classOffering.grade_id.name)
+
+    textClassName.value=classOffering.teacher_id.fullname+" "+classOffering.grade_id.name+" "+classOffering.academicyear_id.name;
+    console.log(textClassName.value);
+    classOffering.classname=textClassName.value;
+}
+
+
 
 //create function for check error
 const checkFormErrors = ()=>{
+
+    generateClassName();
+
     let errors = '';
 
     if (classOffering.classname == null){
@@ -296,6 +314,7 @@ const checkFormErrors = ()=>{
 
 //create function for submit class
 const classSubmit = ()=>{
+
     console.log(classOffering);
 
     const errors = checkFormErrors();
@@ -440,7 +459,6 @@ const modalPrintButton = ()=>{
 
 
 }
-
 
 
 

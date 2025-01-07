@@ -97,6 +97,40 @@ const getGrade = (ob)=>{
 // create function for class refill
 const classFormRefill = (ob,rowIndex)=>{
     console.log('refill'+ob+' '+rowIndex);
+
+    classOffering=JSON.parse(JSON.stringify(ob));
+    oldClassOffering=JSON.parse(JSON.stringify(ob));
+
+    $('#modalClassAdd').modal('show');
+
+
+    textClassName.value=classOffering.classname;
+    textFees.value=classOffering.fees;
+    textDuration.value=classOffering.duration;
+    textServiceCharge.value=classOffering.servicecharge;
+
+    if (classOffering.note != null){
+        textNote.value=classOffering.note;
+    }else {
+        textNote.value="";
+    }
+
+    classTypes=ajaxGetRequest("/classtype/findall");
+    fillDataIntoSelect(selectClassType,'select class type',classTypes,'name',classOffering.classtype_id.name);
+
+    academicYears=ajaxGetRequest("/academicyear/findall")
+    fillDataIntoSelect(SelectAcademicYear,'select academic year',academicYears,'name',classOffering.academicyear_id.name);
+
+    subjects=ajaxGetRequest("/subject/findall");
+    fillDataIntoSelect(selectSubject,'select subject',subjects,'name',classOffering.subject_id.name);
+
+    teachers=ajaxGetRequest("/teacher/findall")
+    fillDataIntoSelect(selectTeacher,'select teacher',teachers,'fullname',classOffering.teacher_id.fullname);
+
+    grades=ajaxGetRequest("/grade/findall");
+    fillDataIntoSelect(selectGrade,'select grade',grades,'name',classOffering.grade_id.name);
+
+
 }
 
 // create function for class delete
@@ -107,25 +141,23 @@ const deleteClass = (ob,rowIndex)=>{
 
     setTimeout(function (){
         const userConfirm = confirm('are you sure to delete following class \n'
-            + '\n class code is '+ob.classcode
-            + '\n teacher  is '+ob.teacher_id.name
-            + '\n grade  is '+ob.grade_id.name
-            + '\n subject  is '+ob.subject_id.name
-            + '\n date  is '+ob.date_id.name
-            + '\n class status  is '+ob.classstatus_id.name
+            + '\n class name is '+ob.classname
+            + '\n fees is '+ob.fees
+            + '\n duration is '+ob.duration
+            + '\n service charge is '+ob.servicecharge
         );
 
         if (userConfirm){
-            const deleteServerResponse = 'ok'
+            const deleteServerResponse = ajaxDeleteRequest("/classoffering",ob);
             if (deleteServerResponse == 'ok'){
-                // alert("delete successfull")
-                Swal.fire({ title:'delete successful', icon:'success'});
+                alert("delete successfull");
+                refreshClassOfferingTable()
+                // Swal.fire({ title:'delete successful', icon:'success'});
             }else {
-                // alert('delete was unsuccessful you might have following errors \n' + deleteServerResponse)
-                Swal.fire({ title: 'delete unsuccessful you might have following errors \n'+deleteServerResponse, icon: 'error'});
+                alert('delete was unsuccessful you might have following errors \n' + deleteServerResponse)
+                // Swal.fire({ title: 'delete unsuccessful you might have following errors \n'+deleteServerResponse, icon: 'error'});
             }
         }
-        refreshClassTable();
     },500)
 
 
@@ -141,49 +173,82 @@ const printClass = (ob,rowIndex)=>{
 const checkFormErrors = ()=>{
     let errors = '';
 
-    if (cls.teacher_id == null){
-        errors= errors+' teacher cannot be empty \n'
-        selectTeacher.classList.add('is-invalid');
+    if (classOffering.classname == null){
+        errors =errors+' class name cannot be empty \n'
+        textClassName.classList.add('is-invalid');
     }
-    if (cls.grade_id == null){
-        errors = errors+ ' grade cannot be empty \n'
-        selectGrade.classList.add('is-invalid');
-    }
-    if (cls.subject_id == null){
-        errors =errors+' subject cannot be empty \n'
-        selectSubject.classList.add('is-invalid');
-    }
-    if (cls.duration == null){
-        errors=errors+' duration cannot be empty \n'
-        selectDuration.classList.add('is-invalid');
-    }
-    if (cls.year == null){
-        errors =errors+' year cannot be empty \n'
-        textYear.classList.add('is-invalid');
-    }
-    if (cls.date_id == null){
-        errors = errors+'date cannot be empty \n'
-        selectDate.classList.add('is-invalid');
-    }
-    if (cls.fees == null){
+
+    if (classOffering.fees == null){
         errors =errors+' fees cannot be empty \n'
         textFees.classList.add('is-invalid');
     }
-    if (cls.classstatus_id == null){
-        errors = errors + ' status cannot be empty \n'
-        selectStatus.classList.add('is-invalid');
+
+    if (classOffering.duration == null){
+        errors=errors+' duration cannot be empty \n'
+        textDuration.classList.add('is-invalid');
     }
+
+    if (classOffering.servicecharge == null){
+        errors=errors+' service charge cannot be empty \n'
+        textServiceCharge.classList.add('is-invalid');
+    }
+
+    if (classOffering.classtype_id == null){
+        errors = errors+'class type cannot be empty \n'
+        selectClassType.classList.add('is-invalid');
+    }
+
+
+    if (classOffering.academicyear_id == null){
+        errors =errors+' academic year cannot be empty \n'
+        SelectAcademicYear.classList.add('is-invalid');
+    }
+
+
+    if (classOffering.subject_id == null){
+        errors =errors+' subject cannot be empty \n'
+        selectSubject.classList.add('is-invalid');
+    }
+
+    if (classOffering.teacher_id == null){
+        errors= errors+' teacher cannot be empty \n'
+        selectTeacher.classList.add('is-invalid');
+    }
+
+    if (classOffering.grade_id == null){
+        errors = errors+ ' grade cannot be empty \n'
+        selectGrade.classList.add('is-invalid');
+    }
+
     return errors;
 }
 
 //create function for submit class
 const classSubmit = ()=>{
-    console.log(cls);
+    console.log(classOffering);
 
     const errors = checkFormErrors();
     if (errors == ''){
         //if errors not available
+        const userConfirm = confirm('are you sure to add this following class offering'
+        +'\n class name is'+classOffering.classname
+        +'\n fees  is'+classOffering.fees
+        +'\n duration  is'+classOffering.duration
+        +'\n servicecharge  is'+classOffering.servicecharge
+        )
         //get user confirmation
+        if (userConfirm){
+            let postServiceResponse = ajaxPostRequest("/classoffering",classOffering);
+            if (postServiceResponse=="ok"){
+                alert('save success '+postServiceResponse);
+                classOfferingForm.reset();
+                refreshClassOfferingForm()
+                $('#modalClassAdd').modal('hide');
+                refreshClassOfferingTable();
+            }else {
+                alert('save not success'+postServiceResponse);
+            }
+        }
     }else {
         // alert('you might have some errors \n'+errors);
         swal.fire({
@@ -193,6 +258,107 @@ const classSubmit = ()=>{
     }
 
 }
+
+
+//define function for check class offering update
+const checkUpdates=()=>{
+    let updates="";
+
+    if (classOffering.classname != oldClassOffering.classname){
+        updates=updates+"class name is updated \n";
+    }
+    if (classOffering.fees != oldClassOffering.fees){
+        updates=updates+"fees is updated \n";
+    }
+    if (classOffering.duration != oldClassOffering.duration){
+        updates=updates+"duration is updated \n";
+    }
+    if (classOffering.note != oldClassOffering.note){
+        updates=updates+"note is updated \n"
+    }
+    if (classOffering.servicecharge != oldClassOffering.servicecharge){
+        updates=updates+"service charge updated \n"
+    }
+    if (classOffering.classtype_id.name != oldClassOffering.classtype_id.name){
+        updates=updates+"class type is updated \n";
+    }
+    if (classOffering.academicyear_id.name != oldClassOffering.academicyear_id.name){
+        updates=updates+"academic year is updated \n";
+    }
+    if (classOffering.subject_id.name != oldClassOffering.subject_id.name){
+        updates=updates+"subject is updated \n";
+    }
+    if (classOffering.teacher_id.fullname != oldClassOffering.teacher_id.fullname){
+        updates=updates+"teacher is changed \n"
+    }
+    if (classOffering.grade_id.name != oldClassOffering.grade_id.name){
+        updates=updates+"grade is changed \n";
+    }
+
+    return updates
+}
+
+const buttonFormUpdate = ()=>{
+    console.log('update');
+    let errors = checkFormErrors();
+    if (errors==""){
+        let updates = checkUpdates();
+        if (updates ==""){
+            alert('nothing updated');
+        }else {
+            const userConfirm = confirm('are you sure to update following changes to class offering\n'+updates);
+            if (userConfirm){
+                let putServiceResponse = ajaxPutRequest("/classoffering",classOffering);
+                if (putServiceResponse=="ok"){
+                    alert('save success '+putServiceResponse);
+                    classOfferingForm.reset();
+                    refreshClassOfferingForm()
+                    $('#modalClassAdd').modal('hide');
+                    refreshClassOfferingTable();
+                }else {
+                    alert('save not success '+putServiceResponse);
+                }
+            }
+        }
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

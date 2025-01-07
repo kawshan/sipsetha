@@ -19,7 +19,7 @@ const refreshTeacherForm = ()=>{
     fillDataIntoSelect(selectQualification,'select qualification',qualifications,'name');
 
     branches=ajaxGetRequest("/branch/findall");
-    fillDataIntoSelectWithTwoAttributes(selectBranch,'select branch',branches,'name','bank_id.name');
+    fillDataIntoSelectObjectArrayWithTwoValues(selectBranch,'select branch',branches,'name','bank_id.name');
 
     teacherStatues=ajaxGetRequest("/teacherstatus/findall");
     fillDataIntoSelect(selectStatus,'select status',teacherStatues,'name');

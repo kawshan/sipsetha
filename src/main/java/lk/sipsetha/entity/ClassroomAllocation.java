@@ -21,10 +21,10 @@ public class ClassroomAllocation {
     private Integer id;
 
     @Column(name = "starttime")
-    private LocalDateTime starttime ;
+    private LocalTime starttime;
 
     @Column(name = "endtime")
-    private LocalDateTime endtime;
+    private LocalTime endtime;
 
     @Column(name = "note")
     private String note;

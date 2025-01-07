@@ -96,6 +96,7 @@
         <th> subject</th>
         <th>teacher</th>
         <th>grade</th>
+        <th>status</th>
         <th>modify</th>
 
         </thead>
@@ -261,6 +262,23 @@
                         </div>
                         <!--            grade end-->
 
+
+                        <!--            class offering status start-->
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="selectClassOfferingStatus" class="form-label fw-bold">
+                                    class offering status <i class="text-danger">*</i>
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <select  id="selectClassOfferingStatus" class="form-select text-center" required onchange="selectDBValidator(this,'','classOffering','classofferingstatus_id')">
+
+                                </select>
+                            </div>
+                        </div>
+                        <!--            class offering status end-->
+
+
                         <!--                        note start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
@@ -328,6 +346,7 @@
                         <th> subject</th>
                         <th>teacher</th>
                         <th>grade</th>
+                        <th>status</th>
                         </thead>
                         <tbody>
 

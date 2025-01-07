@@ -21,6 +21,9 @@ const refreshClassOfferingForm = ()=>{
     classTypes=ajaxGetRequest("/classtype/findall");
     fillDataIntoSelect(selectClassType,'select class type',classTypes,'name');
 
+    classOfferingstatuses=ajaxGetRequest("/classofferingstatus/findall");
+    fillDataIntoSelect(selectClassOfferingStatus,'select class offering ',classOfferingstatuses,'name');
+
     academicYears=ajaxGetRequest("/academicyear/findall")
     fillDataIntoSelect(SelectAcademicYear,'select academic year',academicYears,'name');
 
@@ -44,6 +47,7 @@ const refreshClassOfferingForm = ()=>{
     selectTeacher.style.border='2px solid #ced4da';
     selectGrade.style.border='2px solid #ced4da';
     textNote.style.border='2px solid #ced4da';
+    selectClassOfferingStatus.style.border='2px solid #ced4da';
 
 
 }
@@ -65,6 +69,7 @@ const refreshClassOfferingTable = () => {
         {dataType:'function',propertyName:getSubject},
         {dataType:'function',propertyName:getTeacher},
         {dataType:'function',propertyName:getGrade},
+        {dataType:'function',propertyName:getClassOfferingStatus},
 
     ];
 
@@ -105,6 +110,11 @@ const getGrade = (ob)=>{
     return ob.grade_id.name;
 }
 
+//create function for getGrade
+const getClassOfferingStatus = (ob)=>{
+    return ob.classofferingstatus_id.name;
+}
+
 
 
 // create function for class refill
@@ -130,6 +140,9 @@ const classFormRefill = (ob,rowIndex)=>{
 
     classTypes=ajaxGetRequest("/classtype/findall");
     fillDataIntoSelect(selectClassType,'select class type',classTypes,'name',classOffering.classtype_id.name);
+
+    classOfferingstatuses=ajaxGetRequest("/classofferingstatus/findall");
+    fillDataIntoSelect(selectClassOfferingStatus,'select class offering ',classOfferingstatuses,'name',classOffering.classofferingstatus_id.name);
 
     academicYears=ajaxGetRequest("/academicyear/findall")
     fillDataIntoSelect(SelectAcademicYear,'select academic year',academicYears,'name',classOffering.academicyear_id.name);
@@ -194,6 +207,7 @@ const printClass = (ob,rowIndex)=>{
         {dataType:'function',propertyName:getSubject},
         {dataType:'function',propertyName:getTeacher},
         {dataType:'function',propertyName:getGrade},
+        {dataType:'function',propertyName:getClassOfferingStatus},
 
     ];
 
@@ -272,6 +286,11 @@ const checkFormErrors = ()=>{
         selectGrade.classList.add('is-invalid');
     }
 
+    if (classOffering.classofferingstatus_id == null){
+        errors = errors+ ' class offering status cannot be empty \n'
+        selectClassOfferingStatus.classList.add('is-invalid');
+    }
+
     return errors;
 }
 
@@ -287,6 +306,7 @@ const classSubmit = ()=>{
         +'\n fees  is'+classOffering.fees
         +'\n duration  is'+classOffering.duration
         +'\n servicecharge  is'+classOffering.servicecharge
+        +'\n status  is'+classOffering.classofferingstatus_id.name
         )
         //get user confirmation
         if (userConfirm){
@@ -343,6 +363,10 @@ const checkUpdates=()=>{
         updates=updates+"grade is changed \n";
     }
 
+    if (classOffering.classofferingstatus_id.name != oldClassOffering.classofferingstatus_id.name){
+        updates=updates+"class offering  is changed \n";
+    }
+
     return updates
 }
 
@@ -387,6 +411,7 @@ const printClassOfferingFullTable = ()=>{
         {dataType:'function',propertyName:getSubject},
         {dataType:'function',propertyName:getTeacher},
         {dataType:'function',propertyName:getGrade},
+        {dataType:'function',propertyName:getClassOfferingStatus},
 
     ];
 

@@ -68,6 +68,9 @@ public class ClassOffering {
     @JoinColumn(name = "teacher_id",referencedColumnName = "id")
     private Teacher teacher_id;
 
+    @ManyToOne
+    @JoinColumn(name = "classofferingstatus_id",referencedColumnName = "id")
+    private ClassOfferingStatus classofferingstatus_id;
 
 
 

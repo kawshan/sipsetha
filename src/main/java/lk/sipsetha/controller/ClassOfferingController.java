@@ -1,8 +1,10 @@
 package lk.sipsetha.controller;
 
 import lk.sipsetha.dao.ClassOfferingDao;
+import lk.sipsetha.dao.ClassOfferingStatusDao;
 import lk.sipsetha.dao.UserDao;
 import lk.sipsetha.entity.ClassOffering;
+import lk.sipsetha.entity.ClassOfferingStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -25,6 +27,9 @@ public class ClassOfferingController {
 
     @Autowired
     private UserDao userDao;
+
+    @Autowired
+    private ClassOfferingStatusDao classOfferingStatusDao;
 
     @GetMapping(value = "/findall")
     public List<ClassOffering> getAllClassOffering(){
@@ -57,9 +62,11 @@ public class ClassOfferingController {
         //existing check
 //        operator
         try {
-
+            ClassOfferingStatus deleteClassOfferingStatus = classOfferingStatusDao.getReferenceById(2);
             classOffering.setDeletedatetime(LocalDateTime.now());
-            dao.delete(classOffering);
+            classOffering.setClassofferingstatus_id(deleteClassOfferingStatus);
+//            dao.delete(classOffering);
+            dao.save(classOffering);
             return "ok";
         }catch (Exception e){
             return "class offering delete not successful "+e.getMessage();

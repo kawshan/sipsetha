@@ -27,7 +27,7 @@
             <div id="divPrintGuardianTableButton" class="">
                 <button onclick="printGuardianFullTable()" type="button" class="btn fw-bold"
                         style="background-color: #044800; color: whitesmoke; width: 25%; border: 1px solid black; border-radius: 30px">
-                    <i class="fa-solid fa-print fa-beat"> </i> print user table
+                    <i class="fa-solid fa-print fa-beat"> </i> print guardian table
                 </button>
             </div>
 
@@ -153,7 +153,7 @@
                             <div class="col-md-6">
                                 <input type="text" id="textNic" class="form-control text-center" required
                                        placeholder="enter nic number"
-                                       onkeyup="textValidator(this,'^(([0-9]{9}[VvXxSs])|([0-9]{12}))$','guardian','nic')">
+                                       onkeyup="textValidator(this,'^(([0-9]{9}[VvXxSs])|([0-9]{12}))$','guardian','nic'); generateGuardianGender(this)">
                             </div>
                         </div>
                         <!--                    nic end-->

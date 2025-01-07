@@ -63,6 +63,15 @@ const refreshGuardianForm = ()=>{
     selectStatus.style.border='1px solid #ced4da';
     textNote.style.border='1px solid #ced4da';
 
+
+    selectStatus.value=true
+    guardian.status=selectStatus.value;
+    selectStatus.disabled=true;
+    selectStatus.style.border="2px solid green";
+
+
+    selectGender.disabled=true;
+
     if (!userPrivilege.update){
         btnGuardUpdate.disabled=true;
         btnGuardUpdate.style.cursor='not-allowed';
@@ -287,6 +296,12 @@ const buttonGuardianAdd = ()=>{
         let userConfirm =confirm("are you sure to add this guardian"
         +'\n first name is'+guardian.firstname
         +'\n last name is'+guardian.lastname
+        +'\n nic is'+guardian.nic
+        +'\n mobile is'+guardian.mobile
+        +'\n address is'+guardian.address
+        +'\n guardian type is'+guardian.guardiantype_id.name
+        +'\n gender is'+guardian.gender
+        +'\n status is'+guardian.status
         );
         if (userConfirm){
             let serverResponse=ajaxPostRequest("/guardian",guardian)
@@ -345,7 +360,37 @@ const modalPrintButton = ()=>{
         newWindow.close();  //print rka open vela close krama close venawa
     },500)
 
-
 }
 
 
+//define function for generate gender in guardian form using nic
+const generateGuardianGender = (fieldId)=>{
+    let  nicValue =  fieldId.value;
+    let days;
+    if (new RegExp('^(([0-9]{9}[VvXxSs])|([0-9]{12}))$').test(nicValue)){
+        console.log("yes");
+
+        if (nicValue.length==10){
+            console.log("old");
+            days=nicValue.substring(2, 5);
+            console.log(days+"old");
+        }
+        if (nicValue.length==12){
+            console.log("new");
+            days = nicValue.substring(4, 7);
+            console.log(days+"new")
+        }
+        if (days<500){
+            console.log("male");
+            selectGender.value=true
+            guardian.gender=selectGender.value;
+            selectGender.style.border="2px solid green";
+        }else if (days>500){
+            console.log("female");
+            selectGender.value=false
+            guardian.gender=selectGender.value;
+            selectGender.style.border="2px solid green";
+        }
+
+    }
+}

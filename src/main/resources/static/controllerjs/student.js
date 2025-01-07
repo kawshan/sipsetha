@@ -82,6 +82,10 @@ const refreshStudentForm = ()=>{
     guardians=ajaxGetRequest("/guardian/findall");
     fillDataIntoDataList(textGuardianName, guardians,'nic','firstname');
 
+    selectStatus.value=true;
+    student.status=selectStatus.value;
+    selectStatus.style.border="2px solid green";
+
 }
 
 //define function for get student status

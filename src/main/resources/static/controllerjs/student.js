@@ -49,7 +49,8 @@ const refreshStudentForm = ()=>{
 
     guardians=ajaxGetRequest("/guardian/findall");
 
-    fillDataIntoSelect(selectGuardian,'select guardian',guardians,'firstname')
+    // fillDataIntoSelect(selectGuardian,'select guardian',guardians,'firstname')
+    fillDataIntoSelectWithTwoAttributes(selectGuardian,'select guardian',guardians,'nic','firstname')
 
     grades=ajaxGetRequest("/grade/findall")
     fillDataIntoSelect(selectGrade,'select grade',grades,'name');

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -22,6 +23,9 @@ public class StudentRegistrationController {
 
     @Autowired
     private RegistrationStatusDao registrationStatusDao;
+
+    @Autowired
+    private PrivilegeController privilegeController;
 
 
     @GetMapping(value = "/studentregistrationform")
@@ -36,6 +40,11 @@ public class StudentRegistrationController {
 
     @GetMapping(value = "/findall")
     public List<StudentRegistration> getAllStudentRegistration(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLogUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(), "studentregistration");
+        if (!getLogUserPrivilege.get("select")){
+            return null;
+        }
         return dao.findAll();
 
     }
@@ -43,6 +52,12 @@ public class StudentRegistrationController {
     @PostMapping
     public String saveStudentRegistration(@RequestBody StudentRegistration studentRegistration){
     //authentication and authorization
+        Authentication auth =SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLogUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(), "studentregistration");
+        if (!getLogUserPrivilege.get("insert")){
+            return "cannot perform save student registration.... you don't have privileges";
+        }
+
     //existing and duplicate
     //operator
 
@@ -66,6 +81,11 @@ public class StudentRegistrationController {
     @PutMapping
     public String modifyStudentRegistration(@RequestBody StudentRegistration studentRegistration){
         //authentication and authorization
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLoggedUserPrivileges = privilegeController.getPrivilegeByUserModule(auth.getName(), "studentregistration");
+        if (!getLoggedUserPrivileges.get("update")){
+            return "cannot perform modify student registration.... you don't have privileges";
+        }
         //existing and duplicate
         //operator
         try {
@@ -79,6 +99,11 @@ public class StudentRegistrationController {
     @DeleteMapping
     public String deleteStudentRegistration(@RequestBody StudentRegistration studentRegistration){
         //authetication and authorization
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLoggedUserPrivileges = privilegeController.getPrivilegeByUserModule(auth.getName(), "studentregistration");
+        if (!getLoggedUserPrivileges.get("delete")){
+            return "cannot perform delete student registration ... you don't have privileges";
+        }
         //existing
         //operator
         try {

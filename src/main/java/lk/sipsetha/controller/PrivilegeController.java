@@ -3,6 +3,7 @@ package lk.sipsetha.controller;
 import lk.sipsetha.dao.PrivilegeDao;
 import lk.sipsetha.entity.Privilege;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -29,12 +30,22 @@ public class PrivilegeController {
 
     @GetMapping(value = "/findall",produces = "application/json")
     public List<Privilege> privilegeFindAll(){
-        return privilegeDao.findAll();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> logUserPrivilege = getPrivilegeByUserModule(auth.getName(), "privilege");
+        if (!logUserPrivilege.get("select")){
+            return null;
+        }
+        return privilegeDao.findAll(Sort.by(Sort.Direction.DESC,"id"));
     }
 
     @DeleteMapping
     public String deletePrivilege(@RequestBody Privilege privilege){
         //authentication and authorization
+        Authentication auth =SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> logUserPrivilege =getPrivilegeByUserModule(auth.getName(), "privilege");
+        if (!logUserPrivilege.get("delete")){
+            return "cannot perform privilege delete.... you don't have privileges";
+        }
 
         //existing check
         Privilege extPrivilege = privilegeDao.getReferenceById(privilege.getId());
@@ -62,6 +73,11 @@ public class PrivilegeController {
     @PostMapping
     public String savePrivilege(@RequestBody Privilege privilege){
         //authentication and authorization
+        Authentication auth =SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLogUserPrivilege =getPrivilegeByUserModule(auth.getName(), "privilege");
+        if (!getLogUserPrivilege.get("insert")){
+            return "cannot perform save privilege.... you don't have privileges";
+        }
         //duplicate
         //operator
         try {
@@ -75,6 +91,11 @@ public class PrivilegeController {
     @PutMapping
     public String modifyPrivilege(@RequestBody Privilege privilege){
         //authentication and authorization
+        Authentication auth =SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLogUserPrivileges = getPrivilegeByUserModule(auth.getName(),"privilege");
+        if (!getLogUserPrivileges.get("update")){
+            return "cannot perform update privileges... you don't have privileges";
+        }
         //duplicate or existing
         //operator
 

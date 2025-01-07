@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -16,10 +17,18 @@ import java.util.List;
 public class GuardianController {
 
     @Autowired
-    public GuardianDao guardianDao;
+    private GuardianDao guardianDao;
+
+    @Autowired
+    private PrivilegeController privilegeController;
 
     @GetMapping(value = "/findall")
     public List<Guardian> guardianFindAll(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLoggedUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(), "guardian");
+        if (!getLoggedUserPrivilege.get("select")){
+            return null;
+        }
         return guardianDao.findAll();
     }
 
@@ -36,6 +45,11 @@ public class GuardianController {
     @PutMapping
     public String guardianUpdate(@RequestBody Guardian guardian){
         //authentication and authorization
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLoggedUserPrivileges = privilegeController.getPrivilegeByUserModule(auth.getName(), "guardian");
+        if (!getLoggedUserPrivileges.get("update")){
+            return "cannot perform update guardian .. you don't have privileges";
+        }
         //check existance
         //try catch
         try {
@@ -56,6 +70,11 @@ public class GuardianController {
     @DeleteMapping
     public String deleteGuardian(@RequestBody Guardian guardian){
         //authentication and authorization
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLoggedUserPrivileges = privilegeController.getPrivilegeByUserModule(auth.getName(), "guardian");
+        if (!getLoggedUserPrivileges.get("delete")){
+            return "cannot perform delete guardian .. you don't have privileges";
+        }
         //check existing
         //try catch
         //auto set values
@@ -72,6 +91,12 @@ public class GuardianController {
 
     @PostMapping
     public String saveGuardian(@RequestBody Guardian guardian){
+        //authentication and authorization
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLoggedUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(),"guardian");
+        if (!getLoggedUserPrivilege.get("insert")){
+            return "cannot perform save guardian... you dont have privileges";
+        }
         try {
             guardianDao.save(guardian);
             return "ok";

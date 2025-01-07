@@ -143,6 +143,15 @@ public class UserController {
 
 
     }
+    @GetMapping(value = "/byempid/{empid}")
+    public Boolean getUserByEmpId(@PathVariable("empid")Integer empid){
+        User userByEmpID = userDao.getUserByEmployee(empid);
+        if (empid!=null){
+            return true;
+        }else {
+            return false;
+        }
+    }
 
 
 }

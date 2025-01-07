@@ -108,7 +108,9 @@ const getDesignation = (ob) => {
 
 //create function for has user account
 const getHasUserAccount = (ob) => {
-    if (ob.hasuseraccount) {
+    let user = ajaxGetRequest("/user/byempid/"+ob.id)
+    if (user) {
+    // if (ob.hasuseraccount) {
         return '<i class="fa-solid fa-circle-check fa-2x text-success"></i>'
 
     }
@@ -181,14 +183,14 @@ const deleteEmployee = (ob, rowIndex) => {
            const deleteServerResponse = ajaxDeleteRequest("/employee",ob)
 
             if (deleteServerResponse == 'ok') {
-                // alert("delete successfull")
-                Swal.fire({title: 'delete successful', icon: 'success'});
+                alert("delete successful")
+                // Swal.fire({title: 'delete successful', icon: 'success'});
             } else {
-                // alert('delete was unsuccessful you might have following errors \n' + deleteServerResponse)
-                Swal.fire({
-                    title: 'delete unsuccessful you might have following errors \n' + deleteServerResponse,
-                    icon: 'error'
-                });
+                alert('delete was unsuccessful you might have following errors \n' + deleteServerResponse)
+                // Swal.fire({
+                    // title: 'delete unsuccessful you might have following errors \n' + deleteServerResponse,
+                    // icon: 'error'
+                // });
             }
         }
         refreshEmployeeTable();

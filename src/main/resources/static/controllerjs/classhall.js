@@ -102,7 +102,7 @@ const deleteClassHall = (ob,rowIndex)=>{
             if (deleteServerResponse =="ok"){
                 alert('delete successful')
             }else {
-                alert('delete unsuccessful');
+                alert('delete unsuccessful '+deleteServerResponse);
             }
         }
         refreshClassHallTable()
@@ -207,7 +207,7 @@ const classHallUpdate = ()=>{
                     $('#modalClassHallAdd').modal('hide');
                     refreshClassHallTable()
                 }else {
-                    alert("update not successful")
+                    alert("update not successful"+putServiceResponse)
                 }
             }
         }

@@ -3,12 +3,14 @@ package lk.sipsetha.controller;
 import lk.sipsetha.dao.StudentDao;
 import lk.sipsetha.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -17,9 +19,17 @@ public class StudentController {
     @Autowired
     public StudentDao studentDao;
 
+    @Autowired
+    private PrivilegeController privilegeController;
+
     @GetMapping(value = "/findall",produces = "application/json")
     public List<Student> studentFindAll(){
-        return studentDao.findAll();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLogUserPrivileges = privilegeController.getPrivilegeByUserModule(auth.getName(), "student");
+        if (!getLogUserPrivileges.get("select")){
+            return null;
+        }
+        return studentDao.findAll(Sort.by(Sort.Direction.DESC,"id"));
     }
 
     @GetMapping(value = "/studentform")
@@ -35,6 +45,11 @@ public class StudentController {
     @PostMapping
     public String saveStudent(@RequestBody Student student){
         //user authentication and authorization
+        Authentication auth =SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLogUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(), "student");
+        if (!getLogUserPrivilege.get("insert")){
+            return "cannot perform save student.. you don't have privileges";
+        }
         //existing check
         try {
             //set student number
@@ -59,6 +74,11 @@ public class StudentController {
     @DeleteMapping
     public String deleteStudent(@RequestBody Student student){
         //authentication and authorization
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLoggedUserPrivilege =privilegeController.getPrivilegeByUserModule(auth.getName(), "student");
+        if (!getLoggedUserPrivilege.get("delete")){
+            return "cannot perform delete.. you don't have privileges";
+        }
         //existing check
         Student extStudent = studentDao.getStudentByStudentNumber(student.getStunum());
         if (extStudent == null){
@@ -81,6 +101,11 @@ public class StudentController {
     @PutMapping
     public String updateStudent(@RequestBody Student student){
         //authentication and authorization
+        Authentication auth =SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLogUserPrivileges = privilegeController.getPrivilegeByUserModule(auth.getName(),"student");
+        if (!getLogUserPrivileges.get("update")){
+            return "cannot perform student modify.. you don't have privileges";
+        }
         //check existence and duplicates
         //operator
         //auto set values

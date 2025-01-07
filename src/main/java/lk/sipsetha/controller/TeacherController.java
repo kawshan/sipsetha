@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -22,8 +23,16 @@ public class TeacherController {
     @Autowired
     private TeacherStatusDao teacherStatusDao;
 
+    @Autowired
+    private PrivilegeController privilegeController;
+
     @GetMapping(value = "/findall")
     public List<Teacher> getAllTeacher(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLoggedUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(),"teacher");
+        if (!getLoggedUserPrivilege.get("select")){
+            return null;
+        }
         return  dao.findAll();
     }
 
@@ -40,6 +49,11 @@ public class TeacherController {
     @DeleteMapping
     public String deleteTeacher(@RequestBody Teacher teacher){
         //authentication and authorization
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLoggedUserModule = privilegeController.getPrivilegeByUserModule(auth.getName(), "teacher");
+        if (!getLoggedUserModule.get("delete")){
+            return "cannot perform delete you don't have privileges";
+        }
         //existing
         //operator
         try {
@@ -55,6 +69,11 @@ public class TeacherController {
     @PostMapping
     public String saveTeacher(@RequestBody Teacher teacher){
         //authentication and authorization
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLoggedUSerPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(),"teacher");
+        if (!getLoggedUSerPrivilege.get("insert")){
+            return "cannot perform insert .....  you don't have privileges";
+        }
         //existing
         //operator
         try {
@@ -74,6 +93,11 @@ public class TeacherController {
     @PutMapping
     public String modifyTeacher(@RequestBody Teacher teacher){
         //authentication and authorization
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLoggedUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(), "teacher");
+        if (!getLoggedUserPrivilege.get("update")){
+            return "cannot perform modify teacher ... you don't have privileges";
+        }
         //existing and duplicate
         //operator
         try {

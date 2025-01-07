@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -18,6 +19,8 @@ public class PaymentController {
     @Autowired
     private PaymentDao dao;
 
+    @Autowired
+    private PrivilegeController privilegeController;
 
     @GetMapping(value = "/paymentform")
     public ModelAndView getPaymentTypeUI(){
@@ -31,6 +34,11 @@ public class PaymentController {
 
     @GetMapping(value = "/findall")
     public List<Payment> getAllPaymentType(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLoggedUserPrivileges = privilegeController.getPrivilegeByUserModule(auth.getName(),"studentpayment");
+        if (!getLoggedUserPrivileges.get("select")){
+            return null;
+        }
         return dao.findAll();
     }
 
@@ -38,6 +46,10 @@ public class PaymentController {
     public String saveStudentPayment(@RequestBody Payment payment){
         //authentication and authorization
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLoggedUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(), "studentpayment");
+        if (!getLoggedUserPrivilege.get("insert")){
+            return "cannot perform save student .. you don't have privileges";
+        }
         //existing and duplicate
         //operators
         try {
@@ -61,6 +73,11 @@ public class PaymentController {
     @PutMapping
     public String ModifyPayment(@RequestBody Payment payment){
         //authentication and authorization
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLoggedUserPrivileges = privilegeController.getPrivilegeByUserModule(auth.getName(), "studentpayment");
+        if (!getLoggedUserPrivileges.get("update")){
+            return "cannot perform modify payment ... you don't have privileges";
+        }
         //existing check
         //operation
         try {
@@ -75,6 +92,11 @@ public class PaymentController {
     @DeleteMapping
     public String deletePayment(@RequestBody Payment payment){
         //authentication and authorization
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLoggedUserPrivileges = privilegeController.getPrivilegeByUserModule(auth.getName(), "studentpayment");
+        if (!getLoggedUserPrivileges.get("delete")){
+            return "cannot perform delete payment ... you don't have privileges";
+        }
         //existing
         //operator
         try {

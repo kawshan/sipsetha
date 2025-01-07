@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -22,8 +23,16 @@ public class ClassRoomAllocationController {
     @Autowired
     private AllocationStatusDao allocationStatusDao;
 
+    @Autowired
+    private PrivilegeController privilegeController;
+
     @GetMapping(value = "/findall")
     public List<ClassroomAllocation> getAllClassRoomAllocation(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLoggedUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(), "classroomallocation");
+        if (!getLoggedUserPrivilege.get("select")){
+            return null;
+        }
         return dao.findAll();
     }
 
@@ -41,6 +50,10 @@ public class ClassRoomAllocationController {
     public String saveClassRoomAllocation(@RequestBody ClassroomAllocation classroomAllocation){
         //authentication and authorization
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLoggedUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(), "classroomallocation");
+        if (!getLoggedUserPrivilege.get("insert")){
+            return "cannot perform save class room allocation.. you don't have privileges";
+        }
         //existing and duplicate
         //operator
         try {
@@ -56,6 +69,10 @@ public class ClassRoomAllocationController {
     public String updateClassRoomAllocation(@RequestBody ClassroomAllocation classroomAllocation){
         //authentication and authorization
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLoggedUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(), "classroomallocation");
+        if (!getLoggedUserPrivilege.get("update")){
+            return "cannot perform update class room allocation.. you dont have privileges";
+        }
         //existing and duplicate
         //operator
         try {
@@ -71,6 +88,11 @@ public class ClassRoomAllocationController {
     @DeleteMapping
     public String deleteClassroomAllocation(@RequestBody ClassroomAllocation classroomAllocation){
         //authentication and authorization
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLoggedUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(), "classroomallocation");
+        if (!getLoggedUserPrivilege.get("delete")){
+            return "cannot perform delete class room allocation ... you don't have privileges";
+        }
         //existing
         //operator
         try {

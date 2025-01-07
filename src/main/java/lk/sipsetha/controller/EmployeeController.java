@@ -5,11 +5,13 @@ import lk.sipsetha.dao.EmployeeStatusDao;
 import lk.sipsetha.entity.Employee;
 import lk.sipsetha.entity.EmployeeStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -21,9 +23,17 @@ public class EmployeeController {
     @Autowired
     public EmployeeStatusDao employeeStatusDao;
 
+    @Autowired
+    private PrivilegeController privilegeController;
+
     @GetMapping(value = "/findall")
     public List<Employee> employeeFindAll() {
-        return dao.findAll();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(), "employee");
+        if (!getUserPrivilege.get("select")){
+            return null;
+        }
+        return dao.findAll(Sort.by(Sort.Direction.DESC,"id"));
     }
 
     @GetMapping(value = "/employeeform")
@@ -38,6 +48,11 @@ public class EmployeeController {
 
     @PostMapping(value = "/employeeform")
     public String save(@RequestBody Employee employee) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(), "employee");
+        if (!getUserPrivilege.get("insert")){
+            return "cannot perform employee save... you dont have privileges";
+        }
 
         //check nic duplicates
         Employee exNicEmployee = dao.getByNic(employee.getNic());
@@ -71,6 +86,11 @@ public class EmployeeController {
 
     @DeleteMapping
     public String deleteEmployee(@RequestBody Employee employee) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(), "employee");
+        if (!getUserPrivilege.get("delete")){
+            return "cannot perform delete employee.. you don't have privileges";
+        }
         try {
             //hard delete
             //dao.delete(employee);
@@ -89,21 +109,27 @@ public class EmployeeController {
 
     @PutMapping
     public String updateEmployee(@RequestBody Employee employee){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getUserPrivileges = privilegeController.getPrivilegeByUserModule(auth.getName(), "employee");
+        if (!getUserPrivileges.get("update")){
+            return "cannot perform update employee.. you don't have privileges";
+        }
 
-//        Employee exNicEmployee = dao.getByNic(employee.getNic());
-//        if (exNicEmployee != null) {
-//            return "save not completed given nic " + employee.getNic() + " is already exist";
-//        } else {
-//
-//        }
+        Employee extEmployee = dao.getReferenceById(employee.getId());
+        if (extEmployee == null){
+            return "cannot perform update... employee not exist";
+        }
 
-        //check email duplicate
-//        Employee exEmailEmployee = dao.getByEmail(employee.getEmail());
-//        if (exEmailEmployee != null) {
-//            return "save not complete given email " + employee.getEmail() + "is already exist";
-//        } else {
-//
-//        }
+        Employee exNicEmployee = dao.getByNic(employee.getNic());
+        if (exNicEmployee != null && exNicEmployee.getId() != employee.getId()) {
+            return "update not completed given nic " + employee.getNic() + " is already exist";
+        }
+
+//        check email duplicate
+        Employee exEmailEmployee = dao.getByEmail(employee.getEmail());
+        if (exEmailEmployee != null && !exEmailEmployee.getEmail().equals(employee.getEmail())) {
+            return "save not complete given email " + employee.getEmail() + " is already exist";
+        }
 
         try{
             dao.save(employee);

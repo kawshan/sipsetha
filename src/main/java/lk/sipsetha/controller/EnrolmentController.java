@@ -1,13 +1,16 @@
 package lk.sipsetha.controller;
 
 import lk.sipsetha.dao.EnrolmentDao;
+import lk.sipsetha.dao.EnrolmentStatusDao;
 import lk.sipsetha.entity.Enrolment;
 import lk.sipsetha.entity.EnrolmentHasClassOfferings;
+import lk.sipsetha.entity.EnrolmentStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -17,14 +20,30 @@ public class EnrolmentController {
     @Autowired
     private EnrolmentDao dao;
 
+    @Autowired
+    private PrivilegeController privilegeController;
+
+    @Autowired
+    private EnrolmentStatusDao enrolmentStatusDao;
+
+
     @GetMapping(value = "/findall")
     public List<Enrolment> getAllEnrolment(){
-//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLoggedUserPrivileges = privilegeController.getPrivilegeByUserModule(auth.getName(), "enrolment");
+        if (!getLoggedUserPrivileges.get("select")){
+            return null;
+        }
         return dao.findAll();
     }
 
     @PostMapping
     public String saveEnrolment(@RequestBody Enrolment enrolment){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLoggedUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(),"enrolment");
+        if (!getLoggedUserPrivilege.get("insert")){
+            return "cannot perform save enrolment .. you dont have privileges";
+        }
         try {
             for (EnrolmentHasClassOfferings ehco : enrolment.getClassOfferings()){
                 ehco.setEnrolment_id(enrolment);
@@ -38,6 +57,11 @@ public class EnrolmentController {
 
     @PutMapping
     public String updateEnrolment(@RequestBody Enrolment enrolment){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLoggedUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(), "enrolment");
+        if (!getLoggedUserPrivilege.get("update")){
+            return "cannot perform update enrolment .. you don't have privileges";
+        }
         try {
             for (EnrolmentHasClassOfferings ehco : enrolment.getClassOfferings()){
                 ehco.setEnrolment_id(enrolment);
@@ -45,6 +69,26 @@ public class EnrolmentController {
             return "ok";
         }catch (Exception e){
             return "update enrolment not complete"+e.getMessage();
+        }
+    }
+
+    @DeleteMapping
+    public String deleteEnrolment(@RequestBody Enrolment enrolment){
+        Authentication auth =SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLoggedUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(),"enrolment");
+        if (!getLoggedUserPrivilege.get("delete")){
+            return "cannot perform delete enrolment .. you dont have privileges";
+        }
+        try {
+            for (EnrolmentHasClassOfferings ehco : enrolment.getClassOfferings()){
+                ehco.setEnrolment_id(enrolment);
+            }
+            EnrolmentStatus deleteEnrolmentStatus = enrolmentStatusDao.getReferenceById(3);
+            enrolment.setEnrolmentstatus_id(deleteEnrolmentStatus);
+            dao.save(enrolment);
+            return "ok";
+        }catch (Exception e){
+            return "delete enrolment not complete "+e.getMessage();
         }
     }
 

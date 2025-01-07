@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDateTime;
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -18,8 +19,16 @@ public class ClassOfferingController {
     @Autowired
     private ClassOfferingDao dao;
 
+    @Autowired
+    private PrivilegeController privilegeController;
+
     @GetMapping(value = "/findall")
     public List<ClassOffering> getAllClassOffering(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLoggedUserPrivileges = privilegeController.getPrivilegeByUserModule(auth.getName(), "classoffering");
+        if (!getLoggedUserPrivileges.get("select")){
+            return null;
+        }
         return dao.findAll();
     }
 
@@ -36,6 +45,11 @@ public class ClassOfferingController {
     @DeleteMapping
     public String deleteClassOffering(@RequestBody ClassOffering classOffering){
         //authentication and authorization
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLoggedUserPrivileges = privilegeController.getPrivilegeByUserModule(auth.getName(), "classoffering");
+        if (!getLoggedUserPrivileges.get("delete")){
+            return "cannot perform delete class offerings.. you don't have privileges";
+        }
         //existing check
 //        operator
         try {
@@ -49,6 +63,11 @@ public class ClassOfferingController {
     @PostMapping
     public String saveClassOffering(@RequestBody ClassOffering classOffering){
         //authentication and authorization
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLoggedUserPrivileges = privilegeController.getPrivilegeByUserModule(auth.getName(), "classoffering");
+        if (!getLoggedUserPrivileges.get("insert")){
+            return "cannot perform save class offerings.. you don't have privileges";
+        }
         //existing
         //operator
         try {
@@ -62,6 +81,11 @@ public class ClassOfferingController {
     @PutMapping
     public String modifyClassOffering(@RequestBody ClassOffering classOffering){
         //authentication and authorization
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> getLoggedUserPrivileges = privilegeController.getPrivilegeByUserModule(auth.getName(), "classoffering");
+        if (!getLoggedUserPrivileges.get("update")){
+            return "cannot perform update class offering .. you dont have privileges";
+        }
         //existing and duplicate
         //operator
         try {

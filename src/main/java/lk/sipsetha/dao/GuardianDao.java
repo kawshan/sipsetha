@@ -9,6 +9,6 @@ import java.util.List;
 public interface GuardianDao extends JpaRepository<Guardian,Integer> {
 
 
-    @Query(value = "select g from Guardian as g where g.nic=?1")
+    @Query(value = "select g from Guardian g where g.nic=?1")
     public Guardian getGuardianByByNic(String nic);
 }

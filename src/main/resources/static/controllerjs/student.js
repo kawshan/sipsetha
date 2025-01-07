@@ -7,6 +7,8 @@ window.addEventListener('load', () => {
 
     refreshStudentForm();
 
+    refreshGuardianForm();
+
 });
 //define function for refresh student table
 const refreshStudentTable = () => {
@@ -481,15 +483,125 @@ const modalPrintButton = () => {
 
 
 }
+//define function for refresh guardian form
+const refreshGuardianForm = ()=>{
+    guardian=new Object();
+    // guardianInnerForm.reset();
+
+
+    textGuardianFirstName.style.border="2px solid #ced4da";
+    textGuardianLastName.style.border="2px solid #ced4da";
+    textNic.style.border="2px solid #ced4da";
+    textGuardianMobile.style.border="2px solid #ced4da";
+    textGuardianAddress.style.border="2px solid #ced4da";
+
+    selectGuardianType.style.border="2px solid #ced4da";
+    selectGuardianGender.style.border="2px solid #ced4da";
+    selectGuardianStatus.style.border="2px solid #ced4da";
+
+
+    textGuardianFirstName.value="";
+    textGuardianLastName.value="";
+    textNic.value="";
+    textGuardianMobile.value="";
+    textGuardianAddress.value="";
+
+    guardianTypes=ajaxGetRequest("/guardiantype/findall");
+    fillDataIntoSelect(selectGuardianType,'select guardian type',guardianTypes,'name');
+
+    selectGuardianStatus.value=true;    //value eka assign kara
+    guardian.status=selectGuardianStatus.value; //guardian object ekata value eka bind kara
+    selectGuardianStatus.disabled=true; //guardian ge status eka disable karala damma
+
+    selectGuardianGender.disabled=true;    //gender eka disable karala damma mokada eka automatic enawa nic eka type karana kota
+}
+
+
+//define function for generate gender in guardian form using nic
+const generateGuardianGender = (fieldId)=>{
+    let  nicValue =  fieldId.value;
+    let days;
+    if (new RegExp('^(([0-9]{9}[VvXxSs])|([0-9]{12}))$').test(nicValue)){
+        console.log("yes");
+
+        if (nicValue.length==10){
+            console.log("old");
+            days=nicValue.substring(2, 5);
+            console.log(days+"old");
+        }
+        if (nicValue.length==12){
+            console.log("new");
+            days = nicValue.substring(4, 7);
+            console.log(days+"new")
+        }
+        if (days<500){
+            console.log("male");
+            selectGuardianGender.value=true
+            guardian.gender=selectGuardianGender.value;
+            selectGuardianGender.style.border="2px solid green";
+        }else if (days>500){
+            console.log("female");
+            selectGuardianGender.value=false
+            guardian.gender=selectGuardianGender.value;
+            selectGuardianGender.style.border="2px solid green";
+        }
+
+    }
+}
+
+//define function for guardian check errors
+const guardianCheckErrors = ()=>{
+    let errors="";
+
+    if (guardian.firstname == null){
+        errors=errors+'please enter first name \n';
+    }
+
+    if (guardian.lastname == null){
+        errors=errors+'please enter last name \n';
+    }
+
+
+    return errors;
+}
 
 
 
 
+//define function for guardian submit in inner collapse form
+const buttonGuardianAdd = ()=>{
+    let errors = guardianCheckErrors();
+    if (errors == ""){
+        let userConfirm =confirm("are you sure to add this guardian"
+            +'\n first name is'+guardian.firstname
+            +'\n last name is'+guardian.lastname
+            +'\n nic is'+guardian.nic
+            +'\n mobile is'+guardian.mobile
+            +'\n address is'+guardian.address
+            +'\n guardian type is'+guardian.guardiantype_id.name
+            +'\n gender is'+guardian.gender
+            +'\n status is'+guardian.status
+        );
+        if (userConfirm){
+            let serverResponse=ajaxPostRequest("/guardian",guardian)
+            if (serverResponse=="ok"){
+                alert("save success "+serverResponse);
+                // refreshGuardianTable();
+                // guardianForm.reset();
+                // refreshGuardianForm();
+                // $('#modalGuardianAdd').modal('hide');
+                refreshGuardianForm();
+                $('#collapseExample').collapse('hide');
 
 
-
-
-
+            }else {
+                alert("save not success"+serverResponse);
+            }
+        }
+    }else {
+        alert("you might have following errors "+errors);
+    }
+}
 
 
 

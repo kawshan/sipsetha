@@ -102,12 +102,16 @@ public class GuardianController {
             return "cannot perform save guardian... you dont have privileges";
         }
 
-        Guardian extGuardianNic = guardianDao.getGuardianByByNic(guardian.getNic());
-        if (extGuardianNic!=null){
-            return " cannot save guardian.. guardian's nic is already exists";
-        }
 
         try {
+
+            Guardian extGuardianNic = guardianDao.getGuardianByByNic(guardian.getNic());
+            if (extGuardianNic!=null){
+                return "cannot save guardian.. guardian's nic is already exists";
+            }
+
+
+
             guardian.setUser_id(userDao.getUserByUserName(auth.getName()));
             guardian.setAddeddatetime(LocalDateTime.now());
             guardianDao.save(guardian);

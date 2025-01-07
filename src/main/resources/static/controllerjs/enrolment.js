@@ -75,7 +75,8 @@ const refreshEnrolmentForm = ()=>{
     teachers=ajaxGetRequest("/teacher/findall");
     fillDataIntoSelect(selectTeacher,'select teacher',teachers,'fullname');
 
-    enrolmentStatuses=ajaxGetRequest("")//need to do before add
+    enrolmentStatuses=ajaxGetRequest("/enrolmentstatus/findall");
+    fillDataIntoSelect(selectEnrolmentStatus,'select enrolment status',enrolmentStatuses,'name');
 
     //to set current month to month tag in html page - start
 
@@ -95,6 +96,7 @@ const refreshEnrolmentForm = ()=>{
         event.preventDefault(); // Prevent typing
     });
     txtMonth.disabled=true;
+    enrolment.month=txtMonth.value;
     //to set current month to month tag in html page - end
 
     textTotalIncome.value="";
@@ -138,7 +140,7 @@ const refreshInnerFormAndTable = ()=>{
     classOfferings=ajaxGetRequest("/classoffering/findall");
     fillDataIntoSelect(selectClassOffering,'select class offerings',classOfferings,'classname');
 
-    selectClassOffering.value="";
+    // selectClassOffering.value="";
     textClassFee.value="";
     textClassIncome.value="";
     textRegisteredStudentCount.value="";
@@ -148,7 +150,7 @@ const refreshInnerFormAndTable = ()=>{
     textAdditionalCharge.value="";
 
 
-    selectClassOffering.style.border="2px solid #ced4da";
+    // selectClassOffering.style.border="2px solid #ced4da";
     textClassFee.style.border="2px solid #ced4da";
     textClassIncome
     textRegisteredStudentCount.style.border="2px solid #ced4da";
@@ -215,13 +217,13 @@ const refillInnerForm = (ob,rowIndex)=>{
     fillDataIntoSelect(selectClassOffering,'select class offerings',classOfferings,'classname',ob.classoffering_id.classname);
 
 
-    textClassFee.value=ob.classOfferings.classfee;
-    textClassIncome.value=ob.classOfferings.classincome;
-    textRegisteredStudentCount.value=ob.classOfferings.regstudentcount;
-    textPayedCount.value=ob.classOfferings.payedcount;
-    textFreeStudentCount.value=ob.classOfferings.freestudentscount;
-    textServiceCharge.value=ob.classOfferings.servicecharge;
-    textAdditionalCharge.value=ob.classOfferings.additionalcharge;
+    textClassFee.value=ob.classfee;
+    textClassIncome.value=ob.classincome;
+    textRegisteredStudentCount.value=ob.regstudentcount;
+    textPayedCount.value=ob.payedcount;
+    textFreeStudentCount.value=ob.freestudentscount;
+    textServiceCharge.value=ob.servicecharge;
+    textAdditionalCharge.value=ob.additionalcharge;
 
 }
 
@@ -267,3 +269,93 @@ const buttonInnerAdd=()=>{
         alert("form has errors");
     }
 }
+//define function for delete enrolment
+const deleteEnrolment =(ob,rowInd)=>{
+    const userConfirm=confirm("are you sure to delete enrolment");
+    if (userConfirm){
+        let deleteServerResponse=ajaxDeleteRequest("/enrolment",ob);
+        if (deleteServerResponse=="ok"){
+            alert("delete successful "+deleteServerResponse);
+            refreshEnrolmentTable();
+            refreshEnrolmentForm();
+        }else {
+            alert("you might have some errors \n "+deleteServerResponse);
+        }
+    }
+}
+
+const checkEnrolmentErrors= ()=>{
+    let errors="";
+
+    if (enrolment.month==null){
+        errors=errors+"please select month \n";
+    }
+    if (enrolment.totalclassincome==null){
+        errors=errors+"please add total class income \n";
+    }
+    if (enrolment.totalservicecharge==null){
+        errors=errors+"please add total service charge \n";
+    }
+    if (enrolment.totaladditionalcharge==null){
+        errors=errors+"please add total additional charge \n";
+    }
+    if (enrolment.totaltobepayed==null){
+        errors=errors+"please add total to be payed \n";
+    }
+    if (enrolment.payedamount==null){
+        errors=errors+"please add total payed amount \n"
+    }
+    if (enrolment.enrolmentstatus_id==null){
+        errors=errors+"please select enrolment status \n";
+    }
+    if (enrolment.teacher_id==null){
+        errors=errors+"please select teacher \n"
+    }
+
+
+    return errors;
+}
+
+//define function for add enrolment
+const AddEnrolment = ()=>{
+    console.log("wwwwww")
+    let errors = checkEnrolmentErrors();
+    console.log("ooo")
+    if (errors==""){
+        let userConfirm=confirm("are you sure to add?")
+        if (userConfirm) {
+            let postServerResponse = ajaxPostRequest("/enrolment", enrolment);
+            if (postServerResponse=="ok"){
+                alert("added successfully \n"+postServerResponse);
+                $("#modalEnrolmentAdd").modal('hide');
+                refreshEnrolmentForm();
+                refreshEnrolmentTable();
+            }else {
+                alert("error occurred \n"+postServerResponse);
+            }
+        }
+    }else {
+        alert("errors available"+errors);
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

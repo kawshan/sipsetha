@@ -93,7 +93,7 @@ public class EnrolmentController {
             for (EnrolmentHasClassOfferings ehco : enrolment.getClassOfferings()){
                 ehco.setEnrolment_id(enrolment);
             }
-            EnrolmentStatus deleteEnrolmentStatus = enrolmentStatusDao.getReferenceById(3);
+            EnrolmentStatus deleteEnrolmentStatus = enrolmentStatusDao.getReferenceById(2);
             enrolment.setEnrolmentstatus_id(deleteEnrolmentStatus);
             dao.save(enrolment);
             return "ok";

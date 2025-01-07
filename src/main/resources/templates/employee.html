@@ -28,7 +28,8 @@
         <div class="col-md-8">
             <div id="divPrintEmployeeTableButton" class="">
                 <button type="button" class="btn fw-bold"
-                        style="background-color: #044800; color: whitesmoke; width: 25%; border: 1px solid black; border-radius: 30px" onclick="printEmployeeFullTable()">
+                        style="background-color: #044800; color: whitesmoke; width: 25%; border: 1px solid black; border-radius: 30px"
+                        onclick="printEmployeeFullTable()">
                     <i class="fa-solid fa-print fa-beat"> </i> print employee table
                 </button>
             </div>
@@ -271,14 +272,21 @@
 
                         <div class="row mt-2">
                             <div class="col-md-6">
-                                <label for="fileEmpPhoto" class="form-label fw-bold">image <i class="text-danger">*</i> </label>
-                                <button type="button" id="btnSelectImage" onclick="fileEmpPhoto.click()" class="btn btn-primary">select image</button>
-                                <button type="button" id="btnClearImage" onclick="btnClearImageFN()" class="btn btn-info">clear image</button>
+                                <label for="fileEmpPhoto" class="form-label fw-bold">image <i class="text-danger">*</i>
+                                </label>
+                                <button type="button" id="btnSelectImage" onclick="fileEmpPhoto.click()"
+                                        class="btn btn-primary">select image
+                                </button>
+                                <button type="button" id="btnClearImage" onclick="btnClearImageFN()"
+                                        class="btn btn-info">clear image
+                                </button>
                             </div>
                             <div class="col-md-6">
-                                <img src="/icons/no-photo.png" style="height: 75px; width: 75px" alt="default image" id="imgEmpPhoto">
+                                <img src="/icons/no-photo.png" style="height: 75px; width: 75px" alt="default image"
+                                     id="imgEmpPhoto">
                                 <input type="text" disabled class="form-control" id="textEmpPhoto">
-                                <input type="file" class="form-control d-none" id="fileEmpPhoto" onchange="validateFileField(this,'employee','emp_photo','emp_photo_name','oldEmployee',imgEmpPhoto,textEmpPhoto)">
+                                <input type="file" class="form-control d-none" id="fileEmpPhoto"
+                                       onchange="validateFileField(this,'employee','emp_photo','emp_photo_name','oldEmployee',imgEmpPhoto,textEmpPhoto)">
                             </div>
                         </div>
 
@@ -309,25 +317,25 @@
                                         class="text-danger">*</i></label>
                             </div>
                             <div class="col-md-6">
-                            <div class="input-group">
+                                <div class="input-group">
 
-                                <select id="selectDesignation" class="form-select text-center" required
-                                        onchange="selectDBValidator(this,'','employee','designation_id')">
-                                    <option value="" selected disabled>select an option</option>
-                                    <option value="manager">manger</option>
-                                    <option value="reception">reception</option>
-                                    <option value="admin">admin</option>
-                                    <option value="labour">labour</option>
-                                </select>
+                                    <select id="selectDesignation" class="form-select text-center" required
+                                            onchange="selectDBValidator(this,'','employee','designation_id')">
+                                        <option value="" selected disabled>select an option</option>
+                                        <option value="manager">manger</option>
+                                        <option value="reception">reception</option>
+                                        <option value="admin">admin</option>
+                                        <option value="labour">labour</option>
+                                    </select>
 
-                                <span>
+                                    <span>
                                     <a class="btn btn-success" data-bs-toggle="collapse" href="#collapseExample"
-                                       role="button" >
+                                       role="button">
                                               new
                                             </a>
                                 </span>
 
-                            </div>
+                                </div>
 
                                 <!--  collapse designation form    -->
                                 <div class="collapse mt-2" id="collapseExample">
@@ -450,11 +458,6 @@
         </div>
     </div>
     <!--print model area end-->
-
-
-
-
-
 
 
 </div>

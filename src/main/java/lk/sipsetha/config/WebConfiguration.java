@@ -24,7 +24,7 @@ public class WebConfiguration {
                     .requestMatchers("/login").permitAll()
                     .requestMatchers("/error").permitAll()
                     .requestMatchers("/dashboard").hasAnyAuthority("admin","manager","assistant-manager","cashier","employee")
-                    .requestMatchers("/privilege/**").hasAnyAuthority("admin","manager")
+                    .requestMatchers("/privilege/**").hasAnyAuthority("admin","manager","assistant-manager","cashier","card-checker")
                     .requestMatchers("/user/**").hasAnyAuthority("admin","manager")
                     .requestMatchers("/employee/**").hasAnyAuthority("admin","manager","assistant-manager")
                     .requestMatchers("/student/**").hasAnyAuthority("admin","manager","assistant-manager","cashier")

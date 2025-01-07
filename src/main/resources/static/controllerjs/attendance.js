@@ -1,7 +1,7 @@
 window.addEventListener('load', () => {
 
     //get user privileges for check privileges on buttons
-    userPrivilege =ajaxGetRequest("/privilege/byloggeduser/studentregistration");
+    userPrivilege =ajaxGetRequest("/privilege/byloggeduser/attendance");
 
     //call refresh attendance form
     refreshAttendanceForm()
@@ -45,6 +45,7 @@ const refreshAttendanceTable = () => {
 
     displayProperty = [
         {dataType: 'function', propertyName: getStudentName},
+        {dataType: 'text', propertyName: 'addeddate'},
         {dataType: 'function', propertyName: getClassOffering},
         {dataType: 'function', propertyName: getAttendanceStatus},
     ];

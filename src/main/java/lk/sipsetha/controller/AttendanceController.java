@@ -53,7 +53,7 @@ public class AttendanceController {
 
         //authentication and authorization
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        HashMap<String,Boolean> getLoggedUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(),"guardian");
+        HashMap<String,Boolean> getLoggedUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(),"attendance");
         if (!getLoggedUserPrivilege.get("delete")){
             return "cannot perform delete attendance... you dont have privileges";
         }
@@ -75,7 +75,7 @@ public class AttendanceController {
     public String saveAttendance(@RequestBody Attendance attendance){
         //authentication and authorization
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        HashMap<String,Boolean> getLoggedUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(),"guardian");
+        HashMap<String,Boolean> getLoggedUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(),"attendance");
         if (!getLoggedUserPrivilege.get("insert")){
             return "cannot perform delete attendance... you dont have privileges";
         }
@@ -103,7 +103,7 @@ public class AttendanceController {
     public String modifyAttendance(@RequestBody Attendance attendance){
         //authentication and authorization
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        HashMap<String,Boolean> getLoggedUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(),"guardian");
+        HashMap<String,Boolean> getLoggedUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(),"attendance");
         if (!getLoggedUserPrivilege.get("update")){
             return "cannot perform delete attendance... you dont have privileges";
         }

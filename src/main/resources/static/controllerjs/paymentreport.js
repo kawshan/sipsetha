@@ -127,6 +127,13 @@ const generateReportsByPaymentType = ()=>{
 }
 
 
+const generateReportByDate=()=>{
+    let paymentDate = textPaymentDate.value;
+    studentPayments=ajaxGetRequest("")
+    refreshPaymentTable();
+}
+
+
 
 
 const printPaymentFullTable = () => {

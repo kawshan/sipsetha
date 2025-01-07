@@ -53,6 +53,22 @@ private UserDao userDao;
 
 
 
+    @GetMapping(value = "/reportattendancetui")
+    public ModelAndView reportAttendanceView(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedUser = userDao.getUserByUserName(auth.getName());
+        ModelAndView attendanceReportUI = new ModelAndView();
+        attendanceReportUI.addObject("loggeduserrole",loggedUser.getRoles().iterator().next().getName());
+        attendanceReportUI.addObject("loggeduserphoto",loggedUser.getUserphoto());
+        attendanceReportUI.addObject("loggedusername",auth.getName());
+        attendanceReportUI.addObject("title","attendance report");
+        attendanceReportUI.setViewName("attendancereport.html");
+        return attendanceReportUI;
+    }
+
+
+
+
 
 
 }

@@ -51,12 +51,12 @@
             <div class="col-md-6">
                 <button type="button" class="btn btn-warning fw-bold"
                         style="width: 15%; color: whitesmoke; border:1px solid black"
-                        onclick="classHallFormRefill(window['editOb'],window['editRow'])">
+                        onclick="classRoomAllocationRefill(window['editOb'],window['editRow'])">
                     <i class="fa-solid fa-recycle fa-beat"> </i> edit
                 </button>
                 <button type="button" class="btn btn-danger fw-bold ms-2 me-2"
                         style="width: 15%; border: 1px solid black"
-                        onclick="deleteClassHall(window['editOb'],window['editRow'])">
+                        onclick="deleteClassRoomAllocation(window['editOb'],window['editRow'])">
                     <i class="fa-solid fa-trash fa-beat"></i> delete
                 </button>
                 <button type="button" class="btn btn-primary fw-bold"
@@ -80,6 +80,7 @@
         <th>weekday</th>
         <th>class hall</th>
         <th>class offering</th>
+        <th>status</th>
         <th>modify</th>
         </thead>
         <tbody>
@@ -202,14 +203,14 @@
                             <div class="col-md-4 text-center">
                                 <button type="button" class="btn btn-warning fw-bold"
                                         style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%"
-                                        onclick="classHallUpdate()">
+                                        onclick="updateClassRoomAllocation()">
                                     <i class="fa-solid fa-recycle fa-beat"> </i> update
                                 </button>
                             </div>
                             <div class="col-md-4 text-end">
                                 <button type="submit" class="btn btn-primary fw-bold"
                                         style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%"
-                                        onclick="classHallSubmit()">
+                                        onclick="classRoomAllocationSubmit()">
                                     <i class="fa-solid fa-plus fa-beat"> </i> add
                                 </button>
                             </div>

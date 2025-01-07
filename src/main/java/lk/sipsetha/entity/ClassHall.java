@@ -68,5 +68,9 @@ public class ClassHall {
     @JoinTable(name = "classhall_has_classhallfeatures",joinColumns = @JoinColumn(name = "classhall_id"),inverseJoinColumns = @JoinColumn(name = "classhallfeatures_id"))
     private Set<ClassHallFeatures> features;
 
+    public ClassHall(Integer id, String name){
+        this.id=id;
+        this.name=name;
+    }
 
 }

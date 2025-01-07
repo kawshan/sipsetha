@@ -52,9 +52,15 @@ const getClassHallStatus = (rowOb)=>{
 const refreshClassHallForm = ()=>{
     classhall = new Object();
     classHallForm.reset();
+    classhall.features = [];
 
     classHallStatus = ajaxGetRequest("/classhallstatus/findall");
-    fillDataIntoSelect(selectClassHallStatus,'select status',classHallStatus,'name')
+    fillDataIntoSelect(selectClassHallStatus,'select status',classHallStatus,'name');
+
+    availbaleFeatures=ajaxGetRequest("/classhallfeatures/findall")
+    fillDataIntoSelect(selectAllItem,'select features',availbaleFeatures,'name');
+
+    fillDataIntoSelect(selectedFeatures,'',classhall.features,'name');
 
 
     textName.style.border='2px solid #ced4da';
@@ -107,6 +113,20 @@ const classHallFormRefill = (ob,rowIndex)=>{
 
     fillDataIntoSelect(selectClassHallStatus,'select status',classHallStatus,'name',classhall.classhallstatus_id.name);
 
+    availbaleFeatures=ajaxGetRequest("/classhallfeatures/findall")
+    fillDataIntoSelect(selectAllItem,'select features',availbaleFeatures,'name');
+
+    fillDataIntoSelect(selectedFeatures,'',classhall.features,'name');
+
+
+    if (!userPrivilege.update){
+        btnClassHallUpdate.disabled=true;
+        btnClassHallUpdate.style.cursor='not-allowed';
+    }else {
+        btnClassHallUpdate.disabled="";
+        $("#btnClassHallUpdate").css("cursor", "pointer");
+
+    }
 
 }
 
@@ -126,6 +146,7 @@ const deleteClassHall = (ob,rowIndex)=>{
             const deleteServerResponse= ajaxDeleteRequest("/classhall",ob);
             if (deleteServerResponse =="ok"){
                 alert('delete successful')
+                refreshClassHallTable();
             }else {
                 alert('delete unsuccessful '+deleteServerResponse);
             }
@@ -268,8 +289,69 @@ const classHallSubmit = ()=>{
 }
 
 
+//define function for button add one item
+const btnAddOneItem= ()=>{
+    console.log(selectAllItem.value);
+    if (selectAllItem.value==""){
+        alert("please select item")
+    }else {
+        let selectedItem=JSON.parse(selectAllItem.value);
 
 
+        classhall.features.push(selectedItem);
+        fillDataIntoSelect(selectedFeatures,"",classhall.features,'name');
+
+        let extIndex = availbaleFeatures.map(item => item.name).indexOf(selectedItem.name);
+        if (extIndex != -1){
+            availbaleFeatures.splice(extIndex,1)
+        }
+    fillDataIntoSelect(selectAllItem,"",availbaleFeatures,'name')
+
+    }
+}
+
+//define function for btn add all item
+const btnAddAllItem = ()=>{
+    availbaleFeatures.forEach(item=>{
+        classhall.features.push(item);
+    });
+
+    fillDataIntoSelect(selectedFeatures,'',classhall.features,'name');
+
+    availbaleFeatures=[];
+    fillDataIntoSelect(selectAllItem,"",availbaleFeatures,'name');
+
+
+}
+//define function doe remove one item
+const btnRemoveOneItem = ()=>{
+    console.log(selectAllItem.value);
+    if (selectedFeatures.value==""){
+        alert("please select item for remove");
+    }else {
+        let selectedRemoveItem = JSON.parse(selectedFeatures.value)
+        availbaleFeatures.push(selectedRemoveItem);
+        fillDataIntoSelect(selectAllItem,"",availbaleFeatures,'name');
+
+        let extIndex = classhall.features.map(item=>item.name).indexOf(selectedRemoveItem.name);
+        if (extIndex!=-1){
+            classhall.features.splice(extIndex,1)
+        }
+        fillDataIntoSelect(selectedFeatures,"",classhall.features,'name');
+    }
+}
+
+//define function for remove all item
+function btnRemoveAllItem(){
+    classhall.features.forEach(item=>{
+        availbaleFeatures.push(item);
+    });
+
+    fillDataIntoSelect(selectAllItem,"",availbaleFeatures,'name');
+
+    classhall.features=[];
+    fillDataIntoSelect(selectedFeatures,"",classhall.features,'name');
+}
 
 
 

@@ -89,8 +89,8 @@
 
 
     <!--employee modal area start-->
-    <div class="modal modal-xl" id="modalClassHallAdd" data-bs-backdrop="static" data-bs-keyboard="false">
-        <div class="modal-dialog">
+    <div class="modal" id="modalClassHallAdd" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-fullscreen">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #044800; color: whitesmoke;">
                     <h2 class="h2">
@@ -115,95 +115,159 @@
 
                         <div class="row mt-2">
                             <div class="col-md-4">
-                                <label for="textName" class="form-label fw-bold">name <i class="text-danger">*</i> </label>
+                                <label for="textName" class="form-label fw-bold">name <i class="text-danger">*</i>
+                                </label>
                             </div>
                             <div class="col-md-8">
-                                <input type="text" id="textName" class="form-control text-center" required placeholder="enter name" onkeyup="textValidator(this,'^[A-Za-z0-9]{3,20}$','classhall','name')">
+                                <input type="text" id="textName" class="form-control text-center" required
+                                       placeholder="enter name"
+                                       onkeyup="textValidator(this,'^[A-Za-z0-9]{3,20}$','classhall','name')">
                             </div>
                         </div>
 
                         <div class="row mt-2">
                             <div class="col-md-4">
-                                <label for="textLocation" class="form-label fw-bold">location <i class="text-danger">*</i></label>
+                                <label for="textLocation" class="form-label fw-bold">location <i
+                                        class="text-danger">*</i></label>
                             </div>
                             <div class="col-md-8">
-                                <input type="text" id="textLocation" class="form-control text-center" required placeholder="enter location " onkeyup="textValidator(this,'^[A-Za-z0-9]{3,10}$','classhall','location')">
-                            </div>
-                        </div>
-                        
-                        <div class="row mt-2">
-                            <div class="col-md-4">
-                                <label for="textMinCount" class="form-label fw-bold">min count <i class="text-danger">*</i> </label>
-                            </div>
-                            <div class="col-md-8">
-                                <input type="number" id="textMinCount" class="form-control text-center" required placeholder="enter min count" onkeyup="textValidator(this,'^[0-9]{1,2}$','classhall','mincount')">
-                            </div>
-                        </div>
-                        
-                        <div class="row mt-2">
-                            <div class="col-md-4">
-                                <label for="textMaxCount" class="form-label fw-bold" >max count <i class="text-danger">*</i> </label>
-                            </div>
-                            <div class="col-md-8">
-                                <input type="number" id="textMaxCount" class="form-control text-center" required placeholder="enter max count" onkeyup="textValidator(this,'^[0-9]{1,2}$','classhall','maxcount')">
-                            </div>
-                        </div>
-                        
-                        <div class="row mt-2">
-                            <div class="col-md-4">
-                                <label for="textTableCount" class="form-label fw-bold">table count <i class="text-danger">*</i> </label>
-                            </div>
-                            <div class="col-md-8">
-                                <input type="number" id="textTableCount" class="form-control text-center" required placeholder="enter table count" onkeyup="textValidator(this,'^[0-9]{1,2}$','classhall','tablecount')">
-                            </div>
-                        </div>
-                        
-                        <div class="row mt-2">
-                            <div class="col-md-4">
-                                <label for="textBenchCount" class="form-label fw-bold">bench count <i class="text-danger">*</i> </label>
-                            </div>
-                            <div class="col-md-8">
-                                <input type="number" id="textBenchCount" class="form-control text-center" required placeholder="enter bench count" onkeyup="textValidator(this,'^[0-9]{1,2}$','classhall','benchcount')">
+                                <input type="text" id="textLocation" class="form-control text-center" required
+                                       placeholder="enter location "
+                                       onkeyup="textValidator(this,'^[A-Za-z0-9]{3,10}$','classhall','location')">
                             </div>
                         </div>
 
                         <div class="row mt-2">
                             <div class="col-md-4">
-                                <label for="textMaxTableCount" class="form-label fw-bold">max table count <i class="text-danger">*</i> </label>
+                                <label for="textMinCount" class="form-label fw-bold">min count <i
+                                        class="text-danger">*</i> </label>
                             </div>
                             <div class="col-md-8">
-                                <input type="number" class="form-control text-center" id="textMaxTableCount" required placeholder="enter max table count" onkeyup="textValidator(this,'^[0-9]{1,2}$','classhall','maxtablecount')">
+                                <input type="number" id="textMinCount" class="form-control text-center" required
+                                       placeholder="enter min count"
+                                       onkeyup="textValidator(this,'^[0-9]{1,2}$','classhall','mincount')">
                             </div>
                         </div>
 
                         <div class="row mt-2">
                             <div class="col-md-4">
-                                <label for="textMaxBenchCount" class="form-label fa-bold"> max bench count <i class="text-danger">*</i> </label>
+                                <label for="textMaxCount" class="form-label fw-bold">max count <i
+                                        class="text-danger">*</i> </label>
                             </div>
                             <div class="col-md-8">
-                                <input type="text" class="form-control text-center" id="textMaxBenchCount" required placeholder="enter max bench count" onkeyup="textValidator(this,'^[0-9]{1,2}$','classhall','maxbenchcount')">
+                                <input type="number" id="textMaxCount" class="form-control text-center" required
+                                       placeholder="enter max count"
+                                       onkeyup="textValidator(this,'^[0-9]{1,2}$','classhall','maxcount')">
                             </div>
                         </div>
 
                         <div class="row mt-2">
                             <div class="col-md-4">
-                                <label for="textNote" class="form-label fw-bold">note <i class="text-primary">(optional)</i> </label>
+                                <label for="textTableCount" class="form-label fw-bold">table count <i
+                                        class="text-danger">*</i> </label>
                             </div>
                             <div class="col-md-8">
-                                <input type="text" id="textNote" class="form-control text-center" required placeholder="enter note" onkeyup="textValidator(this,'^[A-Za-z]{2,100}$','classhall','note')">
+                                <input type="number" id="textTableCount" class="form-control text-center" required
+                                       placeholder="enter table count"
+                                       onkeyup="textValidator(this,'^[0-9]{1,2}$','classhall','tablecount')">
                             </div>
                         </div>
 
                         <div class="row mt-2">
                             <div class="col-md-4">
-                                <label for="selectClassHallStatus" class="form-label fw-bold">class hall status <i class="text-danger">*</i> </label>
+                                <label for="textBenchCount" class="form-label fw-bold">bench count <i
+                                        class="text-danger">*</i> </label>
                             </div>
                             <div class="col-md-8">
-                                <select id="selectClassHallStatus" class="form-select text-center" required onchange="selectDBValidator(this,'','classhall','classhallstatus_id')">
+                                <input type="number" id="textBenchCount" class="form-control text-center" required
+                                       placeholder="enter bench count"
+                                       onkeyup="textValidator(this,'^[0-9]{1,2}$','classhall','benchcount')">
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-md-4">
+                                <label for="textMaxTableCount" class="form-label fw-bold">max table count <i
+                                        class="text-danger">*</i> </label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="number" class="form-control text-center" id="textMaxTableCount" required
+                                       placeholder="enter max table count"
+                                       onkeyup="textValidator(this,'^[0-9]{1,2}$','classhall','maxtablecount')">
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-md-4">
+                                <label for="textMaxBenchCount" class="form-label fa-bold"> max bench count <i
+                                        class="text-danger">*</i> </label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" class="form-control text-center" id="textMaxBenchCount" required
+                                       placeholder="enter max bench count"
+                                       onkeyup="textValidator(this,'^[0-9]{1,2}$','classhall','maxbenchcount')">
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-md-4">
+                                <label for="textNote" class="form-label fw-bold">note <i
+                                        class="text-primary">(optional)</i> </label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="text" id="textNote" class="form-control text-center" required
+                                       placeholder="enter note"
+                                       onkeyup="textValidator(this,'^[A-Za-z]{2,100}$','classhall','note')">
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-md-4">
+                                <label for="selectClassHallStatus" class="form-label fw-bold">class hall status <i
+                                        class="text-danger">*</i> </label>
+                            </div>
+                            <div class="col-md-8">
+                                <select id="selectClassHallStatus" class="form-select text-center" required
+                                        onchange="selectDBValidator(this,'','classhall','classhallstatus_id')">
                                     <option value="" selected disabled>select an option</option>
                                 </select>
                             </div>
                         </div>
+
+
+                        <div class="row mt-2">
+                            <!--                            left start-->
+                            <div class="col-md-4">
+                                <label for="selectAllItem" class="form-label">all features</label>
+                                <select id="selectAllItem" multiple class="form-select text-center">
+
+                                </select>
+                            </div>
+                            <!--                            left end-->
+
+
+<!--                            middle start-->
+                            <div class="col-md-4">
+                                <button type="button" onclick="btnAddOneItem()" class="btn btn-success">add one item</button><br>
+                                <button type="button" onclick="btnAddAllItem()" class="btn btn-success">add all item</button><br>
+                                <button type="button" onclick="btnRemoveOneItem()" class="btn btn-success">remove one item</button><br>
+                                <button type="button" onclick="btnRemoveAllItem()" class="btn btn-success">remove all item</button><br>
+                            </div>
+<!--                            middle end-->
+
+
+                            <!--                            right start-->
+                            <div class="col-md-4">
+                                <label for="selectedFeatures" class="form-label ">selected features</label>
+                                <select id="selectedFeatures" class="form-select text-center" multiple>
+
+                                </select>
+                            </div>
+                            <!--                            right end-->
+
+
+                        </div>
+
 
                         <!--                    button start-->
                         <div class="row mt-5">
@@ -229,7 +293,6 @@
                             </div>
                         </div>
                         <!--                    button end-->
-
 
 
                     </form>

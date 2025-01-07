@@ -103,5 +103,15 @@ public class ClassHallController {
         }
     }
 
+//    @GetMapping(value = "/withoutfeatures/{classhallid}")
+//    public List<ClassHall> getClassHallWithoutFeatures(@PathVariable("classhallid")Integer classHallId){
+//        Authentication auth =SecurityContextHolder.getContext().getAuthentication();
+//        HashMap<String,Boolean> getLoggedUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(), "classhall");
+//        if (!getLoggedUserPrivilege.get("select")){
+//            return null;
+//        }
+//        return dao.getClassHallWithOutFeatures(classHallId);
+//    }
+
 
 }

@@ -243,8 +243,43 @@ const deleteUser = (ob, rowIndex) => {
 };
 
 //define function for print user
-const printUser = () => {
+const printUser = (ob,rowIndex) => {
     console.log('print');
+    console.log(ob);
+    console.log(rowIndex);
+    let users = new Array(ob);
+
+    const displayProperty = [   //create array to display property and dataType to generate column in table
+        {dataType: 'function', propertyName: getEmployee},
+        {dataType: 'text', propertyName: 'username'},
+        {dataType: 'text', propertyName: 'email'},
+        {dataType: 'function', propertyName: getUserRole},
+        {dataType: 'function', propertyName: getUserStatus},
+    ];
+
+    // call fill data into table common function
+    fillDataIntoTable(printUserTable, users, displayProperty, "",false)
+
+    let newWindow = window.open();
+    newWindow.document.write(
+        "<head>\n" +
+        "    <link rel=\"stylesheet\" href=\"/bootstrap-5.2.3/css/bootstrap.min.css\">\n" +
+        "    <script src=\"/bootstrap-5.2.3/js/bootstrap.bundle.min.js\"></script>\n" +
+        "    <link rel=\"stylesheet\" href=\"/style/common.css\">\n" +
+        "    <link rel=\"stylesheet\" href=\"/style/button.css\">\n" +
+        "    <link rel=\"stylesheet\" href=\"/style/employee.css\">\n" +
+        "</head>\n" +
+        "<body>"+printUserTable.outerHTML+"</body> "
+    );
+    setTimeout(function (){ //settime out ekkk dunne uda table eka naththam print ui ea hariyata load venna one nisa thama minisecond 500 dunna ookooma bootstrap load vela ganata enna one nisa
+        newWindow.stop();   //load vena eka nawaththuwa
+        newWindow.print();  //print eka call kra
+        newWindow.close();  //print rka open vela close krama close venawa
+    },500)
+
+
+
+
 }
 
 //define function for user form check errors

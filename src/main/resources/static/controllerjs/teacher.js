@@ -173,6 +173,41 @@ const deleteTeacher = (ob,rowIndex)=>{
 //define function for print teacher
 const printTeacher=(ob,rowIndex)=>{
     console.log('print');
+    console.log(ob);
+    console.log(rowIndex);
+    let teachers = new Array(ob);
+
+    const displayProperty=[
+        {dataType:'text',propertyName:'fullname'},
+        {dataType:'text',propertyName:'callingname'},
+        {dataType:'text',propertyName:'mobile'},
+        {dataType:'text',propertyName:'email'},
+        {dataType:'text',propertyName:'address'},
+        {dataType:'function',propertyName:getTeacherStatus},
+    ];
+
+    fillDataIntoTable(printTeacherTable,teachers,displayProperty,"",false);
+
+
+    let newWindow = window.open();
+    newWindow.document.write(
+        "<head>\n" +
+        "    <link rel=\"stylesheet\" href=\"/bootstrap-5.2.3/css/bootstrap.min.css\">\n" +
+        "    <script src=\"/bootstrap-5.2.3/js/bootstrap.bundle.min.js\"></script>\n" +
+        "    <link rel=\"stylesheet\" href=\"/style/common.css\">\n" +
+        "    <link rel=\"stylesheet\" href=\"/style/button.css\">\n" +
+        "    <link rel=\"stylesheet\" href=\"/style/employee.css\">\n" +
+        "</head>\n" +
+        "<body>"+printTeacherTable.outerHTML+"</body> "
+    );
+    setTimeout(function (){ //settime out ekkk dunne uda table eka naththam print ui ea hariyata load venna one nisa thama minisecond 500 dunna ookooma bootstrap load vela ganata enna one nisa
+        newWindow.stop();   //load vena eka nawaththuwa
+        newWindow.print();  //print eka call kra
+        newWindow.close();  //print rka open vela close krama close venawa
+    },500)
+
+
+
 };
 
 const checkFormErrors = ()=>{

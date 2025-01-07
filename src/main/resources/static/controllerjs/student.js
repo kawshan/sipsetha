@@ -166,6 +166,48 @@ const deleteStudent = (ob,rowIndex)=>{
 //create function for print student
 const printStudent = (ob,rowIndex)=>{
     console.log('print');
+    console.log(ob);
+    console.log(rowIndex);
+    let students = new Array(ob);
+
+    let displayProperty=[
+
+        {dataType:'text',propertyName:'stunum'},
+        {dataType:'text',propertyName:'firstname'},
+        {dataType:'text',propertyName:'lastname'},
+        {dataType:'text',propertyName:'age'},
+        {dataType:'function',propertyName:getGender},
+        {dataType:'text',propertyName:'address'},
+        {dataType:'text',propertyName:'mobile'},
+        {dataType:'function',propertyName:getStatus},
+
+    ];
+
+
+    fillDataIntoTable(printStudentTable,students,displayProperty,"",false)
+
+
+    let newWindow = window.open();
+    newWindow.document.write(
+        "<head>\n" +
+        "    <link rel=\"stylesheet\" href=\"/bootstrap-5.2.3/css/bootstrap.min.css\">\n" +
+        "    <script src=\"/bootstrap-5.2.3/js/bootstrap.bundle.min.js\"></script>\n" +
+        "    <link rel=\"stylesheet\" href=\"/style/common.css\">\n" +
+        "    <link rel=\"stylesheet\" href=\"/style/button.css\">\n" +
+        "    <link rel=\"stylesheet\" href=\"/style/employee.css\">\n" +
+        "</head>\n" +
+        "<body>"+printStudentTable.outerHTML+"</body> "
+    );
+    setTimeout(function (){ //settime out ekkk dunne uda table eka naththam print ui ea hariyata load venna one nisa thama minisecond 500 dunna ookooma bootstrap load vela ganata enna one nisa
+        newWindow.stop();   //load vena eka nawaththuwa
+        newWindow.print();  //print eka call kra
+        newWindow.close();  //print rka open vela close krama close venawa
+    },500)
+
+
+
+
+
 }
 
 // create function for check error

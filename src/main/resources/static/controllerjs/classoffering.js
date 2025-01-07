@@ -179,6 +179,45 @@ const deleteClass = (ob,rowIndex)=>{
 //create function for print class
 const printClass = (ob,rowIndex)=>{
     console.log('print')
+    console.log(ob);
+    console.log(rowIndex);
+    let classOfferings = new Array(ob);
+
+    displayProperty=[
+        {dataType: 'text',propertyName:'classname'},
+        {dataType:'text',propertyName:'fees'},
+        {dataType:'text',propertyName:getDuration},
+        {dataType:'text',propertyName:'servicecharge'},
+
+        {dataType:'function',propertyName:getClassType},
+        {dataType:'function',propertyName:getAcademicYear},
+        {dataType:'function',propertyName:getSubject},
+        {dataType:'function',propertyName:getTeacher},
+        {dataType:'function',propertyName:getGrade},
+
+    ];
+
+    fillDataIntoTable(printClassOfferingTable,classOfferings,displayProperty,"",false);
+
+    let newWindow = window.open();
+    newWindow.document.write(
+        "<head>\n" +
+        "    <link rel=\"stylesheet\" href=\"/bootstrap-5.2.3/css/bootstrap.min.css\">\n" +
+        "    <script src=\"/bootstrap-5.2.3/js/bootstrap.bundle.min.js\"></script>\n" +
+        "    <link rel=\"stylesheet\" href=\"/style/common.css\">\n" +
+        "    <link rel=\"stylesheet\" href=\"/style/button.css\">\n" +
+        "    <link rel=\"stylesheet\" href=\"/style/employee.css\">\n" +
+        "</head>\n" +
+        "<body>"+printClassOfferingTable.outerHTML+"</body> "
+    );
+    setTimeout(function (){ //settime out ekkk dunne uda table eka naththam print ui ea hariyata load venna one nisa thama minisecond 500 dunna ookooma bootstrap load vela ganata enna one nisa
+        newWindow.stop();   //load vena eka nawaththuwa
+        newWindow.print();  //print eka call kra
+        newWindow.close();  //print rka open vela close krama close venawa
+    },500)
+
+
+
 }
 
 

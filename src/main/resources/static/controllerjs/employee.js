@@ -245,6 +245,52 @@ const deleteEmployee = (ob, rowIndex) => {
 //create function for print employee
 const printEmployee = (ob, rowIndex) => {
     console.log('print');
+    console.log(ob);
+    console.log(rowIndex);
+    let employees = new Array(ob);
+
+    let displayProperty = [
+        {dataType: 'text', propertyName: 'fullname'},
+        {dataType: 'text', propertyName: 'callingname'},
+        {dataType: 'text', propertyName: 'dob'},
+        {dataType: 'text', propertyName: 'nic'},
+        {dataType: 'function', propertyName: getGender},
+        {dataType: 'text', propertyName: 'mobile'},
+        {dataType: 'text', propertyName: 'landno'},
+        {dataType: 'text', propertyName: 'email'},
+        {dataType: 'text', propertyName: 'address'},
+        {dataType: 'text', propertyName: 'addeddate'},
+        // {dataType: 'function', propertyName: getHasUserAccount},
+        {dataType: 'function', propertyName: getEmployeeStatus},
+        {dataType: 'function', propertyName: getDesignation},
+        {dataType: 'text', propertyName: 'civilstatus'}
+
+    ];
+
+    fillDataIntoTable(printEmployeeTable,employees,displayProperty,"",false);
+
+
+    let newWindow = window.open();
+    newWindow.document.write(
+        "<head>\n" +
+        "    <link rel=\"stylesheet\" href=\"/bootstrap-5.2.3/css/bootstrap.min.css\">\n" +
+        "    <script src=\"/bootstrap-5.2.3/js/bootstrap.bundle.min.js\"></script>\n" +
+        "    <link rel=\"stylesheet\" href=\"/style/common.css\">\n" +
+        "    <link rel=\"stylesheet\" href=\"/style/button.css\">\n" +
+        "    <link rel=\"stylesheet\" href=\"/style/employee.css\">\n" +
+        "</head>\n" +
+        "<body>"+printEmployeeTable.outerHTML+"</body> "
+    );
+    setTimeout(function (){ //settime out ekkk dunne uda table eka naththam print ui ea hariyata load venna one nisa thama minisecond 500 dunna ookooma bootstrap load vela ganata enna one nisa
+        newWindow.stop();   //load vena eka nawaththuwa
+        newWindow.print();  //print eka call kra
+        newWindow.close();  //print rka open vela close krama close venawa
+    },500)
+
+
+
+
+
 }
 
 

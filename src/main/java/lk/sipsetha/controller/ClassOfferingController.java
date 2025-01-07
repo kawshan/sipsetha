@@ -57,6 +57,7 @@ public class ClassOfferingController {
         //existing check
 //        operator
         try {
+
             classOffering.setDeletedatetime(LocalDateTime.now());
             dao.delete(classOffering);
             return "ok";

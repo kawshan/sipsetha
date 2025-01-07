@@ -166,7 +166,7 @@
                             </div>
                             <div class="col-md-6">
                                 <input type="text" id="textFirstName" class="form-control text-center" required
-                                       placeholder="enter first name" onkeyup="textValidator(this,'^[A-Z][a-z]{2,20}$','student','firstname')">
+                                       placeholder="enter first name" onkeyup="textValidatorWithTwoValues(this,'^[A-Z][a-z]{2,20}$','student','firstname','oldStudent')">
                             </div>
                         </div>
                         <!--                    first name end-->
@@ -249,7 +249,7 @@
                                 <label for="selectGrade" class="form-label fw-bold">grade</label>
                             </div>
                             <div class="col-md-6">
-                                <select id="selectGrade" class="form-select text-center" onchange="selectDBValidator(this,'','student','grade_id')">
+                                <select id="selectGrade" class="form-select text-center" onchange="selectDBFieldValidatorWithTwoValues(this,'','student','grade_id','oldStudent')">
                                     <option value="grade1">grade</option>
                                 </select>
                             </div>

@@ -24,7 +24,7 @@ public class PaymentController {
     public ModelAndView getPaymentTypeUI(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         ModelAndView paymentTypeView = new ModelAndView();
-        paymentTypeView.setViewName("paymenttype.html");
+        paymentTypeView.setViewName("payment.html");
         paymentTypeView.addObject("loggedusername",auth.getName());
         paymentTypeView.addObject("title","payment type ui");
         return paymentTypeView;

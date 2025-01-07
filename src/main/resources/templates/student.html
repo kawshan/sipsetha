@@ -50,14 +50,17 @@
         <div id="divModifyButton" class="d-none">
             <div class="col-md-6">
                 <button type="button" class="btn btn-warning fw-bold"
-                        style="width: 15%; color: whitesmoke; border: 1px solid black;" onclick="studentFormRefill(window['editOb'],window['editRow'])">
+                        style="width: 15%; color: whitesmoke; border: 1px solid black;"
+                        onclick="studentFormRefill(window['editOb'],window['editRow'])">
                     <i class="fa-solid fa-recycle fa-beat"></i> edit
                 </button>
                 <button type="button" id="divModifyButtonDelete" class="btn btn-danger fw-bold"
-                        style=" width: 15%; color: whitesmoke; border: 1px solid black; pointer-events: all" onclick="deleteStudent(window['editOb'],window['editRow'])">
+                        style=" width: 15%; color: whitesmoke; border: 1px solid black; pointer-events: all"
+                        onclick="deleteStudent(window['editOb'],window['editRow'])">
                     <i class="fa-solid fa-trash fa-beat"></i> delete
                 </button>
-                <button onclick="printStudent(window['editOb'],window['editRow'])" type="button" class="btn btn-primary fw-bold"
+                <button onclick="printStudent(window['editOb'],window['editRow'])" type="button"
+                        class="btn btn-primary fw-bold"
                         style=" width: 15%; color: whitesmoke;border: 1px solid black">
                     <i class="fa-solid fa-eye fa-beat"></i> print
                 </button>
@@ -140,22 +143,194 @@
                         </div>
                         <!--                required mark end-->
 
-<!--                        guardian start-->
+                        <!--                        guardian start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
-                                <label for="textGuardianName" class="form-label fw-bold">guardian <i class="text-danger">*</i></label>
+                                <label for="textGuardianName" class="form-label fw-bold">guardian <i
+                                        class="text-danger">*</i></label>
                             </div>
                             <div class="col-md-6">
-                                <input list="dataListItems" type="text" required id="textGuardianName" class="form-control text-center" placeholder="select item"
-                                onkeyup="dataListValidator(textGuardianName,'guardians','student','guardian_id','oldStudent','nic','firstname');"
-                                >
-                                <datalist id="dataListItems">
+                                <div class="input-group">
+                                    <input list="dataListItems" type="text" required id="textGuardianName"
+                                           class="form-control text-center" placeholder="type and search guardian"
+                                           onkeyup="dataListValidator(textGuardianName,'guardians','student','guardian_id','oldStudent','nic','firstname');"
+                                    >
+                                    <datalist id="dataListItems">
 
-                                </datalist>
+                                    </datalist>
+                                    <span>
+                                    <a class="btn btn-success" data-bs-toggle="collapse" href="#collapseExample"
+                                       role="button">
+                                              new
+                                            </a>
+                                </span>
+                                </div>
+
+                                <!--  collapse guardian form    -->
+                                <div class="collapse mt-2" id="collapseExample">
+                                    <div class="card card-body">
+                                        <form onsubmit="return false" id="GuardianForm">
+
+                                            <!--                                            guardian form content start-->
+
+
+                                            <!--                    first name start-->
+                                            <div class="row mt-2">
+                                                <div class="col-md-6">
+                                                    <label for="textGuardianFirstName" class="form-label fw-bold">
+                                                        first name<i class="text-danger">*</i>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input type="text" id="textGuardianFirstName"
+                                                           class="form-control text-center" required
+                                                           placeholder="enter first name"
+                                                           onkeyup="textValidator(this,'^[A-Z][a-z]{2,20}$','guardian','firstname')">
+                                                </div>
+                                            </div>
+                                            <!--                    first name end-->
+
+                                            <!--                    last name start-->
+                                            <div class="row mt-2">
+                                                <div class="col-md-6">
+                                                    <label for="textGuardianLastName" class="form-label fw-bold">
+                                                        last name <i class="text-danger">*</i>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input type="text" id="textGuardianLastName"
+                                                           class="form-control text-center" required
+                                                           placeholder="enter last name"
+                                                           onkeyup="textValidator(this,'^[A-Z][a-z]{2,20}$','guardian','lastname')">
+                                                </div>
+                                            </div>
+                                            <!--                    last name end-->
+
+
+                                            <!--                    nic start-->
+                                            <div class="row mt-2">
+                                                <div class="col-md-6">
+                                                    <label for="textNic" class="form-label fw-bold">
+                                                        nic <i class="text-danger">*</i>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input type="text" id="textNic" class="form-control text-center"
+                                                           required
+                                                           placeholder="enter nic number"
+                                                           onkeyup="textValidator(this,'^(([0-9]{9}[VvXxSs])|([0-9]{12}))$','guardian','nic'); generateGuardianGender(this)">
+                                                </div>
+                                            </div>
+                                            <!--                    nic end-->
+
+
+                                            <!--                    mobile start-->
+                                            <div class="row mt-2">
+                                                <div class="col-md-6">
+                                                    <label for="textGuardianMobile" class="form-label fw-bold">
+                                                        mobile <i class="text-danger">*</i>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input type="text" id="textGuardianMobile"
+                                                           class="form-control text-center"
+                                                           required
+                                                           placeholder="enter mobile number"
+                                                           onkeyup="textValidator(this,'^[0][7][01245678][0-9]{7}$','guardian','mobile')">
+                                                </div>
+                                            </div>
+                                            <!--                    mobile end-->
+
+
+                                            <!--                    address start-->
+                                            <div class="row mt-2">
+                                                <div class="col-md-6">
+                                                    <label for="textGuardianAddress" class="form-label fw-bold">
+                                                        address <i class="text-danger">*</i>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <input type="text" id="textGuardianAddress"
+                                                           class="form-control text-center"
+                                                           required
+                                                           placeholder="enter address"
+                                                           onkeyup="textValidator(this,'^[nN][oO][\\s][0-9]{1,3}[\\s][a-z]{3,50}$','guardian','address')">
+                                                </div>
+                                            </div>
+                                            <!--                    address end-->
+
+                                            <!--                        guardian type start-->
+                                            <div class="row mt-2">
+                                                <div class="col-md-6">
+                                                    <label for="selectGuardianType" class="form-label fw-bold">guardian
+                                                        type</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <select id="selectGuardianType" class="form-select text-center"
+                                                            onchange="selectDBValidator(this,'','guardian','guardiantype_id')">
+                                                        <option value="father">father</option>
+                                                        <option value="mother">mother</option>
+                                                        <option value="other">other</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <!--                        guardian type end-->
+
+
+                                            <!--                        gender start-->
+                                            <div class="row mt-2">
+                                                <div class="col-md-6">
+                                                    <label for="selectGuardianGender"
+                                                           class="form-label fw-bold">gender</label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <select id="selectGuardianGender" class="form-select text-center"
+                                                            onchange="selectValidator(this,'','guardian','gender')">
+                                                        <option value="" selected disabled>select an option</option>
+                                                        <option value="true">male</option>
+                                                        <option value="false">female</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <!--                        gender end-->
+
+
+                                            <!--                        status start-->
+                                            <div class="row mt-2">
+                                                <div class="col-md-6">
+                                                    <label for="selectGuardianStatus" class="form-label fw-bold">
+                                                        status<i class="text-danger">*</i>
+                                                    </label>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <select id="selectGuardianStatus" class="form-select text-center"
+                                                            required
+                                                            onchange="selectValidator(this,'','guardian','status')">
+                                                        <option value="" selected disabled>select an option</option>
+                                                        <option value="true">present</option>
+                                                        <option value="false">delete</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <!--                        status end-->
+
+                                            <!--                                            guardian form content end-->
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <button class="btn btn-success" onclick="buttonGuardianAdd()">
+                                                        add
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!--  collapse guardian form end-->
+
+
                             </div>
                         </div>
-<!--                        guardian end-->
-
+                        <!--                        guardian end-->
 
 
                         <!--                    first name start-->
@@ -166,7 +341,8 @@
                             </div>
                             <div class="col-md-6">
                                 <input type="text" id="textFirstName" class="form-control text-center" required
-                                       placeholder="enter first name" onkeyup="textValidatorWithTwoValues(this,'^[A-Z][a-z]{2,20}$','student','firstname','oldStudent')">
+                                       placeholder="enter first name"
+                                       onkeyup="textValidatorWithTwoValues(this,'^[A-Z][a-z]{2,20}$','student','firstname','oldStudent')">
                             </div>
                         </div>
                         <!--                    first name end-->
@@ -180,7 +356,8 @@
                             </div>
                             <div class="col-md-6">
                                 <input type="text" id="textLastName" class="form-control text-center" required
-                                       placeholder="enter last name" onkeyup="textValidator(this,'^[A-Z][a-z]{2,20}$','student','lastname')">
+                                       placeholder="enter last name"
+                                       onkeyup="textValidator(this,'^[A-Z][a-z]{2,20}$','student','lastname')">
                             </div>
                         </div>
                         <!--                        last name end-->
@@ -207,7 +384,8 @@
                                 </label>
                             </div>
                             <div class="col-md-6">
-                                <select id="selectGender" class="form-select text-center" required onchange="selectValidator(this,'','student','gender')">
+                                <select id="selectGender" class="form-select text-center" required
+                                        onchange="selectValidator(this,'','student','gender')">
                                     <option value="" selected disabled>select an option</option>
                                     <option value="true">male</option>
                                     <option value="false">female</option>
@@ -225,37 +403,40 @@
                             </div>
                             <div class="col-md-6">
                                 <input type="text" id="textAddress" class="form-control text-center" required
-                                       placeholder="enter address" onkeyup="textValidator(this,'^[nN][oO][\\s][0-9]{1,3}[\\s][a-z]{3,50}$','student','address')">
+                                       placeholder="enter address"
+                                       onkeyup="textValidator(this,'^[nN][oO][\\s][0-9]{1,3}[\\s][a-z]{3,50}$','student','address')">
                             </div>
                         </div>
                         <!--                        address end-->
 
 
-<!--                        contact number start-->
+                        <!--                        contact number start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
                                 <label for="textMobile" class="form-label fw-bold">mobile <i class="text-primary">(optional)</i></label>
                             </div>
                             <div class="col-md-6">
-                                <input type="text" id="textMobile" class="form-control text-center" placeholder="enter your mobile number" onkeyup="textValidator(this,'^[0][7][01245678][0-9]{7}$','student','mobile')">
+                                <input type="text" id="textMobile" class="form-control text-center"
+                                       placeholder="enter your mobile number"
+                                       onkeyup="textValidator(this,'^[0][7][01245678][0-9]{7}$','student','mobile')">
                             </div>
                         </div>
-<!--                        contact number end-->
+                        <!--                        contact number end-->
 
 
-<!--                        grade start-->
+                        <!--                        grade start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
                                 <label for="selectGrade" class="form-label fw-bold">grade</label>
                             </div>
                             <div class="col-md-6">
-                                <select id="selectGrade" class="form-select text-center" onchange="selectDBFieldValidatorWithTwoValues(this,'','student','grade_id','oldStudent')">
+                                <select id="selectGrade" class="form-select text-center"
+                                        onchange="selectDBFieldValidatorWithTwoValues(this,'','student','grade_id','oldStudent')">
                                     <option value="grade1">grade</option>
                                 </select>
                             </div>
                         </div>
-<!--                        grade end-->
-
+                        <!--                        grade end-->
 
 
                         <!--                        status start-->
@@ -266,7 +447,8 @@
                                 </label>
                             </div>
                             <div class="col-md-6">
-                                <select  id="selectStatus" class="form-select text-center" required onchange="selectValidator(this,'','student','status')">
+                                <select id="selectStatus" class="form-select text-center" required
+                                        onchange="selectValidator(this,'','student','status')">
                                     <option value="" selected disabled>select an option</option>
                                     <option value="true">present</option>
                                     <option value="false">delete</option>
@@ -275,18 +457,19 @@
                         </div>
                         <!--                        status end-->
 
-<!--                        note start-->
+                        <!--                        note start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
-                                <label for="textNote" class="form-label fw-bold">note <i class="text-primary">(optional)</i></label>
+                                <label for="textNote" class="form-label fw-bold">note <i
+                                        class="text-primary">(optional)</i></label>
                             </div>
                             <div class="col-md-6">
-                                <textarea id="textNote" class="form-control text-center" onkeyup="textValidator(this,'','student','note')" placeholder="enter text"></textarea>
+                                <textarea id="textNote" class="form-control text-center"
+                                          onkeyup="textValidator(this,'','student','note')"
+                                          placeholder="enter text"></textarea>
                             </div>
                         </div>
-<!--                        note end-->
-
-
+                        <!--                        note end-->
 
 
                         <!--                    button start-->
@@ -299,13 +482,15 @@
                             </div>
                             <div class="col-md-4 text-center">
                                 <button type="button" id="btnStudentUpdate" class="btn btn-warning fw-bold"
-                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%; pointer-events: all" onclick="buttonStudentUpdate()">
+                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%; pointer-events: all"
+                                        onclick="buttonStudentUpdate()">
                                     <i class="fa-solid fa-recycle fa-beat"> </i> update
                                 </button>
                             </div>
                             <div class="col-md-4 text-end">
                                 <button type="submit" class="btn btn-primary fw-bold"
-                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%; pointer-events: all" id="btnStudentSubmit" onclick="studentSubmit()">
+                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%; pointer-events: all"
+                                        id="btnStudentSubmit" onclick="studentSubmit()">
                                     <i class="fa-solid fa-plus fa-beat"> </i> add
                                 </button>
                             </div>
@@ -354,7 +539,6 @@
         </div>
     </div>
     <!--print model area end-->
-
 
 
 </div>

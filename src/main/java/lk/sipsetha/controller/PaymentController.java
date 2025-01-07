@@ -1,6 +1,7 @@
 package lk.sipsetha.controller;
 
 import lk.sipsetha.dao.PaymentDao;
+import lk.sipsetha.dao.UserDao;
 import lk.sipsetha.entity.Payment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -21,6 +22,9 @@ public class PaymentController {
 
     @Autowired
     private PrivilegeController privilegeController;
+
+    @Autowired
+    private UserDao userDao;
 
     @GetMapping(value = "/paymentform")
     public ModelAndView getPaymentTypeUI(){
@@ -53,6 +57,8 @@ public class PaymentController {
         //existing and duplicate
         //operators
         try {
+            payment.setAddeduser(userDao.getUserByUserName(auth.getName()).getId());
+
             String getNextBillNumber = dao.getNextBillNumber();
             if (getNextBillNumber==null || getNextBillNumber == ""){
                 payment.setBillnumber("0000000001");
@@ -81,6 +87,7 @@ public class PaymentController {
         //existing check
         //operation
         try {
+            payment.setModifyuser(userDao.getUserByUserName(auth.getName()).getId());
             payment.setModifydatetime(LocalDateTime.now());
             dao.save(payment);
             return "ok";

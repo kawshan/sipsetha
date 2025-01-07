@@ -67,7 +67,9 @@ const refreshEmployeeForm = () => {
 
     employeestatuses = ajaxGetRequest("/employeestatus/findall")
 
-    fillDataIntoSelect(selectStatus, 'select status', employeestatuses, 'name');
+    fillDataIntoSelect(selectStatus, 'select status', employeestatuses, 'name','working');
+    employee.employeestatus_id = JSON.parse(selectStatus.value);
+    selectStatus.style.border="2px solid green";
 
     genders = ajaxGetRequest("/gender/findall")
 
@@ -84,7 +86,7 @@ const refreshEmployeeForm = () => {
     textLand.style.border = '1px solid #ced4da';
     textEmail.style.border = '1px solid #ced4da';
     textAddress.style.border = '1px solid #ced4da';
-    selectDateTime.style.border = '1px solid #ced4da';
+    // selectDateTime.style.border = '1px solid #ced4da';
     selectStatus.style.border = '1px solid #ced4da';
     selectDesignation.style.border = '1px solid #ced4da';
     selectCivilStatus.style.border = '1px solid #ced4da';
@@ -179,7 +181,7 @@ const employeeFormRefill = (ob, rowIndex) => {
     }
 
     textAddress.value = employee.address;
-    selectDateTime.value=employee.addeddate
+    // selectDateTime.value=employee.addeddate
 
     fillDataIntoSelect(selectDesignation, 'select designation', designations, 'name',employee.designation_id.name);
 
@@ -258,9 +260,9 @@ const checkEmployeeFormUpdate = ()=>{
     if (employee.address != oldEmployee.address){
         updates=updates+"address is changed \n"
     }
-    if (employee.addeddate != oldEmployee.addeddate){
-        updates= updates+"added date is changed \n"
-    }
+    // if (employee.addeddate != oldEmployee.addeddate){
+    //     updates= updates+"added date is changed \n"
+    // }
     if (employee.employeestatus_id.name != oldEmployee.employeestatus_id.name){
         updates=updates+"employee status is changed";
     }
@@ -341,10 +343,10 @@ const checkFormErrors = () => {
         errors = errors + 'address cannot be empty \n';
         textAddress.classList.add('is-invalid');
     }
-    if (employee.addeddate == null) {
-        errors = errors + 'added date cannot be empty \n'
-        selectDateTime.classList.add('is-invalid');
-    }
+    // if (employee.addeddate == null) {
+    //     errors = errors + 'added date cannot be empty \n'
+    //     selectDateTime.classList.add('is-invalid');
+    // }
     if (employee.employeestatus_id == null) {
         errors = errors + 'employee status cannot be empty \n'
         selectStatus.classList.add('is-invalid');
@@ -470,13 +472,17 @@ const generateGenderAndDOB = (element)=>{
         console.log(year);
         console.log(days);
     }
+    genders = ajaxGetRequest("/gender/findall")
+    let empgender= "";
     if (days<500){
-        genders = ajaxGetRequest("/gender/findall")
-        fillDataIntoSelect(selectGender,'select gender',genders,'name','male');
+        empgender = 'male';
     }else {
-        genders = ajaxGetRequest("/gender/findall")
-        fillDataIntoSelect(selectGender,'select gender',genders,'name','female');
+        empgender = 'female';
     }
+    fillDataIntoSelect(selectGender,'select gender',genders,'name',empgender);
+    employee.gender_id = JSON.parse(selectGender.value);
+    selectGender.style.border="2px solid green";
+
     console.log(days);
     let DOBDate = new Date(year);
     console.log(DOBDate)
@@ -498,6 +504,7 @@ const generateGenderAndDOB = (element)=>{
     dob=year+"-"+month+"-"+date;
     selectDOB.value=dob;
     employee.dob=JSON.parse(JSON.stringify(selectDOB.value));
+    selectDOB.style.border="2px solid green";
 
 }
 

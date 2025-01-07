@@ -89,6 +89,7 @@ public class StudentRegistrationController {
         //existing and duplicate
         //operator
         try {
+            studentRegistration.setModifydatetime(LocalDateTime.now());
             dao.save(studentRegistration);
             return "ok";
         }catch (Exception e){
@@ -107,6 +108,8 @@ public class StudentRegistrationController {
         //existing
         //operator
         try {
+
+            studentRegistration.setDeletedatetime(LocalDateTime.now());
             RegistrationStatus deleteStatus =  registrationStatusDao.getReferenceById(2);
             studentRegistration.setRegistrationstatus_id(deleteStatus);
             dao.save(studentRegistration);

@@ -90,6 +90,8 @@ public class EnrolmentController {
             return "cannot perform update enrolment .. you don't have privileges";
         }
         try {
+            enrolment.setModifyuser_id(userDao.getUserByUserName(auth.getName()).getId());
+            enrolment.setModifydatetime(LocalDateTime.now());
             for (EnrolmentHasClassOfferings ehco : enrolment.getClassOfferings()){
                 ehco.setEnrolment_id(enrolment);
             }
@@ -107,6 +109,8 @@ public class EnrolmentController {
             return "cannot perform delete enrolment .. you dont have privileges";
         }
         try {
+            enrolment.setDeletedatetime(LocalDateTime.now());
+            enrolment.setDeleteuser_id(userDao.getUserByUserName(auth.getName()).getId());
             for (EnrolmentHasClassOfferings ehco : enrolment.getClassOfferings()){
                 ehco.setEnrolment_id(enrolment);
             }

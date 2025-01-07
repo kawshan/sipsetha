@@ -1,6 +1,7 @@
 package lk.sipsetha.controller;
 
 import lk.sipsetha.dao.ClassOfferingDao;
+import lk.sipsetha.dao.UserDao;
 import lk.sipsetha.entity.ClassOffering;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -21,6 +22,9 @@ public class ClassOfferingController {
 
     @Autowired
     private PrivilegeController privilegeController;
+
+    @Autowired
+    private UserDao userDao;
 
     @GetMapping(value = "/findall")
     public List<ClassOffering> getAllClassOffering(){
@@ -53,6 +57,7 @@ public class ClassOfferingController {
         //existing check
 //        operator
         try {
+            classOffering.setDeletedatetime(LocalDateTime.now());
             dao.delete(classOffering);
             return "ok";
         }catch (Exception e){
@@ -71,6 +76,7 @@ public class ClassOfferingController {
         //existing
         //operator
         try {
+            classOffering.setAddeduserid(userDao.getUserByUserName(auth.getName()).getId());
             classOffering.setAddeddatetime(LocalDateTime.now());
             dao.save(classOffering);
             return "ok";
@@ -89,6 +95,7 @@ public class ClassOfferingController {
         //existing and duplicate
         //operator
         try {
+            classOffering.setModifydatetime(LocalDateTime.now());
             dao.save(classOffering);
             return "ok";
         }catch (Exception e){

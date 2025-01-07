@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class EmployeeController {
 
     @Autowired
     private PrivilegeController privilegeController;
+
 
     @GetMapping(value = "/findall")
     public List<Employee> employeeFindAll() {
@@ -71,6 +73,8 @@ public class EmployeeController {
         }
 
         try {
+            employee.setAddeddate(LocalDate.now());
+
             String employeeNextNumber = dao.getEmployeeNextNumber();
             if (employeeNextNumber==null || employeeNextNumber == "") {
                 employee.setEmpnum("00001");

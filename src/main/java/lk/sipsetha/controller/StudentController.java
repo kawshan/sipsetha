@@ -1,7 +1,9 @@
 package lk.sipsetha.controller;
 
 import lk.sipsetha.dao.StudentDao;
+import lk.sipsetha.dao.UserDao;
 import lk.sipsetha.entity.Student;
+import lk.sipsetha.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
@@ -21,6 +23,9 @@ public class StudentController {
 
     @Autowired
     private PrivilegeController privilegeController;
+
+    @Autowired
+    private UserDao userDao;
 
     @GetMapping(value = "/findall",produces = "application/json")
     public List<Student> studentFindAll(){
@@ -53,6 +58,7 @@ public class StudentController {
         //existing check
         try {
             //set student number
+            student.setUser_id(userDao.getUserByUserName(auth.getName()));
             String studentNextNumber= studentDao.getStudentByNextNumber();  // setting student next number to variable student next number where i got it in student dao by defining native SQL query by using max function and lpad function
             if (studentNextNumber.equals(null) || studentNextNumber.equals("")){
                 student.setStunum("00001");

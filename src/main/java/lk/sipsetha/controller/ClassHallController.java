@@ -2,6 +2,7 @@ package lk.sipsetha.controller;
 
 import lk.sipsetha.dao.ClassHallDao;
 import lk.sipsetha.dao.ClassHallStatusDao;
+import lk.sipsetha.dao.UserDao;
 import lk.sipsetha.entity.ClassHall;
 import lk.sipsetha.entity.ClassHallStatus;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,9 @@ public class ClassHallController {
 
     @Autowired
     private PrivilegeController privilegeController;
+
+    @Autowired
+    private UserDao userDao;
 
     @GetMapping(value = "/findall")
     //authentication and authorization
@@ -94,6 +98,7 @@ public class ClassHallController {
             return "cannot perform save class hall .. you don't have privileges";
         }
         try {
+            classHall.setAddeduserid(userDao.getUserByUserName(auth.getName()).getId());
             classHall.setAddeddatetime(LocalDateTime.now());
 //            classHall.setAddeduserid();
             dao.save(classHall);

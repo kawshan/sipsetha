@@ -1,6 +1,7 @@
 package lk.sipsetha.controller;
 
 import lk.sipsetha.dao.GuardianDao;
+import lk.sipsetha.dao.UserDao;
 import lk.sipsetha.entity.Guardian;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -21,6 +22,9 @@ public class GuardianController {
 
     @Autowired
     private PrivilegeController privilegeController;
+
+    @Autowired
+    private UserDao userDao;
 
     @GetMapping(value = "/findall")
     public List<Guardian> guardianFindAll(){
@@ -98,6 +102,8 @@ public class GuardianController {
             return "cannot perform save guardian... you dont have privileges";
         }
         try {
+            guardian.setUser_id(userDao.getUserByUserName(auth.getName()));
+            guardian.setAddeddatetime(LocalDateTime.now());
             guardianDao.save(guardian);
             return "ok";
         }catch (Exception e){

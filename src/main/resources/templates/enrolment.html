@@ -104,7 +104,7 @@
                 </div>
                 <div class="modal-body" style="background-color: #E0E9DD">
 
-                    <form onsubmit="return false">
+                    <form onsubmit="return false" id="formEnrolment">
                         <!--                    required mark start-->
                         <div class="row mt-2">
                             <div class="col-md-12 text-start">
@@ -247,11 +247,11 @@
                                 <!--                                class enrolment start-->
                                 <div class="row mt-2">
                                     <div class="col-md-6">
-                                        <label for="selectEnrolment" class="form-label fw-bold">enrolment <i
+                                        <label for="selectClassOffering" class="form-label fw-bold">class offering <i
                                                 class="text-danger">*</i> </label>
                                     </div>
                                     <div class="col-md-6">
-                                        <select id="selectEnrolment" class="form-select text-center" required
+                                        <select id="selectClassOffering" class="form-select text-center" required
                                                 onchange="selectDBValidator(this,'','enrolmentHasClassOffering','classoffering_id')"></select>
                                     </div>
                                 </div>
@@ -294,8 +294,8 @@
                                     <div class="col-md-6">
                                         <input type="number" id="textRegisteredStudentCount"
                                                class="form-control text-center" required
-                                               placeholder="enter registared student count"
-                                               onkeyup="textValidator(this,'^( ([1-9]{1}{0-9}{1})  | ([1-9][1]) )$','enrolmentHasClassOffering','regstudentcount')">
+                                               placeholder="enter registered student count"
+                                               onkeyup="textValidator(this,'^([1-9]|[1-9][0-9])$','enrolmentHasClassOffering','regstudentcount')">
                                     </div>
                                 </div>
                                 <!--                                registered student count end-->
@@ -310,7 +310,7 @@
                                     <div class="col-md-6">
                                         <input type="number" id="textPayedCount" class="form-control text-center"
                                                required placeholder="enter payed count"
-                                               onkeyup="textValidator(this,'^( ([1-9]{1}{0-9}{1})  | ([1-9][1]) )$','enrolmentHasClassOffering','payedcount')">
+                                               onkeyup="textValidator(this,'^([1-9]|[1-9][0-9])$','enrolmentHasClassOffering','payedcount')">
                                     </div>
                                 </div>
                                 <!--                                payed count end-->
@@ -325,7 +325,7 @@
                                     <div class="col-md-6">
                                         <input type="number" id="textFreeStudentCount" class="form-control text-center"
                                                required placeholder="enter free student count"
-                                               onkeyup="textValidator(this,'^( ([1-9]{1}{0-9}{1})  | ([1-9][1]) )$','enrolmentHasClassOffering','freestudentscount')">
+                                               onkeyup="textValidator(this,'^([1-9]|[1-9][0-9])$','enrolmentHasClassOffering','freestudentscount')">
                                     </div>
                                 </div>
                                 <!--                                free student count end-->
@@ -364,14 +364,14 @@
 
                                 <button type="reset" class="btn btn-danger">reset</button>
                                 <button type="button" class="btn btn-warning">update</button>
-                                <button type="button" class="btn btn-primary">submit</button>
+                                <button type="button" onclick="buttonInnerAdd()" class="btn btn-primary">submit</button>
 
 
                                 <div class="row mt-5">
-                                    <table class="table table-bordered">
+                                    <table class="table table-bordered" id="tableClassOfferings">
                                         <thead class="table-primary">
                                         <th>#</th>
-                                        <th>enrolment</th>
+                                        <th>class offering</th>
                                         <th>class fee</th>
                                         <th>class income</th>
                                         <th>registared student count</th>
@@ -381,6 +381,9 @@
                                         <th>additional charge</th>
                                         <th>modify</th>
                                         </thead>
+                                        <tbody>
+
+                                        </tbody>
                                     </table>
                                 </div>
 
@@ -402,14 +405,14 @@
                                 </button>
                             </div>
                             <div class="col-md-4 text-center">
-                                <button type="button" class="btn btn-warning fw-bold"
-                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%">
+                                <button type="button" id="btnUpdateEnrolment" class="btn btn-warning fw-bold"
+                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%; pointer-events: all">
                                     <i class="fa-solid fa-recycle fa-beat"> </i> update
                                 </button>
                             </div>
                             <div class="col-md-4 text-end">
-                                <button type="submit" class="btn btn-primary fw-bold"
-                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%"
+                                <button type="submit" id="btnAddEnrolment" class="btn btn-primary fw-bold"
+                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%; pointer-events: all"
                                         onclick="employeeSubmit()">
                                     <i class="fa-solid fa-plus fa-beat"> </i> add
                                 </button>

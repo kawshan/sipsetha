@@ -106,3 +106,68 @@ const fillDataIntoPaymentTable = (tableId,dataList,columnList, buttonVisibility=
 
     });
 }
+
+const fillDataIntoTableInnerTable = (tableID, dataList, columnsList, editFunction, deleteFunction, buttonVisibility = true )=>{
+
+    const tableBody = tableID.children[1];
+    tableBody.innerHTML='';
+
+    dataList.forEach((element,index)=>{
+
+        const tr =document.createElement('tr');
+
+        const tdIndex =document.createElement('td');
+        tdIndex.innerText=parseInt(index)+1;
+        tr.appendChild(tdIndex);
+
+
+        columnsList.forEach(column =>{
+            const td =document.createElement('td');
+
+            if (column.dataType=='text'){
+                td.innerText=element[column.propertyName];
+            }
+            if (column.dataType=='function'){
+                td.innerHTML=column.propertyName(element);
+            }
+            tr.appendChild(td);
+        });
+
+
+
+        const tdButton =document.createElement('td');
+
+
+        const buttonEdit=document.createElement('button');
+        buttonEdit.className='btn btn-warning fw-bold';
+        buttonEdit.innerHTML='<i class="fa-solid fa-edit fa-beat"></i> edit'
+        buttonEdit.onclick = function (){
+            editFunction(element,index);
+
+        }
+
+        const buttonDelete=document.createElement('button');
+        buttonDelete.className='btn btn-danger ms-2 me-2'
+        buttonDelete.innerHTML='<i class="fa-solid fa-trash fa-beat"></i> delete'
+        buttonDelete.onclick = function (){
+            deleteFunction(element,index);
+            // console.log('delte');
+            // confirm('are you sure to delete following employee');
+        }
+
+
+        tdButton.appendChild(buttonEdit)
+        tdButton.appendChild(buttonDelete)
+
+
+        if (buttonVisibility){
+            tr.appendChild(tdButton);
+        }
+
+        tableBody.appendChild(tr);
+
+
+
+    });
+
+}

@@ -67,5 +67,203 @@ return ob.enrolmentstatus_id.name;
 
 //define refresh enrolment form
 const refreshEnrolmentForm = ()=>{
-    
+    formEnrolment.reset();
+    enrolment= new Object();
+    oldEnrolment = null;
+    enrolment.ehco = new Array(); //define array for enrolment has class offerings
+
+    teachers=ajaxGetRequest("/teacher/findall");
+    fillDataIntoSelect(selectTeacher,'select teacher',teachers,'fullname');
+
+    enrolmentStatuses=ajaxGetRequest("")//need to do before add
+
+    //to set current month to month tag in html page - start
+
+    const currentDate  = new Date();
+    let currentMonth=currentDate.getMonth()+1;//because js give months starting from 0 january is 0 december is 11
+    // if (currentMonth<10){
+    //     currentMonth='0'+currentMonth
+    // }
+    const formattedMonth= currentMonth<10 ? `0${currentMonth}` : currentMonth; //format as MM format using ternary operator
+    const currentYear = currentDate.getFullYear();
+    const monthInput = document.getElementById('txtMonth');
+    monthInput.value=`${currentYear}-${formattedMonth}`;
+    monthInput.style.border='2px solid green';
+
+
+    txtMonth.addEventListener('keydown', function(event) {
+        event.preventDefault(); // Prevent typing
+    });
+    txtMonth.disabled=true;
+    //to set current month to month tag in html page - end
+
+    textTotalIncome.value="";
+    textTotalServiceCharge.value="";
+    textTotalAdditionalCharge.value="";
+    textToBePayed.value="";
+    textPayedAmount.value="";
+    selectEnrolmentStatus.value="";
+    selectTeacher.value="";
+
+
+    textTotalIncome.style.border="2px solid #ced4da"
+    textTotalServiceCharge.style.border="2px solid #ced4da"
+    textTotalAdditionalCharge.style.border="2px solid #ced4da"
+    textToBePayed.style.border="2px solid #ced4da"
+    textPayedAmount.style.border="2px solid #ced4da"
+    selectEnrolmentStatus.style.border="2px solid #ced4da"
+    selectTeacher.style.border="2px solid #ced4da"
+
+    console.log(userPrivilege);
+    btnUpdateEnrolment.disabled=true;
+    $("#btnUpdateEnrolment").css("cursor", "not-allowed");
+
+    if (userPrivilege.insert){
+        btnAddEnrolment.disabled="";
+        $("#btnAddEnrolment").css("cursor", "pointer");
+    }else {
+        btnAddEnrolment.disabled=true;
+        $("#btnAddEnrolment").css("cursor", "not-allowed");
+    }
+
+    // call refresh inner item and table function
+    refreshInnerFormAndTable();
+
+}
+// define refresh inner form and table
+const refreshInnerFormAndTable = ()=>{
+    enrolmentHasClassOffering=new Object();
+    oldenrolmentHasClassOffering=null;
+
+    classOfferings=ajaxGetRequest("/classoffering/findall");
+    fillDataIntoSelect(selectClassOffering,'select class offerings',classOfferings,'classname');
+
+    selectClassOffering.value="";
+    textClassFee.value="";
+    textClassIncome.value="";
+    textRegisteredStudentCount.value="";
+    textPayedCount.value="";
+    textFreeStudentCount.value="";
+    textServiceCharge.value="";
+    textAdditionalCharge.value="";
+
+
+    selectClassOffering.style.border="2px solid #ced4da";
+    textClassFee.style.border="2px solid #ced4da";
+    textClassIncome
+    textRegisteredStudentCount.style.border="2px solid #ced4da";
+    textPayedCount.style.border="2px solid #ced4da";
+    textFreeStudentCount.style.border="2px solid #ced4da";
+    textServiceCharge.style.border="2px solid #ced4da";
+    textAdditionalCharge.style.border="2px solid #ced4da";
+
+    let displayProperty=[
+        {dataType:'function',propertyName:getClassOfferings},
+        {dataType:'function',propertyName:getClassFee},
+        {dataType:'function',propertyName:getClassIncome},
+        {dataType:'function',propertyName:getRegisteredStudentCount},
+        {dataType:'function',propertyName:getPayedStudentCount},
+        {dataType:'function',propertyName:getFreeStudentCount},
+        {dataType:'function',propertyName:getServiceCharge},
+        {dataType:'function',propertyName:getAdditionalCharge},
+    ]
+    fillDataIntoTableInnerTable(tableClassOfferings,enrolment.ehco,displayProperty,refillInnerForm,deleteInnerRow);
+
+}
+
+const getClassOfferings = (ob)=>{
+    return ob.classoffering_id.classname;
+}
+
+const getClassFee = (ob)=>{
+    return parseFloat(ob.classfee).toFixed(2);
+}
+
+const getClassIncome = (ob)=>{
+    return parseFloat(ob.classincome).toFixed(2);
+}
+
+const getRegisteredStudentCount = (ob)=>{
+    return ob.regstudentcount;
+
+}
+
+const getPayedStudentCount = (ob)=>{
+    return ob.payedcount;
+}
+
+const getFreeStudentCount = (ob)=>{
+    return ob.freestudentscount;
+
+}
+
+const getServiceCharge = (ob)=>{
+    return parseFloat(ob.servicecharge).toFixed(2);
+
+}
+
+const getAdditionalCharge = (ob)=>{
+    return parseFloat(ob.additionalcharge).toFixed(2);
+
+}
+
+
+
+
+const refillInnerForm = (ob,rowIndex)=>{
+    classOfferings=ajaxGetRequest("/classoffering/findall");
+    fillDataIntoSelect(selectClassOffering,'select class offerings',classOfferings,'classname',ob.classoffering_id.classname);
+
+
+    textClassFee.value=ob.classOfferings.classfee;
+    textClassIncome.value=ob.classOfferings.classincome;
+    textRegisteredStudentCount.value=ob.classOfferings.regstudentcount;
+    textPayedCount.value=ob.classOfferings.payedcount;
+    textFreeStudentCount.value=ob.classOfferings.freestudentscount;
+    textServiceCharge.value=ob.classOfferings.servicecharge;
+    textAdditionalCharge.value=ob.classOfferings.additionalcharge;
+
+}
+
+
+const deleteInnerRow = (ob,index)=>{
+    let userConfirm=confirm("are you sure to remove class offering \n");
+    if (userConfirm){
+        let extIndex = enrolment.ehco.map(clsof=>clsof.classoffering_id.id).indexOf(ob.classoffering_id.id);
+        if (extIndex!=-1){
+            enrolment.ehco.splice(extIndex,1);
+            alert("item removed successfully");
+            refreshInnerFormAndTable();
+        }
+    }
+}
+//need to review delete inner row and refill
+
+
+
+//define inner form check errors
+const checkInnerFormErrors=()=>{
+    let errors="";
+    if (enrolmentHasClassOffering.classoffering_id==null){
+    errors=errors+"select class offering \n";
+}
+
+    return errors;
+
+}
+
+//define function for button inner form add
+const buttonInnerAdd=()=>{
+    console.log("add inner form");
+    let errors=checkInnerFormErrors();
+    if (errors==""){
+        let userConfirm=confirm("are you sure to add ?");
+        if (userConfirm){
+            alert("item added successfully")
+            enrolment.ehco.push(enrolmentHasClassOffering)
+            refreshInnerFormAndTable();
+        }
+    }else {
+        alert("form has errors");
+    }
 }

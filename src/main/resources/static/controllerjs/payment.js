@@ -8,6 +8,7 @@ window.addEventListener('load', function () {
 
     //call refresh payment table
     refreshPaymentTable();
+
 });
 
 const refreshPaymentTable = () => {
@@ -87,7 +88,7 @@ const refreshPaymentForm = () => {
 
 
 //define function for get current month
-const getCurrentMonth = ()=>{
+const getCurrentMonth = () => {
     //start of get current month and yar
     let currentDate = new Date();
 
@@ -104,8 +105,6 @@ const getCurrentMonth = ()=>{
 
     //end of get current month and year
 }
-
-
 
 
 //define function for student payment refill
@@ -207,7 +206,7 @@ const checkUpdates = () => {
         updates = updates + "paytype is updated \n"
     }
     if (payment.student_id.firstname != oldPayment.student_id.firstname) {
-        updates = updates + "studnet is updated \n"
+        updates = updates + "student is updated \n"
     }
 
 
@@ -233,6 +232,10 @@ const btnStudentPaymentSubmit = () => {
                 $('#modalStudentPayment').modal('hide');
                 refreshPaymentForm();
                 refreshPaymentTable();
+
+                setTimeout(function () {
+                    clickRadioButton(); //mili seconds 500 parakku kara ee mokada hariyata refresh payment table eka load vela enna one nisa
+                }, 500)
             } else {
                 alert("save not complete you might have some errors \n " + postServerResponse);
             }
@@ -298,23 +301,30 @@ const deletePaymentButton = (ob, rowIndex) => {
     }, 500)
 
 }
+
 //define function for print payment
 const printPayment = (ob, rowIndex) => {
     console.log('print');
     console.log(ob);
     console.log(rowIndex);
-    let studentPayments = new Array(ob);
+
+    let addedUser = ajaxGetRequest("/user/byid/" + ob.addeduser);
+
+    tdAddedUser.innerHTML = addedUser.username
+    tdStudentName.innerHTML = ob.student_id.firstname + " " + ob.student_id.lastname
+    tdPaymentCategory.innerHTML = ob.paymentcategory_id.name
+
+    if (ob.paymentcategory_id.name=="admission"){
+        trRegisteredClass.classList.add('d-none');
+    }else {
+        tdClassName.innerHTML=ob.studentregistration_id.classoffering_id.classname
+    }
 
 
-    const displayProperty = [
-        {dataType: 'text', propertyName: 'fees'},
-        {dataType: 'function', propertyName: getmonth},
-        {dataType: 'text', propertyName: 'billnumber'},
-        {dataType: 'function', propertyName: getPayType},
-        {dataType: 'function', propertyName: getStudentname}
-    ];
 
-    fillDataIntoPaymentTable(printPaymentTable, studentPayments, displayProperty, false,);
+    tdPaymentType.innerHTML = ob.paytype_id.name
+    tdPayedAmount.innerHTML = ob.payedamount
+    tdBalanceAmount.innerHTML = ob.balanceamount
 
     let newWindow = window.open();
     newWindow.document.write(
@@ -325,12 +335,14 @@ const printPayment = (ob, rowIndex) => {
         "    <link rel=\"stylesheet\" href=\"/style/button.css\">\n" +
         "    <link rel=\"stylesheet\" href=\"/style/employee.css\">\n" +
         "</head>\n" +
-        "<body>" + printPaymentTable.outerHTML + "</body> "
+        "<body>" + tableBillPrint.outerHTML + "</body> "+
+    "    <script>tableBillPrint.classList.remove('d-none')</script>"
     );
-    setTimeout(function () { //settime out ekkk dunne uda table eka naththam print ui ea hariyata load venna one nisa thama minisecond 500 dunna ookooma bootstrap load vela ganata enna one nisa
+
+        setTimeout(function () { //settime out ekkk dunne uda table eka naththam print ui ea hariyata load venna one nisa thama minisecond 500 dunna ookooma bootstrap load vela ganata enna one nisa
         newWindow.stop();   //load vena eka nawaththuwa
         newWindow.print();  //print eka call kra
-        newWindow.close();  //print rka open vela close krama close venawa
+        newWindow.close();  //print rka open vela close krama close venawa ee tab eka
     }, 500)
 
 
@@ -423,21 +435,21 @@ const disableReferenceANcardNum = (fieldId) => {
     if (selectedValue.name == "card") {
         textReferenceNumber.disabled = false;
         textCardNumber.disabled = false;
-        textPayedAmount.value=parseFloat(textFee.value).toFixed(2);
-        payment.payedamount=JSON.parse(textPayedAmount.value);
-        textPayedAmount.style.border="2px solid green";
+        textPayedAmount.value = parseFloat(textFee.value).toFixed(2);
+        payment.payedamount = JSON.parse(textPayedAmount.value);
+        textPayedAmount.style.border = "2px solid green";
 
 
-        textBalanceAmount.value="0.00"
-        payment.balanceamount=textBalanceAmount.value;
-        textBalanceAmount.style.border="2px solid green";
+        textBalanceAmount.value = "0.00"
+        payment.balanceamount = textBalanceAmount.value;
+        textBalanceAmount.style.border = "2px solid green";
     } else if (selectedValue.name == "cash") {
 
-        textPayedAmount.value=""
-        textPayedAmount.style.border="2px solid #ced4da";
+        textPayedAmount.value = ""
+        textPayedAmount.style.border = "2px solid #ced4da";
 
-        textBalanceAmount.value="";
-        textBalanceAmount.style.border="2px solid #ced4da"
+        textBalanceAmount.value = "";
+        textBalanceAmount.style.border = "2px solid #ced4da"
 
         textReferenceNumber.disabled = true;
         textCardNumber.disabled = true;
@@ -469,7 +481,7 @@ const getPaymentCategory = (fieldId) => {
         console.log("empty")
         selectStudentRegistration.disabled = true;
         fillDataIntoSelect(selectPaymentCategory, 'select payment category', paymentcategories, 'name', 'admission');
-        let selectedValue=JSON.parse(selectPaymentCategory.value);
+        let selectedValue = JSON.parse(selectPaymentCategory.value);
         payment.paymentcategory_id = selectedValue    //json parse eken karanne JSON string ekek js object ekata pass karana eka
         selectPaymentCategory.style.border = "2px solid green";
 
@@ -479,10 +491,10 @@ const getPaymentCategory = (fieldId) => {
 
         generateBalanceAmount(textPayedAmount); //call function for generate balance amount
 
-        textMonth.value="";
-        payment.month="";
-        textMonth.style.border="2px solid #ced4da";
-        textMonth.disabled=true;
+        textMonth.value = "";
+        payment.month = "";
+        textMonth.style.border = "2px solid #ced4da";
+        textMonth.disabled = true;
 
 
     } else {
@@ -493,18 +505,17 @@ const getPaymentCategory = (fieldId) => {
         payment.paymentcategory_id = JSON.parse(selectPaymentCategory.value);
         selectPaymentCategory.style.border = "2px solid green";
 
-        textMonth.disabled=false;
+        textMonth.disabled = false;
         getCurrentMonth();
 
     }
 }
 
 
-
-
-
-
-
+const clickRadioButton = () => {
+    tableStudentPayment.children[1].children[0].children[6].children[0].click();
+    printBTNPayment.click();
+}
 
 
 

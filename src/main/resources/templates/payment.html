@@ -64,7 +64,8 @@
                 >
                     <i class="fa-solid fa-trash fa-beat"></i> delete
                 </button>
-                <button type="button" class="btn btn-primary fw-bold" style="width: 25%; border:1px solid black"
+                <button type="button" id="printBTNPayment" class="btn btn-primary fw-bold"
+                        style="width: 25%; border:1px solid black"
                         onclick="printPayment(window['editOb'],window['editRow'])"
                 >
                     <i class="fa-solid fa-eye fa-beat"></i> print
@@ -124,7 +125,6 @@
                         <!--                    required mark end-->
 
 
-
                         <!--                        student start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
@@ -132,8 +132,10 @@
                                         class="text-danger">*</i> </label>
                             </div>
                             <div class="col-md-6">
-<!--                                <select id="selectStudent" class="form-select text-center" required onchange="selectDBValidator(this,'','payment','student_id')"> </select>-->
-                                <input type="text" id="textStudent" list="studentList" required placeholder="select student" class="form-control text-center" onkeyup="dataListValidator(this,'students','payment','student_id','oldPayment','stunum','firstname'); generateStudentRegistration(this); getPaymentCategory(this)">
+                                <!--                                <select id="selectStudent" class="form-select text-center" required onchange="selectDBValidator(this,'','payment','student_id')"> </select>-->
+                                <input type="text" id="textStudent" list="studentList" required
+                                       placeholder="select student" class="form-control text-center"
+                                       onkeyup="dataListValidator(this,'students','payment','student_id','oldPayment','stunum','firstname'); generateStudentRegistration(this); getPaymentCategory(this)">
                                 <datalist id="studentList"></datalist>
                             </div>
                         </div>
@@ -147,30 +149,32 @@
                                         class="text-danger">*</i> </label>
                             </div>
                             <div class="col-md-6">
-                                <select id="selectPaymentCategory" class="form-control text-center" onchange="selectDBValidator(this,'','payment','paymentcategory_id')"></select>
+                                <select id="selectPaymentCategory" class="form-control text-center"
+                                        onchange="selectDBValidator(this,'','payment','paymentcategory_id')"></select>
                             </div>
                         </div>
                         <!--                        payment category end-->
 
 
-<!--                        student registration start-->
+                        <!--                        student registration start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
-                                <label for="selectStudentRegistration" class="form-label fw-bold">Student Registration</label>
+                                <label for="selectStudentRegistration" class="form-label fw-bold">Student
+                                    Registration</label>
                             </div>
                             <div class="col-md-6">
-                                <select id="selectStudentRegistration" class="form-control text-center" onchange="selectDBValidator(this,'','payment','studentregistration_id'); generateFees(this);"></select>
+                                <select id="selectStudentRegistration" class="form-control text-center"
+                                        onchange="selectDBValidator(this,'','payment','studentregistration_id'); generateFees(this);"></select>
                             </div>
                         </div>
-<!--                        student registration end-->
-
-
+                        <!--                        student registration end-->
 
 
                         <!--                        pay type start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
-                                <label for="selectPayType" class="form-label fw-bold"> pay type <i class="text-danger">*</i> </label>
+                                <label for="selectPayType" class="form-label fw-bold"> pay type <i
+                                        class="text-danger">*</i> </label>
                             </div>
                             <div class="col-md-6">
                                 <select id="selectPayType" class="form-select text-center" required
@@ -178,7 +182,6 @@
                             </div>
                         </div>
                         <!--                        pay type end-->
-
 
 
                         <!--                        fees start-->
@@ -189,7 +192,7 @@
                             </div>
                             <div class="col-md-6">
                                 <input type="text" id="textFee" class="form-control text-center"
-                                        placeholder="enter fee"
+                                       placeholder="enter fee"
                                        onkeyup="textValidator(this,'^[1-9][0-9]{3,6}[.][0][0]$','payment','fees')">
                             </div>
                         </div>
@@ -204,7 +207,8 @@
                             </div>
                             <div class="col-md-6">
                                 <input type="month" id="textMonth" class="form-control text-center"
-                                       placeholder="enter month" onchange="textValidator(this,'','payment','month'); console.log(this.value)">
+                                       placeholder="enter month"
+                                       onchange="textValidator(this,'','payment','month'); console.log(this.value)">
                             </div>
                         </div>
                         <!--                        month end-->
@@ -335,7 +339,75 @@
     </div>
     <!--print model area end-->
 
+    <!--bill table start-->
+        <table class="table table-bordered d-none" id="tableBillPrint">
+            <th colspan="2" class="text-center">Sipsetha Institute</th>
 
+            <tr>
+                <th>Email</th>
+                <td>sipsethaInstitute@gmail.com</td>
+            </tr>
+
+            <tr>
+                <th>Contact no</th>
+                <td>078-909-6358</td>
+            </tr>
+
+            <tr>
+                <th>Address</th>
+                <td>no 541 colombo 15</td>
+            </tr>
+
+
+            <tr>
+                <th>Added user</th>
+                <td id="tdAddedUser">Mohan ray laffabour</td>
+            </tr>
+
+            <tr>
+                <th>Added Date</th>
+                <td>2024-07-26</td>
+            </tr>
+
+
+            <th colspan="2" class="text-center">Student details</th>
+
+            <tr>
+                <th>Student name</th>
+                <td id="tdStudentName">kawshan virantha</td>
+            </tr>
+
+            <tr>
+                <th>Payment Category</th>
+                <td id="tdPaymentCategory">Admission</td>
+            </tr>
+
+            <tr id="trRegisteredClass">
+                <th>Registered class</th>
+                <td id="tdClassName">class name</td>
+            </tr>
+
+            <th colspan="2" class="text-center">Payment details</th>
+
+
+            <tr>
+                <th>Payment Type</th>
+                <td id="tdPaymentType">cash</td>
+            </tr>
+
+            <tr>
+                <th>Payed amount</th>
+                <td id="tdPayedAmount">1000.00</td>
+            </tr>
+
+            <tr>
+                <th>Balance amount</th>
+                <td id="tdBalanceAmount">1000.00</td>
+            </tr>
+
+
+        </table>
+    <!--    bill table end-->
 
 </div>
 <!--container fluid end-->

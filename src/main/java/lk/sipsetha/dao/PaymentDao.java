@@ -23,4 +23,6 @@ public interface PaymentDao extends JpaRepository<Payment,Integer> {
    @Query(value = "select max(month) from payment where student_id=?1",nativeQuery = true)
     public String getMaxMonthPaymentByStudent(String stunum);
 
+
+
 }

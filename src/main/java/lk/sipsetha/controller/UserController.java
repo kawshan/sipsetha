@@ -143,6 +143,8 @@ public class UserController {
 
 
     }
+
+
     @GetMapping(value = "/byempid/{empid}")
     public Boolean getUserByEmpId(@PathVariable("empid")Integer empid){
         User userByEmpID = userDao.getUserByEmployee(empid);
@@ -151,6 +153,11 @@ public class UserController {
         }else {
             return false;
         }
+    }
+
+    @GetMapping(value = "/byid/{userid}")
+    public User getUserByUserId(@PathVariable("userid")Integer userid){
+        return userDao.getById(userid);
     }
 
 

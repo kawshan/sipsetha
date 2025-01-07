@@ -133,7 +133,7 @@
                             </div>
                             <div class="col-md-6">
 <!--                                <select id="selectStudent" class="form-select text-center" required onchange="selectDBValidator(this,'','payment','student_id')"> </select>-->
-                                <input type="text" id="textStudent" list="studentList" required placeholder="select student" class="form-control text-center" onkeyup="dataListValidator(this,'students','payment','student_id','oldPayment','stunum','firstname')">
+                                <input type="text" id="textStudent" list="studentList" required placeholder="select student" class="form-control text-center" onkeyup="dataListValidator(this,'students','payment','student_id','oldPayment','stunum','firstname'); generateStudentRegistration(this)">
                                 <datalist id="studentList"></datalist>
                             </div>
                         </div>

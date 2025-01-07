@@ -243,7 +243,7 @@ const generateClassName = ()=>{
     console.log(classOffering.teacher_id.fullname)
     console.log(classOffering.grade_id.name)
 
-    textClassName.value=classOffering.teacher_id.fullname+" "+classOffering.grade_id.name+" "+classOffering.academicyear_id.name;
+    textClassName.value=classOffering.teacher_id.fullname+" "+classOffering.grade_id.name+" "+classOffering.subject_id.name+" "+classOffering.academicyear_id.name;
     console.log(textClassName.value);
     classOffering.classname=textClassName.value;
 }

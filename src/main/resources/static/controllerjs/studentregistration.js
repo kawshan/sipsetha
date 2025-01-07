@@ -18,6 +18,7 @@ const refreshStudentRegistrationTable = ()=>{
 
     displayProperty=[
         {dataType:"text",propertyName:"fee"},
+        {dataType:"text",propertyName:"indexnumber"},
         {dataType:"function",propertyName:getStudentName},
         {dataType:"function",propertyName:getClassOffering},
         {dataType:"function",propertyName:getRegistardType},
@@ -41,7 +42,7 @@ const checkPrivileges = (innerOb)=>{
 
 
 const getStudentName = (ob)=>{
-    return ob.student_id.firstname;
+    return ob.student_id.firstname+" "+ob.student_id.lastname;
 }
 const getClassOffering = (ob)=>{
     return ob.classoffering_id.classname

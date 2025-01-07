@@ -5,6 +5,7 @@ import lk.sipsetha.dao.StudentRegistrationDao;
 import lk.sipsetha.entity.RegistrationStatus;
 import lk.sipsetha.entity.StudentRegistration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +35,7 @@ public class StudentRegistrationController {
         ModelAndView studentRegistrationView = new ModelAndView();
         studentRegistrationView.setViewName("studentregistration.html");
         studentRegistrationView.addObject("loggedusername",auth.getName());
-        studentRegistrationView.addObject("title","student registration form ");
+        studentRegistrationView.addObject("title","student class registration ");
         return studentRegistrationView;
     }
 
@@ -45,7 +46,7 @@ public class StudentRegistrationController {
         if (!getLogUserPrivilege.get("select")){
             return null;
         }
-        return dao.findAll();
+        return dao.findAll(Sort.by(Sort.Direction.DESC,"id"));
 
     }
 
@@ -118,6 +119,12 @@ public class StudentRegistrationController {
         }catch (Exception e){
             return "delete student registration not successful"+e.getMessage();
         }
+    }
+
+
+    @GetMapping(value = "/{indexnumb}")
+    public List<StudentRegistration> getIndexNumberFormStudentNumber(@PathVariable("indexnumb") String indexnumb){
+        return dao.getIndexNumberFromStuNum(indexnumb);
     }
 
 }

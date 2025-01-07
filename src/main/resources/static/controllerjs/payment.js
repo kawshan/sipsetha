@@ -84,7 +84,7 @@ const refreshPaymentForm = () => {
     //start of get current month and yar
     let currentDate=new Date();
 
-    let currentMonth=currentDate.getMonth();
+    let currentMonth=currentDate.getMonth()+1;//adding one to get correct month // bcz get month returns 0-11 values 0-> jan 11->dec
     if (currentMonth<10){
         currentMonth="0"+currentMonth;
     }
@@ -437,8 +437,17 @@ const disableReferenceANcardNum = (fieldId)=>{
 
 
 }
+//define function for generate student registration number from student
+const generateStudentRegistration= (fieldID)=>{//parameter ekak vidihata field id eka gannwa eka enne html eke this eken pass karala
+    console.log(fieldID.value);
+    let selectedValue=fieldID.value.split(" ");
+    let indexNumber=selectedValue[0];
+    console.log(indexNumber);
+    let studentRegistrationsbystudent=ajaxGetRequest("/studentregistration/"+indexNumber); //student registration eken index number eka genna gannawa
+    fillDataIntoSelectNew(selectStudentRegistration,'select student registrations',studentRegistrationsbystudent,'classoffering_id','classname','');
 
 
+}
 
 
 

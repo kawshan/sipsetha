@@ -298,16 +298,16 @@
 
 
                         <!--                        added date start-->
-<!--                        <div class="row mt-2">-->
-<!--                            <div class="col-md-6">-->
-<!--                                <label for="selectDateTime" class="form-label fw-bold">added date <i-->
-<!--                                        class="text-danger">*</i></label>-->
-<!--                            </div>-->
-<!--                            <div class="col-md-6">-->
-<!--                                <input type="date" class="form-control text-center" id="selectDateTime" required-->
-<!--                                       placeholder="add date" onchange="textValidator(this,'','employee','addeddate')">-->
-<!--                            </div>-->
-<!--                        </div>-->
+                        <!--                        <div class="row mt-2">-->
+                        <!--                            <div class="col-md-6">-->
+                        <!--                                <label for="selectDateTime" class="form-label fw-bold">added date <i-->
+                        <!--                                        class="text-danger">*</i></label>-->
+                        <!--                            </div>-->
+                        <!--                            <div class="col-md-6">-->
+                        <!--                                <input type="date" class="form-control text-center" id="selectDateTime" required-->
+                        <!--                                       placeholder="add date" onchange="textValidator(this,'','employee','addeddate')">-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
                         <!--                        added date end-->
 
 
@@ -337,6 +337,8 @@
                                         class="text-danger">*</i></label>
                             </div>
                             <div class="col-md-6">
+                            <div class="input-group">
+
                                 <select id="selectDesignation" class="form-select text-center" required
                                         onchange="selectDBValidator(this,'','employee','designation_id')">
                                     <option value="" selected disabled>select an option</option>
@@ -345,6 +347,42 @@
                                     <option value="admin">admin</option>
                                     <option value="labour">labour</option>
                                 </select>
+
+                                <span>
+                                    <a class="btn btn-success" data-bs-toggle="collapse" href="#collapseExample"
+                                       role="button" >
+                                              new
+                                            </a>
+                                </span>
+
+                            </div>
+
+                                <!--  collapse designation form    -->
+                                <div class="collapse mt-2" id="collapseExample">
+                                    <div class="card card-body">
+                                        <form onsubmit="return false" id="designationForm">
+                                            <div class="row">
+                                                <label for="textDesignationName" class="col-4 fw-bold">name</label>
+                                                <div class="col-8">
+                                                    <input type="text" class="form-control"
+                                                           placeholder="enter designation name "
+                                                           id="textDesignationName"
+                                                           onkeyup="textValidator(this,'','designationob','name')">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <button class="btn btn-success" onclick="buttonDesignationSubmit()">
+                                                        add
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!--  collapse designation form end-->
+
+
                             </div>
                         </div>
                         <!--                        designation end-->
@@ -378,7 +416,8 @@
                             </div>
                             <div class="col-md-4 text-center">
                                 <button type="button" class="btn btn-warning fw-bold" id="btnEmployeeUpdate"
-                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%; pointer-events: all" onclick="buttonFormUpdate()">
+                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%; pointer-events: all"
+                                        onclick="buttonFormUpdate()">
                                     <i class="fa-solid fa-recycle fa-beat"> </i> update
                                 </button>
                             </div>

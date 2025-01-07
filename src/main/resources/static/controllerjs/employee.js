@@ -8,6 +8,8 @@ window.addEventListener('load', () => {
     //call refresh employee form
     refreshEmployeeForm()
 
+    //call refresh designation for validation and refresh purpose
+    refreshDesignationForm();
 
 });
 //define function for refresh employee table
@@ -62,7 +64,6 @@ const refreshEmployeeForm = () => {
     employeeForm.reset();
 
     designations = ajaxGetRequest("/designation/findall")
-
     fillDataIntoSelect(selectDesignation, 'select designation', designations, 'name');
 
 
@@ -106,6 +107,17 @@ const refreshEmployeeForm = () => {
     selectGender.disabled=true;
 
 }
+
+
+//define function for refresh designation form
+const refreshDesignationForm = ()=>{
+    designationob=new Object()//define new object
+    // designationob=null
+
+    textDesignationName.value="";
+    textDesignationName.style.border="2px solid #ced4da";
+}
+
 
 
 //create function for get gender
@@ -511,7 +523,35 @@ const generateGenderAndDOB = (element)=>{
 
 }
 
+const buttonDesignationSubmit = ()=>{
+    console.log("designation submit function");
 
+    if (designationob.name!=null){
+        let userConfirm = confirm("Are you sure to add "+designationob.name+"designation value");
+        if (userConfirm){
+            let postServerResponse=ajaxPostRequest("/designation",designationob);
+            if (postServerResponse=="ok"){
+                alert("save successful ");
+
+                designations = ajaxGetRequest("/designation/findall")
+                fillDataIntoSelect(selectDesignation, 'select designation', designations, 'name',textDesignationName.value);
+
+                selectDesignation.style.border="2px solid green";
+                employee.designation_id=JSON.parse(selectDesignation.value);
+
+                refreshDesignationForm();
+                $('#collapseExample').collapse('hide');
+            }else {
+                alert("save not success"+postServerResponse)
+            }
+        }
+    }
+
+
+
+
+
+}
 
 
 

@@ -3,9 +3,7 @@ package lk.sipsetha.controller;
 import lk.sipsetha.dao.DesignationDao;
 import lk.sipsetha.entity.Designation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,5 +20,15 @@ public class DesignationController {
         return dao.findAll();
     }
 
+
+    @PostMapping()
+    public String saveDesignation(@RequestBody Designation designation){
+        try {
+            dao.save(designation);
+            return "ok";
+        }catch (Exception e){
+            return "designation not complete"+e.getMessage();
+        }
+    }
 
 }

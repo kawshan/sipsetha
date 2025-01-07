@@ -65,11 +65,6 @@ const refreshEmployeeForm = () => {
 
     fillDataIntoSelect(selectDesignation, 'select designation', designations, 'name');
 
-    employeestatuses = ajaxGetRequest("/employeestatus/findall")
-
-    fillDataIntoSelect(selectStatus, 'select status', employeestatuses, 'name','working');
-    employee.employeestatus_id = JSON.parse(selectStatus.value);
-    selectStatus.style.border="2px solid green";
 
     genders = ajaxGetRequest("/gender/findall")
 
@@ -101,6 +96,14 @@ const refreshEmployeeForm = () => {
         btnEmployeeAdd.disabled=true;
         btnEmployeeAdd.style.cursor="not-allowed";
     }
+
+    employeestatuses = ajaxGetRequest("/employeestatus/findall")
+
+    fillDataIntoSelect(selectStatus, 'select status', employeestatuses, 'name','working');
+    employee.employeestatus_id = JSON.parse(selectStatus.value);
+    selectStatus.style.border="2px solid green";
+    selectDOB.disabled=true;
+    selectGender.disabled=true;
 
 }
 

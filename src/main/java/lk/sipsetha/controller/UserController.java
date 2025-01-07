@@ -120,17 +120,17 @@ public class UserController {
     @DeleteMapping
     public String deleteUser(@RequestBody User user) {
         //authentication and authorization
-//        Authentication auth =SecurityContextHolder.getContext().getAuthentication();
-//        HashMap<String,Boolean> logUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(),"user");
-//        if (!logUserPrivilege.get("delete")){
-//            return "delete user cannot performed.. you don't have privileges";
-//        }
-        //existing check
+        Authentication auth =SecurityContextHolder.getContext().getAuthentication();
+        HashMap<String,Boolean> logUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(),"user");
+        if (!logUserPrivilege.get("delete")){
+            return "delete user cannot performed.. you don't have privileges";
+        }
+//        existing check
 
-//        User extUser = userDao.getReferenceById(user.getId());
-//        if (extUser == null){
-//            return "user delete not success. user not exists.";
-//        }
+        User extUser = userDao.getReferenceById(user.getId());
+        if (extUser == null){
+            return "user delete not success. user not exists.";
+        }
         try {
             //operations
             //userDao.delete(user); this is hard delete ->this directly removes user record form database

@@ -205,11 +205,11 @@ const deleteUser = (ob, rowIndex) => {
         if (userConfirm) {
             const deleteServerResponse = ajaxDeleteRequest("/user",ob);
             if (deleteServerResponse == 'ok') {
-                // alert('delete successful')
-                swal.fire({title: 'delete successful', icon: 'success'});
+                alert('delete successful')
+                // swal.fire({title: 'delete successful', icon: 'success'});
             } else {
-                // alert('delete was unsuccessful you might have following errors \n'+deleteServerResponse)
-                swal.fire({title: 'delete was unsuccessful you might have following errors \n', icon: 'error'})
+                alert('delete was unsuccessful you might have following errors \n'+deleteServerResponse)
+                // swal.fire({title: 'delete was unsuccessful you might have following errors \n', icon: 'error'})
             }
         }
         refreshUserTable();
@@ -295,7 +295,7 @@ const userSubmit = () => {
         );
         if (UserConfirm){
             let serverResponse= ajaxPostRequest("/user",user);
-            if (serverResponse='ok'){
+            if (serverResponse=='ok'){
                 alert("save successfully ");
                 $('#modalUserAdd').modal('hide');
                 refreshUserForm();

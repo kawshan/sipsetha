@@ -1,89 +1,87 @@
 window.addEventListener('load', () => {
     console.log('working');
 
-    cls = new Object();
+    //call refresh class offering form
+    refreshClassOfferingForm();
 
-    refreshClassTable();
+    //call refresh class offering table
+    refreshClassOfferingTable();
 
-    grades = [
-        {id: 1, name: 'nursery'},
-        {id: 2, name: 'grade 3'},
-        {id: 3, name: 'grade 4'},
-        {id: 4, name: 'grade 5'},
-        {id: 5, name: 'grade 6'},
-        {id: 6, name: 'grade 7'},
-        {id: 7, name: 'grade 8'},
-        {id: 8, name: 'grade 9'},
-        {id: 9, name: 'grade 10'},
-        {id: 10, name: 'grade 11'},
-        {id: 11, name: 'grade 12'},
-        {id: 12, name: 'grade 13'}
-    ];
-
-    fillDataIntoSelect(selectGrade, 'select a grade', grades, 'name');
-
-    subjects = [
-        {id: 1, name: 'nursery'},
-        {id: 2, name: 'sinhala'},
-        {id: 3, name: 'history'},
-        {id: 4, name: 'maths'},
-        {id: 5, name: 'science'},
-        {id: 6, name: 'geography'},
-        {id: 7, name: 'dancing'},
-        {id: 8, name: 'music'},
-    ];
-
-    fillDataIntoSelect(selectSubject, 'select subject', subjects, 'name');
-
-    dates = [
-        {id: 1, name: 'monday'},
-        {id: 2, name: 'tuesday'},
-        {id: 3, name: 'wednesday'},
-        {id: 4, name: 'thursday'},
-        {id: 5, name: 'friday'},
-        {id: 6, name: 'saturday'},
-        {id: 7, name: 'sunday'},
-    ];
-
-    fillDataIntoSelect(selectDate, 'select a date', dates, 'name');
-
-    classstatuses = [
-        {id: 1, name: 'present'},
-        {id: 2, name: 'delete'}
-    ];
-
-    fillDataIntoSelect(selectStatus,'select status',classstatuses,'name')
-
-    teachers=[
-        {id:1,name:'nimal'},
-        {id:2,name:'sunil'}
-    ];
-
-    fillDataIntoSelect(selectTeacher,'select teacher',teachers,'name');
 
 });
+//define refresh class offering refresh form
+const refreshClassOfferingForm = ()=>{
 
-const refreshClassTable = () => {
+    classOffering = new Object();
 
-    clases=[
-        {id:1,classcode:'00001',teacher_id:{id:1,name:'nimal perera'},grade_id:{id:1,name:'grade 6'},subject_id:{id:1,name:'sinhala'},date_id:{id:1,name:'monday'},classstatus_id:{id:1,name:'present'},year:'2023',duration:'one year',fees:'500'}
-    ];
+    classTypes=ajaxGetRequest("/classtype/findall");
+    fillDataIntoSelect(selectClassType,'select class type',classTypes,'name');
+
+    academicYears=ajaxGetRequest("/academicyear/findall")
+    fillDataIntoSelect(SelectAcademicYear,'select academic year',academicYears,'name');
+
+    subjects=ajaxGetRequest("/subject/findall");
+    fillDataIntoSelect(selectSubject,'select subject',subjects,'name');
+
+    teachers=ajaxGetRequest("/teacher/findall")
+    fillDataIntoSelect(selectTeacher,'select teacher',teachers,'fullname');
+
+    grades=ajaxGetRequest("/grade/findall");
+    fillDataIntoSelect(selectGrade,'select grade',grades,'name');
+
+
+    textClassName.style.border='2px solid #ced4da';
+    textFees.style.border='2px solid #ced4da';
+    textDuration.style.border='2px solid #ced4da';
+    textServiceCharge.style.border='2px solid #ced4da';
+    selectClassType.style.border='2px solid #ced4da';
+    SelectAcademicYear.style.border='2px solid #ced4da';
+    selectSubject.style.border='2px solid #ced4da';
+    selectTeacher.style.border='2px solid #ced4da';
+    selectGrade.style.border='2px solid #ced4da';
+    textNote.style.border='2px solid #ced4da';
+
+
+}
+
+
+//define refresh class offering table
+const refreshClassOfferingTable = () => {
+
+    classOfferings=ajaxGetRequest("/classoffering/findall")
 
     displayProperty=[
-        {dataType: 'text',propertyName:'classcode'},
+        {dataType: 'text',propertyName:'classname'},
+        {dataType:'text',propertyName:'fees'},
+        {dataType:'text',propertyName:'duration'},
+        {dataType:'text',propertyName:'servicecharge'},
+
+        {dataType:'function',propertyName:getClassType},
+        {dataType:'function',propertyName:getAcademicYear},
+        {dataType:'function',propertyName:getSubject},
         {dataType:'function',propertyName:getTeacher},
         {dataType:'function',propertyName:getGrade},
-        {dataType:'function',propertyName:getSubject},
-        {dataType:'function',propertyName:getDate},
-        {dataType:'function',propertyName:getClassStatus},
-        {dataType:'text',propertyName:'year'},
-        {dataType:'text',propertyName:'duration'},
-        {dataType:'text',propertyName:'fees'}
+
     ];
 
-    fillDataIntoTable(tableClass,clases,displayProperty,true)
+    fillDataIntoTable(tableClass,classOfferings,displayProperty,true)
 
 };
+
+//create function for getClassStatus
+const getClassType = (ob)=>{
+    return ob.classtype_id.name;
+}
+
+//create function for getDate
+const getAcademicYear = (ob)=>{
+    return ob.academicyear_id.name;
+}
+
+//create function for getSubject
+const getSubject = (ob)=>{
+    return ob.subject_id.name;
+}
 
 //create function for getTeacher
 const getTeacher = (ob)=>{
@@ -93,18 +91,8 @@ const getTeacher = (ob)=>{
 const getGrade = (ob)=>{
     return ob.grade_id.name;
 }
-//create function for getSubject
-const getSubject = (ob)=>{
-    return ob.subject_id.name;
-}
-//create function for getDate
-const getDate = (ob)=>{
-    return ob.date_id.name;
-}
-//create function for getClassStatus
-const getClassStatus = (ob)=>{
-    return ob.classstatus_id.name;
-}
+
+
 
 // create function for class refill
 const classFormRefill = (ob,rowIndex)=>{

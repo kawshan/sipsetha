@@ -24,9 +24,9 @@
                             Administration
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">employee management</a></li>
-                            <li><a class="dropdown-item" href="#">user management</a></li>
-                            <li><a class="dropdown-item" href="#">privilege management</a></li>
+                            <li><a class="dropdown-item" href="http://localhost:8080/employee/employeeform">employee management</a></li>
+                            <li><a class="dropdown-item" href="http://localhost:8080/user/userform">user management</a></li>
+                            <li><a class="dropdown-item" href="http://localhost:8080/privilege/privilegeform">privilege management</a></li>
                         </ul>
                     </li>
 
@@ -36,14 +36,14 @@
                             student
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Student management</a></li>
-                            <li><a class="dropdown-item" href="#">Guardian management</a></li>
+                            <li><a class="dropdown-item" href="http://localhost:8080/student/studentform">Student management</a></li>
+                            <li><a class="dropdown-item" href="http://localhost:8080/guardian/guardianform">Guardian management</a></li>
                         </ul>
 
                     </li>
 
 
-                    <a class="navbar-brand" style="margin-left: 20%">logged user</a>
+                    <a class="navbar-brand" style="margin-left: 20%; color: whitesmoke;" th:text="${loggedusername}">logged user</a>
 
                     <button class="btn btn-danger"
                             onclick="let userConfirm = confirm('are you sure to logout');
@@ -74,9 +74,9 @@
                     Administration section
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">employee</a></li>
-                    <li><a class="dropdown-item" href="#">user</a></li>
-                    <li><a class="dropdown-item" href="#">privilege</a></li>
+                    <li><a class="dropdown-item" href="http://localhost:8080/employee/employeeform">employee</a></li>
+                    <li><a class="dropdown-item" href="http://localhost:8080/user/userform">user</a></li>
+                    <li><a class="dropdown-item" href="http://localhost:8080/privilege/privilegeform">privilege</a></li>
                 </ul>
             </div>
 
@@ -87,8 +87,8 @@
                     student Sections
                 </button>
                 <ul class="dropdown-menu">
-                    <li><a class="dropdown-item" href="#">student management</a></li>
-                    <li><a class="dropdown-item" href="#">guardian management</a></li>
+                    <li><a class="dropdown-item" href="http://localhost:8080/student/studentform">student management</a></li>
+                    <li><a class="dropdown-item" href="ttp://localhost:8080/guardian/guardianform">guardian management</a></li>
                 </ul>
             </div>
 

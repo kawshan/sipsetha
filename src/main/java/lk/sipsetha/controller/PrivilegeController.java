@@ -35,10 +35,23 @@ public class PrivilegeController {
     @DeleteMapping
     public String deletePrivilege(@RequestBody Privilege privilege){
         //authentication and authorization
+
+        //existing check
+        Privilege extPrivilege = privilegeDao.getReferenceById(privilege.getId());
+        if (extPrivilege == null){
+            return "cannot delete privilege. privilege does not exists";
+        }
+
         //hard delete
         //soft delete
         try {
-            privilegeDao.delete(privilege);
+//            privilegeDao.delete(privilege);
+            extPrivilege.setSel(false);
+            extPrivilege.setInst(false);
+            extPrivilege.setUpd(false);
+            extPrivilege.setDel(false);
+            privilegeDao.save(extPrivilege);
+
             return "ok";
         }catch (Exception e){
             return "delete not completed "+e.getMessage();

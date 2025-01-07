@@ -1,5 +1,7 @@
 package lk.sipsetha.controller;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -23,8 +25,10 @@ public class LoginController {
 
     @GetMapping(value = "/dashboard")
     public ModelAndView dashboardUI(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         ModelAndView dashboardView = new ModelAndView();
         dashboardView.setViewName("dashboard.html");
+        dashboardView.addObject("loggedusername",auth.getName());
         return dashboardView;
     }
 

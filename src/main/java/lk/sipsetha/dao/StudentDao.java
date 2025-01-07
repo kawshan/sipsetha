@@ -14,4 +14,9 @@ public interface StudentDao extends JpaRepository<Student,Integer> {
     //define query for get student by student name
     @Query(value = "select s from Student s where s.stunum=?1")
     public Student getStudentByStudentNumber(String id);
+
+
+    @Query(value = "select s.id from Student s where s.stunum=?1")
+    public String getStudentByStunum(String stunum);
+
 }

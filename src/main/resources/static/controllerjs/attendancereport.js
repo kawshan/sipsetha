@@ -41,9 +41,16 @@ const getAttendanceStatus = (ob) => {
 const getAttendanceReportsBetweenDates=()=>{
     let startDate = textStartDate.value;
     let endDate = textEndDate.value;
+    let studentNumber=textStudentNum.value;
+
+    let serverResponsestudentID=ajaxGetRequest("/student/getbystunum/"+studentNumber)
+    console.log(serverResponsestudentID);
+    console.log("type of server response student id "+typeof(serverResponsestudentID))
+    serresForFlote=parseFloat(serverResponsestudentID);
+
     console.log(startDate+" "+endDate);
     // /reportdataattendance/{startdate}/{enddate}  //api request karana
-    attendancesList=ajaxGetRequest("/reportdataattendance/"+startDate+"/"+endDate);
+    attendancesList=ajaxGetRequest("/reportdataattendance/"+startDate+"/"+endDate+"/"+serresForFlote);
     refreshAttendanceTable();
 }
 

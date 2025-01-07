@@ -43,8 +43,8 @@ public interface ReportDao extends JpaRepository<Employee, Integer> {
     @Query(value = "select p from Payment p where p.paymentcategory_id.id=1")
     public List<Payment> getPaymentByPaymentCategory(int paymentcategory);
 
-    @Query(value = "select a from Attendance a where a.addeddate between ?1 and ?2 order by a.addeddate")
-    public List<Attendance> getAttendanceStartAndENDDate(LocalDate startdate, LocalDate enddate);
+    @Query(value = "select a from Attendance a where  a.student_id.id=?3 and a.addeddate between ?1 and ?2  order by a.addeddate ")
+    public List<Attendance> getAttendanceStartAndENDDate(LocalDate startdate, LocalDate enddate , Integer id);
 
     //select * from payment where addeddatetime like '2024-06-27%'
     //@Query(value = "select p.* from Payment p where addeddatetime like //?1%", nativeQuery = true)

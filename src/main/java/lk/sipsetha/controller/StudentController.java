@@ -134,5 +134,10 @@ public class StudentController {
 
     }
 
+    @GetMapping(value = "/getbystunum/{stunum}")
+    public String getStudentByStuNum(@PathVariable("stunum") String stunum){
+        return studentDao.getStudentByStunum(stunum);
+    }
+
 
 }

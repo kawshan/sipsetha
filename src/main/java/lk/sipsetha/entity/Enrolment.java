@@ -76,7 +76,8 @@ public class Enrolment {
     @JoinColumn(name = "teacher_id",referencedColumnName = "id")
     private Teacher  teacher_id;
 
-    @OneToMany(mappedBy = "enrolment_id")
+    //cascade all damme association ekata data save karannna one nisa orphan removal eka damme remove karanna eka one nisa naththam association eken remove karananna ba
+    @OneToMany(mappedBy = "enrolment_id",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<EnrolmentHasClassOfferings> classOfferings;
 
 }

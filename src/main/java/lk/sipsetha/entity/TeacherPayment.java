@@ -59,7 +59,7 @@ public class TeacherPayment {
     private String referencenumber;
 
 
-    @OneToMany(mappedBy = "teacherpayment_id")
+    @OneToMany(mappedBy = "teacherpayment_id",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<TeacherPaymentHasEnrolment> teacherPaymentHasEnrolments;
 
 

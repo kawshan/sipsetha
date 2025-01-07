@@ -1,6 +1,7 @@
 package lk.sipsetha.dao;
 
 import lk.sipsetha.entity.Employee;
+import lk.sipsetha.entity.Payment;
 import lk.sipsetha.entity.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -27,6 +28,18 @@ public interface ReportDao extends JpaRepository<Employee,Integer> {
     @Query(value = "select s from Student s where s.status=?1 and s.grade_id.id=?2")
     public List<Student> getByStatusAndGrade(boolean status, int grade);
 
+    @Query(value = "select p from Payment p where p.month=?1")
+    public List<Payment> getPaymentByMonth(String month);
+
+    @Query(value = "select p from Payment p where p.paytype_id.id=?1 and p.paymentcategory_id.id=?2")
+    public List<Payment> getPaymentByTypeAndCategory(int paytype,int paymentcategory);
+
+
+    @Query(value = "select p from Payment p where p.paytype_id.id=?1")
+    public List<Payment> getPaymentByPaymentType(int paytype);
+
+    @Query(value = "select p from Payment p where p.paymentcategory_id.id=1")
+    public List<Payment> getPaymentByPaymentCategory(int paymentcategory);
 
 
 }

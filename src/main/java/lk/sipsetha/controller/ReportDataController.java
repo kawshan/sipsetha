@@ -2,6 +2,7 @@ package lk.sipsetha.controller;
 
 import lk.sipsetha.dao.ReportDao;
 import lk.sipsetha.entity.Employee;
+import lk.sipsetha.entity.Payment;
 import lk.sipsetha.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -39,6 +40,45 @@ public class ReportDataController {
         return reportDao.getByStatusAndGrade(status,grade);
     }
 
+    //reportdatapayment?month=2024-07
+    @GetMapping(value = "/reportdatapayment",params = {"month"})
+    public List<Payment> getStudentPaymentByMonth(@RequestParam("month")String month){
+        return reportDao.getPaymentByMonth(month);
+    }
 
+
+    //reportdatapayment?paytype=1&paymentcategory=1
+    @GetMapping(value = "reportdatapayment",params = {"paytype","paymentcategory"})
+    public List<Payment> getStudentPaymentByTypeAndCategory(@RequestParam("paytype")int paytype,@RequestParam("paymentcategory")int paymentcategory){
+        return reportDao.getPaymentByTypeAndCategory(paytype,paymentcategory);
+    }
+
+    //reportdatapayment?paytype=1
+    @GetMapping(value = "/reportdatapayment",params = {"paytype"})
+    public List<Payment> getStudentByPaymentType(@RequestParam("paytype")int paytype){
+        return reportDao.getPaymentByPaymentType(paytype);
+    }
+
+
+
+    @GetMapping(value = "/reportdatapayment",params = {"paymentcategory"})
+    public List<Payment> getStudentByPaymentCategory(@RequestParam("paymentcategory")int paymentcategory){
+        return reportDao.getPaymentByPaymentCategory(paymentcategory);
+    }
 
 }
+
+//    @GetMapping(value = "reportdatapayment",params = {"paytype","paymentcategory"})
+//    public List<Payment> getStudentPaymentByTypeAndCategory(@RequestParam("paytype")Integer paytype,@RequestParam("paymentcategory")Integer paymentcategory){
+//        if (paytype != null && paymentcategory==null){
+//            return reportDao.getPaymentByPaymentType(paytype);
+//        }
+//        if (paymentcategory!=null && paytype==null){
+//            return reportDao.getPaymentByPaymentCategory(paymentcategory);
+//        }
+//        if (paytype!=null && paymentcategory!=null){
+//            return reportDao.getPaymentByTypeAndCategory(paytype,paymentcategory);
+//        }
+//
+//
+//    }

@@ -39,5 +39,20 @@ private UserDao userDao;
         return studentReportUI;
     }
 
+    @GetMapping(value = "/reportpaymentui")
+    public ModelAndView reportPaymentView(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedUser = userDao.getUserByUserName(auth.getName());
+        ModelAndView paymentReportUI = new ModelAndView();
+        paymentReportUI.addObject("loggeduserrole",loggedUser.getRoles().iterator().next().getName());
+        paymentReportUI.addObject("loggeduserphoto",loggedUser.getUserphoto());
+        paymentReportUI.addObject("loggedusername",auth.getName());
+        paymentReportUI.setViewName("paymentreport.html");
+        return paymentReportUI;
+    }
+
+
+
+
 
 }

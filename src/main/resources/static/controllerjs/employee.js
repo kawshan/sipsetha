@@ -374,6 +374,7 @@ const employeeSubmit = () => {
             + '\n full name is ' + employee.fullname
             + '\n calling name is ' + employee.callingname
             + '\n nic is ' + employee.nic
+            // + '\n gender is ' + employee.gender_id.name
         );
 
         if (userConfirm){
@@ -449,3 +450,74 @@ const textCallingNameValidator = (fieldId) => {
         employee.callingname = null;
     }
 }
+
+const generateGenderAndDOB = (element)=>{
+    let nicValue = element.value;
+    let year,month,date
+    let days;
+    let dob;
+
+    if (new RegExp("^(([0-9]{9}[VvXxSs])|([0-9]{12}))$").test(nicValue)){
+        if (nicValue.length==10){//for old nic type
+            year="19"+nicValue.substring(0,2);//ekdaas namasiya kiyanna thama meka ganne udaharanayak vidihata 19+67 1967
+            days=nicValue.substring(2,5);
+        }
+
+        if (nicValue.length==12){ //for to check new nic
+            year=nicValue.substring(0,4);
+            days=nicValue.substring(4,7)
+        }
+        console.log(year);
+        console.log(days);
+    }
+    if (days<500){
+        genders = ajaxGetRequest("/gender/findall")
+        fillDataIntoSelect(selectGender,'select gender',genders,'name','male');
+    }else {
+        genders = ajaxGetRequest("/gender/findall")
+        fillDataIntoSelect(selectGender,'select gender',genders,'name','female');
+    }
+    console.log(days);
+    let DOBDate = new Date(year);
+    console.log(DOBDate)
+    if (year%4 !=0){
+        DOBDate.setDate(parseInt(days)-1);
+    }else {
+        DOBDate.setDate(parseInt(days));
+    }
+    console.log(DOBDate);
+
+    month=DOBDate.getMonth()+1;
+    if (month<10){
+        month="0"+month;
+    }
+    date=DOBDate.getDate();
+    if (date<10){
+        date="0"+date;
+    }
+    dob=year+"-"+month+"-"+date;
+    selectDOB.value=dob;
+    employee.dob=JSON.parse(JSON.stringify(selectDOB.value));
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

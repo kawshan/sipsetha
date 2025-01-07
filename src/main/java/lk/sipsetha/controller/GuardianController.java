@@ -3,6 +3,8 @@ package lk.sipsetha.controller;
 import lk.sipsetha.dao.GuardianDao;
 import lk.sipsetha.entity.Guardian;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,8 +25,11 @@ public class GuardianController {
 
     @GetMapping(value = "/guardianform")
     public ModelAndView guardianView(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         ModelAndView guardianUI = new ModelAndView();
         guardianUI.setViewName("guardian.html");
+        guardianUI.addObject("title","guardian management");
+        guardianUI.addObject("loggedusername",auth.getName());
         return guardianUI;
     }
 
@@ -63,6 +68,17 @@ public class GuardianController {
         }catch (Exception e){
             return "cannot delete"+e.getMessage();
         }
+    }
+
+    @PostMapping
+    public String saveGuardian(@RequestBody Guardian guardian){
+        try {
+            guardianDao.save(guardian);
+            return "ok";
+        }catch (Exception e){
+            return "guardian submit not completed "+e.getMessage();
+        }
+
     }
 
 

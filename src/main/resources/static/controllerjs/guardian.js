@@ -197,3 +197,46 @@ const buttonGuardianDelete = (ob,rowIndex)=>{
 
 }
 
+//define function for guardian check errors
+const guardianCheckErrors = ()=>{
+    let errors="";
+
+    if (guardian.firstname == null){
+        errors=errors+'please enter first name \n';
+    }
+
+    if (guardian.lastname == null){
+        errors=errors+'please enter last name \n';
+    }
+
+
+    return errors;
+}
+
+
+//define function for guardian submit
+const buttonGuardianAdd = ()=>{
+    let errors = guardianCheckErrors();
+    if (errors == ""){
+        let userConfirm =confirm("are you sure to add this guardian"
+        +'\n first name is'+guardian.firstname
+        +'\n last name is'+guardian.lastname
+        );
+        if (userConfirm){
+            let serverResponse=ajaxPostRequest("/guardian",guardian)
+            if (serverResponse=="ok"){
+                alert("save success "+serverResponse);
+                refreshGuardianTable();
+                guardianForm.reset();
+                refreshGuardianForm();
+                $('#modalGuardianAdd').modal('hide');
+
+            }else {
+                alert("save not success"+serverResponse);
+            }
+        }
+    }else {
+        alert("you might have following errors "+errors);
+    }
+}
+

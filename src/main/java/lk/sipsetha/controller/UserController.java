@@ -3,6 +3,8 @@ package lk.sipsetha.controller;
 import lk.sipsetha.dao.UserDao;
 import lk.sipsetha.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -17,8 +19,11 @@ public class UserController {
 
     @GetMapping(value = "/userform")
     public ModelAndView userView(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         ModelAndView userView = new ModelAndView();
         userView.setViewName("user.html");
+        userView.addObject("loggedusername",auth.getName());
+        userView.addObject("title","user management");
         return userView;
     }
 

@@ -3,6 +3,8 @@ package lk.sipsetha.controller;
 import lk.sipsetha.dao.StudentDao;
 import lk.sipsetha.entity.Student;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -22,8 +24,11 @@ public class StudentController {
 
     @GetMapping(value = "/studentform")
     public ModelAndView studentView(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         ModelAndView studentUI = new ModelAndView();
         studentUI.setViewName("student.html");
+        studentUI.addObject("title","student management");
+        studentUI.addObject("loggedusername",auth.getName());
         return studentUI;
     }
 

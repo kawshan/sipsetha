@@ -19,8 +19,11 @@ public class PrivilegeController {
 
     @GetMapping(value = "/privilegeform")
     public ModelAndView privilegeUI(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         ModelAndView privilegeView = new ModelAndView();
         privilegeView.setViewName("privilege.html");
+        privilegeView.addObject("title","privilege management");
+        privilegeView.addObject("loggedusername",auth.getName());
         return privilegeView;
     }
 

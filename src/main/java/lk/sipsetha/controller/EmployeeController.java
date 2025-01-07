@@ -5,6 +5,8 @@ import lk.sipsetha.dao.EmployeeStatusDao;
 import lk.sipsetha.entity.Employee;
 import lk.sipsetha.entity.EmployeeStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,8 +28,11 @@ public class EmployeeController {
 
     @GetMapping(value = "/employeeform")
     public ModelAndView getEmployeeView() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         ModelAndView employeeView = new ModelAndView();
         employeeView.setViewName("employee.html");
+        employeeView.addObject("loggedusername",auth.getName());
+        employeeView.addObject("title","employee management");
         return employeeView;
     }
 

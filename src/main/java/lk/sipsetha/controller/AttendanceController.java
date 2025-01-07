@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +44,7 @@ public class AttendanceController {
         ModelAndView attendanceView = new ModelAndView();
         attendanceView.setViewName("attendance.html");
         attendanceView.addObject("loggedusername",auth.getName());
-        attendanceView.addObject("title","employee management");
+        attendanceView.addObject("title","attendance management");
         return attendanceView;
     }
 
@@ -61,7 +62,7 @@ public class AttendanceController {
             AttendanceStatus deleteAttendanceStatus = attendanceStatusDao.getReferenceById(3);
             attendance.setAttendancestatus_id(deleteAttendanceStatus);
             attendance.setDeleteuser(userDao.getUserByUserName(auth.getName()).getId());
-            attendance.setDeletedatetime(LocalDateTime.now());
+            attendance.setDeletedate(LocalDate.now());
             dao.save(attendance);
             return "ok";
         }catch (Exception e){
@@ -79,10 +80,16 @@ public class AttendanceController {
             return "cannot perform delete attendance... you dont have privileges";
         }
 
+//        List<Attendance> chekDuplicateAttendance=dao.checkDupUsingDateStuClZOff(LocalDate.now().toString(),attendance.getClassoffering_id().getId(),attendance.getStudent_id().getId());
+//        if (!chekDuplicateAttendance.isEmpty()){
+//            return "cannot perform attendance its already exists";
+//        }
+
+
         try {
 
             attendance.setAddeduser(userDao.getUserByUserName(auth.getName()).getId());
-            attendance.setAddeddatetime(LocalDateTime.now());
+            attendance.setAddeddate(LocalDate.now());
             dao.save(attendance);
             return "ok";
         }catch (Exception e){
@@ -102,7 +109,7 @@ public class AttendanceController {
         }
         try {
             attendance.setUpdateuser(userDao.getUserByUserName(auth.getName()).getId());
-            attendance.setUpdatedatetime(LocalDateTime.now());
+            attendance.setUpdatedate(LocalDate.now());
             dao.save(attendance);
             return "ok";
         }catch (Exception e){

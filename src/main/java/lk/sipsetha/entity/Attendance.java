@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -31,14 +32,14 @@ public class Attendance {
     @Column(name = "deleteuser")
     private Integer deleteuser;
 
-    @Column(name = "addeddatetime")
-    private LocalDateTime addeddatetime;
+    @Column(name = "addeddate")
+    private LocalDate addeddate;
 
-    @Column(name = "updatedatetime")
-    private LocalDateTime updatedatetime;
+    @Column(name = "updatedate")
+    private LocalDate updatedate;
 
-    @Column(name = "deletedatetime")
-    private LocalDateTime deletedatetime;
+    @Column(name = "deletedate")
+    private LocalDate deletedate;
 
     @Column(name = "note")
     private String note;

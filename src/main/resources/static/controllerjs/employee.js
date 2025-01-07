@@ -85,16 +85,6 @@ const refreshEmployeeForm = () => {
     selectDesignation.style.border = '1px solid #ced4da';
     selectCivilStatus.style.border = '1px solid #ced4da';
 
-    console.log(userPrivilege);
-    if (!userPrivilege.update){
-        btnEmployeeUpdate.disabled=true;
-        btnEmployeeUpdate.style.cursor="not-allowed";
-    }
-
-    if (!userPrivilege.insert){
-        btnEmployeeAdd.disabled=true;
-        btnEmployeeAdd.style.cursor="not-allowed";
-    }
 
     employeestatuses = ajaxGetRequest("/employeestatus/findall")
     fillDataIntoSelect(selectStatus, 'select status', employeestatuses, 'name','working');
@@ -104,10 +94,32 @@ const refreshEmployeeForm = () => {
     selectGender.disabled=true;
 
 
-    employee.emp_photo=null;
+    employee.emp_photo=null;    //employee obkect eke emp_photo kiyana property eka null karala danwa ai ee null karanne refresh ekedi mukuth value thiyenna bari nisa
     imgEmpPhoto.files=null; //files array eka empty karanawa
     imgEmpPhoto.src="/icons/no-photo.png";
     textEmpPhoto.value=""
+
+
+    ////need to disable update button when form is refreshing
+    btnEmployeeUpdate.disabled=true     //
+    btnEmployeeUpdate.style.cursor="not-allowed";       //ethakota cursor eka me symbol eken 🚫 pennnawa
+
+
+    btnEmployeeAdd.disabled=false;  //disable false ee kiyanne visible venna hadanawa
+    btnEmployeeAdd.style.cursor="pointer";      ////refill ekedi pointer not allowed dunna nisa thama methana pointer dunne ethakota cursor eka 👆 mehema pennanawa
+
+
+    console.log(userPrivilege); //log ekak dala balanawa privilege monada kiyala
+    if (!userPrivilege.update){ //privilege baluwa update eka karanna puluwan da ba da kiyala
+        btnEmployeeUpdate.disabled=true;    //update privilege eka naththam diable karala danawa button eke
+        btnEmployeeUpdate.style.cursor="not-allowed";   // pointer eka not allowed kiyala danawa
+    }
+
+    if (!userPrivilege.insert){ //insert eke privilege thiyeawada da nadda baluwa
+        btnEmployeeAdd.disabled=true;   //privilege naththam button eka disable
+        btnEmployeeAdd.style.cursor="not-allowed";  //pointer eka not allowed
+    }
+
 
 }
 
@@ -200,10 +212,24 @@ const employeeFormRefill = (ob, rowIndex) => {
         imgEmpPhoto.src="/icons/no-photo.png";
         textEmpPhoto.value="";
     }else {
-        imgEmpPhoto.src=atob(employee.emp_photo);//btoa eken encrypt karanawa meken decrypt karanawa
+        imgEmpPhoto.src=atob(employee.emp_photo);//btoa eken encrypt karanawa meken decrypt karanawa ai decrypt karala ganne normal ganna bari nisa
         textEmpPhoto.value=employee.emp_photo_name
     }
 
+
+    //enable btn update because we disabled that in refresh
+    btnEmployeeUpdate.disabled=false
+    btnEmployeeUpdate.style.cursor="pointer";
+    //need to disable add button
+    btnEmployeeAdd.disabled=true;
+    btnEmployeeAdd.style.cursor="not-allowed";
+
+
+    console.log(userPrivilege); //log ekak dala balanawa privilege monada kiyala
+    if (!userPrivilege.update){ //privilege baluwa update eka karanna puluwan da ba da kiyala
+        btnEmployeeUpdate.disabled=true;    //update privilege eka naththam diable karala danawa button eke
+        btnEmployeeUpdate.style.cursor="not-allowed";   // pointer eka not allowed kiyala danawa
+    }
 
 }
 
@@ -226,14 +252,10 @@ const deleteEmployee = (ob, rowIndex) => {
            const deleteServerResponse = ajaxDeleteRequest("/employee",ob)
 
             if (deleteServerResponse == 'ok') {
-                alert("delete successful")
-                // Swal.fire({title: 'delete successful', icon: 'success'});
+                alert("delete successful");
+                divModifyButton.className="d-none";
             } else {
                 alert('delete was unsuccessful you might have following errors \n' + deleteServerResponse)
-                // Swal.fire({
-                    // title: 'delete unsuccessful you might have following errors \n' + deleteServerResponse,
-                    // icon: 'error'
-                // });
             }
         }
         refreshEmployeeTable();
@@ -359,6 +381,7 @@ const buttonFormUpdate = ()=>{
                     refreshEmployeeForm();
                     $("#modalEmployeeAdd").modal("hide");
                     refreshEmployeeTable();
+                    divModifyButton.className="d-none";
                 }else {
                     alert("fail to update have following error \n "+putServiceResponce);
                 }
@@ -455,10 +478,6 @@ const employeeSubmit = () => {
 
     } else {
         alert('you might have some errors \n'+errors);
-        // swal.fire({
-        //     title: 'you might have some errors \n ' + errors,
-        //     icon: 'error'
-        // });
     }
 }
 

@@ -67,6 +67,8 @@ const fillDataIntoTable = (tableId,dataList,columnList,checkPrivilege, buttonVis
 
     });
 }
+
+
 const fillDataIntoPaymentTable = (tableId,dataList,columnList, buttonVisibility=true)=>{
     const tableBody = tableId.children[1];
     tableBody.innerHTML='';

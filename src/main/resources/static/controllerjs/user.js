@@ -100,14 +100,25 @@ const refreshUserForm = () => {
     // selectRole.style.border = '2px solid #ced4da';
     selectStatus.style.border = '2px solid #ced4da';
 
-    console.log(userPrivilege)
-    if (!userPrivilege.update){
-        btnUpdateUser.disabled=true;
-        btnUpdateUser.style.cursor="not-allowed";
+
+    ////need to disable update button when form is refreshing
+    btnUpdateUser.disabled=true     //
+    btnUpdateUser.style.cursor="not-allowed";       //ethakota cursor eka me symbol eken 🚫 pennnawa
+
+
+    btnAddUser.disabled=false;  //disable false ee kiyanne visible venna hadanawa
+    btnAddUser.style.cursor="pointer";      ////refill ekedi pointer not allowed dunna nisa thama methana pointer dunne ethakota cursor eka 👆 mehema pennanawa
+
+
+
+    console.log(userPrivilege)  //log ekak dala balanawa privilege monada kiyala
+    if (!userPrivilege.update){ //privilege baluwa update eka karanna puluwan da ba da kiyala
+        btnUpdateUser.disabled=true;    //update privilege eka naththam diable karala danawa button eke
+        btnUpdateUser.style.cursor="not-allowed";   // pointer eka not allowed kiyala danawa
     }
-    if (!userPrivilege.insert){
-        btnAddUser.disabled=true;
-        btnAddUser.style.cursor="not-allowed";
+    if (!userPrivilege.insert){//insert eke privilege thiyeawada da nadda baluwa
+        btnAddUser.disabled=true;//privilege naththam button eka disable
+        btnAddUser.style.cursor="not-allowed";//pointer eka not allowed
     }
 
 
@@ -212,7 +223,19 @@ const userFormRefill = (ob, rowIndex) => {
 
     });
 
+    //enable btn update because we disabled that in refresh
+    btnUpdateUser.disabled=false
+    btnUpdateUser.style.cursor="pointer";
+    //need to disable add button
+    btnAddUser.disabled=true;
+    btnAddUser.style.cursor="not-allowed";
 
+
+    console.log(userPrivilege); //log ekak dala balanawa privilege monada kiyala
+    if (!userPrivilege.update){ //privilege baluwa update eka karanna puluwan da ba da kiyala
+        btnUpdateUser.disabled=true;    //update privilege eka naththam diable karala danawa button eke
+        btnUpdateUser.style.cursor="not-allowed";   // pointer eka not allowed kiyala danawa
+    }
 
 
 }
@@ -232,11 +255,10 @@ const deleteUser = (ob, rowIndex) => {
         if (userConfirm) {
             const deleteServerResponse = ajaxDeleteRequest("/user",ob);
             if (deleteServerResponse == 'ok') {
-                alert('delete successful')
-                // swal.fire({title: 'delete successful', icon: 'success'});
+                alert('delete successful');
+                divModifyButton.className="d-none";
             } else {
                 alert('delete was unsuccessful you might have following errors \n'+deleteServerResponse)
-                // swal.fire({title: 'delete was unsuccessful you might have following errors \n', icon: 'error'})
             }
         }
         refreshUserTable();
@@ -443,8 +465,7 @@ const userUpdate = ()=>{
                     $('#modalUserAdd').modal('hide');
                     refreshUserForm();
                     refreshUserTable();
-
-
+                    divModifyButton.className="d-none";
                 }else {
                     alert("fail to update. you might have some errors \n"+putServiceResponse)
                 }

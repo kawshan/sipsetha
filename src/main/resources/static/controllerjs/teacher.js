@@ -40,20 +40,35 @@ const refreshTeacherForm = ()=>{
     selectBranch.style.border='2px solid #ced4da';
     selectStatus.style.border='2px solid #ced4da';
 
-    if (!userPrivilege.update){
-        btnTeacherUpdate.disabled=true;
-        btnTeacherUpdate.style.cursor='not-allowed';
-    }
 
-    if (!userPrivilege.delete){
-        btnTeacherAdd.disabled=true;
-        btnTeacherAdd.style.cursor='not-allowed';
-    }
 
     fillDataIntoSelect(selectStatus,'select status',teacherStatues,'name','working');
     selectStatus.disabled=true;
     teacher.teacherstatus_id=JSON.parse(selectStatus.value);
     selectStatus.style.border='2px solid green';
+
+
+
+    ////need to disable update button when form is refreshing
+    btnTeacherUpdate.disabled=true; //
+    btnTeacherUpdate.style.cursor="not-allowed";       //ethakota cursor eka me symbol eken 🚫 pennnawa
+
+
+    btnTeacherAdd.disabled=false;  //disable false ee kiyanne visible venna hadanawa
+    btnTeacherAdd.style.cursor="pointer";      ////refill ekedi pointer not allowed dunna nisa thama methana pointer dunne ethakota cursor eka 👆 mehema pennanawa
+
+
+    if (!userPrivilege.update){
+        btnTeacherUpdate.disabled=true;
+        btnTeacherUpdate.style.cursor='not-allowed';
+    }
+
+    if (!userPrivilege.insert){
+        btnTeacherAdd.disabled=true;
+        btnTeacherAdd.style.cursor='not-allowed';
+    }
+
+
 
 }
 
@@ -168,6 +183,22 @@ const teacherFormRefill = (ob,rowIndex)=>{
     }
 
 
+
+    ////need to disable update button when form is refreshing
+    btnTeacherUpdate.disabled=false; //button eka diasable nathi karanwa
+    btnTeacherUpdate.style.cursor="pointer";       //cursor eka pointer denwa
+
+
+    btnTeacherAdd.disabled=true;    //button eka disable karanwa
+    btnTeacherAdd.style.cursor="not-allowed";   //cursor eka not allowed eka denawa
+
+
+    if (!userPrivilege.update){ //update karanna privilege naththa,
+        btnTeacherUpdate.disabled=true; //button disable karala
+        btnTeacherUpdate.style.cursor='not-allowed';    //cursor eka not allowed denawa
+    }
+
+
 };
 
 
@@ -188,6 +219,7 @@ const deleteTeacher = (ob,rowIndex)=>{
             const deleteServerResponse = ajaxDeleteRequest("/teacher",ob);
             if (deleteServerResponse == 'ok'){
                 alert('delete successful')
+                divModifyButton.className="d-none";
             }else {
                 alert('delete unsuccessful you might have following errors \n'+deleteServerResponse)
             }
@@ -408,6 +440,7 @@ const buttonFormUpdate = ()=>{
                     refreshTeacherForm();
                     $('#modalTeacherAdd').modal('hide');
                     refreshTeacherTable();
+                    divModifyButton.className="d-none";
                 }else {
                     alert("update not success "+putServiceResponse);
                 }

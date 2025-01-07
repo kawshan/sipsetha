@@ -75,6 +75,22 @@ const refreshClassHallForm = ()=>{
     textNote.style.border='2px solid #ced4da';
     selectClassHallStatus.style.border='2px solid #ced4da';
 
+
+//man methana karala thiyenne filed id eka aran eke inner html eka empty karala message eka aran eka disable karala eka selected karala iita passe eka appen karala eeta passe data list ekata loop ekk hadala ekata document create element eken element ekak create karan eka appenc child karala select element ekata dagena thiyenwa iita passe selected value eka deela thiyenwa active kiyala
+    fillDataIntoSelect(selectClassHallStatus,'select status',classHallStatus,'name','active');
+    selectClassHallStatus.style.border="2px solid green";   //colur eka green karala thiyenwa
+    classhall.classhallstatus_id=JSON.parse(selectClassHallStatus.value);   //object eke property ekata bind karagen thiyenewa json parse karagena ai json parse karanne apita server eken enner json string ekak eeka ehema thiyegena apita wada karanna ba ee nisa JSON string eka JS object ekata convert karanna one nisa thama meka karanne
+
+
+    //need to disable update button when form is refreshing
+    btnClassHallUpdate.disabled=true     //
+    btnClassHallUpdate.style.cursor="not-allowed";       //ethakota cursor eka me symbol eken 🚫 pennnawa
+
+
+    btnClassHallAdd.disabled=false;  //disable false ee kiyanne visible venna hadanawa
+    btnClassHallAdd.style.cursor="pointer";      ////refill ekedi pointer not allowed dunna nisa thama methana pointer dunne ethakota cursor eka 👆 mehema pennanawa
+
+
     if (!userPrivilege.update){
         btnClassHallUpdate.disabled=true;
         btnClassHallUpdate.style.cursor='not-allowed';
@@ -84,12 +100,6 @@ const refreshClassHallForm = ()=>{
         btnClassHallAdd.disabled=true;
         btnClassHallAdd.style.cursor='not-allowed';
     }
-
-    fillDataIntoSelect(selectClassHallStatus,'select status',classHallStatus,'name','active');
-    selectClassHallStatus.style.border="2px solid green";
-    classhall.classhallstatus_id=JSON.parse(selectClassHallStatus.value);
-
-
 
 };
 
@@ -125,13 +135,17 @@ const classHallFormRefill = (ob,rowIndex)=>{
     fillDataIntoSelect(selectedFeatures,'',classhall.features,'name');
 
 
-    if (!userPrivilege.update){
-        btnClassHallUpdate.disabled=true;
-        btnClassHallUpdate.style.cursor='not-allowed';
-    }else {
-        btnClassHallUpdate.disabled="";
-        $("#btnClassHallUpdate").css("cursor", "pointer");
+    btnClassHallUpdate.disabled=false   //update button eka enable karanwa
+    btnClassHallUpdate.style.cursor="pointer";  //cursor eka pointer denawa
 
+
+    btnClassHallAdd.disabled=true;  //add button eka disable karanawa
+    btnClassHallAdd.style.cursor="not-allowed"; //cursor eka not allowed karanwa
+
+
+    if (!userPrivilege.update){//privilege baluwa update eka karanna puluwan da ba da kiyala
+        btnClassHallUpdate.disabled=true;//update privilege eka naththam diable karala danawa button eke
+        btnClassHallUpdate.style.cursor='not-allowed';// pointer eka not allowed kiyala danawa
     }
 
 }
@@ -153,6 +167,7 @@ const deleteClassHall = (ob,rowIndex)=>{
             if (deleteServerResponse =="ok"){
                 alert('delete successful')
                 refreshClassHallTable();
+                divModifyButton.className="d-none";
             }else {
                 alert('delete unsuccessful '+deleteServerResponse);
             }
@@ -306,6 +321,7 @@ const classHallUpdate = ()=>{
                     refreshClassHallForm();
                     $('#modalClassHallAdd').modal('hide');
                     refreshClassHallTable()
+                    divModifyButton.className="d-none";
                 }else {
                     alert("update not successful"+putServiceResponse)
                 }
@@ -352,66 +368,67 @@ const classHallSubmit = ()=>{
 
 //define function for button add one item
 const btnAddOneItem= ()=>{
-    console.log(selectAllItem.value);
-    if (selectAllItem.value==""){
-        alert("please select item")
-    }else {
-        let selectedItem=JSON.parse(selectAllItem.value);
+    console.log(selectAllItem.value);   //log ekak daagannawa select all item kiyana html element eka value aka
+    if (selectAllItem.value==""){   //ee value eka empty nam
+        alert("please select item") //user ta alert message ekak denawa plese select item kiyala
+    }else { //value eka empty nathtam
+        let selectedItem=JSON.parse(selectAllItem.value); //selectAllItem kiyana html element eke value eka json parse karala eka selected item kiyana variable ekata assign karagena thiyenwa JSOn parse karanne apita server eken enne json string ekak ehema thiyagena apita wada karanna ba ee nisa api eka JS object ekakata convert karagannwa
 
 
-        classhall.features.push(selectedItem);
-        fillDataIntoSelect(selectedFeatures,"",classhall.features,'name');
+        classhall.features.push(selectedItem);      //class hall features kiyana array ekata push kiyana method ekan ee array ekata dagena thiyenwa
+        fillDataIntoSelect(selectedFeatures,"",classhall.features,'name');  //fill data into select method ekan api select element ekata value daagannawa mekedi api data arrray eka vidihata use karanne class hall features kiyana array eka
 
-        let extIndex = availbaleFeatures.map(item => item.name).indexOf(selectedItem.name);
-        if (extIndex != -1){
-            availbaleFeatures.splice(extIndex,1)
+        let extIndex = availbaleFeatures.map(item => item.name).indexOf(selectedItem.name); //meken create karanwa array of name properties from avalilable features walin eke uda api define karala thiyenewa line number 61 eken index eka hoyagena thiyenawa result eka daagena thiywnawa extIndex varible ekata
+        if (extIndex != -1){ //index of eken return karanawa -1 ekak mukuth hambela naththam selected item ekata adala  //methana not eka -1 kiayanne match ekak thiyenwa kiyanna
+            availbaleFeatures.splice(extIndex,1)    //mtach ekak ehema hambela nam remove karanawa one item eka from avaliable features array eken
         }
-    fillDataIntoSelect(selectAllItem,"",availbaleFeatures,'name')
+    fillDataIntoSelect(selectAllItem,"",availbaleFeatures,'name')   //iita passe fill data into select eken data fill karanwa
 
     }
 }
 
 //define function for btn add all item
 const btnAddAllItem = ()=>{
-    availbaleFeatures.forEach(item=>{
-        classhall.features.push(item);
+    availbaleFeatures.forEach(item=>{   //available features kiyana array eke eka item ekek gaane iterate venna kiyala for each eka hadagena thiyenwa
+        classhall.features.push(item);  //ee item tika push karanawa class hall features kiyana array eka
     });
 
-    fillDataIntoSelect(selectedFeatures,'',classhall.features,'name');
+    fillDataIntoSelect(selectedFeatures,'',classhall.features,'name');  // select element eka fill karanawa class hall features kiyana array eka use karala name eka thama ee table eke property eka selected featurs kiyana ekata thama html element eka
 
-    availbaleFeatures=[];
-    fillDataIntoSelect(selectAllItem,"",availbaleFeatures,'name');
+    availbaleFeatures=[];       //empty array ekak hadagena thiyenwa mokada apita data empty karanna one nisa select all item kiyana html element ekan
+    fillDataIntoSelect(selectAllItem,"",availbaleFeatures,'name');  //dan ee empty array eka use karala data fill kara gannawa select all iten kiyana html element ekata ee kiyanne ee element ekata mukuth fill karanne na kiyana eka
+
 
 
 }
 //define function doe remove one item
 const btnRemoveOneItem = ()=>{
-    console.log(selectAllItem.value);
-    if (selectedFeatures.value==""){
-        alert("please select item for remove");
-    }else {
-        let selectedRemoveItem = JSON.parse(selectedFeatures.value)
-        availbaleFeatures.push(selectedRemoveItem);
-        fillDataIntoSelect(selectAllItem,"",availbaleFeatures,'name');
+    console.log(selectAllItem.value);   //log ekak danawa select all item eke value eka
+    if (selectedFeatures.value==""){    //value eka empty nam
+        alert("please select item for remove"); //alert ekak denawa please select item for remove kiyana
+    }else {//value ekak thiyenwa nam
+        let selectedRemoveItem = JSON.parse(selectedFeatures.value) //selected features eke value eka json parse karanawa eeta passe eka selected remove item kiyana variable ekata assign karanawa
+        availbaleFeatures.push(selectedRemoveItem); //avalibale features kiyana array eka push karanawa seleced remove item eke
+        fillDataIntoSelect(selectAllItem,"",availbaleFeatures,'name');  //ee array eka pavivhi karala select all item ekata data fill kara gannnawa
 
-        let extIndex = classhall.features.map(item=>item.name).indexOf(selectedRemoveItem.name);
-        if (extIndex!=-1){
-            classhall.features.splice(extIndex,1)
+        let extIndex = classhall.features.map(item=>item.name).indexOf(selectedRemoveItem.name);     //This line finds the index of the item in classhall.features that matches the name property of selectedRemoveItem.name index of eken return karanawa -1 ekak mukuth hambune naththam
+        if (extIndex!=-1){      //index eka -1 kiaynne hambela na kiyana eka eke not eke  kiaynne hambela kiyana eka
+            classhall.features.splice(extIndex,1)   //ee match ekak hambela nisa eeka remove karanawa ext index from class hall features array eken
         }
-        fillDataIntoSelect(selectedFeatures,"",classhall.features,'name');
+        fillDataIntoSelect(selectedFeatures,"",classhall.features,'name');  //selected features kiyana html element ekeata data fill karanwa classhall features kiyana array ekan
     }
 }
 
 //define function for remove all item
 function btnRemoveAllItem(){
-    classhall.features.forEach(item=>{
-        availbaleFeatures.push(item);
+    classhall.features.forEach(item=>{  //class hall features kiyana array eke eka item ekek gaanne iterate karala
+        availbaleFeatures.push(item);   //available features kiyana array ekata ee item eka push karanawa
     });
-
+//eeta passe ee availbale features kiayana array eka use karla select all item kiyana html select element ekata data fill kara gannawa
     fillDataIntoSelect(selectAllItem,"",availbaleFeatures,'name');
 
-    classhall.features=[];
-    fillDataIntoSelect(selectedFeatures,"",classhall.features,'name');
+    classhall.features=[];  //class hall features kiyala empty array ekak hadagannawa mokda selected features element eka empty karaganna one nisa
+    fillDataIntoSelect(selectedFeatures,"",classhall.features,'name'); //selected features element ekatata empty array eken data fill kragannnawa ee kiyanne element eka empty karagannawa kiyana eka
 }
 
 

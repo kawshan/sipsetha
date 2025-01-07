@@ -189,15 +189,16 @@ const refreshStudentForm = () => {
     })
     //end of selecting student grade based on dob
 
+    ////need to disable update button when form is refreshing
+    btnStudentUpdate.disabled=true     //
+    btnStudentUpdate.style.cursor="not-allowed";       //ethakota cursor eka me symbol eken 🚫 pennnawa
+
     btnStudentSubmit.disabled = false;  //ai meka damme kiyana ekata reason eka thama refill ekedi submit button eke disable karala pointer not allowed karana nisa
     btnStudentSubmit.style.cursor='pointer'
 
-    if (!userPrivilege.update) {
-        btnStudentUpdate.disabled = true;
-        btnStudentUpdate.style.cursor = 'not-allowed';
-    } else {
-        btnStudentUpdate.disabled = true;
-        btnStudentUpdate.style.cursor = 'not-allowed';
+    if (!userPrivilege.update) {    //privilege baluwa update eka karanna puluwan da ba da kiyala
+        btnStudentUpdate.disabled = true;   //update privilege eka naththam diable karala danawa button eke
+        btnStudentUpdate.style.cursor = 'not-allowed';  // pointer eka not allowed kiyala danawa
     }
 
     if (!userPrivilege.insert) {
@@ -205,7 +206,7 @@ const refreshStudentForm = () => {
         btnStudentSubmit.style.cursor = 'not-allowed';
     }
 
-    selectStatus.value = true;
+    selectStatus.value = true;      //me tika karanne form eka refresh venakotama status eka active thiyenna one nisa
     student.status = selectStatus.value;
     selectStatus.style.border = "2px solid green";
 
@@ -252,15 +253,21 @@ const studentFormRefill = (ob, rowIndex) => {
     fillDataIntoSelect(selectGrade, 'select grade', grades, 'name', student.grade_id.name);
     // selectGrade
 
+    //enable btn update because we disabled that in refresh
+    btnStudentUpdate.disabled=false
+    btnStudentUpdate.style.cursor="pointer";
+
+    //need to disable add button
+    btnStudentSubmit.disabled=true;
+    btnStudentSubmit.style.cursor = 'not-allowed';
+
+
+
     if (!userPrivilege.update) {
         btnStudentUpdate.disabled = true;
         btnStudentUpdate.style.cursor = 'not-allowed';
-    } else {
-        btnStudentUpdate.disabled = false;
-        btnStudentUpdate.style.cursor = 'pointer';
     }
-    btnStudentSubmit.disabled=true;
-    btnStudentSubmit.style.cursor = 'not-allowed';
+
 }
 
 // define function for get student gender
@@ -292,6 +299,7 @@ const deleteStudent = (ob, rowIndex) => {
             const deleteServerResponse = ajaxDeleteRequest('/student', ob);
             if (deleteServerResponse == 'ok') {
                 alert('delete successful')
+                divModifyButton.className="d-none";
             } else {
                 alert('delete was unsuccessful you might have following errors \n' + deleteServerResponse)
             }
@@ -466,8 +474,8 @@ const buttonStudentUpdate = () => {
                 alert("update successful");
                 refreshStudentForm();
                 $('#modalStudentAdd').modal('hide');
-                divModifyButton.classList.add("d-none");
                 refreshStudentTable();
+                divModifyButton.className="d-none";
             } else {
                 alert("error happened please retry \n" + putServiceResponse);
             }

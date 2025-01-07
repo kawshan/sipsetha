@@ -44,6 +44,18 @@ const refreshAttendanceForm = () => {
     btnStudentSubmit.style.cursor="pointer";
 
 
+    console.log(userPrivilege); //log ekak dala balanawa privilege monada kiyala
+    if (!userPrivilege.update){ //privilege baluwa update eka karanna puluwan da ba da kiyala
+        btnAttendanceUpdate.disabled=true;    //update privilege eka naththam diable karala danawa button eke
+        btnAttendanceUpdate.style.cursor="not-allowed";   // pointer eka not allowed kiyala danawa
+    }
+
+    if (!userPrivilege.insert){ //insert eke privilege thiyeawada da nadda baluwa
+        btnStudentSubmit.disabled=true;   //privilege naththam button eka disable
+        btnStudentSubmit.style.cursor="not-allowed";  //pointer eka not allowed
+    }
+
+
 }
 
 //define refresh attendance table
@@ -145,6 +157,12 @@ const refillAttendanceForm = (ob, rowIndex) => {
     //add button eka disable karanawa
     btnStudentSubmit.disabled=true;
     btnStudentSubmit.style.cursor="not-allowed";
+
+    console.log(userPrivilege); //log ekak dala balanawa privilege monada kiyala
+    if (!userPrivilege.update){ //privilege baluwa update eka karanna puluwan da ba da kiyala
+        btnAttendanceUpdate.disabled=true;    //update privilege eka naththam diable karala danawa button eke
+        btnAttendanceUpdate.style.cursor="not-allowed";   // pointer eka not allowed kiyala danawa
+    }
 
 
 }
@@ -282,8 +300,8 @@ const attendanceFullTable = ()=>{
 
 const modalPrintButton = ()=>{
     console.log("model print working");
-    let newWindow = window.open();
-    newWindow.document.write(
+    let newWindow = window.open();  //window open ekan karanne browser window ekak open karana eka iita passe eka varibale ekakata assign karagannawa
+    newWindow.document.write(   //meka liyanna hethuwa thama content eka directly write karanna puluwan document ekata
         "<head>\n" +
         "    <link rel=\"stylesheet\" href=\"/bootstrap-5.2.3/css/bootstrap.min.css\">\n" +
         "    <script src=\"/bootstrap-5.2.3/js/bootstrap.bundle.min.js\"></script>\n" +

@@ -73,10 +73,22 @@ const refreshClassRoomAllocationForm = ()=>{
     selectAllocationStatus.style.border="2px solid green";
 
 
+
+    ////need to disable update button when form is refreshing
+    btnClassRoomAllocationUpdate.disabled=true     //
+    btnClassRoomAllocationUpdate.style.cursor="not-allowed";       //ethakota cursor eka me symbol eken 🚫 pennnawa
+
+
+    btnClassRoomAllocationAdd.disabled=false;  //disable false ee kiyanne visible venna hadanawa
+    btnClassRoomAllocationAdd.style.cursor="pointer";      ////refill ekedi pointer not allowed dunna nisa thama methana pointer dunne ethakota cursor eka 👆 mehema pennanawa
+
+
+
     if (!userPrivilege.update){
         btnClassRoomAllocationUpdate.disabled=true;
         btnClassRoomAllocationUpdate.style.cursor='not-allowed';
     }
+
     if (!userPrivilege.insert){
         btnClassRoomAllocationAdd.disabled=true;
         btnClassRoomAllocationAdd.style.cursor='not-allowed';
@@ -158,10 +170,6 @@ const printClassHallAllocation = (ob,rowIndex)=>{
     },500)
 
 
-
-
-
-
 }
 
 
@@ -193,6 +201,21 @@ const classRoomAllocationRefill = (ob,rowOb)=>{
         textNote.value="";
     }
 
+
+    ////need to disable update button when form is refreshing
+    btnClassRoomAllocationUpdate.disabled=false;     //
+    btnClassRoomAllocationUpdate.style.cursor="pointer";       //ethakota cursor eka me symbol eken 🚫 pennnawa
+
+
+    btnClassRoomAllocationAdd.disabled=true;  //disable false ee kiyanne visible venna hadanawa
+    btnClassRoomAllocationAdd.style.cursor="not-allowed";      ////refill ekedi pointer not allowed dunna nisa thama methana pointer dunne ethakota cursor eka 👆 mehema pennanawa
+
+
+
+    if (!userPrivilege.update){
+        btnClassRoomAllocationUpdate.disabled=true;
+        btnClassRoomAllocationUpdate.style.cursor='not-allowed';
+    }
 
 
 }
@@ -305,6 +328,7 @@ const updateClassRoomAllocation = ()=>{
                     refreshClassRoomAllocationForm();
                     $('#modalClassRoomAllocationAdd').modal('hide');
                     refreshClassRoomAllocationTable();
+                    divModifyButton.className="d-none";
                 }else {
                  alert("update not successful "+putServiceResponse);
                 }
@@ -332,6 +356,7 @@ const deleteClassRoomAllocation = (ob,rowIndex)=>{
             if (deleteServiceResponse=="ok"){
                 alert("delete successful "+deleteServiceResponse);
                 refreshClassRoomAllocationTable();
+                divModifyButton.className="d-none";
             }else {
                 alert("delete not successful "+deleteServiceResponse);
             }

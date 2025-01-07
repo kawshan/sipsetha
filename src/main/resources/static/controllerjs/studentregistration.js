@@ -125,16 +125,6 @@ const refreshStudentRegistrationForm = () => {
     selectRegisteredType.style.border = "2px solid #ced4da";
     textNote.style.border = "2px solid #ced4da";
 
-    if (!userPrivilege.update) {
-        divModifyButtonEdit.disabled = true;
-        divModifyButtonEdit.style.cursor = 'not-allowed';
-    }
-
-    if (!userPrivilege.delete) {
-        divModifyButtonDelete.disabled = true;
-        divModifyButtonDelete.style.cursor = 'not-allowed';
-    }
-
 
     //load venakotama registration status eka active kiyana type eke thiyanna one nisa following steps tika karanawa
     registrationstatues = ajaxGetRequest("/registrationstatus/findall");    //ajax request ekak gahala registration status tika genna gaththa
@@ -160,6 +150,25 @@ const refreshStudentRegistrationForm = () => {
     btnStudentRegADD.style.cursor="pointer";
 
 
+    if (!userPrivilege.update) {    //privilege baluwa update eka karanna puluwan da ba da kiyala
+        divModifyButtonEdit.disabled = true;//update privilege eka naththam diable karala danawa button eke
+        divModifyButtonEdit.style.cursor = 'not-allowed';// pointer eka not allowed kiyala danawa
+    }
+
+
+    if (!userPrivilege.insert) {//privilege baluwa insert eka karanna puluwan da ba da kiyala
+        btnStudentRegADD.disabled = true;//insert privilege eka naththam diable karala danawa button eke
+        btnStudentRegADD.style.cursor = 'not-allowed';// pointer eka not allowed kiyala danawa
+    }
+
+
+    if (!userPrivilege.delete) {//privilege baluwa delete eka karanna puluwan da ba da kiyala
+        divModifyButtonDelete.disabled = true;//delete privilege eka naththam diable karala danawa button eke
+        divModifyButtonDelete.style.cursor = 'not-allowed';// pointer eka not allowed kiyala danawa
+    }
+
+
+
 }
 
 //define function for refill student registration form
@@ -169,8 +178,9 @@ const refillStudentRegistrationForm = (ob, rowIndex) => {
     console.log("refill")
     $('#modalStudentRegistration').modal('show');
 
-    textFee.value = studentRegistration.fee;
+    selectRegistrationStatus.disabled=false //meka false kare refresh ekedi disable karala thiyena nisa hethuwa thama disable  ekata me select fied ekata refresh venakotama active status eka deelea thiyena nisa
 
+    textFee.value = studentRegistration.fee;
 
     textStudent.value = studentRegistration.student_id.stunum + " " + studentRegistration.student_id.firstname;
 
@@ -195,6 +205,13 @@ const refillStudentRegistrationForm = (ob, rowIndex) => {
     //update button eka enable karanawa
     btnStudentRegUpdate.disabled=false;
     btnStudentRegUpdate.style.cursor="pointer";
+
+
+    console.log(userPrivilege); //log ekak dala balanawa privilege monada kiyala
+    if (!userPrivilege.update){ //privilege baluwa update eka karanna puluwan da ba da kiyala
+        btnStudentRegUpdate.disabled=true;    //update privilege eka naththam diable karala danawa button eke
+        btnStudentRegUpdate.style.cursor="not-allowed";   // pointer eka not allowed kiyala danawa
+    }
 
 
 }
@@ -315,6 +332,7 @@ const btnDeleteStudentRegistration = (ob, rowIndex) => {
             if (deleteServerResponse == "ok") {
                 alert("delete successful " + deleteServerResponse);
                 refreshStudentRegistrationTable();
+                divModifyButton.className="d-none";
             } else {
                 alert("delete not successful " + deleteServerResponse);
                 refreshStudentRegistrationTable();

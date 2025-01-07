@@ -116,20 +116,31 @@ const refreshEnrolmentForm = ()=>{
     selectEnrolmentStatus.style.border="2px solid #ced4da"
     selectTeacher.style.border="2px solid #ced4da"
 
-    console.log(userPrivilege);
-    btnUpdateEnrolment.disabled=true;
-    $("#btnUpdateEnrolment").css("cursor", "not-allowed");
-
-    if (userPrivilege.insert){
-        btnAddEnrolment.disabled="";
-        $("#btnAddEnrolment").css("cursor", "pointer");
-    }else {
-        btnAddEnrolment.disabled=true;
-        $("#btnAddEnrolment").css("cursor", "not-allowed");
-    }
 
     // call refresh inner item and table function
     refreshInnerFormAndTable();
+
+
+    ////need to disable update button when form is refreshing
+    btnUpdateEnrolment.disabled=true;
+    btnUpdateEnrolment.style.cursor="not-allowed";       //ethakota cursor eka me symbol eken 🚫 pennnawa
+
+
+    btnAddEnrolment.disabled=false;  //disable false ee kiyanne visible venna hadanawa
+    btnAddEnrolment.style.cursor="pointer";      ////refill ekedi pointer not allowed dunna nisa thama methana pointer dunne ethakota cursor eka 👆 mehema pennanawa
+
+
+    console.log(userPrivilege); //log ekak dala balanawa privilege monada kiyala
+    if (!userPrivilege.update){ //privilege baluwa update eka karanna puluwan da ba da kiyala
+        btnUpdateEnrolment.disabled=true;    //update privilege eka naththam diable karala danawa button eke
+        btnUpdateEnrolment.style.cursor="not-allowed";   // pointer eka not allowed kiyala danawa
+    }
+
+    if (!userPrivilege.insert){ //insert eke privilege thiyeawada da nadda baluwa
+        btnAddEnrolment.disabled=true;   //privilege naththam button eka disable
+        btnAddEnrolment.style.cursor="not-allowed";  //pointer eka not allowed
+    }
+
 
 }
 // define refresh inner form and table
@@ -280,6 +291,7 @@ const deleteEnrolment =(ob,rowInd)=>{
             alert("delete successful "+deleteServerResponse);
             refreshEnrolmentTable();
             refreshEnrolmentForm();
+            divModifyButton.className="d-none";
         }else {
             alert("you might have some errors \n "+deleteServerResponse);
         }

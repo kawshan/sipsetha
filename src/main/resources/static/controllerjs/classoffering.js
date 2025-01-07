@@ -2,7 +2,7 @@ window.addEventListener('load', () => {
     console.log('working');
 
     //get privileges to check button events
-    userPrivilege =ajaxGetRequest("/privilege/byloggeduser/classoffering")
+    userPrivilege =ajaxGetRequest("/privilege/byloggeduser/classoffering");
 
 
     //call refresh class offering form
@@ -61,6 +61,28 @@ const refreshClassOfferingForm = ()=>{
     fillDataIntoSelect(selectClassOfferingStatus,'select class offering ',classOfferingstatuses,'name','active');
     selectClassOfferingStatus.style.border="2px solid green";
     classOffering.classofferingstatus_id=JSON.parse(selectClassOfferingStatus.value);
+
+
+    ////need to disable update button when form is refreshing
+    btnClassOfferingUpdate.disabled=true     //
+    btnClassOfferingUpdate.style.cursor="not-allowed";       //ethakota cursor eka me symbol eken 🚫 pennnawa
+
+
+    btnClassOfferingAdd.disabled=false;  //disable false ee kiyanne visible venna hadanawa
+    btnClassOfferingAdd.style.cursor="pointer";      ////refill ekedi pointer not allowed dunna nisa thama methana pointer dunne ethakota cursor eka 👆 mehema pennanawa
+
+
+    console.log(userPrivilege); //log ekak dala balanawa privilege monada kiyala
+    if (!userPrivilege.update){ //privilege baluwa update eka karanna puluwan da ba da kiyala
+        btnClassOfferingUpdate.disabled=true;    //update privilege eka naththam diable karala danawa button eke
+        btnClassOfferingUpdate.style.cursor="not-allowed";   // pointer eka not allowed kiyala danawa
+    }
+
+    if (!userPrivilege.insert){ //insert eke privilege thiyeawada da nadda baluwa
+        btnClassOfferingAdd.disabled=true;   //privilege naththam button eka disable
+        btnClassOfferingAdd.style.cursor="not-allowed";  //pointer eka not allowed
+    }
+
 
 }
 
@@ -196,6 +218,23 @@ const classFormRefill = (ob,rowIndex)=>{
     fillDataIntoSelect(selectGrade,'select grade',grades,'name',classOffering.grade_id.name);
 
 
+
+    //enable btn update because we disabled that in refresh
+    btnClassOfferingUpdate.disabled=false
+    btnClassOfferingUpdate.style.cursor="pointer";
+    //need to disable add button
+    btnClassOfferingAdd.disabled=true;
+    btnClassOfferingAdd.style.cursor="not-allowed";
+
+
+    console.log(userPrivilege); //log ekak dala balanawa privilege monada kiyala
+    if (!userPrivilege.update){ //privilege baluwa update eka karanna puluwan da ba da kiyala
+        btnClassOfferingUpdate.disabled=true;    //update privilege eka naththam diable karala danawa button eke
+        btnClassOfferingUpdate.style.cursor="not-allowed";   // pointer eka not allowed kiyala danawa
+    }
+
+
+
 }
 
 // create function for class delete
@@ -215,8 +254,9 @@ const deleteClass = (ob,rowIndex)=>{
         if (userConfirm){
             const deleteServerResponse = ajaxDeleteRequest("/classoffering",ob);
             if (deleteServerResponse == 'ok'){
-                alert("delete successfull");
+                alert("delete successful");
                 refreshClassOfferingTable()
+                divModifyButton.className="d-none";
             }else {
                 alert('delete was unsuccessful you might have following errors \n' + deleteServerResponse)
             }
@@ -442,6 +482,7 @@ const buttonFormUpdate = ()=>{
                     refreshClassOfferingForm()
                     $('#modalClassAdd').modal('hide');
                     refreshClassOfferingTable();
+                    divModifyButton.className="d-none";
                 }else {
                     alert('save not success '+putServiceResponse);
                 }

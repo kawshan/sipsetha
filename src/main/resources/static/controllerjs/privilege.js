@@ -85,14 +85,25 @@ const refreshPrivilegeForm = () => {
     labelUpdate.innerText="not granted";
     labelDelete.innerText="not granted";
 
-    if (!userPrivilege.update){
-        btnUpdatePrivilege.disabled=true;
-        btnUpdatePrivilege.style.cursor="not-allowed";
+
+
+    //need to disable update button when form is refreshing
+    btnUpdatePrivilege.disabled=true     //
+    btnUpdatePrivilege.style.cursor="not-allowed";       //ethakota cursor eka me symbol eken 🚫 pennnawa
+
+
+    btnAddPrivilege.disabled=false;  //disable false ee kiyanne visible venna hadanawa
+    btnAddPrivilege.style.cursor="pointer";      ////refill ekedi pointer not allowed dunna nisa thama methana pointer dunne ethakota cursor eka 👆 mehema pennanawa
+
+
+    if (!userPrivilege.update){     //privilege baluwa update eka karanna puluwan da ba da kiyala
+        btnUpdatePrivilege.disabled=true;   //update privilege eka naththam diable karala danawa button eke
+        btnUpdatePrivilege.style.cursor="not-allowed";  // pointer eka not allowed kiyala danawa
     }
 
-    if (!userPrivilege.insert){
-        btnAddPrivilege.disabled=true;
-        btnAddPrivilege.style.cursor="not-allowed";
+    if (!userPrivilege.insert){     //insert eke privilege thiyeawada da nadda baluwa
+        btnAddPrivilege.disabled=true;      //privilege naththam button eka disable
+        btnAddPrivilege.style.cursor="not-allowed";     //pointer eka not allowed
 
     }
 
@@ -166,9 +177,6 @@ const privilegeFormRefill = (ob, rowIndex) => {
     modules=ajaxGetRequest("/module/findall");
     fillDataIntoSelect(selectModule,"select module",modules,"name",privilege.module_id.name)
 
-// start of my codes
-
-
 
     if (privilege.sel==true){
         checkboxSelect.checked=true;
@@ -204,6 +212,21 @@ const privilegeFormRefill = (ob, rowIndex) => {
     }
 
 
+    //need to disable update button when form is refreshing
+    btnUpdatePrivilege.disabled=false     //
+    btnUpdatePrivilege.style.cursor="pointer";       //ethakota cursor eka me symbol eken 🚫 pennnawa
+
+
+    btnAddPrivilege.disabled=true;  //disable false ee kiyanne visible venna hadanawa
+    btnAddPrivilege.style.cursor="not-allowed";      ////refill ekedi pointer not allowed dunna nisa thama methana pointer dunne ethakota cursor eka 👆 mehema pennanawa
+
+
+    if (!userPrivilege.update){     //privilege baluwa update eka karanna puluwan da ba da kiyala
+        btnUpdatePrivilege.disabled=true;   //update privilege eka naththam diable karala danawa button eke
+        btnUpdatePrivilege.style.cursor="not-allowed";  // pointer eka not allowed kiyala danawa
+    }
+
+
 
 
 }
@@ -228,6 +251,7 @@ const deletePrivilege = (ob, rowIndex) => {
             if (deleteServerResponse == 'ok') {
                 alert('delete successful');
                 refreshPrivilegeTable();
+                divModifyButton.className="d-none";
             } else {
                 alert('delete was unsuccessful you might have following errors \n' + deleteServerResponse);
             }
@@ -388,6 +412,7 @@ const buttonPrivilegeUpdate = ()=>{
                 formPrivilege.reset();
                 refreshPrivilegeForm();
                 refreshPrivilegeTable();
+                divModifyButton.className="d-none";
             }else {
                 alert("update is not successful"+serverResponse);
             }

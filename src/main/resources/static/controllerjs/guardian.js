@@ -73,15 +73,7 @@ const refreshGuardianForm = ()=>{
 
     selectGender.disabled=true;
 
-    if (!userPrivilege.update){
-        btnGuardUpdate.disabled=true;
-        btnGuardUpdate.style.cursor='not-allowed';
-    }
 
-    if (!userPrivilege.insert){
-        btnGuardAdd.disabled=true
-        btnGuardAdd.style.cursor='not-allowed';
-    }
 
     //need to disable update button when form is refreshing
     btnGuardUpdate.disabled=true;
@@ -90,15 +82,16 @@ const refreshGuardianForm = ()=>{
     btnGuardAdd.disabled=false;
     btnGuardAdd.style.cursor="pointer"; //refill ekedi pointer not allowed dunna nisa thama methana pointer dunne ethakota cursor eka 👆 mehema pennanawa
 
-    //privilege thiyenawa da balanwa insert ekata
-    if (!userPrivilege.insert) {
-        btnGuardAdd.disabled = true;
-    }
-    else {
-        btnGuardAdd.disabled=false;
+
+    if (!userPrivilege.update){ //privilege baluwa update eka karanna puluwan da ba da kiyala
+        btnGuardUpdate.disabled=true;       //update privilege eka naththam diable karala danawa button eke
+        btnGuardUpdate.style.cursor='not-allowed';  // pointer eka not allowed kiyala danawa
     }
 
-
+    if (!userPrivilege.insert){ //insert eke privilege thiyeawada da nadda baluwa
+        btnGuardAdd.disabled=true   //privilege naththam button eka disable
+        btnGuardAdd.style.cursor='not-allowed'; //pointer eka not allowed
+    }
 }
 
 //define get guardian function
@@ -199,11 +192,9 @@ const GuardianFormRefill = (ob,rowIndex)=>{
 
 
     //privilege thiyenawa da balanwa insert ekata
-    if (!userPrivilege.update) {
-        btnGuardUpdate.disabled = true;
-    }
-    else {
-        btnGuardUpdate.disabled=false;
+    if (!userPrivilege.update) {        //privilege baluwa update eka karanna puluwan da ba da kiyala
+        btnGuardUpdate.disabled = true;     //update privilege eka naththam diable karala danawa button eke
+        btnGuardUpdate.style.cursor="pointer";      // pointer eka not allowed kiyala danawa
     }
 
 }
@@ -296,6 +287,7 @@ const buttonGuardianDelete = (ob,rowIndex)=>{
             let deleteServiceResponse=ajaxDeleteRequest("/guardian",ob);
             if (deleteServiceResponse=="ok"){
                 alert("delete successful")
+                divModifyButton.className="d-none";
             }else {
                 alert("delete unsuccessful error happened \n"+deleteServiceResponse);
             }

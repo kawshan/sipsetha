@@ -241,6 +241,8 @@ const checkEmployeeFormUpdate = ()=>{
     }
     return updates;
 }
+
+
 //define function for button from update
 const buttonFormUpdate = ()=>{
     console.log("update");
@@ -274,8 +276,6 @@ const buttonFormUpdate = ()=>{
     }
 
 }
-
-
 
 
 //create function for check error
@@ -346,7 +346,16 @@ const employeeSubmit = () => {
         );
 
         if (userConfirm){
-            ajaxPostRequest("/employee/employeeform",employee)
+           let serverResponse=ajaxPostRequest("/employee/employeeform",employee)
+            if (serverResponse=="ok"){
+                alert("employee added successfully ")
+                $('#modalEmployeeAdd').modal('hide');
+                refreshEmployeeForm()
+                employeeForm.reset();
+                refreshEmployeeTable()
+            }else {
+                alert("something happened during employee add please recheck again"+serverResponse);
+            }
         }
 
 

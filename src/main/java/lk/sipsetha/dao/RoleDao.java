@@ -1,7 +1,17 @@
 package lk.sipsetha.dao;
 
 import lk.sipsetha.entity.Role;
+import lk.sipsetha.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
 
 public interface RoleDao extends JpaRepository<Role,Integer>{
+
+
+    //define query for get role list without admin account
+//    select * from role as r where r.name <> 'admin';
+    @Query(value = "select r from Role r where r.name <> 'admin' ")
+    public List<Role> getRoleListWithoutAdmin();
 }

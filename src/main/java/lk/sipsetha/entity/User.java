@@ -40,7 +40,7 @@ public class User {
 
     @Column(name = "addeddatetime")
     @NotNull
-    private LocalDateTime datetime;
+    private LocalDateTime addeddatetime;
 
     @Column(name = "note")
     private String note;

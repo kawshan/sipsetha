@@ -213,7 +213,7 @@
                                 <label for="textRePassword" class="form-label fw-bold">re password <i class="text-danger">*</i></label>
                             </div>
                             <div class="col-md-6">
-                                <input type="password" id="textRePassword" class="form-control text-center" required placeholder="retype your password" onkeyup="textValidator(this,'^.*$','user','repassword')">
+                                <input type="password" id="textRePassword" class="form-control text-center" required placeholder="retype your password" onkeyup="passwordRetypeValidator()">
                             </div>
                         </div>
 <!--                        retype password end-->
@@ -252,7 +252,7 @@
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">role <i class="text-danger">*</i></label>
                             </div>
-                            <div class="col-md-6" id="divRoles">
+                            <div id="divRoles">
 
                             </div>
                         </div>
@@ -264,11 +264,10 @@
                                 <label for="selectStatus" class="form-label fw-bold">status <i class="text-danger">*</i></label>
                             </div>
                             <div class="col-md-6">
-                                <select id="selectStatus" class="form-select text-center" required onchange="selectDBValidator(this,'','user','userstatus_id')">
+                                <select id="selectStatus" class="form-select text-center" required onchange="selectValidator(this,'','user','status')">
                                     <option value="" selected disabled >select an option</option>
-                                    <option value="working">working</option>
-                                    <option value="resign">resign</option>
-                                    <option value="delete">delete</option>
+                                    <option value="true">active</option>
+                                    <option value="false">not active</option>
                                 </select>
                             </div>
                         </div>
@@ -281,7 +280,7 @@
                                 <button type="reset" class="btn btn-danger fw-bold ms-2 me-2" style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%"> <i class="fa-solid fa-trash fa-beat"></i> reset</button>
                             </div>
                             <div class="col-md-4 text-center">
-                                <button type="button" class="btn btn-warning fw-bold ms-2 me-2" style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%"> <i class="fa-solid fa-recycle fa-beat"></i> update</button>
+                                <button type="button" class="btn btn-warning fw-bold ms-2 me-2" style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%" onclick="userUpdate()">      <i class="fa-solid fa-recycle fa-beat"></i> update</button>
                             </div>
                             <div class="col-md-4 text-end">
                                 <button type="submit" class="btn btn-primary fw-bold ms-2 me-2" style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%" onclick="userSubmit()"><i class="fa-solid fa-plus fa-beat"> </i>add</button>

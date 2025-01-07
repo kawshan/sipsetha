@@ -75,7 +75,7 @@ const ajaxPutRequest = (url,object)=>{
             console.log("fail "+restOb);
             putServiceResponse=restOb;
         }
-    })
+    });
     return putServiceResponse;
 }
 

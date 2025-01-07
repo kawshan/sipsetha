@@ -9,6 +9,7 @@ window.addEventListener('load', () => {
     //call refresh privilege form function
     refreshPrivilegeForm();
 
+    //some of my codes at the end of privilegeFormRefill function need to re change after watching privilege module in online session
 
 });
 
@@ -83,6 +84,7 @@ const getUpdate = (ob) => {
     }
     return priv;
 }
+
 // define function for get delete
 const getDelete = (ob) => {
     let priv;
@@ -108,12 +110,43 @@ const privilegeFormRefill = (ob, rowIndex) => {
     fillDataIntoSelect(selectRole,"select role",roles,'name',privilege.role_id.name)
     fillDataIntoSelect(selectModule,"select module",modules,"name",privilege.module_id.name)
 
+// start of my codes
 
-    checkboxSelect
-    checkboxInsert
-    checkboxUpdate
-    checkboxDelete
 
+    if (ob.sel==true){
+        checkboxSelect.checked=true;
+        labelSelect.innerHTML='select privilege is granted'
+    }else {
+        checkboxSelect.checked=false;
+        labelSelect.innerHTML='select privilege is not granted'
+    }
+
+    if (ob.inst==true){
+        checkboxInsert.checked=true;
+        labelInsert.innerHTML='insert privilege is granted'
+    }else {
+        checkboxInsert.disabled=false;
+        labelInsert.innerHTML='insert privilege is not granted';
+
+    }
+
+    if (ob.upd==true){
+        checkboxUpdate.checked=true;
+        labelUpdate.innerHTML='update privilege is granted';
+    }else {
+        checkboxUpdate.checked=false;
+        labelUpdate.innerHTML='update privilege is not granted';
+    }
+
+    if (ob.del==true){
+        checkboxDelete.checked=true;
+        labelDelete.innerHTML='delete privilege is granted';
+    }else {
+        checkboxDelete.checked=false;
+        labelDelete.innerHTML='delete privilege is not granted';
+    }
+
+    // end of my codes
     //refill not complete
 
 

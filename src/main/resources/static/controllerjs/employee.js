@@ -41,7 +41,8 @@ const refreshEmployeeTable = () => {
 const refreshEmployeeForm = () => {
 
     //create object
-    employee = new Object();
+    employee = new Object();    //create employee object
+    employeeForm.reset();
 
     designations = ajaxGetRequest("/designation/findall")
 
@@ -134,6 +135,8 @@ const employeeFormRefill = (ob, rowIndex) => {
 
 
     textMobile.value = employee.mobile;
+
+
     if (employee.landno != null){
         textLand.value = employee.landno;
     }else {
@@ -368,7 +371,7 @@ const employeeSubmit = () => {
     }
 }
 
-
+// define function for get full name validator
 const textFullNameValidator = (fieldId, pattern) => {
     const regPattern = new RegExp(pattern);
     if (fieldId.value != "") {
@@ -402,6 +405,7 @@ const textFullNameValidator = (fieldId, pattern) => {
     }
 }
 
+//define function for get calling name validator
 const textCallingNameValidator = (fieldId) => {
     const callingNameValue = fieldId.value;
 

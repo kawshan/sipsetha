@@ -3,9 +3,12 @@ package lk.sipsetha.controller;
 import lk.sipsetha.dao.PrivilegeDao;
 import lk.sipsetha.entity.Privilege;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -21,7 +24,7 @@ public class PrivilegeController {
         return privilegeView;
     }
 
-    @GetMapping(value = "/findall")
+    @GetMapping(value = "/findall",produces = "application/json")
     public List<Privilege> privilegeFindAll(){
         return privilegeDao.findAll();
     }
@@ -53,5 +56,57 @@ public class PrivilegeController {
         }
     }
 
+    @PutMapping
+    public String modifyPrivilege(@RequestBody Privilege privilege){
+        //authentication and authorization
+        //duplicate or existing
+        //operator
+
+        try {
+            privilegeDao.save(privilege);
+            return "ok";
+        }catch (Exception e){
+            return "modify privilege was not successful"+e.getMessage();
+        }
+
+    }
+
+    //define function for get get logged user by module
+    @GetMapping(value = "/byloggeduser/{modulename}",produces = "application/json")
+    public HashMap<String,Boolean> getPrivilegeByLoggedUserModule(@PathVariable("modulename")String modulename){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        return getPrivilegeByUserModule(auth.getName(),modulename);
+    }
+
+    //define function for get privilege by user module
+    public HashMap<String,Boolean> getPrivilegeByUserModule(String username, String modulename){
+        HashMap<String,Boolean> userPrivilege = new HashMap<String,Boolean>();
+        if (username.equals("admin")){
+            userPrivilege.put("select",true);
+            userPrivilege.put("insert",true);
+            userPrivilege.put("update",true);
+            userPrivilege.put("delete",true);
+        }else {
+            String userPrivi = privilegeDao.getPrivilegeByUserModule(username,modulename);
+            String[] userPriviList = userPrivi.split(",");
+            userPrivilege.put("select",userPriviList[0].equals("1"));
+            userPrivilege.put("insert",userPriviList[1].equals("1"));
+            userPrivilege.put("update",userPriviList[2].equals("1"));
+            userPrivilege.put("delete",userPriviList[3].equals("1"));
+        }
+        return userPrivilege;
+    }
+
+
 }
+
+
+
+
+
+
+
+
+
+
 

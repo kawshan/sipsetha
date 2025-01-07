@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--    link my styles css start -->
+    <link rel="stylesheet" href="/style/common.css">
+    <link rel="stylesheet" href="/style/button.css">
+    <link rel="stylesheet" href="/style/employee.css">
+    <!--    link my styles css end -->
+
+
+    <!--    link my js start-->
+    <script src="/commonjs/validation.js"></script>
+    <!--    link my js end-->
+
+
+    <!--    link bootstrap js and css font awesome start-->
+    <link rel="stylesheet" href="/bootstrap-5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/fontawesome-free-6.4.2/css/all.css">
+    <script src="/bootstrap-5.2.3/js/bootstrap.bundle.min.js"></script>
+    <script src="/commonjs/jquery.js"></script>
+    <!--    link bootstrap js and css font awesome end-->
+
+    <!--    jquery cdn start-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css">
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+    <!--    jquery cdn end-->
+
+
+    <!--    sweet alert start-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css" rel="stylesheet">
+    <!--    sweet alert end-->
+
+
+    <meta charset="UTF-8">
+    <title>login</title>
+</head>
+<body class="login-background">
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-md-6">
+            <img src="/images/learnig.png" alt="learning image" height="" width="960"
+                 style="margin-top: 10%; padding: 10%">
+        </div>
+        <div class="col-md-6" style="padding: 7%">
+            <!--        title start-->
+            <div class="row">
+                <div class="mt-4 p-5 text-white text-center rounded" style="background-color: #044800; margin: 5%; ">
+                    <h2 style="border-radius: 50px">login for sipsetha education institute</h2>
+                </div>
+            </div>
+            <!--        title end-->
+
+            <!--            form area start-->
+            <div class="div">
+                <form action="/login" method="post">
+                    <!--            user name start-->
+                    <div class="row mt-2 text-center fw-bold">
+                        <div class="col-6">
+                            <label for="txtUserName" class="form-label fw-bold">user name</label>
+                        </div>
+                        <div class="col-6">
+                            <input type="text" name="username" id="txtUserName" class="form-control" placeholder="enter your username"
+                                   required>
+                        </div>
+                    </div>
+                    <!--            user name end-->
+
+
+                    <!--                password area start-->
+                    <div class="row mt-2">
+                        <div class="col-6 text-center fw-bold">
+                            <label for="txtPassword" class="form-label fw-bold">password</label>
+                        </div>
+                        <div class="col-6">
+                            <input type="password" name="password" id="txtPassword" class="form-control" placeholder="enter password"
+                                   required>
+                        </div>
+                    </div>
+                    <!--                password area end-->
+
+                    <!--            button row start-->
+                    <div class="row mt-5">
+                        <div class="col-md-4"></div>
+                        <div class="col-md-4 text-end">
+                            <button type="submit" class="btn"
+                                    style="width: 200px; background-color:#044800; color: whitesmoke ">login
+                            </button>
+                        </div>
+                        <div class="col-md-4"></div>
+                    </div>
+                    <!--            button row end-->
+                </form>
+            </div>
+            <!--            form area end-->
+        </div>
+    </div>
+</div>
+</body>
+</html>

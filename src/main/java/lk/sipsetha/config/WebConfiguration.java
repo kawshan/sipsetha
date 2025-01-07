@@ -1,0 +1,68 @@
+package lk.sipsetha.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
+
+@Configuration
+@EnableWebSecurity
+public class WebConfiguration {
+
+
+    private BCryptPasswordEncoder bCryptPasswordEncoder;
+
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity.authorizeHttpRequests(auth -> {
+            auth
+                    .requestMatchers("/bootstrap-5.2.3/**","/commonjs/**","/controllerjs/**","/fontawesome-free-6.4.2/**","/icons/**","/images/**","/style/**").permitAll()
+                    .requestMatchers("/createadmin").permitAll()
+                    .requestMatchers("/login").permitAll()
+                    .requestMatchers("/error").permitAll()
+                    .requestMatchers("/dashboard").permitAll()
+                    .requestMatchers("/privilege/**").hasAnyAuthority("admin","manager")
+                    .requestMatchers("/user/**").hasAnyAuthority("admin","manager")
+                    .requestMatchers("/employee/**").hasAnyAuthority("admin","manager")
+                    .requestMatchers("/student/**").hasAnyAuthority("admin","manager")
+                    .requestMatchers("/guardian/**").hasAnyAuthority("admin","manager")
+                    .anyRequest().authenticated();
+        })
+                .formLogin(login->{
+                    login.
+                            loginPage("/login")
+                            .defaultSuccessUrl("/dashboard",true)
+                            .failureUrl("/login?error=usernamepassworderror")
+                            .usernameParameter("username")
+                            .passwordParameter("password");
+
+                })
+                .logout(logout->{
+                    logout
+                            .logoutUrl("/logout")
+                            .logoutSuccessUrl("/login");
+                })
+                .exceptionHandling(exception->{
+                    exception.accessDeniedPage("/error");
+                })
+                .csrf(csrf->{
+                    csrf.disable();
+                    //url eke pamanayi request wada krananne
+                    // default enable
+                    // meka disable kare naththam js file athule ajax service access karanna ba
+                });
+        return httpSecurity.build();
+
+    }
+
+    @Bean   //bcrypt eka class ekek vidihata hadagannawa apita instance ekek one hinda...
+    public BCryptPasswordEncoder bCryptPasswordEncoder2(){
+        bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        return bCryptPasswordEncoder;
+    }
+
+
+}

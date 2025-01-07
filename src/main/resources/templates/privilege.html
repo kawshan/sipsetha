@@ -171,7 +171,7 @@
                                 <label for="selectRole" class="form-label fw-bold">role <i class="text-danger">*</i></label>
                             </div>
                             <div class="col-md-6">
-                                <select id="selectRole" class="form-select text-center" required onchange="selectDBValidator(this,'','privilege','role_id')">
+                                <select id="selectRole" class="form-select text-center" required onchange="selectDBValidator(this,'','privilege','role_id'); generateModuleList();  ">
                                     <option value="" selected disabled>select an option</option>
                                     <option value="manager">manager</option>
                                     <option value="cashier">cashier</option>
@@ -264,7 +264,7 @@
                             </div>
                             <div class="col-md-4 text-center">
                                 <button type="button" class="btn btn-warning fw-bold"
-                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%">
+                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%" onclick="buttonPrivilegeUpdate()" >
                                     <i class="fa-solid fa-recycle fa-beat"> </i> update
                                 </button>
                             </div>

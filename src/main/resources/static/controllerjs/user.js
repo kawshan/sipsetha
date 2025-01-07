@@ -109,7 +109,12 @@ const getEmployee = (ob) => {
 
 //create function for get user role
 const getUserRole = (ob) => {
-    return 'role';
+    // return 'role';
+    let userRoles='';
+    ob.roles.forEach(element=>{
+        userRoles=userRoles+element.name+','// element kiyanne ekak eke name eka .name ekan gannawa
+    });
+    return userRoles;
 }
 
 //create function for user form refill

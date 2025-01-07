@@ -9,7 +9,7 @@ window.addEventListener('load', () => {
     //call refresh privilege form function
     refreshPrivilegeForm();
 
-    //some of my codes at the end of privilegeFormRefill function need to re change after watching privilege module in online session
+    //some of my experiment codes at the end of privilegeFormRefill function need to re change after watching privilege module in online session
 
 });
 
@@ -29,7 +29,16 @@ const refreshPrivilegeTable = () => {
     ];
 
     fillDataIntoTable(tablePrivilege, privileges, displayProperty, true)
+    $('#tablePrivilege').dataTable();
 }
+//define function for filter module list by given role id
+const generateModuleList = ()=>{
+    modulesByRole = ajaxGetRequest("/module/listbyrole?roleid="+JSON.parse(selectRole.value).id);
+    fillDataIntoSelect(selectModule,'select module',modulesByRole,'name');
+    selectModule.disabled=false;
+}
+
+
 
 //define function for refresh privilege form
 const refreshPrivilegeForm = () => {
@@ -38,9 +47,12 @@ const refreshPrivilegeForm = () => {
 
     roles = ajaxGetRequest("/role/findall");
     fillDataIntoSelect(selectRole, 'select an option', roles, 'name');
+    selectRole.disabled=false
 
     modules = ajaxGetRequest("/module/findall");
     fillDataIntoSelect(selectModule, 'select an option', modules, 'name');
+    selectModule.disabled=true
+
 
     selectRole.style.border="1px solid #4ced4da";
     selectModule.style.border="1px solid #4ced4da";
@@ -142,7 +154,7 @@ const privilegeFormRefill = (ob, rowIndex) => {
         checkboxInsert.checked=true;
         labelInsert.innerHTML='insert privilege is granted'
     }else {
-        checkboxInsert.disabled=false;
+        checkboxInsert.checked=false;
         labelInsert.innerHTML='insert privilege is not granted';
 
     }
@@ -188,16 +200,11 @@ const deletePrivilege = (ob, rowIndex) => {
             const deleteServerResponse =ajaxDeleteRequest("/privilege",ob)
             if (deleteServerResponse == 'ok') {
                 alert('delete successful');
-                // Swal.fire({title: 'delete successful', icon: 'success'});
+                refreshPrivilegeTable();
             } else {
-                alert('delete was unsuccessful you might have following errors \n' + deleteServerResponse)
-                // Swal.fire({
-                //     title: 'delete unsuccessful you might have following errors \n' + deleteServerResponse,
-                //     icon: 'error'
-                // });
+                alert('delete was unsuccessful you might have following errors \n' + deleteServerResponse);
             }
         }
-        refreshPrivilegeTable();
     }, 500)
 };
 
@@ -240,6 +247,7 @@ const checkFormErrors = () => {
 
 //create function for submit privilege form
 const privilegeSubmit = () => {
+    console.log("submit");
     console.log(privilege);
 
     const errors = checkFormErrors();
@@ -271,8 +279,59 @@ const privilegeSubmit = () => {
     }
 }
 
+//create function for check privilege form update
+const checkUpdate= ()=>{
+    let updates = '';
+
+    if (privilege.sel != oldPrivilege.sel){
+        updates=updates+"select is changed \n"
+    }
+    if (privilege.inst != oldPrivilege.inst){
+        updates=updates+"insert is changed \n";
+    }
+    if (privilege.upd != oldPrivilege.upd){
+        updates=updates+"update is changed \n";
+    }
+    if (privilege.del != oldPrivilege.del){
+        updates=updates+"delete is changed \n"
+    }
+
+    if (privilege.role_id.name != oldPrivilege.role_id.name){
+        updates=updates+"role is changed \n";
+    }
+
+    if (privilege.module_id.name != oldPrivilege.module_id.name){
+        updates=updates+"module is changed \n"
+    }
 
 
+    return updates;
+}
+
+//define function for privilege form update
+const buttonPrivilegeUpdate = ()=>{
+    console.log('update ');
+    console.log(privilege);
+    console.log(oldPrivilege);
+    let updates = checkUpdate();
+    if (updates != ''){
+        const userConfirm =confirm("are you sure to update following updates\n"+updates);
+        if (userConfirm){
+            let serverResponse= ajaxPutRequest("/privilege",privilege);
+            if (serverResponse == "ok"){
+                alert("update successful"+serverResponse);
+                $('#modalPrivilegeAdd').modal('hide');
+                formPrivilege.reset();
+                refreshPrivilegeForm();
+                refreshPrivilegeTable();
+            }else {
+                alert("update is not successful"+serverResponse);
+            }
+        }
+    }else {
+        alert("nothing to update");
+    }
+}
 
 
 

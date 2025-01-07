@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <!--    link my styles css start -->
+    <link rel="stylesheet" href="/style/common.css">
+    <link rel="stylesheet" href="/style/button.css">
+    <link rel="stylesheet" href="/style/employee.css">
+    <!--    link my styles css end -->
+
+
+    <!--    link my js start-->
+
+    <!--    link my js end-->
+
+
+    <!--    link bootstrap js and css font awesome start-->
+    <link rel="stylesheet" href="/bootstrap-5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/fontawesome-free-6.4.2/css/all.css">
+    <script src="/bootstrap-5.2.3/js/bootstrap.bundle.min.js"></script>
+    <script src="/commonjs/jquery.js"></script>
+    <!--    link bootstrap js and css font awesome end-->
+
+    <!--    jquery cdn start-->
+
+    <!--    jquery cdn end-->
+
+
+    <meta charset="UTF-8">
+    <title>dashboard</title>
+</head>
+<body style="background-color: #E0E9DD">
+<div class="container-fluid">
+
+    <!--    title area start-->
+    <div class="row p-2">
+        <div class="col-md-12">
+            <h1 class="h1 text-center"
+                style="background-color: #044800; color: whitesmoke; padding: 25px; border-radius: 30px">
+                 dashboard for sipsetha institute
+            </h1>
+        </div>
+    </div>
+    <!--    title area end-->
+
+    <!-- student employee teacher class start -->
+    <div class="row mt-2" style="padding: 5%">
+        <div class="col-md-3">
+            <img src="/icons/student.png" alt="student image"
+                 style="border-radius: 10%; border: 2px solid black; padding: 10px" onclick="console.log('student'); window.open('http://localhost:8080/student/studentform','_self');">
+            <h5 class="fw-bold">student management</h5>
+        </div>
+        <div class="col-md-3">
+            <img src="/icons/employee.png" alt="employee image"
+                 style="border-radius: 10%; border: 2px solid black; padding: 10px" onclick="console.log('employee'); window.open('http://localhost:8080/employee/employeeform');">
+            <h5 class="fw-bold">employee management</h5>
+        </div>
+        <div class="col-md-3">
+            <img src="/icons/teacher.png" alt="teacher image"
+                 style="border-radius: 10%; border: 2px solid black; padding: 10px;" onclick="console.log('teacher')">
+            <h5 class="fw-bold">teacher management</h5>
+        </div>
+        <div class="col-md-3">
+            <img src="/icons/class.png" alt="class management"
+                 style="border-radius: 10%; border: 2px solid black; padding: 10px;" onclick="console.log('class')">
+            <h5 class="fw-bold">class management</h5>
+        </div>
+    </div>
+    <!-- student employee teacher class start -->
+
+    <!--    second row start-->
+    <div class="row mt-2" style="padding: 5%">
+    <div class="col-md-3">
+        <img src="/icons/payment.png" alt="payment image"
+             style="border-radius: 10%; border: 2px solid black; padding: 10px;" onclick="console.log('payment')">
+        <h5 class="fw-bold">payment management</h5>
+    </div>
+    <div class="col-md-3">
+        <img src="/icons/privilege.png" alt="privilege image"
+             style="border-radius: 10%; border: 2px solid black; padding: 10px;" onclick="console.log('privilege'); window.open('http://localhost:8080/privilege/privilegeform');">
+        <h5 class="fw-bold">privilege management</h5>
+    </div>
+    <div class="col-md-3">
+        <img src="/icons/user.png" alt="user image"
+             style="border-radius: 10%; border: 2px solid black; padding: 10px;" onclick="console.log('user'); window.open('http://localhost:8080/user/userform');">
+        <h5 class="fw-bold">user management</h5>
+    </div>
+    <div class="col-md-3">
+        <img src="/icons/parent.png" alt="parent image" style="border-radius: 10%; border: 2px solid black; padding: 10px;"
+             onclick="console.log('parent'); window.open('http://localhost:8080/guardian/guardianform');">
+        <h5 class="fw-bold">parent management</h5>
+    </div>
+    </div>
+    <!--    second row end-->
+
+
+</div>
+</body>
+</html>

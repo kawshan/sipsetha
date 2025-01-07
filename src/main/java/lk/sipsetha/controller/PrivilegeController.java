@@ -40,5 +40,18 @@ public class PrivilegeController {
 
     }
 
+    @PostMapping
+    public String savePrivilege(@RequestBody Privilege privilege){
+        //authentication and authorization
+        //duplicate
+        //operator
+        try {
+            privilegeDao.save(privilege);
+            return "ok";
+        }catch (Exception e){
+            return "privilege save not complete"+e.getMessage();
+        }
+    }
+
 }
 

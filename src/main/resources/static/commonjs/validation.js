@@ -44,15 +44,24 @@ const selectValidator = (fieldId,pattern,object,property)=>{
 }
 
 
-const checkBoxValidator = (fieldId,pattern,object,property)=>{
-    if (fieldId.value != ''){
-        fieldId.style.border='2px solid green';
-        window[object][property] = fieldId.value;
-    }else {
-        fieldId.style.border='2px solid green';
-        window[object][property] = null;
+const checkBoxValidator = (fieldId,pattern,object,property,trueValue,falseValue,labelID,labelTrueValue,labelFalseValue)=>{
+//     if (fieldId.value != ''){
+//         fieldId.style.border='2px solid green';
+//         window[object][property] = fieldId.value;
+//     }else {
+//         fieldId.style.border='2px solid red';
+//         window[object][property] = null;
+//
+//     }
 
+    if (fieldId.checked){
+        window[object][property]=trueValue;
+        labelID.innerText = labelTrueValue;
+    }else {
+        window[object][property]=falseValue;
+        labelID.innerText=labelFalseValue;
     }
+
 
 }
 

@@ -99,7 +99,12 @@ const getUserStatus = (ob) => {
 const getEmployee = (ob) => {
     // return ob.employee_id.fullname;
     // return "employee";
-    return ob.employee_id.fullname;
+    // return ob.employee_id.fullname;
+    if (ob.employee_id != null){
+        return ob.employee_id.fullname;
+    }else {
+        return "----";
+    }
 }
 
 //create function for get user role
@@ -121,6 +126,7 @@ const userFormRefill = (ob, rowIndex) => {
     let employeeWithoutUserAccount=ajaxGetRequest("/employee/withoutuseraccount")
     employeeWithoutUserAccount.push(user.employee_id);
     fillDataIntoSelect(selectEmployee,'select employee',employeeWithoutUserAccount,'fullname',user.employee_id.fullname)
+    selectEmployee.disabled=true;
 
     textUserName.value = user.username;
 
@@ -155,6 +161,11 @@ const userFormRefill = (ob, rowIndex) => {
                     user.roles.splice(extIndex,1)
                 }
             }
+        }
+
+        let extIndex = user.roles.map(item => item.name).indexOf(role.name);
+        if (extIndex != -1){
+           input.checked = true;
         }
 
 
@@ -208,7 +219,7 @@ const printUser = () => {
 //define function for user form check errors
 const checkFormErrors = () => {
     let errors = '';
-    if (user.employee == null) {
+    if (user.employee_id == null) {
         errors = errors + 'employee cannot be empty \n'
         selectEmployee.classList.add('is-invalid');
     }
@@ -220,7 +231,7 @@ const checkFormErrors = () => {
         errors = errors + 'password cannot be empty \n'
         textPassword.classList.add('is-invalid');
     }
-    if (user.repassword == null) {
+    if (textRePassword.value == "") {
         errors = errors + 're password cannot be empty \n'
         textRePassword.classList.add('is-invalid');
     }
@@ -392,6 +403,7 @@ const passwordRetypeValidator = ()=>{
     // textRePassword
     if (textPassword.value == textRePassword.value){
         textRePassword.style.border='2px solid green';
+        user.password = textPassword.value;
     }else {
         textRePassword.style.border="2px solid red";
         user.password=null;

@@ -48,4 +48,7 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "employee_id",referencedColumnName = "id")
     private Employee employee_id;
+
+
+
 }

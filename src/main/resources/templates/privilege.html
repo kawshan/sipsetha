@@ -156,7 +156,7 @@
 
                 <div class="modal-body" style="background-color: #E0E9DD">
 
-                    <form onsubmit="return false">
+                    <form onsubmit="return false" id="formPrivilege">
                         <!--                    required mark start-->
                         <div class="row mt-2">
                             <div class="col-md-12 text-start">
@@ -204,7 +204,7 @@
                                 <label for="checkboxSelect" class="form-label fw-bold">select</label>
                             </div>
                             <div class="col-md-6">
-                                <input type="checkbox" id="checkboxSelect" class="form-check-input fw-bold" onchange="checkBoxValidator(this,'','privilege','sel')">
+                                <input type="checkbox" id="checkboxSelect" class="form-check-input fw-bold" onchange="checkBoxValidator(this,'','privilege','sel',true,false,labelSelect,'granted','not-granted')">
                                 <label id="labelSelect">select privilege not granted</label>
                             </div>
                         </div>
@@ -217,7 +217,7 @@
                                 <label for="checkboxInsert" class="form-label fw-bold">insert</label>
                             </div>
                             <div class="col-md-6">
-                                <input type="checkbox" id="checkboxInsert" class="form-check-input fw-bold" onchange="checkBoxValidator(this,'','privilege','inst')" >
+                                <input type="checkbox" id="checkboxInsert" class="form-check-input fw-bold" onchange="checkBoxValidator(this,'','privilege','inst',true,false,labelInsert,'granted','not-granted')" >
                                 <label id="labelInsert">insert privilege not granted</label>
                             </div>
                         </div>
@@ -231,7 +231,7 @@
                                 <label for="checkboxUpdate" class="form-label fw-bold">update</label>
                             </div>
                             <div class="col-md-6">
-                                <input type="checkbox" id="checkboxUpdate" class="form-check-input fw-bold" onchange="checkBoxValidator(this,'','privilege','upd')">
+                                <input type="checkbox" id="checkboxUpdate" class="form-check-input fw-bold" onchange="checkBoxValidator(this,'','privilege','upd',true,false,labelUpdate,'granted','not-granted')">
                                 <label id="labelUpdate">update privilege not granted</label>
                             </div>
                         </div>
@@ -245,8 +245,8 @@
                                 <label for="checkboxDelete" class="form-label fw-bold">delete</label>
                             </div>
                             <div class="col-md-6">
-                                <input type="checkbox" id="checkboxDelete" class="form-check-input fw-bold" onchange="checkBoxValidator(this,'','privilege','del')" >
-                                <label id="labelDelete">select privilege not granted</label>
+                                <input type="checkbox" id="checkboxDelete" class="form-check-input fw-bold" onchange="checkBoxValidator(this,'','privilege','del',true,false,labelDelete,'granted','not-granted')" >
+                                <label id="labelDelete">delete privilege not granted</label>
                             </div>
                         </div>
                         <!--                        delete end-->

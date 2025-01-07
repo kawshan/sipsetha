@@ -113,7 +113,7 @@ const classHallFormRefill = (ob,rowIndex)=>{
 
     fillDataIntoSelect(selectClassHallStatus,'select status',classHallStatus,'name',classhall.classhallstatus_id.name);
 
-    availbaleFeatures=ajaxGetRequest("/classhallfeatures/findall")
+    availbaleFeatures=ajaxGetRequest("/classhallfeatures/withoutchfeatures/"+classhall.id)
     fillDataIntoSelect(selectAllItem,'select features',availbaleFeatures,'name');
 
     fillDataIntoSelect(selectedFeatures,'',classhall.features,'name');
@@ -228,6 +228,21 @@ const checkClassHallUpdates = ()=>{
     if (classhall.classhallstatus_id.name != oldClasshall.classhallstatus_id.name){
         updates=updates+"status is changed \n"
     }
+    if (classhall.features.length!=oldClasshall.features.length){
+        updates=updates+"class hall features are changed \n"
+    }else {
+        for (let element of classhall.features) {
+            let extFeaturesCount = oldClasshall.features.map(item => item.id).indexOf(element.id);
+
+            if (extFeaturesCount!=-1){
+                updates=updates+"features are changed \n";
+                break;
+            }
+
+        }
+    }
+
+
     return updates;
 }
 

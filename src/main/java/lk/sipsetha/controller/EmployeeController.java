@@ -57,7 +57,7 @@ public class EmployeeController {
 
         try {
             String employeeNextNumber = dao.getEmployeeNextNumber();
-            if (employeeNextNumber.equals(null) || employeeNextNumber.equals("")) {
+            if (employeeNextNumber==null || employeeNextNumber == "") {
                 employee.setEmpnum("00001");
             } else {
                 employee.setEmpnum(employeeNextNumber);

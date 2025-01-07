@@ -83,7 +83,6 @@
         <th>fee</th>
         <th>month</th>
         <th>bill number</th>
-        <th>reference number</th>
         <th>pay type</th>
         <th>student name</th>
         <th>modify</th>
@@ -214,7 +213,7 @@
                         <!--                        pay type start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
-                                <label for="selectPayType" class="form-label fw-bold"> pay type </label>
+                                <label for="selectPayType" class="form-label fw-bold"> pay type <i class="text-danger">*</i> </label>
                             </div>
                             <div class="col-md-6">
                                 <select id="selectPayType" class="form-select text-center" required
@@ -256,7 +255,7 @@
                             <div class="col-md-4 text-end">
                                 <button type="submit" class="btn btn-primary fw-bold"
                                         style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%"
-                                        onclick="classSubmit()">
+                                        onclick="btnStudentRegistrationSubmit()">
                                     <i class="fa-solid fa-plus fa-beat"> </i> add
                                 </button>
                             </div>

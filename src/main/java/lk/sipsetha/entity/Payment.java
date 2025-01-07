@@ -24,10 +24,10 @@ public class Payment {
     private BigDecimal fees;
 
     @Column(name = "month")
-    private Integer month;
+    private String month;
 
     @Column(name = "billnumber")
-    private Integer billnumber;
+    private String billnumber;
 
     @Column(name = "payedamount")
     private BigDecimal payedamount;

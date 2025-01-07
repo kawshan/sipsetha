@@ -125,4 +125,16 @@ public class GuardianController {
     }
 
 
+    @GetMapping(value = "/toverifyexistence/{nic}")
+    public Boolean getNicForExistingValidation(@PathVariable("nic")String nic){
+        Guardian exGuardianNic=guardianDao.getGuardianByByNic(nic);
+        if (exGuardianNic!=null){
+            return true;
+        }else {
+            return false;
+        }
+
+    }
+
+
 }

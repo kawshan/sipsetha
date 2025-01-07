@@ -17,7 +17,7 @@ const refreshTeacherForm = ()=>{
     fillDataIntoSelect(selectQualification,'select qualification',qualifications,'name');
 
     branches=ajaxGetRequest("/branch/findall");
-    fillDataIntoSelect(selectBranch,'select branch',branches,'name');
+    fillDataIntoSelectWithTwoAttributes(selectBranch,'select branch',branches,'name','bank_id');
 
     teacherStatues=ajaxGetRequest("/teacherstatus/findall");
     fillDataIntoSelect(selectStatus,'select status',teacherStatues,'name');

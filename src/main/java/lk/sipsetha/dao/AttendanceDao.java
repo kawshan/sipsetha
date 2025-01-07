@@ -9,6 +9,6 @@ import java.util.List;
 public interface AttendanceDao extends JpaRepository<Attendance,Integer> {
 
     //define query to check duplicate of attendance using date, student and class offering
-    @Query(value = "select * from attendance where addeddate=?1 and classoffering_id=?2 and student_id=?3;",nativeQuery = true)
-    public List<Attendance> checkDupUsingDateStuClZOff(String addeddate, Integer classOffering, Integer studentID);
+    @Query(value = "select * from attendance where addeddate=?1 and classoffering_id=?2 and student_id=?3",nativeQuery = true)
+    public Attendance checkDupUsingDateStuClZOff(String addeddate, Integer classOffering, Integer studentID);
 }

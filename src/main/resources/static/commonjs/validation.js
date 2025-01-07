@@ -65,8 +65,8 @@ const checkBoxValidator = (fieldId,pattern,object,property,trueValue,falseValue,
 
 const dataListValidator = (fieldId,dataListName,object,property,oldObject,displayPropertyOne,displayPropertyTwo) =>{
 
-    const fieldValue = fieldId.value;
-    if (fieldValue!==""){
+    const fieldValue = fieldId.value;   //field id eken value eka gannawa
+    if (fieldValue!==""){   //empty nadda kiyala balanwa
         let dataList = window[dataListName];
         let extIndex=-1;
         for (const index in dataList){
@@ -77,8 +77,45 @@ const dataListValidator = (fieldId,dataListName,object,property,oldObject,displa
         }
         if (extIndex!=-1){
             window[object][property] = dataList[extIndex];
+            if (window[oldObject]!=null && window[object][property]['id']!= window[oldObject][property]['id']){ //old object eka null neme nam ee kiyanne old object ekak thiyenawa nam saha window eken ena object eke property eka saha old object eke thiyene property eka samana naththam
+                fieldId.style.border='5px solid #f39c12';//thabili paating border eka daanawa
+            }else {
+                fieldId.style.border='2px solid green';// kola paata border ekak damawa
+            }
+        }else {//ehema match ekak hambune nathtam object eka null karala daala border eka red karanawa;
+            window[object][property]=null;
+            fieldId.style.border='2px solid red';
+        }
+
+
+    }else {
+        window[object][property]=null;
+        if (fieldId.required){
+            fieldId.style.border='2px solid red';
+        }else {
+            fieldId.style.border='2px solid #ced4da';
+
+        }
+    }
+}
+
+
+const dataListValidatorWithSingleValue = (fieldId,dataListName,object,property,oldObject,displayPropertyOne) =>{
+
+    const fieldValue = fieldId.value;   //field id eken value eka gannawa
+    if (fieldValue!==""){   //empty nadda kiyala balanwa
+        let dataList = window[dataListName];
+        let extIndex=-1;
+        for (const index in dataList){
+            if (fieldValue == dataList[index][displayPropertyOne]){
+                extIndex=index;
+                break
+            }
+        }
+        if (extIndex!=-1){
+            window[object][property] = dataList[extIndex];
             if (window[oldObject]!=null && window[object][property]['id']!= window[oldObject][property]['id']){
-                fieldId.style.border='5px solid orangered';
+                fieldId.style.border='5px solid #f39c12';
             }else {
                 fieldId.style.border='2px solid green';
             }
@@ -99,6 +136,7 @@ const dataListValidator = (fieldId,dataListName,object,property,oldObject,displa
     }
 }
 
+
 //start validation of two values
 const textValidatorWithTwoValues=(fieldId,pattern,object,property,oldObject)=>{
     const fieldValue = fieldId.value;
@@ -111,7 +149,7 @@ const textValidatorWithTwoValues=(fieldId,pattern,object,property,oldObject)=>{
 
             if (window[oldObject]!=null && window[object][property]!=window[oldObject][property]){
                 // fieldId.style.border="2px solid #e67e22";
-                fieldId.style.border='5px solid orangered';
+                fieldId.style.border='5px solid #f39c12';
             }else {
                 fieldId.style.border="2px solid green";
             }
@@ -138,7 +176,7 @@ const selectDBFieldValidatorWithTwoValues = (fieldId,pattern,object,property,old
         window[object][property]=JSON.parse(fieldValue);//convert js object   //json parse eken venne string eka java script object ekat convert vena eka
                                                         //JSON.stringify is a JavaScript method used to convert a JavaScript object or value to a JSON string
         if (window[oldObject]!=null && window[object][property]['id']!= window[oldObject][property]['id']){
-            fieldId.style.border='5px solid orangered';
+            fieldId.style.border='5px solid #f39c12';
         }else {
             fieldId.style.border="2px solid green";
         }

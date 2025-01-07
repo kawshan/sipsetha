@@ -195,7 +195,8 @@
                                                     <input type="text" id="textNic" class="form-control text-center"
                                                            required
                                                            placeholder="enter nic number"
-                                                           onkeyup="textValidator(this,'^(([0-9]{9}[VvXxSs])|([0-9]{12}))$','guardian','nic'); generateGuardianGender(this)">
+                                                           onkeyup="textValidator(this,'^(([0-9]{9}[VvXxSs])|([0-9]{12}))$','guardian','nic'); generateGuardianGender(this); validateNicExisting(this)">
+                                                    <div id="divNicText" class="form-text text-center d-none"></div>
                                                 </div>
                                             </div>
                                             <!--                    nic end-->

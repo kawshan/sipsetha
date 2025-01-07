@@ -80,10 +80,10 @@ public class AttendanceController {
             return "cannot perform delete attendance... you dont have privileges";
         }
 
-//        List<Attendance> chekDuplicateAttendance=dao.checkDupUsingDateStuClZOff(LocalDate.now().toString(),attendance.getClassoffering_id().getId(),attendance.getStudent_id().getId());
-//        if (!chekDuplicateAttendance.isEmpty()){
-//            return "cannot perform attendance its already exists";
-//        }
+        Attendance chekDuplicateAttendance=dao.checkDupUsingDateStuClZOff(LocalDate.now().toString(),attendance.getClassoffering_id().getId(),attendance.getStudent_id().getId());
+        if (chekDuplicateAttendance!=null){
+            return "cannot perform attendance its already exists";
+        }
 
 
         try {

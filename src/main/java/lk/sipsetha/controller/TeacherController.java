@@ -75,6 +75,16 @@ public class TeacherController {
             return "cannot perform insert .....  you don't have privileges";
         }
         //existing
+        Teacher exTeacherNic=dao.getTeacherByNic(teacher.getNic());
+        if (exTeacherNic!=null){
+            return "Cannot perform teacher save. teacher's nic already exists";
+        }
+
+        Teacher exTeacherEmail = dao.getTeacherByEmail(teacher.getEmail());
+        if (exTeacherEmail!=null){
+            return "cannot perform teacher save. teacher email already exists";
+        }
+
         //operator
         try {
             String teacherNextNumber = dao.getTeacherNextNumber();

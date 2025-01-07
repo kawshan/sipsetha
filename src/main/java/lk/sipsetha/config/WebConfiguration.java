@@ -27,8 +27,16 @@ public class WebConfiguration {
                     .requestMatchers("/privilege/**").hasAnyAuthority("admin","manager")
                     .requestMatchers("/user/**").hasAnyAuthority("admin","manager")
                     .requestMatchers("/employee/**").hasAnyAuthority("admin","manager","assistant-manager")
-                    .requestMatchers("/student/**").hasAnyAuthority("admin","manager")
-                    .requestMatchers("/guardian/**").hasAnyAuthority("admin","manager")
+                    .requestMatchers("/student/**").hasAnyAuthority("admin","manager","assistant-manager","cashier")
+                    .requestMatchers("/guardian/**").hasAnyAuthority("admin","manager","assistant-manager","cashier")
+                    .requestMatchers("/studentregistration/**").hasAnyAuthority("admin","manager","assistant-manager","cashier")
+                    .requestMatchers("/payment/**").hasAnyAuthority("admin","manager","assistant-manager","cashier")
+                    .requestMatchers("/attendance/**").hasAnyAuthority("admin","manager","assistant-manager","cashier","card-checker")
+                    .requestMatchers("/classhall/**").hasAnyAuthority("admin","manager","assistant-manager")
+                    .requestMatchers("/classroomallocation/**").hasAnyAuthority("admin","manager","assistant-manager")
+                    .requestMatchers("/teacher/**").hasAnyAuthority("admin","manager","assistant-manager")
+                    .requestMatchers("/classoffering/**").hasAnyAuthority("admin","manager","assistant-manager","cashier")
+                    .requestMatchers("/teacherpayment/**").hasAnyAuthority("admin","manager","assistant-manager")
                     .anyRequest().authenticated();
         })
                 .formLogin(login->{

@@ -57,13 +57,13 @@
             <div class="col-md-8">
                 <button type="button" class="btn btn-warning fw-bold"
                         style="width: 25%; color: whitesmoke; border:1px solid black"
-                        onclick="classFormRefill(window['editOb'],window['editRow'])"
+                        onclick="refillStudentRegistrationForm(window['editOb'],window['editRow'])"
                 >
                     <i class="fa-solid fa-recycle fa-beat"> </i> edit
                 </button>
                 <button type="button" class="btn btn-danger fw-bold ms-2 me-2"
                         style="width: 25%; border: 1px solid black"
-                        onclick="deleteClass(window['editOb'],window['editRow'])"
+                        onclick="btnDeleteStudentRegistration(window['editOb'],window['editRow'])"
                 >
                     <i class="fa-solid fa-trash fa-beat"></i> delete
                 </button>
@@ -87,15 +87,11 @@
     <table class="table table-bordered table-striped" id="tableStudentRegistration">
         <thead class="table text-center" style="background-color: #044800; color: whitesmoke">
         <th>#</th>
-        <th>class code</th>
-        <th>teacher</th>
-        <th>grade</th>
-        <th>subject</th>
-        <th>date</th>
-        <th>class status</th>
-        <th>year</th>
-        <th>duration</th>
         <th>fees</th>
+        <th>student</th>
+        <th>class offering</th>
+        <th>registration type</th>
+        <th>registration status</th>
         <th>modify</th>
         </thead>
         <tbody>
@@ -141,9 +137,56 @@
                                 <label for="textFee" class="form-label fw-bold"> fee <i class="text-danger">*</i> </label>
                             </div>
                             <div class="col-md-6">
-                                <input type="number" min="500" max="9999" id="textFee" class="form-control text-center" required placeholder="enter fee" onkeyup="textValidator(this,'^[0-9]{4}[.][0]{2}$','studentRegistration','fee')">
+                                <input type="number" min="1000" max="9999" id="textFee" class="form-control text-center" required placeholder="enter fee" onkeyup="textValidator(this,'^[0-9]{4}[.][0]{2}$','studentRegistration','fee')">
                             </div>
                         </div>
+                        
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="selectStudent" class="form-label fw-bold">select student <i class="text-danger">*</i> </label>
+                            </div>
+                            <div class="col-md-6">
+                                <select id="selectStudent" class="form-select text-center" required onchange="selectDBValidator(this,'','studentRegistration','student_id')"></select>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="selectClassOffering" class="form-label fw-bold"> select class offering <i class="text-danger">*</i> </label>
+                            </div>
+                            <div class="col-md-6">
+                                <select id="selectClassOffering" class="form-select text-center" required onchange="selectDBValidator(this,'','studentRegistration','classoffering_id')"></select>
+                            </div>
+                        </div>
+                        
+                        
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="selectRegistrationStatus" class="form-label fw-bold">select registration status</label>
+                            </div>
+                            <div class="col-md-6">
+                                <select id="selectRegistrationStatus" class="form-select text-center" required onchange="selectDBValidator(this,'','studentRegistration','registrationstatus_id')"></select>
+                            </div>
+                        </div>
+                        
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="selectRegisteredType" class="form-label fw-bold">registered type</label>
+                            </div>
+                            <div class="col-md-6">
+                                <select id="selectRegisteredType" class="form-select text-center" required onchange="selectDBValidator(this,'','studentRegistration','registerdtype_id')"></select>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="textNote" class="form-label fw-bold">note <i class="text-primary">(optional) </i> </label>
+                            </div>
+                            <div class="col-md-6">
+                                <textarea id="textNote" cols="" rows="3" placeholder="enter note " onkeyup="textValidator(this,'','studentRegistration','note')"></textarea>
+                            </div>
+                        </div>
+                        
 
 
                         <!--                    button start-->
@@ -154,12 +197,12 @@
                                 </button>
                             </div>
                             <div class="col-md-4 text-center">
-                                <button type="button" class="btn btn-warning fw-bold" style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%" onclick="buttonFormUpdate()" >
+                                <button type="button" class="btn btn-warning fw-bold" style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%" onclick="btnStudentRegistrationUpdate()" >
                                     <i class="fa-solid fa-recycle fa-beat"> </i> update
                                 </button>
                             </div>
                             <div class="col-md-4 text-end">
-                                <button type="submit" class="btn btn-primary fw-bold" style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%" onclick="classSubmit()">
+                                <button type="submit" class="btn btn-primary fw-bold" style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%" onclick="addStudentRegistration()">
                                     <i class="fa-solid fa-plus fa-beat"> </i> add
                                 </button>
                             </div>

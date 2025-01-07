@@ -140,7 +140,7 @@ const checkClassHallErrors = ()=>{
     if (classhall.maxbenchcount == null){
         errors=errors+"max bench count cannot be empty \n"
     }
-    if (classhall.classhallstatus_id.name == null){
+    if (classhall.classhallstatus_id == null){
         errors=errors+"status cannot be empty \n"
     }
 

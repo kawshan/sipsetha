@@ -46,11 +46,11 @@ const refreshPaymentForm = () => {
     studentPaymentForm.reset();
     payment = new Object();
 
-    paymentcategories=ajaxGetRequest("/paymentcategory/findall")
-    fillDataIntoSelect(selectPaymentCategory,'select payment category',paymentcategories,'name');
+    paymentcategories = ajaxGetRequest("/paymentcategory/findall")
+    fillDataIntoSelect(selectPaymentCategory, 'select payment category', paymentcategories, 'name');
 
-    studentRegistrations=ajaxGetRequest("/studentregistration/findall")
-    fillDataIntoSelect(selectStudentRegistration,'select student registrations',studentRegistrations,'indexnumber');
+    studentRegistrations = ajaxGetRequest("/studentregistration/findall")
+    fillDataIntoSelect(selectStudentRegistration, 'select student registrations', studentRegistrations, 'indexnumber');
 
 
     payTypes = ajaxGetRequest("/paytype/findall");
@@ -77,30 +77,37 @@ const refreshPaymentForm = () => {
     }
 
     //the reason behind this disabaling is to generate fee and balance amount
-    textFee.disabled=true;
-    textBalanceAmount.disabled=true
+    textFee.disabled = true;
+    textBalanceAmount.disabled = true
 
-
-    //start of get current month and yar
-    let currentDate=new Date();
-
-    let currentMonth=currentDate.getMonth()+1;//adding one to get correct month // bcz get month returns 0-11 values 0-> jan 11->dec
-    if (currentMonth<10){
-        currentMonth="0"+currentMonth;
-    }
-    let currentMonthAndYearValue=currentDate.getFullYear()+"-"+currentMonth;
-    console.log(currentMonthAndYearValue)
-    textMonth.value=currentMonthAndYearValue;
-    payment.month=textMonth.value;
-    textMonth.style.border="2px solid green";
-
-
-
-
-    //end of get current month and yar
-
+//call get current month function
+    getCurrentMonth();
 
 }
+
+
+//define function for get current month
+const getCurrentMonth = ()=>{
+    //start of get current month and yar
+    let currentDate = new Date();
+
+    let currentMonth = currentDate.getMonth() + 1;//adding one to get correct month // bcz get month returns 0-11 values 0-> jan 11->dec
+    if (currentMonth < 10) {
+        currentMonth = "0" + currentMonth;
+    }
+    let currentMonthAndYearValue = currentDate.getFullYear() + "-" + currentMonth;
+    console.log(currentMonthAndYearValue)
+    textMonth.value = currentMonthAndYearValue;
+    payment.month = textMonth.value;
+    textMonth.style.border = "2px solid green";
+
+
+    //end of get current month and year
+}
+
+
+
+
 //define function for student payment refill
 const refillPaymentForm = (ob, rowIndex) => {
     payment = JSON.parse(JSON.stringify(ob));
@@ -133,10 +140,10 @@ const refillPaymentForm = (ob, rowIndex) => {
     textStudent.value = payment.student_id.stunum + " " + payment.student_id.firstname;
     console.log(JSON.stringify(textStudent.value));
 
-    fillDataIntoSelect(studentregistration_id,'select student registration',studentRegistrations,'indexnumber',ob.studentregistration_id.indexnumber);
+    fillDataIntoSelect(studentregistration_id, 'select student registration', studentRegistrations, 'indexnumber', ob.studentregistration_id.indexnumber);
 
 
-    fillDataIntoSelect(selectPaymentCategory,'select payment category',paymentcategories,'name',ob.paymentcategory_id.name)
+    fillDataIntoSelect(selectPaymentCategory, 'select payment category', paymentcategories, 'name', ob.paymentcategory_id.name)
 
 }
 
@@ -145,20 +152,15 @@ const refillPaymentForm = (ob, rowIndex) => {
 const checkErrors = () => {
     let errors = "";
 
-    if (payment.studentregistration_id== null) {
-        errors = errors + "registration cannot be empty \n";
-    }
 
-    if (payment.paymentcategory_id== null) {
+    if (payment.paymentcategory_id == null) {
         errors = errors + "payment category cannot be empty \n";
     }
 
     if (payment.fees == null) {
         errors = errors + "fees cannot be empty \n";
     }
-    if (payment.month == null) {
-        errors + "month cannot be empty \n";
-    }
+
     if (payment.payedamount == null) {
         errors + "payed amount cannot be empty \n";
     }
@@ -181,21 +183,14 @@ const checkErrors = () => {
 const checkUpdates = () => {
     let updates = "";
 
-    if (payment.studentregistration_id.indexnumber != payment.studentregistration_id.indexnumber) {
-        errors = errors + "registration is changed \n";
-    }
-
     if (payment.paymentcategory_id.name != payment.paymentcategory_id.name) {
         errors = errors + "payment is changed \n";
     }
 
-
     if (payment.fees != oldPayment.fees) {
         updates = updates + "fees is updated \n";
     }
-    if (payment.month != oldPayment.month) {
-        updates = updates + "payment is updated \n"
-    }
+
     if (payment.payedamount != oldPayment.payedamount) {
         updates = updates + "payed amount is updated \n";
     }
@@ -220,16 +215,14 @@ const checkUpdates = () => {
 }
 
 
-const btnStudentRegistrationSubmit = () => {
+const btnStudentPaymentSubmit = () => {
     let errors = checkErrors();
     if (errors == "") {
         let userConfirm = confirm("Are you sure to add this following student registration \n"
-            + "\n student registration is " + payment.studentregistration_id.indexnumber
             + "\n payment category is " + payment.paymentcategory_id.name
             + "\n paytype is " + payment.paytype_id.name
             + "\n student is " + payment.student_id.firstname
             + "\n fees is " + payment.fees
-            + "\n month is" + payment.month
             + "\n payed amount is " + payment.payedamount
             + "\n balance amount is " + payment.balanceamount
         );
@@ -244,6 +237,8 @@ const btnStudentRegistrationSubmit = () => {
                 alert("save not complete you might have some errors \n " + postServerResponse);
             }
         }
+    } else {
+        alert("you have following errors \n" + errors);
     }
 }
 
@@ -385,68 +380,123 @@ const modalPrintButton = () => {
 
 
 //define function for generate fee when selecting student registrations
-const generateFees = (fieldId)=>{
+const generateFees = (fieldId) => {
     console.log(fieldId.value); //log ekek daagannawa field id eke value eka
-    selectedValue=JSON.parse(fieldId.value);//iita passe json parse karagannawa eekta hethuva convert json string into JS object
-    console.log(selectedValue.classoffering_id.fees+" class offering fee")
+    selectedValue = JSON.parse(fieldId.value);//iita passe json parse karagannawa eekta hethuva convert json string into JS object
+    console.log(selectedValue.classoffering_id.fees + " class offering fee")
     // console.log(selectedValue.fee+"fee")  //log ekak dagannawa selected value eke fee eka balanna
-    feeFromSelectedValue=selectedValue.classoffering_id.fees; //selected value eken fee eka aragen eka varibale ekakata assign kara gannawa
-    textFee.value=parseFloat(feeFromSelectedValue).toFixed(2);// iita passe text fee kiyana id eke value ekat assign kara gannawa parse flote karala iita passe to fixed karala dahsma thithi dekak thiya gannawa
-    payment.fees=textFee.value; //payment object eke fee ekata textfee kiyana id eka thiyena input field ekan value eka aran assign kara gannawa // in other words bind karagannawa object ekata
-    textFee.style.border="2px solid green";
+    feeFromSelectedValue = selectedValue.classoffering_id.fees; //selected value eken fee eka aragen eka varibale ekakata assign kara gannawa
+    textFee.value = parseFloat(feeFromSelectedValue).toFixed(2);// iita passe text fee kiyana id eke value ekat assign kara gannawa parse flote karala iita passe to fixed karala dahsma thithi dekak thiya gannawa
+    payment.fees = textFee.value; //payment object eke fee ekata textfee kiyana id eka thiyena input field ekan value eka aran assign kara gannawa // in other words bind karagannawa object ekata
+    textFee.style.border = "2px solid green";
 
 }
 
 //define function for generate balance amount
-const generateBalanceAmount = (fieldId)=>{
-    if (new RegExp("^[1-9][0-9]{3,6}[.][0][0]$").test(fieldId.value)){//field id eken value eka aran eka regex pattern eken test karanawa eka true nam
+const generateBalanceAmount = (fieldId) => {
+    if (new RegExp("^[1-9][0-9]{3,6}[.][0][0]$").test(fieldId.value)) {//field id eken value eka aran eka regex pattern eken test karanawa eka true nam
         console.log("ok");
-        let payedAmount=parseFloat(fieldId.value).toFixed(2);  //payed amount ekata field id eke value eka gaththa
-        let feeAmount=parseFloat(textFee.value).toFixed(2);
-        let balanceAmount=payedAmount-feeAmount;
+        let payedAmount = parseFloat(fieldId.value).toFixed(2);  //payed amount ekata field id eke value eka gaththa
+        let feeAmount = parseFloat(textFee.value).toFixed(2);
+        let balanceAmount = payedAmount - feeAmount;
         console.log(balanceAmount);
 
         console.log(typeof (balanceAmount)) //testing vidihata type eka verify kara gaththa string da number da kiyala
-        if (balanceAmount<'0'){
+        if (balanceAmount < '0') {
             console.log("not good value");
-            payment.balanceamount=null;
-            textBalanceAmount.style.border="2px solid red";
-        }else {
+            payment.balanceamount = null;
+            textBalanceAmount.style.border = "2px solid red";
+        } else {
             console.log("good value");
-            textBalanceAmount.value=parseFloat(balanceAmount).toFixed(2);
-            payment.balanceamount=textBalanceAmount.value;
-            textBalanceAmount.style.border="2px solid green";
+            textBalanceAmount.value = parseFloat(balanceAmount).toFixed(2);
+            payment.balanceamount = textBalanceAmount.value;
+            textBalanceAmount.style.border = "2px solid green";
         }
 
     }
 }
 
 
-const disableReferenceANcardNum = (fieldId)=>{
-    let selectedValue=JSON.parse(fieldId.value);    //json string ekak JS object ekak bawata convert karanawa
+const disableReferenceANcardNum = (fieldId) => {
+    let selectedValue = JSON.parse(fieldId.value);    //json string ekak JS object ekak bawata convert karanawa
     console.log(selectedValue.name);
-    if (selectedValue.name=="card"){
-        textReferenceNumber.disabled=false;
-        textCardNumber.disabled=false;
-    }else if (selectedValue.name=="cash"){
-        textReferenceNumber.disabled=true;
-        textCardNumber.disabled=true;
+    if (selectedValue.name == "card") {
+        textReferenceNumber.disabled = false;
+        textCardNumber.disabled = false;
+        textPayedAmount.value=parseFloat(textFee.value).toFixed(2);
+        payment.payedamount=JSON.parse(textPayedAmount.value);
+        textPayedAmount.style.border="2px solid green";
+
+
+        textBalanceAmount.value="0.00"
+        payment.balanceamount=textBalanceAmount.value;
+        textBalanceAmount.style.border="2px solid green";
+    } else if (selectedValue.name == "cash") {
+
+        textPayedAmount.value=""
+        textPayedAmount.style.border="2px solid #ced4da";
+
+        textBalanceAmount.value="";
+        textBalanceAmount.style.border="2px solid #ced4da"
+
+        textReferenceNumber.disabled = true;
+        textCardNumber.disabled = true;
     }
-
-
 
 
 }
 //define function for generate student registration number from student
-const generateStudentRegistration= (fieldID)=>{//parameter ekak vidihata field id eka gannwa eka enne html eke this eken pass karala
+const generateStudentRegistration = (fieldID) => {//parameter ekak vidihata field id eka gannwa eka enne html eke this eken pass karala
     console.log(fieldID.value);
-    let selectedValue=fieldID.value.split(" ");
-    let indexNumber=selectedValue[0];
+    let selectedValue = fieldID.value.split(" ");
+    let indexNumber = selectedValue[0];
     console.log(indexNumber);
-    let studentRegistrationsbystudent=ajaxGetRequest("/studentregistration/"+indexNumber); //student registration eken index number eka genna gannawa
-    fillDataIntoSelectNew(selectStudentRegistration,'select student registrations',studentRegistrationsbystudent,'classoffering_id','classname','');
+    let studentRegistrationsbystudent = ajaxGetRequest("/studentregistration/" + indexNumber); //student registration eken index number eka genna gannawa
+    fillDataIntoSelectNew(selectStudentRegistration, 'select student registrations', studentRegistrationsbystudent, 'classoffering_id', 'classname', '');
 
 
+}
+
+//define function for generate payment category for student
+const getPaymentCategory = (fieldId) => {
+    console.log(fieldId.value);
+    let selectedValue = fieldId.value.split(" ");
+    let indexNumber = selectedValue[0];
+    console.log(indexNumber);
+    let paymentAmountByStudent = ajaxGetRequest("/payment/payedamountbystudent/" + indexNumber);
+    console.log(paymentAmountByStudent + " payment amount")
+    if (paymentAmountByStudent != true) {  //me kiyanne mukuth payment ekak naththam
+        console.log("empty")
+        selectStudentRegistration.disabled = true;
+        fillDataIntoSelect(selectPaymentCategory, 'select payment category', paymentcategories, 'name', 'admission');
+        let selectedValue=JSON.parse(selectPaymentCategory.value);
+        payment.paymentcategory_id = selectedValue    //json parse eken karanne JSON string ekek js object ekata pass karana eka
+        selectPaymentCategory.style.border = "2px solid green";
+
+        textFee.value = parseFloat(selectedValue.addmissionfee).toFixed(2);
+        textFee.style.border = "2px solid green";
+        payment.fees = textFee.value;
+
+        generateBalanceAmount(textPayedAmount); //call function for generate balance amount
+
+        textMonth.value="";
+        payment.month="";
+        textMonth.style.border="2px solid #ced4da";
+        textMonth.disabled=true;
+
+
+    } else {
+        console.log("not empty");
+        selectStudentRegistration.disabled = false;
+        fillDataIntoSelect(selectPaymentCategory, 'select payment category', paymentcategories, 'name', 'monthly');
+
+        payment.paymentcategory_id = JSON.parse(selectPaymentCategory.value);
+        selectPaymentCategory.style.border = "2px solid green";
+
+        textMonth.disabled=false;
+        getCurrentMonth();
+
+    }
 }
 
 

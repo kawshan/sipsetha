@@ -571,16 +571,19 @@ const guardianCheckErrors = ()=>{
 //define function for guardian submit in inner collapse form
 const buttonGuardianAdd = ()=>{
     let errors = guardianCheckErrors();
+    let guardianNic=guardian.nic + " "+guardian.firstname;
+
+
     if (errors == ""){
         let userConfirm =confirm("are you sure to add this guardian"
-            +'\n first name is'+guardian.firstname
-            +'\n last name is'+guardian.lastname
-            +'\n nic is'+guardian.nic
-            +'\n mobile is'+guardian.mobile
-            +'\n address is'+guardian.address
-            +'\n guardian type is'+guardian.guardiantype_id.name
-            +'\n gender is'+guardian.gender
-            +'\n status is'+guardian.status
+            +'\n first name is '+guardian.firstname
+            +'\n last name is '+guardian.lastname
+            +'\n nic is '+guardian.nic
+            +'\n mobile is '+guardian.mobile
+            +'\n address is '+guardian.address
+            +'\n guardian type is '+guardian.guardiantype_id.name
+            +'\n gender is '+guardian.gender
+            +'\n status is '+guardian.status
         );
         if (userConfirm){
             let serverResponse=ajaxPostRequest("/guardian",guardian)
@@ -590,8 +593,13 @@ const buttonGuardianAdd = ()=>{
                 // guardianForm.reset();
                 // refreshGuardianForm();
                 // $('#modalGuardianAdd').modal('hide');
+
                 refreshGuardianForm();
                 $('#collapseExample').collapse('hide');
+
+                guardians = ajaxGetRequest("/guardian/findall");
+                fillDataIntoDataList(dataListItems,guardians,'nic','firstname');
+                textGuardianName.value=guardianNic;
 
 
             }else {

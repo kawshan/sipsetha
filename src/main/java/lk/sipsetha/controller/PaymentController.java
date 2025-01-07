@@ -115,5 +115,21 @@ public class PaymentController {
         }
     }
 
+    @GetMapping(value = "/payedamountbystudent/{stunum}")
+    public Boolean getPaymentAmountByStudentNum(@PathVariable("stunum")String stunum){
+        List<Payment> paymentList = dao.paymentByStudent(stunum);
+        if (paymentList.size() == 0){
+            return  false;
+        }else {
+           return true;
+        }
+    }
+
+
+    
+    @GetMapping(value = "/getmaxmonthbystudent/{stunum}")
+    public String getMaxMonthByStudent(@PathVariable("stunum")String stunum){
+        return dao.getMaxMonthPaymentByStudent(stunum);
+    }
 
 }

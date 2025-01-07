@@ -133,23 +133,11 @@
                             </div>
                             <div class="col-md-6">
 <!--                                <select id="selectStudent" class="form-select text-center" required onchange="selectDBValidator(this,'','payment','student_id')"> </select>-->
-                                <input type="text" id="textStudent" list="studentList" required placeholder="select student" class="form-control text-center" onkeyup="dataListValidator(this,'students','payment','student_id','oldPayment','stunum','firstname'); generateStudentRegistration(this)">
+                                <input type="text" id="textStudent" list="studentList" required placeholder="select student" class="form-control text-center" onkeyup="dataListValidator(this,'students','payment','student_id','oldPayment','stunum','firstname'); generateStudentRegistration(this); getPaymentCategory(this)">
                                 <datalist id="studentList"></datalist>
                             </div>
                         </div>
                         <!--                        student end-->
-
-<!--                        student registration start-->
-                        <div class="row mt-2">
-                            <div class="col-md-6">
-                                <label for="selectStudentRegistration" class="form-label fw-bold">Student Registration <i
-                                        class="text-danger">*</i> </label>
-                            </div>
-                            <div class="col-md-6">
-                                <select id="selectStudentRegistration" class="form-control text-center" onchange="selectDBValidator(this,'','payment','studentregistration_id'); generateFees(this);"></select>
-                            </div>
-                        </div>
-<!--                        student registration end-->
 
 
                         <!--                        payment category start-->
@@ -163,6 +151,19 @@
                             </div>
                         </div>
                         <!--                        payment category end-->
+
+
+<!--                        student registration start-->
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="selectStudentRegistration" class="form-label fw-bold">Student Registration</label>
+                            </div>
+                            <div class="col-md-6">
+                                <select id="selectStudentRegistration" class="form-control text-center" onchange="selectDBValidator(this,'','payment','studentregistration_id'); generateFees(this);"></select>
+                            </div>
+                        </div>
+<!--                        student registration end-->
+
 
 
 
@@ -188,7 +189,7 @@
                             </div>
                             <div class="col-md-6">
                                 <input type="text" id="textFee" class="form-control text-center"
-                                       required placeholder="enter fee"
+                                        placeholder="enter fee"
                                        onkeyup="textValidator(this,'^[1-9][0-9]{3,6}[.][0][0]$','payment','fees')">
                             </div>
                         </div>
@@ -202,7 +203,7 @@
                                 </label>
                             </div>
                             <div class="col-md-6">
-                                <input type="month" id="textMonth" class="form-control text-center" required
+                                <input type="month" id="textMonth" class="form-control text-center"
                                        placeholder="enter month" onchange="textValidator(this,'','payment','month'); console.log(this.value)">
                             </div>
                         </div>
@@ -216,7 +217,7 @@
                                         class="text-danger">*</i> </label>
                             </div>
                             <div class="col-md-6">
-                                <input type="text" id="textPayedAmount" class="form-control text-center" required
+                                <input type="text" id="textPayedAmount" class="form-control text-center"
                                        placeholder="enter payed amount"
                                        onkeyup="textValidator(this,'^[1-9][0-9]{3,6}[.][0][0]$','payment','payedamount'); generateBalanceAmount(this);">
                             </div>
@@ -231,7 +232,7 @@
                                         class="text-danger">*</i> </label>
                             </div>
                             <div class="col-md-6">
-                                <input type="text" id="textBalanceAmount" class="form-control text-center" required
+                                <input type="text" id="textBalanceAmount" class="form-control text-center"
                                        placeholder="enter balance amount"
                                        onkeyup="textValidator(this,'^[1-9][0-9]{3,6}[.][0][0]$','payment','balanceamount')">
                             </div>
@@ -286,7 +287,7 @@
                             <div class="col-md-4 text-end">
                                 <button type="submit" id="btnStudentPayment" class="btn btn-primary fw-bold"
                                         style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%; pointer-events: all"
-                                        onclick="btnStudentRegistrationSubmit()">
+                                        onclick="btnStudentPaymentSubmit()">
                                     <i class="fa-solid fa-plus fa-beat"> </i> add
                                 </button>
                             </div>

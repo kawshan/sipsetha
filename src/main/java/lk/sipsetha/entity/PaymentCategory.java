@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
+
 @Entity
 @Table(name = "paymentcategory")
 @Data
@@ -19,6 +21,9 @@ public class PaymentCategory {
 
     @Column(name = "name")
     private String name;
+
+    @Column(name = "addmissionfee")
+    private BigDecimal addmissionfee;
 
 
 }

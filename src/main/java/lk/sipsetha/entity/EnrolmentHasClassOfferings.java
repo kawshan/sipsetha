@@ -51,4 +51,5 @@ public class EnrolmentHasClassOfferings {
     @ManyToOne
     @JoinColumn(name = "classoffering_id",referencedColumnName = "id")
     private ClassOffering classoffering_id;
+
 }

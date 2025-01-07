@@ -138,9 +138,9 @@ const refreshInnerFormAndTable = ()=>{
     oldenrolmentHasClassOffering=null;
 
     classOfferings=ajaxGetRequest("/classoffering/findall");
-    fillDataIntoSelect(selectClassOffering,'select class offerings',classOfferings,'classname');
+    fillDataIntoSelect(selectClassOffering,'select class offerings',classOfferings,'id');
 
-    // selectClassOffering.value="";
+
     textClassFee.value="";
     textClassIncome.value="";
     textRegisteredStudentCount.value="";
@@ -150,9 +150,9 @@ const refreshInnerFormAndTable = ()=>{
     textAdditionalCharge.value="";
 
 
-    // selectClassOffering.style.border="2px solid #ced4da";
+    selectClassOffering.style.border="2px solid #ced4da";
     textClassFee.style.border="2px solid #ced4da";
-    textClassIncome
+    textClassIncome.style.border="2px solid #ced4da";
     textRegisteredStudentCount.style.border="2px solid #ced4da";
     textPayedCount.style.border="2px solid #ced4da";
     textFreeStudentCount.style.border="2px solid #ced4da";
@@ -259,14 +259,16 @@ const buttonInnerAdd=()=>{
     console.log("add inner form");
     let errors=checkInnerFormErrors();
     if (errors==""){
-        let userConfirm=confirm("are you sure to add ?");
+        let userConfirm=confirm("are you sure to add following\n"
+        +"\n class offering is "+enrolmentHasClassOffering.classoffering_id.classname
+        );
         if (userConfirm){
-            alert("item added successfully")
             enrolment.ehco.push(enrolmentHasClassOffering)
+            alert("class offerings added successfully")
             refreshInnerFormAndTable();
         }
     }else {
-        alert("form has errors");
+        alert("form has errors"+errors);
     }
 }
 //define function for delete enrolment

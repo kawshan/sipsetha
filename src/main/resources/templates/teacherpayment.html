@@ -49,12 +49,12 @@
     <div class="row mt-2">
         <div id="divModifyButton" class="d-none">
             <div class="col-md-8">
-                <button type="button" class="btn btn-warning fw-bold"
+                <button type="button" id="divModifyButtonRefill" class="btn btn-warning fw-bold"
                         style="width: 25%; color: whitesmoke; border:1px solid black"
                         onclick="employeeFormRefill(window['editOb'],window['editRow'])">
                     <i class="fa-solid fa-recycle fa-beat"> </i> edit
                 </button>
-                <button type="button" class="btn btn-danger fw-bold ms-2 me-2"
+                <button type="button" id="divModifyButtonDelete" class="btn btn-danger fw-bold ms-2 me-2"
                         style="width: 25%; border: 1px solid black"
                         onclick="deleteEmployee(window['editOb'],window['editRow'])">
                     <i class="fa-solid fa-trash fa-beat"></i> delete
@@ -70,55 +70,22 @@
 
     <!--  table area start-->
     <div class="row mt-5"></div>
-    <table class="table table-bordered table-striped" id="tableEmployee">
+    <table class="table table-bordered table-striped" id="tableTeacherPayment">
         <thead class="table text-center" style="background-color: #044800; color: whitesmoke">
-        <th>id</th>
-        <th>full name</th>
-        <th>calling name</th>
-        <th>dob</th>
-        <th>nic</th>
-        <th>gender</th>
-        <th>mobile</th>
-        <th>landno</th>
-        <th>email</th>
-        <th>address</th>
-        <th>added date</th>
-        <th>has user account</th>
-        <th>status</th>
-        <th>designation</th>
-        <th>civil status</th>
+        <th>#</th>
+        <th>bill number</th>
+        <th>total enrolment amount</th>
+        <th>total payment amount</th>
+        <th>total balance amount</th>
+        <th>bank name</th>
+        <th>branch name</th>
+        <th>account holder name</th>
+        <th>account number</th>
+        <th>reference number</th>
         <th>modify</th>
         </thead>
         <tbody>
-        <tr>
-            <td>1</td>
-            <td>kawshan virantha</td>
-            <td>virantha</td>
-            <td>2000-07-13</td>
-            <td>20019502906</td>
-            <td>male</td>
-            <td>0722837355</td>
-            <td>0112345678</td>
-            <td>kawshan@gmail.com</td>
-            <td>no 46/1 n.h.s kiribathgoda</td>
-            <td>2023-11-11</td>
-            <td>false</td>
-            <td>working</td>
-            <td>manager</td>
-            <td>married</td>
-            <td class="text-center">
-                <button type="button" class="btn btn-warning fw-bold"
-                        style="color: whitesmoke; border: 1px solid black; "><i
-                        class="fa-solid fa-recycle fa-beat"> </i>edit
-                </button>
-                <button type="button" class="btn btn-danger fw-bold"
-                        style="color: whitesmoke; border: 1px solid black; "><i class="fa-solid fa-trash fa-beat"> </i>delete
-                </button>
-                <button type="button" class="btn btn-primary fw-bold"
-                        style="color: whitesmoke; border: 1px solid black; "><i class="fa-solid fa-eye fa-beat"> </i>print
-                </button>
-            </td>
-        </tr>
+
         </tbody>
     </table>
     <!--  table area end-->
@@ -140,7 +107,7 @@
                 </div>
                 <div class="modal-body" style="background-color: #E0E9DD">
 
-                    <form onsubmit="return false">
+                    <form onsubmit="return false" id="formTeacherPayment">
                         <!--                    required mark start-->
                         <div class="row mt-2">
                             <div class="col-md-12 text-start">
@@ -277,7 +244,7 @@
                                     </div>
                                     <div class="col-md-6">
                                         <select id="selectEnrolment" class="form-select text-center" required
-                                                onchange="selectDBValidator(this,'','teacherPaymentHasEnrolment','enrolment_id')"></select>
+                                                onchange="selectDBValidator(this,'','tchPayHsEnrlmt','enrolment_id')"></select>
                                     </div>
                                 </div>
                                 <!--                                enrolment start-->
@@ -293,7 +260,7 @@
                                         <input type="text" id="textPayedAmount"
                                                class="form-control text-center" required
                                                placeholder="enter payed amount"
-                                               onkeyup="textValidator(this,'','teacherpayment','payedamount')">
+                                               onkeyup="textValidator(this,'','tchPayHsEnrlmt','payedamount')">
                                     </div>
                                 </div>
                                 <!--                                payed balance amount end-->
@@ -309,7 +276,7 @@
                                         <input type="text" id="textBalanceAmount"
                                                class="form-control text-center" required
                                                placeholder="enter balance amount"
-                                               onkeyup="textValidator(this,'','teacherpayment','balanceamount')">
+                                               onkeyup="textValidator(this,'','tchPayHsEnrlmt','balanceamount')">
                                     </div>
                                 </div>
                                 <!--                                total balance amount end-->
@@ -318,12 +285,12 @@
                                 <!--                                button start-->
                                 <button type="reset" class="btn btn-danger">reset</button>
                                 <button type="button" class="btn btn-warning">update</button>
-                                <button type="button" class="btn btn-primary">submit</button>
+                                <button type="button" class="btn btn-primary" onclick="buttonInnerAdd()" >submit</button>
                                 <!--                                button end-->
 
                                 <!--                                table start-->
                                 <div class="row mt-5">
-                                    <table class="table table-hover table-bordered">
+                                    <table class="table table-hover table-bordered" id="teacherPaymentHasEnrolmentInnerTable">
                                         <thead class="table-primary">
                                         <th>#</th>
                                         <th>enrolment</th>
@@ -331,6 +298,9 @@
                                         <th>balance amount</th>
                                         <th>modify</th>
                                         </thead>
+                                        <tbody>
+
+                                        </tbody>
                                     </table>
                                 </div>
                                 <!--                                table end-->
@@ -353,14 +323,14 @@
                                 </button>
                             </div>
                             <div class="col-md-4 text-center">
-                                <button type="button" class="btn btn-warning fw-bold"
-                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%">
+                                <button type="button" id="btnUpdateTeacherPayment" class="btn btn-warning fw-bold"
+                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%; pointer-events: all">
                                     <i class="fa-solid fa-recycle fa-beat"> </i> update
                                 </button>
                             </div>
                             <div class="col-md-4 text-end">
-                                <button type="submit" class="btn btn-primary fw-bold"
-                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%"
+                                <button type="submit" id="btnAddTeacherPayment" class="btn btn-primary fw-bold"
+                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%; pointer-events: all"
                                         onclick="employeeSubmit()">
                                     <i class="fa-solid fa-plus fa-beat"> </i> add
                                 </button>

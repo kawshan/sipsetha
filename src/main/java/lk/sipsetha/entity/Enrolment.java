@@ -80,5 +80,8 @@ public class Enrolment {
     @OneToMany(mappedBy = "enrolment_id",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<EnrolmentHasClassOfferings> classOfferings;
 
+
+
+
 }
 

@@ -130,7 +130,7 @@
                                 <div class="input-group">
                                     <input list="dataListItems" type="text" required id="textGuardianName"
                                            class="form-control text-center" placeholder="type and search guardian"
-                                           onkeyup="dataListValidator(textGuardianName,'guardians','student','guardian_id','oldStudent','nic','firstname');"
+                                           onkeyup="dataListValidator(textGuardianName,'guardians','student','guardian_id','oldStudent','nic','firstname'); getMobileNumForStu(this);"
                                     >
                                     <datalist id="dataListItems">
 
@@ -380,7 +380,7 @@
                             <div class="col-md-6">
                                 <input type="text" id="textAddress" class="form-control text-center" required
                                        placeholder="enter address"
-                                       onkeyup="textValidator(this,'^[nN][oO][\\s][0-9]{1,3}[\\s][a-z]{3,50}$','student','address')">
+                                       onkeyup="textValidator(this,'^[Nn][Oo]\\s[0-9]{1,4}(?:\\s.*)?$','student','address')">
                             </div>
                         </div>
                         <!--                        address end-->

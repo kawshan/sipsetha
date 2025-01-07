@@ -182,43 +182,43 @@ const checkGuardianUpdateForm = ()=>{
     let updates = '';
 
     if (guardian.firstname != oldGuardian.firstname){
-        updates=updates+"first name is changed \n";
+        updates=updates+"First name is changed \n";
     }
     if (guardian.lastname != oldGuardian.lastname){
-        updates=updates+"last name is changed \n";
+        updates=updates+"Last name is changed \n";
     }
     if (guardian.nic != oldGuardian.nic){
-        updates=updates+"nic is changed \n";
+        updates=updates+"Nic is changed \n";
     }
     if (guardian.mobile != oldGuardian.mobile){
-        updates=updates+"mobile is changed \n";
+        updates=updates+"Mobile is changed \n";
     }
     if (guardian.landno != oldGuardian.landno){
-        updates=updates+"land number is changed \n"
+        updates=updates+"Land number is changed \n"
     }
     if (guardian.address != oldGuardian.address){
-        updates=updates+"address is changed \n";
+        updates=updates+"Address is changed \n";
     }
     if (guardian.guardiantype_id.name != oldGuardian.guardiantype_id.name){
-        updates=updates+"guardian type is changed \n";
+        updates=updates+"Guardian type is changed \n";
     }
     if (guardian.gender != oldGuardian.gender){
-        updates=updates+"guardian's gender is changed \n";
+        updates=updates+"Guardian's gender is changed \n";
     }
     if (guardian.wpaddress != oldGuardian.wpaddress){
-        updates=updates+"workplace address is changed \n";
+        updates=updates+"Workplace address is changed \n";
     }
     if (guardian.wplandno != oldGuardian.wplandno){
-        updates=updates+"workplace land number is changed \n";
+        updates=updates+"Workplace land number is changed \n";
     }
     if (guardian.position != oldGuardian.position){
-        updates=updates+"position is changed \n"
+        updates=updates+"Position is changed \n"
     }
     if (guardian.status != oldGuardian.status){
-        updates=updates+"status is changed \n";
+        updates=updates+"Status is changed \n";
     }
     if (guardian.note != oldGuardian.note){
-        updates=updates+"note is changed \n"
+        updates=updates+"Note is changed \n"
     }
 
     return updates;
@@ -228,21 +228,21 @@ const checkGuardianUpdateForm = ()=>{
 const buttonGuardianUpdate = ()=>{
     let updates = checkGuardianUpdateForm();
     if (updates == ""){
-        alert("nothing to update")
+        alert("Nothing to update")
     }else {
         //get user confirmation
-        const userConfirm =confirm("are you sure to update this guardian \n"+updates);
+        const userConfirm =confirm("Are you sure to update this guardian \n"+updates);
         if (userConfirm){
             //call put service
             let putServiceResponse=ajaxPutRequest("/guardian",guardian);
             if (putServiceResponse == "ok"){
-                alert("updated successfully");
+                alert("Updated successfully");
                 guardianForm.reset();
                 refreshGuardianForm();
                 $('#modalGuardianAdd').modal('hide');
                 refreshGuardianTable();
             }else {
-                alert("error happened please retry"+putServiceResponse);
+                alert("Error happened please retry \n"+putServiceResponse);
             }
         }
     }
@@ -265,7 +265,7 @@ const buttonGuardianDelete = (ob,rowIndex)=>{
             if (deleteServiceResponse=="ok"){
                 alert("delete successful")
             }else {
-                alert("delete unsuccessful error happened"+deleteServiceResponse);
+                alert("delete unsuccessful error happened \n"+deleteServiceResponse);
             }
         }
         refreshGuardianTable();
@@ -298,7 +298,7 @@ const buttonGuardianAdd = ()=>{
         let userConfirm =confirm("are you sure to add this guardian"
         +'\n first name is '+guardian.firstname
         +'\n last name is '+guardian.lastname
-        +'\n nic is'+guardian.nic
+        +'\n nic is '+guardian.nic
         +'\n mobile is '+guardian.mobile
         +'\n address is '+guardian.address
         +'\n guardian type is '+guardian.guardiantype_id.name
@@ -390,7 +390,7 @@ const generateGuardianGender = (fieldId)=>{
 
             guardianTypes=[
                 {id:'1',name:'father'},
-                {id:'1',name:'other'}
+                {id:'3',name:'other'}
             ];
             fillDataIntoSelect(selectGuardianType,'select guardian type',guardianTypes,'name');
 
@@ -404,7 +404,7 @@ const generateGuardianGender = (fieldId)=>{
 
             guardianTypes=[
                 {id:'1',name:'mother'},
-                {id:'1',name:'other'}
+                {id:'3',name:'other'}
             ];
             fillDataIntoSelect(selectGuardianType,'select guardian type',guardianTypes,'name');
 

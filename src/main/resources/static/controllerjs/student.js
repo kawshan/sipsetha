@@ -180,6 +180,8 @@ const refreshStudentForm = () => {
         student.grade_id=JSON.parse(selectGrade.value); //json parse convert json string into js object
         selectGrade.style.border="2px solid green";//border ekata colour ekk danawa
         selectGrade.disabled=true;  //disable karanawa
+
+
     })
     //end of selecting student grade based on dob
 
@@ -202,6 +204,9 @@ const refreshStudentForm = () => {
     selectStatus.value = true;
     student.status = selectStatus.value;
     selectStatus.style.border = "2px solid green";
+
+
+    textMobile.disabled=false;  //false karapu ekata hethuwa thama guardian gen api gannawa guardian ge mobile number eka aran student ta assign karala eeta passe student objet ekata bind karala ee html input element eka disable true karapu nisa
 
 }
 
@@ -457,6 +462,7 @@ const buttonStudentUpdate = () => {
                 alert("update successful");
                 refreshStudentForm();
                 $('#modalStudentAdd').modal('hide');
+                divModifyButton.classList.add("d-none");
                 refreshStudentTable();
             } else {
                 alert("error happened please retry \n" + putServiceResponse);
@@ -567,11 +573,27 @@ const generateGuardianGender = (fieldId)=>{
             selectGuardianGender.value=true
             guardian.gender=selectGuardianGender.value;
             selectGuardianGender.style.border="2px solid green";
+
+            guardianTypes=[
+                {id:'1',name:'father'},
+                {id:'3',name:'other'}
+            ];
+            fillDataIntoSelect(selectGuardianType,'select guardian type',guardianTypes,'name');
+
+
         }else if (days>500){
             console.log("female");
             selectGuardianGender.value=false
             guardian.gender=selectGuardianGender.value;
             selectGuardianGender.style.border="2px solid green";
+
+            guardianTypes=[
+                {id:'1',name:'mother'},
+                {id:'3',name:'other'}
+            ];
+            fillDataIntoSelect(selectGuardianType,'select guardian type',guardianTypes,'name');
+
+
         }
 
     }
@@ -665,7 +687,23 @@ const validateNicExisting = (fieldId)=>{
 
 
 
+const getMobileNumForStu = (fieldId)=>{
+    let selectedValue=fieldId.value;
+    console.log(selectedValue);
+    let valueArr=selectedValue.split(" ")
+    let nicValue=valueArr[0];
+    console.log(nicValue)
 
+    let getMobileFromGuardianServiceResponse=ajaxGetRequest("/guardian/getmobilebynic/"+nicValue);
+    console.log(getMobileFromGuardianServiceResponse);
+
+    textMobile.value=getMobileFromGuardianServiceResponse;
+    student.mobile=textMobile.value;    //value bind karanwa object eka student property eka student
+    textMobile.style.border="2px solid green";
+    textMobile.disabled=true;
+
+
+}
 
 
 

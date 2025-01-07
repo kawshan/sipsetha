@@ -11,4 +11,9 @@ public interface GuardianDao extends JpaRepository<Guardian,Integer> {
 
     @Query(value = "select g from Guardian g where g.nic=?1")
     public Guardian getGuardianByByNic(String nic);
+
+
+    @Query(value = "select mobile from guardian where nic=?1",nativeQuery = true)
+    public String getMobileByGuardianNic(String nic);
+
 }

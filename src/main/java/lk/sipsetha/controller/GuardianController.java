@@ -136,5 +136,10 @@ public class GuardianController {
 
     }
 
+    @GetMapping(value = "/getmobilebynic/{nic}")
+    public String getGuardiansMobileByNic(@PathVariable("nic") String nic){
+        return guardianDao.getMobileByGuardianNic(nic);
+    }
+
 
 }

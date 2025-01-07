@@ -230,18 +230,30 @@
                         </div>
 <!--                        email end-->
 
+<!--&lt;!&ndash;                        role area start&ndash;&gt;-->
+<!--                        <div class="row mt-2">-->
+<!--                            <div class="col-md-6">-->
+<!--                                <label for="selectRole" class="form-label fw-bold">role <i class="text-danger">*</i></label>-->
+<!--                            </div>-->
+<!--                            <div class="col-md-6">-->
+<!--                                <select id="selectRole" class="form-select text-center" required onchange="selectDBValidator(this,'','user','role_id')">-->
+<!--                                    <option value="" selected disabled>select an option</option>-->
+<!--                                    <option value="owner" >owner</option>-->
+<!--                                    <option value="manager" >manager</option>-->
+<!--                                    <option value="student" >student</option>-->
+<!--                                </select>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--&lt;!&ndash;                        role area end&ndash;&gt;-->
+
+
 <!--                        role area start-->
-                        <div class="row mt-2">
+                        <div class="div mt-2">
                             <div class="col-md-6">
-                                <label for="selectRole" class="form-label fw-bold">role <i class="text-danger">*</i></label>
+                                <label class="form-label fw-bold">role <i class="text-danger">*</i></label>
                             </div>
-                            <div class="col-md-6">
-                                <select id="selectRole" class="form-select text-center" required onchange="selectDBValidator(this,'','user','role_id')">
-                                    <option value="" selected disabled>select an option</option>
-                                    <option value="owner" >owner</option>
-                                    <option value="manager" >manager</option>
-                                    <option value="student" >student</option>
-                                </select>
+                            <div class="col-md-6" id="divRoles">
+
                             </div>
                         </div>
 <!--                        role area end-->

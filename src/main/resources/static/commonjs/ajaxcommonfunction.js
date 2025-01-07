@@ -36,6 +36,7 @@ const ajaxPostRequest = (url,object)=>{
             postServerResponse=restOb;
         }
     });
+    return postServerResponse
 }
 //define function for ajax delete request
 const ajaxDeleteRequest = (url,ob)=>{

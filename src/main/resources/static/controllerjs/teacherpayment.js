@@ -47,7 +47,7 @@ const refreshTeacherPaymentForm = () => {
     formTeacherPayment.reset();
     teacherpayment = new Object();
     oldteacherpayment = null;
-    teacherpayment.teacherPaymentHasEnrolment = new Array();
+    teacherpayment.teacherPaymentHasEnrolments = new Array();
 
 
     textTotalEnrolmentAmount.value = "";
@@ -104,7 +104,7 @@ const refreshInnerFormAndTable = () => {
     ];
 
 
-    fillDataIntoTableInnerTable(teacherPaymentHasEnrolmentInnerTable, teacherpayment.teacherPaymentHasEnrolment, displayProperty, refillInnerForm, deleteInnerRow);
+    fillDataIntoTableInnerTable(teacherPaymentHasEnrolmentInnerTable, teacherpayment.teacherPaymentHasEnrolments, displayProperty, refillInnerForm, deleteInnerRow);
 
 }
 
@@ -123,18 +123,18 @@ const refillInnerForm = (ob, rowIndex) => {
 
 }
 
-
 const deleteInnerRow = (ob,index) => {//need to do this
 let userConfirm=confirm('are you sure to remove')
     if (userConfirm){
-        let extIndex=teacherpayment.teacherPaymentHasEnrolment.map(enrl=>enrl.enrolment_id).indexOf(ob.enrolment_id);
+        let extIndex=teacherpayment.teacherPaymentHasEnrolments.map(enrl=>enrl.enrolment_id).indexOf(ob.enrolment_id);
         if (extIndex!=-1){
-            teacherpayment.teacherPaymentHasEnrolment.splice(extIndex,1);
+            teacherpayment.teacherPaymentHasEnrolments.splice(extIndex,1);
             alert("item removed successfully");
             refreshInnerFormAndTable()
         }
     }
 }
+
 const checkInnerFormErrors = ()=>{
     let errors="";
 
@@ -155,7 +155,7 @@ const buttonInnerAdd = ()=>{
             +"balance amount"+tchPayHsEnrlmt.balanceamount
         );
         if (userConfirm){
-            teacherpayment.teacherPaymentHasEnrolment.push(tchPayHsEnrlmt);
+            teacherpayment.teacherPaymentHasEnrolments.push(tchPayHsEnrlmt);
             alert("enrolment added successfully");
             refreshInnerFormAndTable();
         }
@@ -163,6 +163,69 @@ const buttonInnerAdd = ()=>{
         alert("form has errors"+errors)
     }
 }
+
+//define function for check errors in teacher payment
+const checkTeacherPaymentErrors = ()=>{
+    let errors = "";
+
+    if (teacherpayment.totalenrolmentamount==null){
+        errors=errors+"please enter total enrolment amount \n";
+    }
+    if (teacherpayment.totalpaymentamount == null){
+        errors=errors+"please enter total payment amount \n";
+    }
+    if (teacherpayment.totalbalanceamount == null){
+        errors=errors+"please enter total balance amount \n"
+    }
+    if (teacherpayment.bankname==null){
+        errors=errors+"please enter bank name \n";
+    }
+    if (teacherpayment.branchname == null){
+        errors=errors+"please enter branch name \n";
+    }
+    if (teacherpayment.accountholdername==null){
+        errors=errors+"please enter account holder name \n"
+    }
+    if (teacherpayment.accountnumber==null){
+        errors=errors+"please enter account number \n"
+    }
+    // if (teacherpayment.referencenumber==null){
+    //     errors=errors+"please enter reference number \n"
+    // }
+
+
+    return errors;
+}
+
+
+//define function for teacher payment
+const teacherPaymentAdd = ()=>{
+    console.log(teacherpayment);
+    let errors = checkTeacherPaymentErrors();
+    if (errors==""){
+        let userConfirm=confirm("are you sure to add teacher payment \n"
+        +"total enrolment amount is"+teacherpayment.totalenrolmentamount
+        +"total payment amount is"+teacherpayment.totalpaymentamount
+        +"total balance amount is"+teacherpayment.totalbalanceamount
+        +"bank name is"+teacherpayment.bankname
+        +"branch name is"+teacherpayment.branchname
+        +"account holder name is"+teacherpayment.accountholdername
+        +"account number is"+teacherpayment.accountnumber
+        );
+        if (userConfirm){
+            const postServerResponse=ajaxPostRequest("/teacherpayment",teacherpayment);
+            if (postServerResponse=="ok"){
+                alert("save successful \n"+postServerResponse);
+                $("#modalTeacherPaymentAdd").modal('hide');
+                refreshTeacherPaymentForm();
+                refreshTeacherPaymentTable();
+            }
+        }
+    }else {
+        alert("you have following errors \n"+errors)
+    }
+}
+
 
 
 

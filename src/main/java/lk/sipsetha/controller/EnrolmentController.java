@@ -2,6 +2,7 @@ package lk.sipsetha.controller;
 
 import lk.sipsetha.dao.EnrolmentDao;
 import lk.sipsetha.dao.EnrolmentStatusDao;
+import lk.sipsetha.dao.UserDao;
 import lk.sipsetha.entity.Enrolment;
 import lk.sipsetha.entity.EnrolmentHasClassOfferings;
 import lk.sipsetha.entity.EnrolmentStatus;
@@ -11,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 
@@ -26,6 +28,9 @@ public class EnrolmentController {
 
     @Autowired
     private EnrolmentStatusDao enrolmentStatusDao;
+
+    @Autowired
+    private UserDao userDao;
 
     @GetMapping
     public ModelAndView enrolmentView(){
@@ -55,6 +60,18 @@ public class EnrolmentController {
             return "cannot perform save enrolment .. you dont have privileges";
         }
         try {
+
+            String enrolmentNextNumber = dao.getEnrolmentNextNumber();
+            if (enrolmentNextNumber==null || enrolmentNextNumber ==""){
+                enrolment.setEnrolmentnum("0000000001");
+            }else {
+                enrolment.setEnrolmentnum(enrolmentNextNumber);
+            }
+
+
+            enrolment.setAddeddatetime(LocalDateTime.now());
+            enrolment.setAddeduser_id(userDao.getUserByUserName(auth.getName()).getId());
+//            enrolment.setAddeduser_id();
             for (EnrolmentHasClassOfferings ehco : enrolment.getClassOfferings()){
                 ehco.setEnrolment_id(enrolment);
             }

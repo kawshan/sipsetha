@@ -70,7 +70,7 @@ const refreshEnrolmentForm = ()=>{
     formEnrolment.reset();
     enrolment= new Object();
     oldEnrolment = null;
-    enrolment.ehco = new Array(); //define array for enrolment has class offerings
+    enrolment.classOfferings = new Array(); //define array for enrolment has class offerings
 
     teachers=ajaxGetRequest("/teacher/findall");
     fillDataIntoSelect(selectTeacher,'select teacher',teachers,'fullname');
@@ -169,7 +169,7 @@ const refreshInnerFormAndTable = ()=>{
         {dataType:'function',propertyName:getServiceCharge},
         {dataType:'function',propertyName:getAdditionalCharge},
     ]
-    fillDataIntoTableInnerTable(tableClassOfferings,enrolment.ehco,displayProperty,refillInnerForm,deleteInnerRow);
+    fillDataIntoTableInnerTable(tableClassOfferings,enrolment.classOfferings,displayProperty,refillInnerForm,deleteInnerRow);
 
 }
 
@@ -231,9 +231,9 @@ const refillInnerForm = (ob,rowIndex)=>{
 const deleteInnerRow = (ob,index)=>{
     let userConfirm=confirm("are you sure to remove class offering \n");
     if (userConfirm){
-        let extIndex = enrolment.ehco.map(clsof=>clsof.classoffering_id.id).indexOf(ob.classoffering_id.id);
+        let extIndex = enrolment.classOfferings.map(clsof=>clsof.classoffering_id.id).indexOf(ob.classoffering_id.id);
         if (extIndex!=-1){
-            enrolment.ehco.splice(extIndex,1);
+            enrolment.classOfferings.splice(extIndex,1);
             alert("item removed successfully");
             refreshInnerFormAndTable();
         }
@@ -263,7 +263,7 @@ const buttonInnerAdd=()=>{
         +"\n class offering is "+enrolmentHasClassOffering.classoffering_id.classname
         );
         if (userConfirm){
-            enrolment.ehco.push(enrolmentHasClassOffering)
+            enrolment.classOfferings.push(enrolmentHasClassOffering)
             alert("class offerings added successfully")
             refreshInnerFormAndTable();
         }
@@ -321,6 +321,7 @@ const checkEnrolmentErrors= ()=>{
 //define function for add enrolment
 const AddEnrolment = ()=>{
     console.log("wwwwww")
+    console.log(enrolments);
     let errors = checkEnrolmentErrors();
     console.log("ooo")
     if (errors==""){

@@ -1,6 +1,7 @@
 package lk.sipsetha.controller;
 
 import lk.sipsetha.dao.TeacherPaymentDao;
+import lk.sipsetha.dao.UserDao;
 import lk.sipsetha.entity.TeacherPayment;
 import lk.sipsetha.entity.TeacherPaymentHasEnrolment;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 
@@ -20,6 +22,9 @@ public class TeacherPaymentController {
 
     @Autowired
     private PrivilegeController privilegeController;
+
+    @Autowired
+    private UserDao userDao;
 
     @GetMapping
     public ModelAndView teacherPaymentView(){
@@ -50,10 +55,23 @@ public class TeacherPaymentController {
             return "cannot perform save teacher payment .. you don't have privileges";
         }
         try {
+            String nextBillNumber = dao.getNextBillNumber();
+            if (nextBillNumber==null || nextBillNumber==""){
+                teacherPayment.setBillnumber("0000000001");
+            }else {
+                teacherPayment.setBillnumber(nextBillNumber);
+            }
+
+            teacherPayment.setAddeddatetime(LocalDateTime.now());
+            teacherPayment.setAddeduser(userDao.getUserByUserName(auth.getName()).getId());
+
+
             for (TeacherPaymentHasEnrolment teacherPaymentHasEnrolment : teacherPayment.getTeacherPaymentHasEnrolments()){
                 teacherPaymentHasEnrolment.setTeacherpayment_id(teacherPayment);
             }
+            dao.save(teacherPayment);
             return "ok";
+
         }catch (Exception e){
             return "teacher payment save not completed"+e.getMessage();
         }

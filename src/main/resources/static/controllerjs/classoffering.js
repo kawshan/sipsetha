@@ -259,11 +259,11 @@ const classSubmit = ()=>{
             }
         }
     }else {
-        // alert('you might have some errors \n'+errors);
-        swal.fire({
-            title:'you might have some errors \n '+errors,
-            icon:'error'
-        });
+        alert('you might have some errors \n'+errors);
+        // swal.fire({
+        //     title:'you might have some errors \n '+errors,
+        //     icon:'error'
+        // });
     }
 
 }

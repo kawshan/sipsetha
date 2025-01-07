@@ -143,13 +143,15 @@
 <!--                        guardian start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
-                                <label for="selectGuardian" class="form-label fw-bold">guardian <i class="text-danger">*</i></label>
+                                <label for="textGuardianName" class="form-label fw-bold">guardian <i class="text-danger">*</i></label>
                             </div>
                             <div class="col-md-6">
-                                <select id="selectGuardian" class="form-select text-center" onchange="selectDBValidator(this,'','student','guardian_id')">
-                                    <option value="guardian">guardian 1</option>
-                                    <option value="guardian">guardian 2</option>
-                                </select>
+                                <input list="dataListItems" type="text" required id="textGuardianName" class="form-control" placeholder="select item"
+                                onkeyup="dataListValidator(textGuardianName,'guardians','student','guardian_id','oldStudent','nic','firstname');"
+                                >
+                                <datalist id="dataListItems">
+
+                                </datalist>
                             </div>
                         </div>
 <!--                        guardian end-->

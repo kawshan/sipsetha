@@ -46,17 +46,19 @@ const refreshStudentForm = ()=>{
     console.log('refresh success');
 
     student = new Object(); //create new student object this use for front end binding
+    oldStudent=null;
 
-    guardians=ajaxGetRequest("/guardian/findall");
 
     // fillDataIntoSelect(selectGuardian,'select guardian',guardians,'firstname')
-    fillDataIntoSelectWithTwoAttributes(selectGuardian,'select guardian',guardians,'nic','firstname')
+    // fillDataIntoSelectWithTwoAttributes(selectGuardian,'select guardian',guardians,'nic','firstname')
 
     grades=ajaxGetRequest("/grade/findall")
     fillDataIntoSelect(selectGrade,'select grade',grades,'name');
 
+    guardians=ajaxGetRequest("/guardian/findall")
+    fillDataIntoDataList(dataListItems, guardians,'nic','firstname');
 
-    selectGuardian.style.border='1px solid #ced4da';
+    textGuardianName.style.border='1px solid #ced4da';
     textFirstName.style.border='1px solid #ced4da';
     textLastName.style.border='1px solid #ced4da';
     textAge.style.border='1px solid #ced4da';
@@ -77,6 +79,8 @@ const refreshStudentForm = ()=>{
         btnStudentSubmit.style.cursor='not-allowed';
     }
 
+    guardians=ajaxGetRequest("/guardian/findall");
+    fillDataIntoDataList(textGuardianName, guardians,'nic','firstname');
 
 }
 
@@ -108,7 +112,10 @@ const studentFormRefill = (ob,rowIndex) =>{
     selectGender.value=student.gender;
     selectStatus.value=student.status;
 
-    fillDataIntoSelect(selectGuardian,'select guardian',guardians,'firstname',student.guardian_id.firstname);
+    // fillDataIntoSelect(selectGuardian,'select guardian',guardians,'firstname',student.guardian_id.firstname);
+    // fillDataIntoDataList(dataListItems, guardians,'nic','firstname',student.guardian_id.nic);
+    textGuardianName.value=student.guardian_id.nic+" "+student.guardian_id.firstname;
+
     // selectGuardian
     fillDataIntoSelect(selectGrade,'select grade',grades,'name',student.grade_id.name);
     // selectGrade
@@ -224,8 +231,8 @@ const studentSubmit = ()=>{
             }
         }
     }else {
-        // alert('you might have some errors \n '+errors);
-        swal.fire({title:'you might have some errors \n '+errors, icon:'error'})
+        alert('you might have some errors \n '+errors);
+        // swal.fire({title:'you might have some errors \n '+errors, icon:'error'})
     }
 
 }

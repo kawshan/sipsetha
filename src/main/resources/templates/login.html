@@ -80,6 +80,14 @@
                     </div>
                     <!--                password area end-->
 
+<!--                    start of error message area-->
+                    <div class="text-center text-danger fw-bold" th:if="${param.error}">
+                    invalid user name and password
+                    </div>
+<!--                    end of error message area-->
+
+
+
                     <!--            button row start-->
                     <div class="row mt-5">
                         <div class="col-md-4"></div>

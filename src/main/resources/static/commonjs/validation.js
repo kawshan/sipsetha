@@ -65,3 +65,51 @@ const checkBoxValidator = (fieldId,pattern,object,property,trueValue,falseValue,
 
 }
 
+const dataListValidator = (fieldId,dataListName,object,property,oldObject,displayPropertyOne,displayPropertyTwo) =>{
+
+    const fieldValue = fieldId.value;
+    if (fieldValue!==""){
+        let dataList = window[dataListName];
+        let extIndex=-1;
+        for (const index in dataList){
+            if (fieldValue == dataList[index][displayPropertyOne]+" "+dataList[index][displayPropertyTwo]){
+                extIndex=index;
+                break
+            }
+        }
+        if (extIndex!=-1){
+            window[object][property] = dataList[extIndex];
+            if (window[oldObject]!=null && window[object][property]['id']!= window[oldObject][property]['id']){
+                fieldId.style.border='2px solid orange';
+            }else {
+                fieldId.style.border='2px solid green';
+            }
+        }else {
+            window[object][property]=null;
+            fieldId.style.border='2px solid red';
+        }
+
+
+    }else {
+        window[object][property]=null;
+        if (fieldId.required){
+            fieldId.style.border='2px solid red';
+        }else {
+            fieldId.style.border='2px solid #ced4da';
+
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -44,8 +44,10 @@ const fillDataIntoSelectWithTwoAttributes = (fieldId,message,dataList,property,p
 }
 
 //define function into fill data into data list
-const fillDataIntoDataList = (fieldId,dataList,property,propertyTwo)=>{
-    fieldId.innerHTML=""//empting all inner htmls
+const fillDataIntoDataList = (fieldId,dataList,property,propertyTwo,selectedValue)=>{
+    console.log("filll")
+    fieldId.innerHTML='';//empting all inner htmls
+
     for (const ob of dataList){
         let option = document.createElement('option');
         option.value=ob[property]+" "+ob[propertyTwo];

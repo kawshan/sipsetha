@@ -3,9 +3,7 @@ package lk.sipsetha.controller;
 import lk.sipsetha.dao.AcademicYearDao;
 import lk.sipsetha.entity.AcademicYear;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -22,4 +20,14 @@ public class AcademicYearController {
     }
 
 
+    @PostMapping
+    public String saveAcademicYear(@RequestBody AcademicYear academicyear){
+        try {
+            dao.save(academicyear);
+            return "ok";
+        }catch (Exception e){
+            return "academic year save not complete"+e.getMessage();
+        }
+
+    }
 }

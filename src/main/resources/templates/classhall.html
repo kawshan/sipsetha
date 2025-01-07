@@ -77,7 +77,7 @@
         <th>name</th>
         <th>location</th>
         <th>table count</th>
-        <th>benchcount</th>
+        <th>bench count</th>
         <th>status</th>
         <th>modify</th>
         </thead>
@@ -125,7 +125,7 @@
                             <div class="col-md-8">
                                 <input type="text" id="textName" class="form-control text-center" required
                                        placeholder="enter name"
-                                       onkeyup="textValidator(this,'^[A-Za-z0-9]{3,20}$','classhall','name')">
+                                       onkeyup="textValidator(this,'^[A-Za-z]{3,20}[\\s][A-Za-z]{3,20}$','classhall','name')">
                             </div>
                         </div>
                         <!--name end-->
@@ -140,7 +140,7 @@
                             <div class="col-md-8">
                                 <input type="text" id="textLocation" class="form-control text-center" required
                                        placeholder="enter location "
-                                       onkeyup="textValidator(this,'^[A-Za-z0-9]{3,20}$','classhall','location')">
+                                       onkeyup="textValidator(this,'^[A-Za-z]{3,20}[\\s][A-Za-z]{3,20}$','classhall','location')">
                             </div>
                         </div>
                         <!--location end-->
@@ -220,7 +220,7 @@
                         <!--max bench count-->
                         <div class="row mt-2">
                             <div class="col-md-4">
-                                <label for="textMaxBenchCount" class="form-label fa-bold"> max bench count <i
+                                <label for="textMaxBenchCount" class="form-label fw-bold"> max bench count <i
                                         class="text-danger">*</i> </label>
                             </div>
                             <div class="col-md-8">
@@ -240,7 +240,7 @@
                             <div class="col-md-8">
                                 <input type="text" id="textNote" class="form-control text-center" required
                                        placeholder="enter note"
-                                       onkeyup="textValidator(this,'^[A-Za-z]{2,100}$','classhall','note')">
+                                       onkeyup="textValidator(this,'^.*$','classhall','note')">
                             </div>
                         </div>
                         <!--note end-->
@@ -265,7 +265,7 @@
                         <div class="row mt-2">
                             <!--                            left start-->
                             <div class="col-md-4">
-                                <label for="selectAllItem" class="form-label">all features</label>
+                                <label for="selectAllItem" class="form-label fw-bold">all features</label>
                                 <select id="selectAllItem" multiple class="form-select text-center">
 
                                 </select>
@@ -295,7 +295,7 @@
 
                             <!--                            right start-->
                             <div class="col-md-4">
-                                <label for="selectedFeatures" class="form-label ">selected features</label>
+                                <label for="selectedFeatures" class="form-label fw-bold">selected features</label>
                                 <select id="selectedFeatures" class="form-select text-center" multiple>
 
                                 </select>

@@ -11,6 +11,10 @@ window.addEventListener('load', () => {
     //call refresh class offering table
     refreshClassOfferingTable();
 
+    //call refresh subject form                             //those all three functions are called after our browswer document is fully loded
+    refreshSubjectForm();
+
+    refreshAcademicYear();
 
 });
 //define refresh class offering refresh form
@@ -21,8 +25,7 @@ const refreshClassOfferingForm = ()=>{
     classTypes=ajaxGetRequest("/classtype/findall");
     fillDataIntoSelect(selectClassType,'select class type',classTypes,'name');
 
-    classOfferingstatuses=ajaxGetRequest("/classofferingstatus/findall");
-    fillDataIntoSelect(selectClassOfferingStatus,'select class offering ',classOfferingstatuses,'name');
+
 
     academicYears=ajaxGetRequest("/academicyear/findall")
     fillDataIntoSelect(SelectAcademicYear,'select academic year',academicYears,'name');
@@ -37,7 +40,8 @@ const refreshClassOfferingForm = ()=>{
     fillDataIntoSelect(selectGrade,'select grade',grades,'name');
 
 
-    textClassName.style.border='2px solid #ced4da';
+
+
     textFees.style.border='2px solid #ced4da';
     textDuration.style.border='2px solid #ced4da';
     textServiceCharge.style.border='2px solid #ced4da';
@@ -49,9 +53,42 @@ const refreshClassOfferingForm = ()=>{
     textNote.style.border='2px solid #ced4da';
     selectClassOfferingStatus.style.border='2px solid #ced4da';
 
-
+    textClassName.style.border='2px solid green';
+    textClassName.placeholder="class offering name will be auto generated";
     textClassName.disabled=true;
+
+    classOfferingstatuses=ajaxGetRequest("/classofferingstatus/findall");
+    fillDataIntoSelect(selectClassOfferingStatus,'select class offering ',classOfferingstatuses,'name','active');
+    selectClassOfferingStatus.style.border="2px solid green";
+    classOffering.classofferingstatus_id=JSON.parse(selectClassOfferingStatus.value);
+
 }
+
+//define function for refresh subject form
+const refreshSubjectForm = ()=>{
+    subjectob=new Object(); //define new js object
+
+
+    textSubjectName.value="";
+    textSubjectName.style.border="2px solid #ced4da";
+
+}
+
+const refreshAcademicYear = ()=>{
+    academicyear=new Object();//define new object
+
+    textAcademicYear.value="";
+    textAcademicYear.style.border="2px solid #ced4da";
+
+
+    textAdmissionFee.value="";
+    textAdmissionFee.style.border="2px solid #ced4da";
+
+
+
+
+}
+
 
 
 //define refresh class offering table
@@ -323,7 +360,7 @@ const classSubmit = ()=>{
         const userConfirm = confirm('are you sure to add this following class offering'
         +'\n class name is'+classOffering.classname
         +'\n fees  is'+classOffering.fees
-        +'\n duration  is'+classOffering.duration
+        +'\n duration  is'+classOffering.duration+" hours"
         +'\n servicecharge  is'+classOffering.servicecharge
         +'\n status  is'+classOffering.classofferingstatus_id.name
         )
@@ -459,10 +496,59 @@ const modalPrintButton = ()=>{
 
 
 }
+//define function for subject submit
+const buttonSubjectSubmit = ()=>{
+    console.log("button subject submit");
+    if (subjectob.name!=null){//null neme nam ee kiyanne object eka athule value ekak thiyenawa kiyanna
+        let userConfirm=confirm("are you sure to add "+subjectob.name+" as subject ?");
+        if (userConfirm){
+            let postServerResponse=ajaxPostRequest("/subject",subjectob);
+            if (postServerResponse=="ok"){
+                alert("save successful");
+
+
+                subjects=ajaxGetRequest("/subject/findall");
+                fillDataIntoSelect(selectSubject,'select subject',subjects,'name',textSubjectName.value);
+                selectSubject.style.border="2px solid green";
+                classOffering.subject_id=JSON.parse(selectSubject.value);
+
+                refreshSubjectForm();
+                $('#collapseExample').collapse('hide');
+            }else {
+                alert("save not complete \n"+postServerResponse);
+            }
+        }
+    }else {
+        alert("please recheck");
+    }
+}
 
 
 
 
+const buttonAcademicYearSubmit = ()=>{
+    if (academicyear!=null){
+        let userConfirm=confirm("are you sure to add "+academicyear.name+" as new academic year"
+        +"\n admission fee as"+academicyear.admissionfee
+        );
+        if (userConfirm){
+            let postServerResponse=ajaxPostRequest("/academicyear",academicyear)
+            if (postServerResponse=="ok"){
+                alert("academic year save successful");
+
+                academicYears=ajaxGetRequest("/academicyear/findall")
+                fillDataIntoSelect(SelectAcademicYear,'select academic year',academicYears,'name',textAcademicYear.value);  //text academic year ekan value eka aran eka  select academic year ekata set karanawa
+                SelectAcademicYear.style.border="2px solid green"; //border eka green karanawa
+                classOffering.academicyear_id=JSON.parse(SelectAcademicYear.value);
+
+                refreshAcademicYear();
+                $('#collapseAcademicYear').collapse('hide');
+            }
+        }
+    }else {
+        alert("error happened please recheck");
+    }
+}
 
 
 

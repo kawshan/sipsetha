@@ -172,7 +172,7 @@
                                 </label>
                             </div>
                             <div class="col-md-6">
-                                <input type="number" id="textDuration" class="form-control text-center" required placeholder="enter duration" onkeyup="textValidator(this,'^[1-8]{1}[.][0][0]$','classOffering','duration')">
+                                <input type="number" id="textDuration" class="form-control text-center" required placeholder="enter duration" onkeyup="textValidator(this,'^[1-8]{1}[.][0-5][0-9]$','classOffering','duration')">
                             </div>
                         </div>
                         <!--            duration end-->
@@ -207,9 +207,53 @@
                                 <label for="SelectAcademicYear" class="form-label fw-bold">academic year <i class="text-danger">*</i></label>
                             </div>
                             <div class="col-md-6">
-                                <select id="SelectAcademicYear" class="form-select text-center" required onchange="selectDBValidator(this,'','classOffering','academicyear_id')">
+<!--                                input group start-->
+                                    <div class="input-group">
+                                        <select id="SelectAcademicYear" class="form-select text-center" required onchange="selectDBValidator(this,'','classOffering','academicyear_id')">
 
-                                </select>
+                                        </select>
+                                        <span>
+                                            <i class="btn btn-primary" data-bs-toggle="collapse" href="#collapseAcademicYear"
+                                               role="button">add</i>
+                                        </span>
+                                    </div>
+<!--                                input group end-->
+
+                                <!--  collapse academic year form  start  -->
+                                <div class="collapse mt-2" id="collapseAcademicYear">
+                                    <div class="card card-body">
+                                        <form onsubmit="return false" id="academicYearForm">
+                                            <div class="row">
+                                                <label for="textAcademicYear" class="col-4 fw-bold">academic year</label>
+                                                <div class="col-8">
+                                                    <input type="text" class="form-control"
+                                                           placeholder="enter academic year ex [ACY2024] "
+                                                           id="textAcademicYear"
+                                                           onkeyup="textValidator(this,'^[A][C][Y][2][0][2-5][0-9]$','academicyear','name')">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-2">
+                                                <div class="col-md-4">
+                                                    <label for="textAdmissionFee" class="form-label fw-bold">addmission fee</label>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <input type="text" id="textAdmissionFee" class="form-control text-center" onkeyup="textValidator(this,'^[1-9][0-9]{2,6}$','academicyear','admissionfee')">
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <button type="button" class="btn btn-success" onclick="buttonAcademicYearSubmit()">
+                                                        add
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!--  collapse academic year form end-->
+
                             </div>
                         </div>
                         <!--          academic  year end-->
@@ -224,9 +268,44 @@
                                 </label>
                             </div>
                             <div class="col-md-6">
-                                <select  id="selectSubject" class="form-select text-center" required onchange="selectDBValidator(this,'','classOffering','subject_id')">
+<!--                                input group start-->
+                                    <div class="input-group">
+                                        <select  id="selectSubject" class="form-select text-center" required onchange="selectDBValidator(this,'','classOffering','subject_id')">
 
-                                </select>
+                                        </select>
+                                        <span>
+                                            <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseExample"
+                                               role="button">new</a>
+                                        </span>
+                                    </div>
+<!--                                    input group start-->
+
+                                <!--  collapse designation form    -->
+                                <div class="collapse mt-2" id="collapseExample">
+                                    <div class="card card-body">
+                                        <form onsubmit="return false" id="SubjectForm">
+                                            <div class="row">
+                                                <label for="textSubjectName" class="col-4 fw-bold">subject</label>
+                                                <div class="col-8">
+                                                    <input type="text" class="form-control"
+                                                           placeholder="enter subject name "
+                                                           id="textSubjectName"
+                                                           onkeyup="textValidator(this,'^[A-za-z]{3,20}$','subjectob','name')">
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <button class="btn btn-success" onclick="buttonSubjectSubmit()">
+                                                        add
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!--  collapse designation form end-->
+
+
                             </div>
                         </div>
                         <!--            subject end-->

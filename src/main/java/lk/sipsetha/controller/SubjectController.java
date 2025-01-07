@@ -3,9 +3,7 @@ package lk.sipsetha.controller;
 import lk.sipsetha.dao.SubjectDao;
 import lk.sipsetha.entity.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -21,4 +19,15 @@ public class SubjectController {
     public List<Subject> getAllSubject(){
         return dao.findAll();
     }
+
+    @PostMapping
+    public String saveSubject(@RequestBody Subject subject){
+        try {
+            dao.save(subject);
+            return "ok";
+        }catch (Exception e){
+            return "save not complete "+e.getMessage();
+        }
+    }
+
 }

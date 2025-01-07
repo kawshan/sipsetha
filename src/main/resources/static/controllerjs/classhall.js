@@ -84,6 +84,11 @@ const refreshClassHallForm = ()=>{
         btnClassHallAdd.style.cursor='not-allowed';
     }
 
+    fillDataIntoSelect(selectClassHallStatus,'select status',classHallStatus,'name','active');
+    selectClassHallStatus.style.border="2px solid green";
+    classhall.classhallstatus_id=JSON.parse(selectClassHallStatus.value);
+
+
 
 };
 
@@ -318,8 +323,15 @@ const classHallSubmit = ()=>{
     const errors=checkClassHallErrors();
     if (errors==""){
         const userConfirm = confirm('are you sure to add following class hall'
-        +'\n name is'+classhall.name
-        +'\n location is'+classhall.location
+        +'\n name is '+classhall.name
+        +'\n location is '+classhall.location
+        +'\n min count is '+classhall.mincount
+        +'\n max count is '+classhall.maxcount
+        +'\n table count is '+classhall.tablecount
+        +'\n bench count is '+classhall.benchcount
+        +'\n max table count is '+classhall.maxtablecount
+        +'\n max bench count is '+classhall.maxbenchcount
+        +'\n class hall status is '+classhall.classhallstatus_id.name
         )
         if (userConfirm){
             let postServerResponse = ajaxPostRequest("/classhall",classhall);

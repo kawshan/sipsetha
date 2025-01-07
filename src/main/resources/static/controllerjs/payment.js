@@ -25,6 +25,7 @@ const refreshPaymentTable = () => {
     ];
 
     fillDataIntoPaymentTable(tableStudentPayment, studentPayments, displayProperty, true);
+    $('#tableStudentPayment').dataTable();
 
 
 }
@@ -236,7 +237,7 @@ const btnStudentPaymentSubmit = () => {
                 setTimeout(function () {
                     clickRadioButton(); //mili seconds 500 parakku kara ee mokada hariyata refresh payment table eka load vela enna one nisa
                 }, 500)
-                printBTNPayment.className='d-none';
+                printBTNPayment.className = 'd-none';
             } else {
                 alert("save not complete you might have some errors \n " + postServerResponse);
             }
@@ -315,12 +316,11 @@ const printPayment = (ob, rowIndex) => {
     tdStudentName.innerHTML = ob.student_id.firstname + " " + ob.student_id.lastname
     tdPaymentCategory.innerHTML = ob.paymentcategory_id.name
 
-    if (ob.paymentcategory_id.name=="admission"){
+    if (ob.paymentcategory_id.name == "admission") {
         trRegisteredClass.classList.add('d-none');
-    }else {
-        tdClassName.innerHTML=ob.studentregistration_id.classoffering_id.classname
+    } else {
+        tdClassName.innerHTML = ob.studentregistration_id.classoffering_id.classname
     }
-
 
 
     tdPaymentType.innerHTML = ob.paytype_id.name
@@ -336,11 +336,11 @@ const printPayment = (ob, rowIndex) => {
         "    <link rel=\"stylesheet\" href=\"/style/button.css\">\n" +
         "    <link rel=\"stylesheet\" href=\"/style/employee.css\">\n" +
         "</head>\n" +
-        "<body>" + tableBillPrint.outerHTML + "</body> "+
-    "    <script>tableBillPrint.classList.remove('d-none')</script>"
+        "<body>" + tableBillPrint.outerHTML + "</body> " +
+        "    <script>tableBillPrint.classList.remove('d-none')</script>"
     );
 
-        setTimeout(function () { //settime out ekkk dunne uda table eka naththam print ui ea hariyata load venna one nisa thama minisecond 500 dunna ookooma bootstrap load vela ganata enna one nisa
+    setTimeout(function () { //settime out ekkk dunne uda table eka naththam print ui ea hariyata load venna one nisa thama minisecond 500 dunna ookooma bootstrap load vela ganata enna one nisa
         newWindow.stop();   //load vena eka nawaththuwa
         newWindow.print();  //print eka call kra
         newWindow.close();  //print rka open vela close krama close venawa ee tab eka
@@ -394,14 +394,69 @@ const modalPrintButton = () => {
 
 //define function for generate fee when selecting student registrations
 const generateFees = (fieldId) => {
-    console.log(fieldId.value); //log ekek daagannawa field id eke value eka
-    selectedValue = JSON.parse(fieldId.value);//iita passe json parse karagannawa eekta hethuva convert json string into JS object
-    console.log(selectedValue.classoffering_id.fees + " class offering fee")
-    // console.log(selectedValue.fee+"fee")  //log ekak dagannawa selected value eke fee eka balanna
-    feeFromSelectedValue = selectedValue.classoffering_id.fees; //selected value eken fee eka aragen eka varibale ekakata assign kara gannawa
-    textFee.value = parseFloat(feeFromSelectedValue).toFixed(2);// iita passe text fee kiyana id eke value ekat assign kara gannawa parse flote karala iita passe to fixed karala dahsma thithi dekak thiya gannawa
-    payment.fees = textFee.value; //payment object eke fee ekata textfee kiyana id eka thiyena input field ekan value eka aran assign kara gannawa // in other words bind karagannawa object ekata
-    textFee.style.border = "2px solid green";
+
+    let paymentCategory = JSON.parse(selectPaymentCategory.value);    //
+    console.log(paymentCategory.name);
+
+    let selectedStu = textStudent.value.split(" ");
+    let stunum = selectedStu[0];
+    console.log(stunum);
+
+    let selectedStuReg = JSON.parse(selectStudentRegistration.value);
+    let regID = selectedStuReg.id;
+    console.log(regID)
+
+
+    if (paymentCategory.name == "monthly") {//payment category eka balanna one monthly da kiyala
+        // monthly nam
+
+        //free card da nadda balanna one
+        let serverResponse = ajaxGetRequest("/studentregistration/getsturegfromstuidandregstatus/" + stunum + "/" + regID); //free card da nadda balana ajax get request eka meken response ekek thiyenawanam true enawa naththam false enawa
+        if (serverResponse) {
+            //free card
+
+            //payment type eke karanna thiyena ewa
+            console.log("free card");
+            payTypes = ajaxGetRequest("/paytype/findall");  //ajax req ekak gahala values tika gennna gannwa
+            fillDataIntoSelect(selectPayType, 'select pay type', payTypes, 'name','cash');//eka select field ekata set karanawa display property eka cash denawa
+            payment.paytype_id=JSON.parse(selectPayType.value); //object ekata bind karanawa
+            selectPayType.style.border="2px solid green";   //border eka kola paata karanawa
+
+            //fees kiyana field eke karanna thiyena dewal tika
+            textFee.value="0.00";   //fee eke value eka zero karanwa
+            payment.fees=textFee.value; //payment eke fees ekata bind karanwa
+            textFee.style.border="2px solid green"; //colour eka green karanwa
+
+            //payed amount eke karanna thiyena dewal
+            textPayedAmount.value="0.00";
+            payment.payedamount=textPayedAmount.value;
+            textPayedAmount.style.border="2px solid green";
+
+
+            // balance amount eke karanna thiyena dewal
+            textBalanceAmount.value="0.00";
+            payment.balanceamount=textBalanceAmount.value;
+            textBalanceAmount.style.border="2px solid green";
+
+
+        } else {
+            //not free card
+            console.log("normal card");
+            console.log(fieldId.value); //log ekek daagannawa field id eke value eka
+            selectedValue = JSON.parse(fieldId.value);//iita passe json parse karagannawa eekta hethuva convert json string into JS object
+            console.log(selectedValue.classoffering_id.fees + " class offering fee")    //class offering eken ena fees eka log ekek daa gannawa
+            // console.log(selectedValue.fee+"fee")  //log ekak dagannawa selected value eke fee eka balanna
+            feeFromSelectedValue = selectedValue.classoffering_id.fees; //selected value eken fee eka aragen eka varibale ekakata assign kara gannawa
+            textFee.value = parseFloat(feeFromSelectedValue).toFixed(2);// iita passe text fee kiyana id eke value ekat assign kara gannawa parse flote karala iita passe to fixed karala dahsma thithi dekak thiya gannawa
+            payment.fees = textFee.value; //payment object eke fee ekata textfee kiyana id eka thiyena input field ekan value eka aran assign kara gannawa // in other words bind karagannawa object ekata
+            textFee.style.border = "2px solid green";
+        }
+
+
+    } else {//else nam ee kiyanne admission nam
+
+    }
+
 
 }
 
@@ -518,46 +573,45 @@ const clickRadioButton = () => {
     printBTNPayment.click();    //print button eka click karanwa;
 }
 
-const generateMaxMonth = ()=>{
-    let student=textStudent.value.split(" ");//split eken ven karanawa space eken iita passe apita hambenne array ekak
-    let stuNumber=student[0];//ee array eke 0 veni index eka gannawa
+const generateMaxMonth = () => {
+    let student = textStudent.value.split(" ");//split eken ven karanawa space eken iita passe apita hambenne array ekak
+    let stuNumber = student[0];//ee array eke 0 veni index eka gannawa
     console.log(stuNumber)//for testing;
 
-    let selectedValueStuReg=JSON.parse(selectStudentRegistration.value)//json string ekak JS object ekakata convert karagannawa
-    console.log(selectedValueStuReg.id+" type of "+typeof (selectedValueStuReg.id))//testing
+    let selectedValueStuReg = JSON.parse(selectStudentRegistration.value)//json string ekak JS object ekakata convert karagannawa
+    console.log(selectedValueStuReg.id + " type of " + typeof (selectedValueStuReg.id))//testing
 
     console.log(textStudent.value);
 
-    let serverResponse=ajaxGetRequest("/payment/getmaxmonthpayment/"+stuNumber+"/"+selectedValueStuReg.id);
+    let serverResponse = ajaxGetRequest("/payment/getmaxmonthpayment/" + stuNumber + "/" + selectedValueStuReg.id);
     console.log(serverResponse);
 
-    let maxMonth=serverResponse;
+    let maxMonth = serverResponse;
 
-    let currentMonth=new Date().getMonth();
-    if (currentMonth<9){
-        currentMonth='0'+(currentMonth+1)
-    }else {
-        currentMonth=currentMonth+1;
+    let currentMonth = new Date().getMonth();
+    if (currentMonth < 9) {
+        currentMonth = '0' + (currentMonth + 1)
+    } else {
+        currentMonth = currentMonth + 1;
     }
-    console.log(currentMonth+" current month");
+    console.log(currentMonth + " current month");
 
-    let MMVal=maxMonth.split('-');  //server ekan enne 2024-05 wage format ekekin ena value ekak ekayi meka split kare MM type ekata haro ganna one niss
-    if (maxMonth==""){  //max valu eka empty ekak da kiyala balanawa ee mokada kiyanne meeta kalin student payemnet ekak karala na kiyan eka
+    let MMVal = maxMonth.split('-');  //server ekan enne 2024-05 wage format ekekin ena value ekak ekayi meka split kare MM type ekata haro ganna one niss
+    if (maxMonth == "") {  //max valu eka empty ekak da kiyala balanawa ee mokada kiyanne meeta kalin student payemnet ekak karala na kiyan eka
         console.log("first monthly payment")
-        divMonthText.innerText="Student's first monthly payment ";
-        divMonthText.style.color="green";
-        divMonthText.className="d-block"
-        divMonthText.classList.add("d-block","text-center","fw-bold");
-    }else {
-        if (MMVal[1]<currentMonth){
-            console.log("student last payed month was "+maxMonth);
-            divMonthText.innerText="student last payed month was "+maxMonth;
-            divMonthText.style.color="orange";
-            divMonthText.className="d-block"
-            divMonthText.classList.add("d-block","text-center","fw-bold");
+        divMonthText.innerText = "Student's first monthly payment ";
+        divMonthText.style.color = "green";
+        divMonthText.className = "d-block"
+        divMonthText.classList.add("d-block", "text-center", "fw-bold");
+    } else {
+        if (MMVal[1] < currentMonth) {
+            console.log("student last payed month was " + maxMonth);
+            divMonthText.innerText = "student last payed month was " + maxMonth;
+            divMonthText.style.color = "orange";
+            divMonthText.className = "d-block"
+            divMonthText.classList.add("d-block", "text-center", "fw-bold");
         }
     }
-
 
 
 }

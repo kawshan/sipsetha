@@ -28,7 +28,8 @@ const refreshStudentTable = () => {
 
     ];
 
-    fillDataIntoTable(tableStudent, students, displayProperty, checkPrivilege, true)
+    fillDataIntoTable(tableStudent, students, displayProperty, checkPrivilege, true);
+    $('#tableStudent').dataTable();
 
 }
 

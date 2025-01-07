@@ -146,5 +146,15 @@ public class StudentRegistrationController {
         return classOfferingDao.getClassOfferingsByStudentGrade(stunum);
     }
 
+    @GetMapping(value = "/getsturegfromstuidandregstatus/{stunum}/{regid}")
+    public Boolean getStudentRegistrationByStudentIdAndRegistrationStatus(@PathVariable("stunum")String stunum, @PathVariable("regid")String regid){
+        StudentRegistration exStudentRegistration = dao.getStudentRegistrationByStunumRegType(stunum,regid);
+        if (exStudentRegistration!=null){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
 
 }

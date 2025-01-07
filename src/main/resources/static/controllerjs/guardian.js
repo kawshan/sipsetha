@@ -26,6 +26,7 @@ const refreshGuardianTable = ()=>{
     ];
 
     fillDataIntoTable(tableGuardian,guardians,displayProperty,checkPrivileges,true)
+    $('#tableGuardian').dataTable();
 
 }
 

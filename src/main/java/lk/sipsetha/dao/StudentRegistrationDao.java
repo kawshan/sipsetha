@@ -17,6 +17,9 @@ public interface StudentRegistrationDao extends JpaRepository<StudentRegistratio
 //    @Query(value = "select sr.indexnumber from StudentRegistration sr where sr.student_id=(select s.id from Student s where s.stunum=?1)")
     public List<StudentRegistration> getIndexNumberFromStuNum(String indexnumb);
 
+    @Query(value = "select * from studentregistration where student_id in (select id from student where stunum=?1)and registerdtype_id=2 and id=?2",nativeQuery = true)
+    public StudentRegistration getStudentRegistrationByStunumRegType(String stunum, String regid);
+
 
 
 }

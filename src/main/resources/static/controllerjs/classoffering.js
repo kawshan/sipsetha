@@ -111,7 +111,8 @@ const refreshClassOfferingTable = () => {
 
     ];
 
-    fillDataIntoTable(tableClass,classOfferings,displayProperty,"",true)
+    fillDataIntoTable(tableClass,classOfferings,displayProperty,"",true);
+    $('#tableClass').dataTable();
 
 };
 

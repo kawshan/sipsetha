@@ -22,6 +22,7 @@ const refreshClassHallTable = ()=>{
     ];
 
     fillDataIntoTable(tableClassHall,classhalls,displayProperty,checkPrivilege,true)
+    $('#tableClassHall').dataTable();
 
 }
 

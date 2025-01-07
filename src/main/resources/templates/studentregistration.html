@@ -123,6 +123,8 @@
                             </div>
                         </div>
                         <!--                    required mark end-->
+
+
                         <!--select student start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
@@ -191,7 +193,7 @@
                             </div>
                             <div class="col-md-6">
                                 <select id="selectRegisteredType" class="form-select text-center" required
-                                        onchange="selectDBValidator(this,'','studentRegistration','registerdtype_id')"></select>
+                                        onchange="selectDBValidator(this,'','studentRegistration','registerdtype_id'); checkRegisteredType(this);"></select>
                             </div>
                         </div>
                         <!--select registrated type end-->

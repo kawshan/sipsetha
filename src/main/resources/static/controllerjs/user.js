@@ -23,7 +23,8 @@ const refreshUserTable = () => {
     ];
 
     // call fill data into table common function
-    fillDataIntoTable(tableUser, users, displayProperty, checkPrivilege,true)
+    fillDataIntoTable(tableUser, users, displayProperty, checkPrivilege,true);
+    $('#tableUser').dataTable();
 
 
 }

@@ -28,6 +28,7 @@ const refreshClassRoomAllocationTable = ()=>{
 
 
     fillDataIntoTable(tableClassRoomAllocation,classRoomAllocationsList,displayProperty,checkPrivileges,true);
+    $('#tableClassRoomAllocation').dataTable();
 }
 const checkPrivileges =(innerOB) =>{
     if (innerOB.allocationstatus_id.name!="not-available"){

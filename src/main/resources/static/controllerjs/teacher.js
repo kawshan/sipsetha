@@ -88,7 +88,8 @@ const refreshTeacherTable = ()=>{
         {dataType:'function',propertyName:getTeacherStatus},
     ];
 
-    fillDataIntoTable(tableTeacher,teachers,displayProperty,checkPrivilege,true)
+    fillDataIntoTable(tableTeacher,teachers,displayProperty,checkPrivilege,true);
+    $('#tableTeacher').dataTable();
 
 };
 

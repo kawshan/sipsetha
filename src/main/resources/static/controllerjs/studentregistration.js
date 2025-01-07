@@ -26,7 +26,7 @@ const refreshStudentRegistrationTable = () => {
     ]
 
     fillDataIntoTable(tableStudentRegistration, StudentRegistrations, displayProperty, checkPrivileges, true)
-
+    $('#tableStudentRegistration').dataTable();
 }
 
 const checkPrivileges = (innerOb) => {
@@ -115,8 +115,9 @@ const refreshStudentRegistrationForm = () => {
         textFee.value = parseFloat(fees).toFixed(2);//flote ekakata convert kata dashama thith 2 k thibba
         studentRegistration.fee = textFee.value;//student registration object ekata bind kara
         textFee.style.border = "2px solid green"; //green colour kara
-    });
 
+    });
+//end of select class offering add event listener
 
     textFee.disabled = true;
     // textFee.value=//class fee eka genna ganna one class offering eka select karahama
@@ -216,7 +217,7 @@ const checkErrors = () => {
         errors = errors + "registration status cannot be empty \n";
     }
     if (studentRegistration.registerdtype_id == null) {
-        errors = errors + "registerd type cannot be empty \n"
+        errors = errors + "registered type cannot be empty \n"
     }
 
     return errors;
@@ -228,11 +229,11 @@ const addStudentRegistration = () => {
     let errors = checkErrors();
     if (errors == "") {
         const userConfirm = confirm("are you sure to add following registration \n" +
-            "\n fee is" + studentRegistration.fee
-            + "\n student is" + studentRegistration.student_id.firstname
-            + "\n class offering is" + studentRegistration.classoffering_id.classname
-            + "\n registration status is" + studentRegistration.registrationstatus_id.name
-            + "\n registration type is" + studentRegistration.registerdtype_id.name
+            "\n fee is " + studentRegistration.fee
+            + "\n student is " + studentRegistration.student_id.lastname
+            + "\n class offering is " + studentRegistration.classoffering_id.classname
+            + "\n registration status is " + studentRegistration.registrationstatus_id.name
+            + "\n registration type is " + studentRegistration.registerdtype_id.name
         )
         if (userConfirm) {
             let postServiceResponse = ajaxPostRequest("/studentregistration", studentRegistration);
@@ -365,12 +366,12 @@ const modalPrintButton = () => {
 
 }
 
-const getClassOfferingFromStuNum = (fieldId) => {
+const getClassOfferingFromStuNum = (fieldId) => {   //student number eken student ta adala class offerings tika genna gena thiyenawa
     console.log(fieldId.value);
     let selectedValue = fieldId.value;
-    let stunumArr = selectedValue.split(" ");
-    let studentNumber = stunumArr[0];
-    console.log(studentNumber);
+    let stunumArr = selectedValue.split(" ");   //his thanaking ven karagena thiyenawa ee mokada data ena format eka thama front end user element ekata student number histhanak student ge name
+    let studentNumber = stunumArr[0];   //ee ta passe uda line eken eka array ekakata set karn thiyena nisa eke 0 veni index eken enne student number eka nisa eka varible ekakata save karan thiyenawa
+    console.log(studentNumber); //log ekak aran eka double chek karagannawa //testing purpose nisa
 
     let classOfferingFromStudentGrade = ajaxGetRequest("/studentregistration/getclassofferingbystudentgradefromstunum/" + studentNumber)
     fillDataIntoSelectWithTwoAttributes(selectClassOffering, 'select class offering', classOfferingFromStudentGrade, 'id', 'classname')
@@ -380,47 +381,31 @@ const getClassOfferingFromStuNum = (fieldId) => {
 
 
 
+//define function for check registration status
+const checkRegisteredType = (fieldId)=>{
+    let feeValue = textFee.value;    //fee eke value eka genna gena thiyenawa passe one vena nisa meka use karala thiyenawa else code block eke
+    let selectedValue=JSON.parse(fieldId.value);
+    console.log("name is "+selectedValue.name+" id is "+selectedValue.id);
+
+
+    if (selectedValue.name=="free-card"){ //student ge registared type eka free card nam
+        console.log("free card")
+            textFee.value="0.00";
+            studentRegistration.fee=textFee.value;
+            textFee.style.border="2px solid green";
+
+    }
+
+    else { //ehema neme nam ee kiyanne free card neme nam normal registration type eka
+        console.log("normal registration type");
+            textFee.value=feeValue; //value eka set kara
+            studentRegistration.fee=textFee.value;  //object eke property ekata bind kara
+            textFee.style.border="2px solid green"; //colour eka green kara
+    }
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+}
 
 
 

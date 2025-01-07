@@ -59,6 +59,7 @@ const refreshAttendanceTable = () => {
     ];
 
     fillDataIntoTable(tableAttendance,attendancesList,displayProperty,checkPrivileges,true)
+    $('#tableAttendance').dataTable();
 }
 
 

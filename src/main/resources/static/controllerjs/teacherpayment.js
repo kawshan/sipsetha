@@ -25,7 +25,7 @@ const refreshTeacherPaymentTable = () => {
 
     ]
     fillDataIntoPaymentTable(tableTeacherPayment, teacherPayments, displayProperty, true)
-    $('#tableEnrolment').dataTable();
+    $('#tableTeacherPayment').dataTable();
 
 }
 

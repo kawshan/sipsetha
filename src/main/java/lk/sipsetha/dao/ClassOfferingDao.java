@@ -11,6 +11,8 @@ public interface ClassOfferingDao extends JpaRepository<ClassOffering,Integer> {
 
 //    @Query(value = "select classname from classoffering where id=(select classoffering_id from studentregistration where student_id=(select id from student where stunum=?1))",nativeQuery = true)
 //    @Query(value = "select cof from ClassOffering cof where cof.id=(select sreg.id from StudentRegistration sreg where sreg.student_id=(select s.id from Student s where s.stunum=?1))")
-//    public List<ClassOffering> getClassOfferingByStudent(String stunum);
+
+    @Query(value = "select * from classoffering where id in (select classoffering_id from studentregistration where student_id in (select id from student where stunum=?1))",nativeQuery = true)
+    public List<ClassOffering> getClassOfferingByStudent(String stunum);
 
 }

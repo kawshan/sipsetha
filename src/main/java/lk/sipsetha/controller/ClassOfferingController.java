@@ -113,9 +113,11 @@ public class ClassOfferingController {
     }
 
 
-//    @GetMapping(value = "/bystunum/{stunum}")
-//    public List<ClassOffering> getByStuNum(@PathVariable("stunum")String stunum){
-//        return dao.getClassOfferingByStudent(stunum);
-//    }
+    @GetMapping(value = "/bystunum/{stunum}")
+    public List<ClassOffering> getByStuNum(@PathVariable("stunum")String stunum){
+        while(true){
+            return dao.getClassOfferingByStudent(stunum);
+        }
+    }
 
 }

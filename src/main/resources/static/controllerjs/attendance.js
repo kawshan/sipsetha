@@ -18,6 +18,13 @@ const refreshAttendanceForm = () => {
     attendance = new Object();
     oldAttendance = null;
 
+    textStudent.style.border="2px solid #ced4da";
+    selectClassOffering.style.border="2px solid #ced4da";
+    selectAttendanceStatus.style.border="2px solid #ced4da";
+    textNote.style.border="2px solid #ced4da";
+
+    textNote.value="";
+
     students = ajaxGetRequest("/student/findall")
     fillDataIntoDataList(dataListStudent, students, 'stunum', 'firstname');
 
@@ -183,17 +190,16 @@ const buttonAttendanceUpdate = ()=>{
     }
 }
 
-//define function for generate student registration number from student
-// const generateStudentRegistration = (fieldID) => {//parameter ekak vidihata field id eka gannwa eka enne html eke this eken pass karala
-//     console.log(fieldID.value);
-//     let selectedValue = fieldID.value.split(" ");
-//     let indexNumber = selectedValue[0];
-//     console.log(indexNumber);
-//     let studentRegistrationsbystudent = ajaxGetRequest("/studentregistration/" + indexNumber); //student registration eken index number eka genna gannawa
-//     fillDataIntoSelectNew(selectClassOffering, 'select student registrations', studentRegistrationsbystudent, 'classoffering_id', 'classname', '');
-//     fillDataIntoSelect(selectClassOffering,'select class offerings',studentRegistrationsbystudent,'classoffering_id',)
-//
-// }
+// define function for generate student registration number from student
+const generateStudentClassOfferings = (fieldID) => {//parameter ekak vidihata field id eka gannwa eka enne html eke this eken pass karala
+    console.log(fieldID.value);
+    let selectedValue = fieldID.value.split(" ");
+    let indexNumber = selectedValue[0];
+    console.log(indexNumber);
+    let studentClassOfferingByStudentNumber = ajaxGetRequest("/classoffering/bystunum/" + indexNumber); //student registration eken index number eka genna gannawa
+    fillDataIntoSelect(selectClassOffering,'select class offerings',studentClassOfferingByStudentNumber,'classname');
+
+}
 
 
 

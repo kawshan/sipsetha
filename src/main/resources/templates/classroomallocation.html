@@ -137,15 +137,6 @@
 
                         <div class="row mt-2">
                             <div class="col-md-6">
-                                <label for="selectAllocationStatus" class="form-label fw-bold">allocation status <i class="text-danger">*</i> </label>
-                            </div>
-                            <div class="col-md-6">
-                                <select  id="selectAllocationStatus" class="form-select text-center" required onchange="selectDBValidator(this,'','classRoomAllocation','allocationstatus_id')"></select>
-                            </div>
-                        </div>
-
-                        <div class="row mt-2">
-                            <div class="col-md-6">
                                 <label for="selectAllocationType" class="form-label fw-bold">allocation type <i class="text-danger">*</i> </label>
                             </div>
                             <div class="col-md-6">
@@ -177,6 +168,15 @@
                             </div>
                             <div class="col-md-6">
                                 <select id="selectClassOffering" class="form-select text-center" required onchange="selectDBValidator(this,'','classRoomAllocation','classoffering_id')"></select>
+                            </div>
+                        </div>
+
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="selectAllocationStatus" class="form-label fw-bold">allocation status <i class="text-danger">*</i> </label>
+                            </div>
+                            <div class="col-md-6">
+                                <select  id="selectAllocationStatus" class="form-select text-center" required onchange="selectDBValidator(this,'','classRoomAllocation','allocationstatus_id')"></select>
                             </div>
                         </div>
 

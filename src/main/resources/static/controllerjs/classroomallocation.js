@@ -9,6 +9,7 @@ window.addEventListener('load',()=>{
     //call refresh class room allocation table
     refreshClassRoomAllocationTable();
 
+
 })
 ///define refresh class room allocation table
 const refreshClassRoomAllocationTable = ()=>{
@@ -66,6 +67,11 @@ const refreshClassRoomAllocationForm = ()=>{
     textNote.style.border="2px solid #ced4da";
 
 
+    fillDataIntoSelect(selectAllocationStatus,'select allocation status',allocationStatues,'name','available');
+    classRoomAllocation.allocationstatus_id=JSON.parse(selectAllocationStatus.value);
+    selectAllocationStatus.style.border="2px solid green";
+
+
     if (!userPrivilege.update){
         btnClassRoomAllocationUpdate.disabled=true;
         btnClassRoomAllocationUpdate.style.cursor='not-allowed';
@@ -75,7 +81,10 @@ const refreshClassRoomAllocationForm = ()=>{
         btnClassRoomAllocationAdd.style.cursor='not-allowed';
     }
 
+
 }
+
+
 
 //define function for get AllocationType
 const getAllocationType = (ob)=>{

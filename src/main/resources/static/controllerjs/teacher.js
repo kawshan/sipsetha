@@ -6,7 +6,7 @@ window.addEventListener('load',()=>{
     //call refresh table for teacher ui
     refreshTeacherTable();
 
-
+    refreshBranchCollapseForm();
 });
 
 //define function for refresh teacher form
@@ -48,6 +48,27 @@ const refreshTeacherForm = ()=>{
         btnTeacherAdd.style.cursor='not-allowed';
     }
 
+    fillDataIntoSelect(selectStatus,'select status',teacherStatues,'name','working');
+    selectStatus.disabled=true;
+    teacher.teacherstatus_id=JSON.parse(selectStatus.value);
+    selectStatus.style.border='2px solid green';
+
+}
+
+
+//define function for refresh branch collapse form
+const refreshBranchCollapseForm=()=>{
+    branchOB=new Object();
+
+    textBranchCode.value=""
+    textBranchCode.style.border="2px solid #ced4da";
+
+    textBranchName.value=""
+    textBranchName.style.border="2px solid #ced4da";
+
+    banks=ajaxGetRequest("/bank/findall")
+    fillDataIntoSelect(selectBank,"select bank",banks,'name')
+    selectBank.style.border="2px solid #ced4da"
 }
 
 
@@ -60,6 +81,7 @@ const refreshTeacherTable = ()=>{
         {dataType:'text',propertyName:'callingname'},
         {dataType:'text',propertyName:'mobile'},
         {dataType:'text',propertyName:'email'},
+        {dataType:'text',propertyName:'nic'},
         {dataType:'text',propertyName:'address'},
         {dataType:'function',propertyName:getTeacherStatus},
     ];
@@ -100,6 +122,8 @@ const teacherFormRefill = (ob,rowIndex)=>{
     oldTeacher=JSON.parse(JSON.stringify(ob));
 
     $('#modalTeacherAdd').modal('show')
+
+    selectStatus.disabled=false;    //refersh eke di disable karapu nisa methanadi disable false karala danawa
 
     qualifications=ajaxGetRequest("/qualifications/findall");
     fillDataIntoSelect(selectQualification,'select qualification',qualifications,'name',teacher.qualifications_id.name);
@@ -488,11 +512,89 @@ const modalPrintButton = ()=>{
 
 
 
+//define function for generate gender in guardian form using nic
+const generateTeacherGender = (fieldId)=>{
+    let  nicValue =  fieldId.value;
+    let year,month,date
+    let days;
+    let dob;
+    if (new RegExp('^(([0-9]{9}[VvXxSs])|([0-9]{12}))$').test(nicValue)){
+        console.log("yes");
+
+        if (nicValue.length==10){
+            console.log("old");
+            year="19"+nicValue.substring(0,2);
+            days=nicValue.substring(2, 5);
+            console.log(days+"old");
+        }
+        if (nicValue.length==12){
+            console.log("new");
+            year=nicValue.substring(0,4);
+            days = nicValue.substring(4, 7);
+            console.log(days+"new")
+        }
+        if (days<500){
+            console.log("male");
+            radioMale.checked=true
+            teacher.gender="male";
+            radioMale.style.border="2px solid green"
+        }else if (days>500){
+            console.log("female");
+            radioFemale.checked=true
+            teacher.gender="female";
+            radioFemale.style.border="2px solid green"
+        }
 
 
+        console.log(days);
+        let DOBDate = new Date(year);
+        console.log(DOBDate)
+        if (year%4 !=0){
+            DOBDate.setDate(parseInt(days)-1);
+        }else {
+            DOBDate.setDate(parseInt(days));
+        }
+        console.log(DOBDate);
 
+        month=DOBDate.getMonth()+1;
+        if (month<10){
+            month="0"+month;
+        }
+        date=DOBDate.getDate();
+        if (date<10){
+            date="0"+date;
+        }
+        dob=year+"-"+month+"-"+date;
+        selectDOB.value=dob;
+        teacher.birthdate=JSON.parse(JSON.stringify(selectDOB.value));
+        selectDOB.style.border="2px solid green";
 
+    }
+}
 
+const buttonBranchSubmit = ()=>{
+    if (branchOB!=null){
+        let userConfirm=confirm("are you sure to add branch name "+branchOB.name+" as a new branch ?")
+        if (userConfirm){
+            let postServerResponse=ajaxPostRequest("/branch",branchOB);
+            if (postServerResponse=="ok"){
+                alert("save success");
+
+                branches=ajaxGetRequest("/branch/findall");
+                fillDataIntoSelect(selectBranch,'select branch',branches,'name',textBranchName.value);
+                teacher.branch_id=JSON.parse(selectBranch.value);
+                selectBranch.style.border="2px solid green";
+
+                refreshBranchCollapseForm();
+                $('#collapseBranch').collapse('hide');
+            }else {
+                alert("error occured \n"+postServerResponse);
+            }
+        }
+    }else {
+        alert("error happened please recheck");
+    }
+}
 
 
 

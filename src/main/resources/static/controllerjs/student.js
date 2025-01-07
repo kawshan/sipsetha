@@ -56,9 +56,29 @@ const refreshStudentForm = () => {
     student = new Object(); //create new student object this use for front end binding
     oldStudent = null;
 
+    textGuardianName.style.border = '1px solid #ced4da';
+    textFirstName.style.border = '1px solid #ced4da';
+    textLastName.style.border = '1px solid #ced4da';
+    textDOB.style.border = '1px solid #ced4da';
+    selectGender.style.border = '1px solid #ced4da';
+    textAddress.style.border = '1px solid #ced4da';
+    textMobile.style.border = '1px solid #ced4da';
+    selectGrade.style.border = '1px solid #ced4da';
+    selectStatus.style.border = '1px solid #ced4da';
+    textNote.style.border = '1px solid #ced4da';
 
-    // fillDataIntoSelect(selectGuardian,'select guardian',guardians,'firstname')
-    // fillDataIntoSelectWithTwoAttributes(selectGuardian,'select guardian',guardians,'nic','firstname')
+
+    textGuardianName.value="";
+    textFirstName.value="";
+    textLastName.value="";
+    textDOB.value="";
+    selectGender.value="";
+    textAddress.value="";
+    textMobile.value="";
+    selectGrade.value="";
+    selectStatus.value="";
+    textNote.value="";
+
 
     grades = ajaxGetRequest("/grade/findall")
     fillDataIntoSelect(selectGrade, 'select grade', grades, 'name');
@@ -110,51 +130,51 @@ const refreshStudentForm = () => {
         switch (balanceYear) {
             case 8:
                 console.log("grade is 8");
-                fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','gradethree');
+                fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','grade-three');
                 break;
             case 9:
                 console.log("grade is 9");
-                fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','gradefour');
+                fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','grade-four');
                 break;
             case 10:
                 console.log("grade is 10");
-                fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','gradefive');
+                fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','grade-five');
                 break;
             case 11:
                 console.log("grade is 11");
-                fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','gradesix');
+                fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','grade-six');
                 break;
             case 12:
                 console.log("grade is 12");
-                fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','gradeseven');
+                fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','grade-seven');
                 break;
             case 13:
                 console.log("grade is 13");
-                fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','gradeeight');
+                fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','grade-eight');
                 break;
             case 14:
                 console.log("grade is 14");
-                fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','gradenine');
+                fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','grade-nine');
                 break;
             case 15:
                 console.log("grade is 15");
-                fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','gradeten');
+                fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','grade-ten');
                 break;
             case 16:
                 console.log("grade is 16");
-                fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','gradeeleven');
+                fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','grade-eleven');
                 break;
             case 17:
                 console.log("grader is 17");
-                fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','gradetwevel');
+                fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','grade-twevel');
                 break;
             case 18:
                 console.log("grade is 18");
-                fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','gradethirteen');
+                fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','grade-thirteen');
                 break;
             default:
                 console.log("more than 19");
-                fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','');
+                fillDataIntoSelect(selectGrade, 'select grade', grades, 'name','grade-thirteen');
 
         }
         student.grade_id=JSON.parse(selectGrade.value); //json parse convert json string into js object
@@ -163,6 +183,8 @@ const refreshStudentForm = () => {
     })
     //end of selecting student grade based on dob
 
+    btnStudentSubmit.disabled = false;  //ai meka damme kiyana ekata reason eka thama refill ekedi submit button eke disable karala pointer not allowed karana nisa
+    btnStudentSubmit.style.cursor='pointer'
 
     if (!userPrivilege.update) {
         btnStudentUpdate.disabled = true;
@@ -228,7 +250,8 @@ const studentFormRefill = (ob, rowIndex) => {
         btnStudentUpdate.disabled = false;
         btnStudentUpdate.style.cursor = 'pointer';
     }
-
+    btnStudentSubmit.disabled=true;
+    btnStudentSubmit.style.cursor = 'not-allowed';
 }
 
 // define function for get student gender
@@ -254,7 +277,7 @@ const deleteStudent = (ob, rowIndex) => {
             + '\n gender is ' + ob.gender
             + '\n address is ' + ob.address
             + '\n grade is ' + ob.grade_id.name
-            + '\n student status is' + ob.status
+            + '\n student status is ' + ob.status
         );
         if (userConfirm) {
             const deleteServerResponse = ajaxDeleteRequest('/student', ob);
@@ -321,23 +344,23 @@ const checkFormErrors = () => {
         textFirstName.classList.add('is-invalid');
     }
     if (student.lastname == null) {
-        errors = errors + 'last name cannot be empty \n';
+        errors = errors + ' last name cannot be empty \n';
         textLastName.classList.add('is-invalid');
     }
     if (student.dob == null) {
-        errors = errors + 'date of birth cannot be empty \n';
+        errors = errors + ' date of birth cannot be empty \n';
         textDOB.classList.add('is-invalid')
     }
     if (student.gender == null) {
-        errors = errors + 'gender cannot be empty \n';
+        errors = errors + ' gender cannot be empty \n';
         selectGender.classList.add('is-invalid');
     }
     if (student.address == null) {
-        errors = errors + 'address cannot be empty \n';
+        errors = errors + ' address cannot be empty \n';
         textAddress.classList.add('is-invalid');
     }
     if (student.status == null) {
-        errors = errors + 'status cannot be empty \n';
+        errors = errors + ' status cannot be empty \n';
         selectStatus.classList.add('is-invalid');
     }
     return errors;
@@ -358,7 +381,7 @@ const studentSubmit = () => {
             + '\n gender is ' + student.gender
             + '\n address is ' + student.address
             + '\n grade is ' + student.grade_id.name
-            + '\n student status is' + student.status
+            + '\n student status is ' + student.status
         );
         //get user confirmation
         if (userConfirm) {
@@ -370,12 +393,11 @@ const studentSubmit = () => {
                 refreshStudentForm();
                 refreshStudentTable();
             } else {
-                alert('student add unsuccessful please check again' + serverResponse);
+                alert('student add unsuccessful please check again \n' + serverResponse);
             }
         }
     } else {
         alert('you might have some errors \n ' + errors);
-        // swal.fire({title:'you might have some errors \n '+errors, icon:'error'})
     }
 
 }

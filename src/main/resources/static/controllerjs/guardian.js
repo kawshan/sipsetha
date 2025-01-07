@@ -170,6 +170,8 @@ const GuardianFormRefill = (ob,rowIndex)=>{
     selectStatus.value=guardian.status;
     textNote.value=guardian.note;
 
+    selectStatus.disabled=false;    //disable eka false karanne mama refesh eke di eka selected value eka active karala eka disable karala thiyena nisa eka methanadi disable false karala danawa mokada user ta meka change karanna puluwan venna one nisa
+
     fillDataIntoSelect(selectGuardianType,'select guardian type',guardianTypes,'name',guardian.guardiantype_id.name)
 
 
@@ -294,14 +296,14 @@ const buttonGuardianAdd = ()=>{
     let errors = guardianCheckErrors();
     if (errors == ""){
         let userConfirm =confirm("are you sure to add this guardian"
-        +'\n first name is'+guardian.firstname
-        +'\n last name is'+guardian.lastname
+        +'\n first name is '+guardian.firstname
+        +'\n last name is '+guardian.lastname
         +'\n nic is'+guardian.nic
-        +'\n mobile is'+guardian.mobile
-        +'\n address is'+guardian.address
-        +'\n guardian type is'+guardian.guardiantype_id.name
-        +'\n gender is'+guardian.gender
-        +'\n status is'+guardian.status
+        +'\n mobile is '+guardian.mobile
+        +'\n address is '+guardian.address
+        +'\n guardian type is '+guardian.guardiantype_id.name
+        +'\n gender is '+guardian.gender
+        +'\n status is '+guardian.status
         );
         if (userConfirm){
             let serverResponse=ajaxPostRequest("/guardian",guardian)
@@ -385,11 +387,27 @@ const generateGuardianGender = (fieldId)=>{
             selectGender.value=true
             guardian.gender=selectGender.value;
             selectGender.style.border="2px solid green";
+
+            guardianTypes=[
+                {id:'1',name:'father'},
+                {id:'1',name:'other'}
+            ];
+            fillDataIntoSelect(selectGuardianType,'select guardian type',guardianTypes,'name');
+
+
         }else if (days>500){
             console.log("female");
             selectGender.value=false
             guardian.gender=selectGender.value;
             selectGender.style.border="2px solid green";
+
+
+            guardianTypes=[
+                {id:'1',name:'mother'},
+                {id:'1',name:'other'}
+            ];
+            fillDataIntoSelect(selectGuardianType,'select guardian type',guardianTypes,'name');
+
         }
 
     }

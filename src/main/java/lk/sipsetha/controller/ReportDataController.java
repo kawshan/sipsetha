@@ -60,7 +60,7 @@ public class ReportDataController {
     }
 
 
-
+//    reportdatapayment?paymentcategory=1
     @GetMapping(value = "/reportdatapayment",params = {"paymentcategory"})
     public List<Payment> getStudentByPaymentCategory(@RequestParam("paymentcategory")int paymentcategory){
         return reportDao.getPaymentByPaymentCategory(paymentcategory);
@@ -68,17 +68,3 @@ public class ReportDataController {
 
 }
 
-//    @GetMapping(value = "reportdatapayment",params = {"paytype","paymentcategory"})
-//    public List<Payment> getStudentPaymentByTypeAndCategory(@RequestParam("paytype")Integer paytype,@RequestParam("paymentcategory")Integer paymentcategory){
-//        if (paytype != null && paymentcategory==null){
-//            return reportDao.getPaymentByPaymentType(paytype);
-//        }
-//        if (paymentcategory!=null && paytype==null){
-//            return reportDao.getPaymentByPaymentCategory(paymentcategory);
-//        }
-//        if (paytype!=null && paymentcategory!=null){
-//            return reportDao.getPaymentByTypeAndCategory(paytype,paymentcategory);
-//        }
-//
-//
-//    }

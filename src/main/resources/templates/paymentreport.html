@@ -47,22 +47,30 @@
         <div class="col-md-2">
             <button type="button" class="btn btn-primary" onclick="generateReportsFromMonth()">generate report from month</button>
         </div>
+    </div>
+
+    <div class="row mt-5">
         <!--        report by month start-->
         <div class="col-md-2">
             <select id="selectPaymentCategory" class="form-control text-center">
 
             </select>
-
+        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-warning" onclick="generateReportsByPaymentCategory()">Reports by payment category</button>
         </div>
         <div class="col-md-2">
             <select id="selectPayType" class="form-select text-center">
 
             </select>
         </div>
-        <div class="col-md-4">
-            <button type="button" class="btn btn-primary" onclick="generateReportsByPayCatANDType()">generate reports by payment category and month</button>
-        </div>
+        <div class="col-md-2">
+            <button type="button" class="btn btn-warning" onclick="generateReportsByPaymentType()">Reports by payment category</button>
 
+        </div>
+        <div class="col-md-4">
+            <button type="button" class="btn btn-primary" onclick="generateReportsByPayCatANDType()">Generate reports by Both category and type </button>
+        </div>
     </div>
 <!--report input and button area end-->
 

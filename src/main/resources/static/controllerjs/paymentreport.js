@@ -111,11 +111,21 @@ const generateReportsByPayCatANDType = ()=>{
     studentPayments=ajaxGetRequest("/reportdatapayment?paytype="+JSON.parse(selectPayType.value).id+"&paymentcategory="+JSON.parse(selectPaymentCategory.value).id);
     refreshPaymentTable();
 
-
-
-
-
 }
+
+
+const generateReportsByPaymentCategory = ()=>{
+    //reportdatapayment?paymentcategory=1
+    studentPayments=ajaxGetRequest("/reportdatapayment?paymentcategory="+JSON.parse(selectPaymentCategory.value).id);
+    refreshPaymentTable();
+}
+
+const generateReportsByPaymentType = ()=>{
+    // reportdatapayment?paytype=1
+    studentPayments=ajaxGetRequest("/reportdatapayment?paytype="+JSON.parse(selectPayType.value).id);
+    refreshPaymentTable();
+}
+
 
 
 

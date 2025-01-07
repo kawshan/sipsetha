@@ -20,7 +20,6 @@ const textValidator = (fieldId,pattern,object,property)=>{
     }
 }
 
-
 const selectDBValidator = (fieldId,pattern,object,property)=>{
     if (fieldId.value != ''){
         fieldId.style.border='2px solid green';
@@ -42,7 +41,6 @@ const selectValidator = (fieldId,pattern,object,property)=>{
 
     }
 }
-
 
 const checkBoxValidator = (fieldId,pattern,object,property,trueValue,falseValue,labelID,labelTrueValue,labelFalseValue)=>{
 //     if (fieldId.value != ''){
@@ -80,7 +78,7 @@ const dataListValidator = (fieldId,dataListName,object,property,oldObject,displa
         if (extIndex!=-1){
             window[object][property] = dataList[extIndex];
             if (window[oldObject]!=null && window[object][property]['id']!= window[oldObject][property]['id']){
-                fieldId.style.border='2px solid orange';
+                fieldId.style.border='5px solid orangered';
             }else {
                 fieldId.style.border='2px solid green';
             }
@@ -113,7 +111,7 @@ const textValidatorWithTwoValues=(fieldId,pattern,object,property,oldObject)=>{
 
             if (window[oldObject]!=null && window[object][property]!=window[oldObject][property]){
                 // fieldId.style.border="2px solid #e67e22";
-                fieldId.style.backgroundColor="#f1c40f";
+                fieldId.style.border='5px solid orangered';
             }else {
                 fieldId.style.border="2px solid green";
             }
@@ -140,8 +138,7 @@ const selectDBFieldValidatorWithTwoValues = (fieldId,pattern,object,property,old
         window[object][property]=JSON.parse(fieldValue);//convert js object   //json parse eken venne string eka java script object ekat convert vena eka
                                                         //JSON.stringify is a JavaScript method used to convert a JavaScript object or value to a JSON string
         if (window[oldObject]!=null && window[object][property]['id']!= window[oldObject][property]['id']){
-            // fieldId.style.border="2px solid #e67e22";
-            fieldId.style.backgroundColor="#f1c40f";
+            fieldId.style.border='5px solid orangered';
         }else {
             fieldId.style.border="2px solid green";
         }

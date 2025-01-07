@@ -77,6 +77,7 @@
             <th>calling name</th>
             <th>mobile</th>
             <th>email</th>
+            <th>nic</th>
             <th>address</th>
             <th>status</th>
             <th>modify</th>
@@ -156,7 +157,7 @@
                             <div class="col-md-6">
                                 <input type="text" id="textNic" class="form-control text-center" required
                                        placeholder="enter nic number"
-                                       onkeyup="textValidator(this,'^(([0-9]{9}[VvXxSs])|([0-9]{12}))$','teacher','nic')">
+                                       onkeyup="textValidator(this,'^(([0-9]{9}[VvXxSs])|([0-9]{12}))$','teacher','nic'); generateTeacherGender(this);">
                             </div>
                         </div>
                         <!--                    nic end-->
@@ -226,6 +227,23 @@
                         </div>
                         <!--                    address end-->
 
+
+                        <!--                        qualification start-->
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="selectQualification" class="form-label fw-bold">qualifications
+                                    <i class="text-danger">*</i> </label>
+                            </div>
+                            <div class="col-md-6">
+                                <select id="selectQualification" class="form-select text-center" required
+                                        onchange="selectDBValidator(this,'','teacher','qualifications_id')">
+
+                                </select>
+                            </div>
+                        </div>
+                        <!--                        qualification end-->
+
+
                         <!--                        school start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
@@ -235,7 +253,7 @@
                             <div class="col-md-6">
                                 <input type="text" id="textSchool" class="form-control text-center" required
                                        placeholder="enter teachers school name"
-                                       onkeyup="textValidator(this,'^[A-Z][a-z]{5,200}$','teacher','teacherschool')">
+                                       onkeyup="textValidator(this,'^([A-Z][a-z]{1,30}[\\s][A-z][a-z]{1,30})|([A-Z][a-z]{1,30}[\\s][A-z][a-z]{1,30}[\\s][A-z][a-z]{1,30})$','teacher','teacherschool')">
                             </div>
                         </div>
                         <!--                        school end-->
@@ -290,37 +308,66 @@
                         </div>
                         <!--                        account no end-->
 
-
-
-                        <!--                        qualification start-->
-                        <div class="row mt-2">
-                            <div class="col-md-6">
-                                <label for="selectQualification" class="form-label fw-bold">qualifications
-                                    <i class="text-danger">*</i> </label>
-                            </div>
-                            <div class="col-md-6">
-                                <select id="selectQualification" class="form-select text-center" required
-                                        onchange="selectDBValidator(this,'','teacher','qualifications_id')">
-
-                                </select>
-                            </div>
-                        </div>
-                        <!--                        qualification end-->
-
-
-
                         <!--                        branch name start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
                                 <label for="selectBranch" class="form-label fw-bold">select branch <i class="text-danger">*</i></label>
                             </div>
                             <div class="col-md-6">
-                                <select id="selectBranch" class="form-control text-center" required onchange="selectDBValidator(this,'','teacher','branch_id')">
-                                    <option value="" selected disabled>select an option</option>
-                                    <option value="kiribathgoda">kiribathgoda</option>
-                                    <option value="colombo">colombo</option>
-                                    <option value="gampaha">gampaha</option>
-                                </select>
+                                <div class="input-group">
+                                    <select id="selectBranch" class="form-control text-center" required onchange="selectDBValidator(this,'','teacher','branch_id')">
+
+                                    </select>
+                                    <span>
+                                        <i class="btn btn-primary" data-bs-toggle="collapse" href="#collapseBranch"
+                                               role="button">add</i>
+                                        </span>
+                                </div>
+                                <!--  collapse academic year form  start  -->
+                                <div class="collapse mt-2" id="collapseBranch">
+                                    <div class="card card-body">
+                                        <form onsubmit="return false" id="BranchForm">
+                                            <div class="row mt-2">
+                                                <div class="col-md-4">
+                                                    <label for="textBranchName" class="form-label fw-bold">Branch Name</label>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <input type="text" id="textBranchName" class="form-control text-center" onkeyup="textValidator(this,'^[A-Za-z]{3,30}$','branchOB','name')">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mt-2">
+                                                <div class="col-md-4">
+                                                    <label for="textBranchCode" class="form-label fw-bold">Branch Code</label>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <input type="text" id="textBranchCode" class="form-control text-center" onkeyup="textValidator(this,'^[0-9]{3,30}$','branchOB','bankbranchcode')">
+                                                </div>
+                                            </div>
+
+
+
+                                            <div class="row mt-2">
+                                                <div class="col-md-4">
+                                                    <label for="selectBank" class="form-label fw-bold">Bank name</label>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <select id="selectBank" class="form-select text-center" onchange="selectDBValidator(this,'','branchOB','bank_id')"></select>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="row">
+                                                <div class="col-12">
+                                                    <button type="button" class="btn btn-success" onclick="buttonBranchSubmit()">
+                                                        add
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                                <!--  collapse academic year form end-->
                             </div>
                         </div>
                         <!--                        branch name end-->

@@ -59,9 +59,12 @@ public class EmployeeController {
     @GetMapping(value = "/employeeform")
     public ModelAndView getEmployeeView() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedUser=userDao.getUserByUserName(auth.getName());
         ModelAndView employeeView = new ModelAndView();
         employeeView.setViewName("employee.html");
         employeeView.addObject("loggedusername",auth.getName());
+        employeeView.addObject("loggeduserrole",loggedUser.getRoles().iterator().next().getName());
+        employeeView.addObject("loggeduserphoto",loggedUser.getUserphoto());
         employeeView.addObject("title","employee management");
         return employeeView;
     }

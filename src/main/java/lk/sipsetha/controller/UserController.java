@@ -29,9 +29,12 @@ public class UserController {
     @GetMapping(value = "/userform")
     public ModelAndView userView() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedUser=userDao.getUserByUserName(auth.getName());
         ModelAndView userView = new ModelAndView();
         userView.setViewName("user.html");
         userView.addObject("loggedusername", auth.getName());
+        userView.addObject("loggeduserrole",loggedUser.getRoles().iterator().next().getName());
+        userView.addObject("loggeduserphoto",loggedUser.getUserphoto());
         userView.addObject("title", "user management");
         return userView;
     }

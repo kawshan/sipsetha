@@ -3,9 +3,11 @@ package lk.sipsetha.controller;
 import lk.sipsetha.dao.ClassOfferingDao;
 import lk.sipsetha.dao.RegistrationStatusDao;
 import lk.sipsetha.dao.StudentRegistrationDao;
+import lk.sipsetha.dao.UserDao;
 import lk.sipsetha.entity.ClassOffering;
 import lk.sipsetha.entity.RegistrationStatus;
 import lk.sipsetha.entity.StudentRegistration;
+import lk.sipsetha.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
@@ -33,13 +35,19 @@ public class StudentRegistrationController {
     @Autowired//dependency injection
     private ClassOfferingDao classOfferingDao;  //class offering dao eke instance ekak hadagena eka varible ekakta dagena thiyenawa
 
+    @Autowired
+    private UserDao userDao;
+
 
     @GetMapping(value = "/studentregistrationform")
     public ModelAndView getStudentRegistrationUI(){
         Authentication auth  = SecurityContextHolder.getContext().getAuthentication();
+        User loggedUser=userDao.getUserByUserName(auth.getName());
         ModelAndView studentRegistrationView = new ModelAndView();
         studentRegistrationView.setViewName("studentregistration.html");
         studentRegistrationView.addObject("loggedusername",auth.getName());
+        studentRegistrationView.addObject("loggeduserrole",loggedUser.getRoles().iterator().next().getName());
+        studentRegistrationView.addObject("loggeduserphoto",loggedUser.getUserphoto());
         studentRegistrationView.addObject("title","student class registration ");
         return studentRegistrationView;
     }

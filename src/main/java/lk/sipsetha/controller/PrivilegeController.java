@@ -1,7 +1,9 @@
 package lk.sipsetha.controller;
 
 import lk.sipsetha.dao.PrivilegeDao;
+import lk.sipsetha.dao.UserDao;
 import lk.sipsetha.entity.Privilege;
+import lk.sipsetha.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
@@ -18,13 +20,19 @@ public class PrivilegeController {
     @Autowired
     private PrivilegeDao privilegeDao;
 
+    @Autowired
+    private UserDao userDao;
+
     @GetMapping(value = "/privilegeform")
     public ModelAndView privilegeUI(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedUser=userDao.getUserByUserName(auth.getName());
         ModelAndView privilegeView = new ModelAndView();
         privilegeView.setViewName("privilege.html");
         privilegeView.addObject("title","privilege management");
         privilegeView.addObject("loggedusername",auth.getName());
+        privilegeView.addObject("loggeduserrole",loggedUser.getRoles().iterator().next().getName());
+        privilegeView.addObject("loggeduserphoto",loggedUser.getUserphoto());
         return privilegeView;
     }
 

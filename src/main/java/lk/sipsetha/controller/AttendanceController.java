@@ -5,6 +5,7 @@ import lk.sipsetha.dao.AttendanceStatusDao;
 import lk.sipsetha.dao.UserDao;
 import lk.sipsetha.entity.Attendance;
 import lk.sipsetha.entity.AttendanceStatus;
+import lk.sipsetha.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
@@ -42,9 +43,12 @@ public class AttendanceController {
     @GetMapping(value = "/attendanceform")
     public ModelAndView getAttendanceView() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedUser=userDao.getUserByUserName(auth.getName());
         ModelAndView attendanceView = new ModelAndView();
         attendanceView.setViewName("attendance.html");
         attendanceView.addObject("loggedusername",auth.getName());
+        attendanceView.addObject("loggeduserrole",loggedUser.getRoles().iterator().next().getName());
+        attendanceView.addObject("loggeduserphoto",loggedUser.getUserphoto());
         attendanceView.addObject("title","attendance management");
         return attendanceView;
     }

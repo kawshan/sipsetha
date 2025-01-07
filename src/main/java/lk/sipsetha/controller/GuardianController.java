@@ -3,6 +3,7 @@ package lk.sipsetha.controller;
 import lk.sipsetha.dao.GuardianDao;
 import lk.sipsetha.dao.UserDao;
 import lk.sipsetha.entity.Guardian;
+import lk.sipsetha.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
@@ -40,10 +41,13 @@ public class GuardianController {
     @GetMapping(value = "/guardianform")
     public ModelAndView guardianView(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedUser=userDao.getUserByUserName(auth.getName());
         ModelAndView guardianUI = new ModelAndView();
         guardianUI.setViewName("guardian.html");
         guardianUI.addObject("title","guardian management");
         guardianUI.addObject("loggedusername",auth.getName());
+        guardianUI.addObject("loggeduserrole",loggedUser.getRoles().iterator().next().getName());
+        guardianUI.addObject("loggeduserphoto",loggedUser.getUserphoto());
         return guardianUI;
     }
 

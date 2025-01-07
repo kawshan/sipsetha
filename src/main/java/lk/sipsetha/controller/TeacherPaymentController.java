@@ -4,6 +4,7 @@ import lk.sipsetha.dao.TeacherPaymentDao;
 import lk.sipsetha.dao.UserDao;
 import lk.sipsetha.entity.TeacherPayment;
 import lk.sipsetha.entity.TeacherPaymentHasEnrolment;
+import lk.sipsetha.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -29,10 +30,13 @@ public class TeacherPaymentController {
     @GetMapping
     public ModelAndView teacherPaymentView(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User loggedUser=userDao.getUserByUserName(authentication.getName());
         ModelAndView teacherPaymentUI = new ModelAndView();
         teacherPaymentUI.setViewName("teacherpayment.html");
         teacherPaymentUI.addObject("title","teacher payment ui");
         teacherPaymentUI.addObject("loggedusername",authentication.getName());
+        teacherPaymentUI.addObject("loggeduserrole",loggedUser.getRoles().iterator().next().getName());
+        teacherPaymentUI.addObject("loggeduserphoto",loggedUser.getUserphoto());
         return teacherPaymentUI;
 
     }

@@ -5,6 +5,7 @@ import lk.sipsetha.dao.ClassOfferingStatusDao;
 import lk.sipsetha.dao.UserDao;
 import lk.sipsetha.entity.ClassOffering;
 import lk.sipsetha.entity.ClassOfferingStatus;
+import lk.sipsetha.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -44,9 +45,12 @@ public class ClassOfferingController {
     @GetMapping(value = "/classofferingform")
     public ModelAndView classOfferingView(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedUser=userDao.getUserByUserName(auth.getName());
         ModelAndView classOfferingUI = new ModelAndView();
         classOfferingUI.setViewName("classoffering.html");
         classOfferingUI.addObject("loggedusername",auth.getName());
+        classOfferingUI.addObject("loggeduserrole",loggedUser.getRoles().iterator().next().getName());
+        classOfferingUI.addObject("loggeduserphoto",loggedUser.getUserphoto());
         classOfferingUI.addObject("title","class offering management");
         return classOfferingUI;
     }

@@ -30,9 +30,9 @@
                             Administration
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="employee/employeeform">employee management</a></li>
-                            <li><a class="dropdown-item" href="user/userform">user management</a></li>
-                            <li><a class="dropdown-item" href="privilege/privilegeform">privilege management</a></li>
+                            <li><a class="dropdown-item" href="/employee/employeeform">employee management</a></li>
+                            <li><a class="dropdown-item" href="/user/userform">user management</a></li>
+                            <li><a class="dropdown-item" href="/privilege/privilegeform">privilege management</a></li>
                         </ul>
                     </li>
 
@@ -68,7 +68,7 @@
                     <li class="nav-item dropdown" id="navTeacher">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false" style="color: whitesmoke">
-                            class
+                            Teacher
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="/teacher/teacherform">teacher management</a></li>
@@ -116,7 +116,7 @@
 
             <div class="row mt-2" id="offCanAdministration">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown"
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
                             aria-expanded="false">
                         Administration section
                     </button>
@@ -131,7 +131,7 @@
 
             <div class="row mt-2" id="offCanStudent">
                 <div class="btn-group mt-2">
-                    <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown"
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
                             aria-expanded="false">
                         student Sections
                     </button>
@@ -140,13 +140,14 @@
                         <li><a class="dropdown-item" href="/student/studentform">student management</a></li>
                         <li><a class="dropdown-item" href="/studentregistration/studentregistrationform">student registration management</a></li>
                         <li><a class="dropdown-item" href="/payment/paymentform">student payment management</a></li>
+                        <li><a class="dropdown-item" href="/attendance/attendanceform">Attendance management</a></li>
                     </ul>
                 </div>
             </div>
 
             <div class="row mt-2" id="offCanClass">
                 <div class="btn-group mt-2">
-                    <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown"
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
                             aria-expanded="false">
                         class Sections
                     </button>
@@ -162,7 +163,7 @@
 
             <div class="row mt-2" id="offCanTeacher">
                 <div class="btn-group mt-2">
-                    <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown"
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
                             aria-expanded="false">
                         teacher Sections
                     </button>
@@ -189,6 +190,17 @@
                 </div>
             </div>
 
+            <div class="row mt-2 d-none" id="offCanAttendance">
+                <div class="btn-group mt-2">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        Attendance
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/attendance/attendanceform">Attendance management</a></li>
+                    </ul>
+                </div>
+            </div>
 
 
 

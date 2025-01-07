@@ -2,8 +2,10 @@ package lk.sipsetha.controller;
 
 import lk.sipsetha.dao.AllocationStatusDao;
 import lk.sipsetha.dao.ClassRoomAllocationDao;
+import lk.sipsetha.dao.UserDao;
 import lk.sipsetha.entity.AllocationStatus;
 import lk.sipsetha.entity.ClassroomAllocation;
+import lk.sipsetha.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
@@ -19,7 +21,7 @@ import java.util.List;
 @RequestMapping(value = "/classroomallocation")
 public class ClassRoomAllocationController {
 
-    @Autowired
+    @Autowired  //dependency injection
     private ClassRoomAllocationDao dao;
 
     @Autowired
@@ -27,6 +29,9 @@ public class ClassRoomAllocationController {
 
     @Autowired
     private PrivilegeController privilegeController;
+
+    @Autowired
+    private UserDao userDao;
 
     @GetMapping(value = "/findall")
     public List<ClassroomAllocation> getAllClassRoomAllocation(){
@@ -41,9 +46,12 @@ public class ClassRoomAllocationController {
     @GetMapping(value = "/classroomallocationform")
     public ModelAndView getClassroomAllocationForm(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedUser=userDao.getUserByUserName(auth.getName());
         ModelAndView classroomAllocationView = new ModelAndView();
         classroomAllocationView.setViewName("classroomallocation.html");
         classroomAllocationView.addObject("loggedusername",auth.getName());
+        classroomAllocationView.addObject("loggeduserrole",loggedUser.getRoles().iterator().next().getName());
+        classroomAllocationView.addObject("loggeduserphoto",loggedUser.getUserphoto());
         classroomAllocationView.addObject("title","classroom allocation ui");
         return classroomAllocationView;
     }

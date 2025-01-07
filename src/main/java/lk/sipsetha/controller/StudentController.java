@@ -40,10 +40,13 @@ public class StudentController {
     @GetMapping(value = "/studentform")
     public ModelAndView studentView(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedUser=userDao.getUserByUserName(auth.getName());
         ModelAndView studentUI = new ModelAndView();
         studentUI.setViewName("student.html");
         studentUI.addObject("title","student management");
         studentUI.addObject("loggedusername",auth.getName());
+        studentUI.addObject("loggeduserrole",loggedUser.getRoles().iterator().next().getName());
+        studentUI.addObject("loggeduserphoto",loggedUser.getUserphoto());
         return studentUI;
     }
 

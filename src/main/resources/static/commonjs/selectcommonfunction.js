@@ -43,6 +43,9 @@ const fillDataIntoSelectWithTwoAttributes = (fieldId,message,dataList,property,p
     }
 
 }
+
+
+
 //define function for fill data into select with two attributes
 const fillDataIntoSelectNew = (fieldId,message,dataList,property,propertyTwo,selectedValue)=>{
     fieldId.innerHTML=""; //inner html eka clean karala danawa monawath nathi venna ee html eka athule thiyena

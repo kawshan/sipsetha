@@ -3,6 +3,7 @@ package lk.sipsetha.controller;
 import lk.sipsetha.dao.PaymentDao;
 import lk.sipsetha.dao.UserDao;
 import lk.sipsetha.entity.Payment;
+import lk.sipsetha.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
@@ -30,9 +31,12 @@ public class PaymentController {
     @GetMapping(value = "/paymentform")
     public ModelAndView getPaymentTypeUI(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedUser=userDao.getUserByUserName(auth.getName());
         ModelAndView paymentTypeView = new ModelAndView();
         paymentTypeView.setViewName("payment.html");
         paymentTypeView.addObject("loggedusername",auth.getName());
+        paymentTypeView.addObject("loggeduserrole",loggedUser.getRoles().iterator().next().getName());
+        paymentTypeView.addObject("loggeduserphoto",loggedUser.getUserphoto());
         paymentTypeView.addObject("title","student payment management ui");
         return paymentTypeView;
     }

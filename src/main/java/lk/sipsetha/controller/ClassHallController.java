@@ -5,6 +5,7 @@ import lk.sipsetha.dao.ClassHallStatusDao;
 import lk.sipsetha.dao.UserDao;
 import lk.sipsetha.entity.ClassHall;
 import lk.sipsetha.entity.ClassHallStatus;
+import lk.sipsetha.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
@@ -46,9 +47,12 @@ public class ClassHallController {
     @GetMapping(value = "/classhallform")
     public ModelAndView getClassHallView(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedUser=userDao.getUserByUserName(auth.getName());
         ModelAndView classHallUI = new ModelAndView();
         classHallUI.setViewName("classhall.html");
         classHallUI.addObject("loggedusername",auth.getName());
+        classHallUI.addObject("loggeduserrole",loggedUser.getRoles().iterator().next().getName());
+        classHallUI.addObject("loggeduserphoto",loggedUser.getUserphoto());
         classHallUI.addObject("title","class hall management ui");
         return classHallUI;
     }

@@ -2,8 +2,10 @@ package lk.sipsetha.controller;
 
 import lk.sipsetha.dao.TeacherDao;
 import lk.sipsetha.dao.TeacherStatusDao;
+import lk.sipsetha.dao.UserDao;
 import lk.sipsetha.entity.Teacher;
 import lk.sipsetha.entity.TeacherStatus;
+import lk.sipsetha.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,6 +28,9 @@ public class TeacherController {
     @Autowired
     private PrivilegeController privilegeController;
 
+    @Autowired
+    private UserDao userDao;
+
     @GetMapping(value = "/findall")
     public List<Teacher> getAllTeacher(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -39,9 +44,12 @@ public class TeacherController {
     @GetMapping(value = "/teacherform")
     public ModelAndView teacherView(){
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User loggedUser=userDao.getUserByUserName(auth.getName());
         ModelAndView teacherUI = new ModelAndView();
         teacherUI.setViewName("teacher.html");
         teacherUI.addObject("loggedusername",auth.getName());
+        teacherUI.addObject("loggeduserrole",loggedUser.getRoles().iterator().next().getName());
+        teacherUI.addObject("loggeduserphoto",loggedUser.getUserphoto());
         teacherUI.addObject("title","teacher management ui");
         return teacherUI;
     }

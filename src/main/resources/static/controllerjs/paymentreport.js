@@ -129,7 +129,8 @@ const generateReportsByPaymentType = ()=>{
 
 const generateReportByDate=()=>{
     let paymentDate = textPaymentDate.value;
-    studentPayments=ajaxGetRequest("")
+    console.log(paymentDate+" "+typeof (paymentDate));
+    studentPayments=ajaxGetRequest("/reportdatapayment/"+paymentDate);
     refreshPaymentTable();
 }
 

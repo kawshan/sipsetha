@@ -73,17 +73,15 @@ public class ReportDataController {
 
     ///reportdataattendance/{startdate}/{enddate}
     @GetMapping(value = "/reportdataattendance/{startdate}/{enddate}")
-    public List<Attendance> getAttendanceBYStartDateAndEndDate(@PathVariable("startdate") String startdate, @PathVariable("enddate") String enddate) {
-        LocalDate startdateLD = LocalDate.parse(startdate);
-        LocalDate enddateLD = LocalDate.parse(enddate);
-        return reportDao.getAttendanceStartAndENDDate(startdateLD, enddateLD);
+    public List<Attendance> getAttendanceBYStartDateAndEndDate(@PathVariable("startdate") LocalDate startdate, @PathVariable("enddate") LocalDate enddate) {
+        return reportDao.getAttendanceStartAndENDDate(startdate, enddate);
     }
 
-    //reportdatapayment/2024-07-03
-//    @GetMapping(value = "/reportdatapayment/{date}")
-//    public List<Payment> getReportByDate(@PathVariable("date") String date) {
-//        return reportDao.getPaymentByDate(date);
-//    }
+    //reportdatapayment/2024-07-27
+    @GetMapping(value = "/reportdatapayment/{date}")
+    public List<Payment> getReportByDate(@PathVariable("date") String date) {
+        return reportDao.getPaymentByDate(date);
+    }
 
 }
 

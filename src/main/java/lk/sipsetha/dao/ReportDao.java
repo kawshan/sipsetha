@@ -6,18 +6,17 @@ import lk.sipsetha.entity.Payment;
 import lk.sipsetha.entity.Student;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public interface ReportDao extends JpaRepository<Employee,Integer> {
-
+public interface ReportDao extends JpaRepository<Employee, Integer> {
 
 
     @Query(value = "select e from Employee e where e.employeestatus_id.id=1")
     public List<Employee> workingEmployees();
-
 
 
     @Query(value = "select e from Employee e where e.employeestatus_id.id=?1 and e.designation_id.id=?2")
@@ -35,7 +34,7 @@ public interface ReportDao extends JpaRepository<Employee,Integer> {
     public List<Payment> getPaymentByMonth(String month);
 
     @Query(value = "select p from Payment p where p.paytype_id.id=?1 and p.paymentcategory_id.id=?2")
-    public List<Payment> getPaymentByTypeAndCategory(int paytype,int paymentcategory);
+    public List<Payment> getPaymentByTypeAndCategory(int paytype, int paymentcategory);
 
 
     @Query(value = "select p from Payment p where p.paytype_id.id=?1")
@@ -47,9 +46,14 @@ public interface ReportDao extends JpaRepository<Employee,Integer> {
     @Query(value = "select a from Attendance a where a.addeddate between ?1 and ?2 order by a.addeddate")
     public List<Attendance> getAttendanceStartAndENDDate(LocalDate startdate, LocalDate enddate);
 
-//    @Query(value = "select p from Payment p where p.addeddatetime like ?1 %")
-//    @Query(value = "select * from payment where addeddatetime like ?1 %",nativeQuery = true)
-//    public List<Payment> getPaymentByDate(String date);
+    //select * from payment where addeddatetime like '2024-06-27%'
+    //@Query(value = "select p.* from Payment p where addeddatetime like //?1%", nativeQuery = true)
+    @Query(value = "select p from Payment p where DATE(p.addeddatetime) like concat(?1,'%') ")
+    public List<Payment> getPaymentByDate(String date);
+
+
+
+
 
 
 }

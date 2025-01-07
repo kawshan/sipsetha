@@ -1,6 +1,6 @@
 window.addEventListener('load', () => {
     // student = new Object();
-    userPrivilege = ajaxGetRequest("/privilege/byloggeduser/student")
+    userPrivilege = ajaxGetRequest("/privilege/byloggeduser/student");
 
 
     refreshStudentTable();
@@ -180,6 +180,9 @@ const refreshStudentForm = () => {
         student.grade_id=JSON.parse(selectGrade.value); //json parse convert json string into js object
         selectGrade.style.border="2px solid green";//border ekata colour ekk danawa
         selectGrade.disabled=true;  //disable karanawa
+
+
+
 
 
     })

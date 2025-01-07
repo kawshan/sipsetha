@@ -24,10 +24,10 @@ public class WebConfiguration {
                     .requestMatchers("/login").permitAll()
                     .requestMatchers("/error").permitAll()
                     .requestMatchers("/dashboard").hasAnyAuthority("admin","manager","assistant-manager","cashier","employee","card-checker")
-                    .requestMatchers("/privilege/**").hasAnyAuthority("admin","manager","assistant-manager","cashier","card-checker")//methana danna une api privilege controller eke privilege module ekata privilege thiyenawada balannath privilege check karana nisa?
+                    .requestMatchers("/privilege/**").hasAnyAuthority("admin","manager","assistant-manager","cashier","employee","card-checker")//methana danna une api privilege controller eke privilege module ekata privilege thiyenawada balannath privilege check karana nisa?
                     .requestMatchers("/user/**").hasAnyAuthority("admin","manager","assistant-manager")
                     .requestMatchers("/employee/**").hasAnyAuthority("admin","manager","assistant-manager")
-                    .requestMatchers("/student/**").hasAnyAuthority("admin","manager","assistant-manager","cashier")
+                    .requestMatchers("/student/**").hasAnyAuthority("admin","manager","assistant-manager","cashier","card-checker")
                     .requestMatchers("/guardian/**").hasAnyAuthority("admin","manager","assistant-manager","cashier")
                     .requestMatchers("/studentregistration/**").hasAnyAuthority("admin","manager","assistant-manager","cashier")
                     .requestMatchers("/payment/**").hasAnyAuthority("admin","manager","assistant-manager","cashier")
@@ -35,7 +35,7 @@ public class WebConfiguration {
                     .requestMatchers("/classhall/**").hasAnyAuthority("admin","manager","assistant-manager")
                     .requestMatchers("/classroomallocation/**").hasAnyAuthority("admin","manager","assistant-manager")
                     .requestMatchers("/teacher/**").hasAnyAuthority("admin","manager","assistant-manager")
-                    .requestMatchers("/classoffering/**").hasAnyAuthority("admin","manager","assistant-manager","cashier")
+                    .requestMatchers("/classoffering/**").hasAnyAuthority("admin","manager","assistant-manager","cashier","card-checker")
                     .requestMatchers("/teacherpayment/**").hasAnyAuthority("admin","manager","assistant-manager")
                     .anyRequest().authenticated();
         })

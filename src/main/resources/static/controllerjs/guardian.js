@@ -89,6 +89,15 @@ const refreshGuardianForm = ()=>{
     btnGuardAdd.disabled=false;
     btnGuardAdd.style.cursor="pointer"; //refill ekedi pointer not allowed dunna nisa thama methana pointer dunne ethakota cursor eka 👆 mehema pennanawa
 
+    //privilege thiyenawa da balanwa insert ekata
+    if (!userPrivilege.insert) {
+        btnGuardAdd.disabled = true;
+    }
+    else {
+        btnGuardAdd.disabled=false;
+    }
+
+
 }
 
 //define get guardian function
@@ -186,6 +195,15 @@ const GuardianFormRefill = (ob,rowIndex)=>{
     //need to disable add button
     btnGuardAdd.disabled=true;
     btnGuardAdd.style.cursor="not-allowed";
+
+
+    //privilege thiyenawa da balanwa insert ekata
+    if (!userPrivilege.update) {
+        btnGuardUpdate.disabled = true;
+    }
+    else {
+        btnGuardUpdate.disabled=false;
+    }
 
 }
 

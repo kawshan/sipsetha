@@ -138,8 +138,8 @@ public class EmployeeController {
         }
     }
 
-    @Transactional  //mekata ai damme uda methoda eka transactional nisa ethana eka scilently fall kiyana error eka awa eka nathi karanna thama me dewani method ekata transactional damme link for this error ->https://stackoverflow.com/questions/19302196/transaction-marked-as-rollback-only-how-do-i-find-the-cause
-    @DeleteMapping  //methanath dependency ekak thiyenawa eka tham employee delete karanakota eyata adala user account ekak thiyenawanam eke status eka delete karanawa
+    @Transactional    //methanath dependency ekak thiyenawa eka thamai employee delete karanakota eyata adala user account ekak thiyenawanam eke status eka delete karanawa                                                                                                                                                      //mekata ai damme uda methoda eka transactional nisa ethana eka scilently fall kiyana error eka awa eka nathi karanna thama me dewani method ekata transactional damme link for this error ->https://stackoverflow.com/questions/19302196/transaction-marked-as-rollback-only-how-do-i-find-the-cause
+    @DeleteMapping
     public String deleteEmployee(@RequestBody Employee employee) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         HashMap<String,Boolean> getUserPrivilege = privilegeController.getPrivilegeByUserModule(auth.getName(), "employee");

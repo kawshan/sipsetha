@@ -1,0 +1,203 @@
+window.addEventListener('load', () => {
+
+    //get user privileges for check privileges on buttons
+    userPrivilege =ajaxGetRequest("/privilege/byloggeduser/studentregistration");
+
+    //call refresh attendance form
+    refreshAttendanceForm()
+
+
+    //refresh attendance table call;
+    refreshAttendanceTable();
+});
+
+
+//define refresh attendance form
+const refreshAttendanceForm = () => {
+    AttendanceForm.reset();
+    attendance = new Object();
+    oldAttendance = null;
+
+    students = ajaxGetRequest("/student/findall")
+    fillDataIntoDataList(dataListStudent, students, 'stunum', 'firstname');
+
+
+    classOfferings = ajaxGetRequest("/classoffering/findall")
+    fillDataIntoSelect(selectClassOffering, "Select Class Offerings", classOfferings, 'classname');
+
+    attendanceStatuses = ajaxGetRequest("/attendancestatus/findall")
+    fillDataIntoSelect(selectAttendanceStatus, "Select Attendance status", attendanceStatuses, 'name');
+
+
+}
+
+//define refresh attendance table
+const refreshAttendanceTable = () => {
+
+    attendancesList = ajaxGetRequest("/attendance/findall");
+
+    displayProperty = [
+        {dataType: 'function', propertyName: getStudentName},
+        {dataType: 'function', propertyName: getClassOffering},
+        {dataType: 'function', propertyName: getAttendanceStatus},
+    ];
+
+    fillDataIntoTable(tableAttendance,attendancesList,displayProperty,checkPrivileges,true)
+}
+
+const checkPrivileges = (innerOb)=>{
+    if (innerOb.attendancestatus_id.name!="delete"){
+        if (!userPrivilege.delete){
+            divModifyButtonDelete.className='d-none';
+        }
+    }else {
+        divModifyButtonDelete.disabled=true;
+        divModifyButtonDelete.style.cursor='not-allowed';
+    }
+}
+
+const getStudentName = (ob) => {
+    return ob.student_id.firstname + " " + ob.student_id.lastname
+}
+
+const getClassOffering = (ob) => {
+    return ob.classoffering_id.classname;
+}
+
+const getAttendanceStatus = (ob) => {
+    return ob.attendancestatus_id.name;
+}
+
+const refillAttendanceForm = (ob, rowIndex) => {
+
+    attendance = JSON.parse(JSON.stringify(ob));
+    oldAttendance = JSON.parse(JSON.stringify(ob));
+
+    $('#modalAttendanceAdd').modal('show');
+
+    textStudent.value = attendance.student_id.stunum + " " + attendance.student_id.firstname
+
+    fillDataIntoSelect(selectClassOffering, "Select Class Offerings", classOfferings, 'classname', attendance.classoffering_id.classname);
+
+    fillDataIntoSelect(selectAttendanceStatus, "Select Attendance status", attendanceStatuses, 'name', attendance.attendancestatus_id.name);
+
+}
+
+const deleteAttendance = (ob, rowIndex) => {
+    console.log("delete");
+    tableAttendance.children[1].children[rowIndex].style.backgroundColor = 'pink';
+    setTimeout(function () {
+        const userConfirm = confirm("are you sure to delete attendance \n"
+            + "\n Student is " + ob.student_id.stunum + " " + ob.student_id.firstname + " " + ob.student_id.lastname
+            + "\n Class offering is" + ob.classoffering_id.classname
+            + "\n Attendance staus is" + ob.attendancestatus_id.name
+        );
+
+        if (userConfirm) {
+            let deleteServerResponse = ajaxDeleteRequest("/attendance", ob);
+            if (deleteServerResponse == "ok") {
+                alert("Delete Successful");
+                refreshAttendanceTable();
+            } else {
+                alert("Error happened please recheck \n" + deleteServerResponse);
+            }
+        }
+
+    }, 500)
+}
+
+
+const checkFormErrors = () => {
+    let errors = "";
+
+    if (attendance.student_id == null) {
+        errors = errors + "student cannot be empty \n"
+    }
+    if (attendance.classoffering_id == null) {
+        errors = errors + "Class offering cannot be empty \n"
+    }
+    if (attendance.attendancestatus_id == null) {
+        errors = errors + "attendance status cannot be empty \n"
+    }
+
+    return errors;
+}
+
+const buttonAttendanceSubmit = () => {
+    let errors = checkFormErrors();
+    if (errors == "") {
+        const userConfirm = confirm("Are you sure to add following attendance \n"
+            + "\n student number is " + attendance.student_id.stunum + " student firstname is " + attendance.student_id.firstname + " student last name is " + attendance.student_id.lastname
+            + "\n class offering name is"+attendance.classoffering_id.classname
+            +"\n attendance status is"+attendance.attendancestatus_id.name
+        );
+        if (userConfirm){
+            let postServiceResponse=ajaxPostRequest("/attendance",attendance);
+            if (postServiceResponse=="ok"){
+                alert("save successful ")
+                $('#modalAttendanceAdd').modal('hide');
+                refreshAttendanceForm();
+                refreshAttendanceTable();
+            }else {
+                alert("error happened \n"+postServiceResponse)
+            }
+        }
+    }else {
+        alert("you might have some errors \n"+errors);
+    }
+}
+
+const checkUpdates = ()=>{
+    let updates = "";
+
+    if (attendance.student_id.stunum != oldAttendance.student_id.stunum){
+        updates=updates+"student is changed \n";
+    }
+    if (attendance.classoffering_id.classname!=oldAttendance.classoffering_id.classname){
+        updates="class offering is changed \n";
+    }
+    if (attendance.attendancestatus_id.name!=oldAttendance.attendancestatus_id.name){
+        updates="attendance status is changed \n";
+    }
+    return updates;
+}
+
+
+const buttonAttendanceUpdate = ()=>{
+    let updates=checkUpdates();
+    if (updates==""){
+        alert("nothing to update ");
+    }else {
+        const userConfirm=confirm("Are you sure to update following attendance \n"+updates)
+        if (userConfirm){
+            let putServiceResponse = ajaxPutRequest("/attendance",attendance)
+            if (putServiceResponse=="ok"){
+                $('#modalAttendanceAdd').modal('hide');
+                refreshAttendanceForm();
+                refreshAttendanceTable();
+                alert("update successful");
+            }else {
+                alert("error happened please recheck");
+            }
+        }
+    }
+}
+
+//define function for generate student registration number from student
+// const generateStudentRegistration = (fieldID) => {//parameter ekak vidihata field id eka gannwa eka enne html eke this eken pass karala
+//     console.log(fieldID.value);
+//     let selectedValue = fieldID.value.split(" ");
+//     let indexNumber = selectedValue[0];
+//     console.log(indexNumber);
+//     let studentRegistrationsbystudent = ajaxGetRequest("/studentregistration/" + indexNumber); //student registration eken index number eka genna gannawa
+//     fillDataIntoSelectNew(selectClassOffering, 'select student registrations', studentRegistrationsbystudent, 'classoffering_id', 'classname', '');
+//     fillDataIntoSelect(selectClassOffering,'select class offerings',studentRegistrationsbystudent,'classoffering_id',)
+//
+// }
+
+
+
+
+
+
+

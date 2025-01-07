@@ -4,6 +4,8 @@ import lk.sipsetha.entity.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
+import java.util.List;
+
 public interface EmployeeDao extends JpaRepository<Employee,Integer> {
 
 
@@ -16,5 +18,8 @@ public interface EmployeeDao extends JpaRepository<Employee,Integer> {
     @Query(value = "SELECT lpad(max(e.empnum)+1,5,0) as empnumber FROM sipsetha.employee as e;",nativeQuery = true)
     public String getEmployeeNextNumber();
 
+    //create query for get employee without user account
+    @Query("select e from Employee e where e.id not in(select u.employee_id from User u where u.employee_id is not null)")
+    public List<Employee> getListWithoutUserAccount();
 
 }

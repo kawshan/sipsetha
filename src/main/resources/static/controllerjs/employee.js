@@ -120,7 +120,7 @@ const employeeFormRefill = (ob, rowIndex) => {
     employee=JSON.parse(JSON.stringify(ob));
     oldEmployee=JSON.parse(JSON.stringify(ob));
 
-    console.log('refil');
+    console.log('refill');
     $('#modalEmployeeAdd').modal('show');
 
 
@@ -129,7 +129,10 @@ const employeeFormRefill = (ob, rowIndex) => {
     textCallingName.value = employee.callingname;
     selectDOB.value = employee.dob;
     textNic.value = employee.nic;
-    fillDataIntoSelect(selectGender, 'select gender', genders, 'name');
+
+    fillDataIntoSelect(selectGender, 'select gender', genders, 'name',employee.gender_id.name);
+
+
     textMobile.value = employee.mobile;
     if (employee.landno != null){
         textLand.value = employee.landno;

@@ -110,4 +110,9 @@ public class EmployeeController {
 
     }
 
+    @GetMapping(value = "/withoutuseraccount")
+    public List<Employee> getListWithoutUserAccount(){
+        return dao.getListWithoutUserAccount();
+    }
+
 }

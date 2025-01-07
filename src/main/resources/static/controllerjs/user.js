@@ -1,39 +1,22 @@
 window.addEventListener('load',()=>{
-    user = new Object();
 
+    //call refresh user form function
+    refreshUserForm();
+
+    //call refresh user table function
     refreshUserTable();
 
-    roles=[
-        {id:1,name:'owner'},
-        {id:2,name:'manager'},
-        {id:3,name:'cashier'}
-    ];
-    fillDataIntoSelect(selectRole,'select role',roles,'name');
-
-    statuses=[
-        {id:1,name:'working'},
-        {id:2,name:'resign'},
-        {id:3,name:'delete'},
-    ];
-
-    fillDataIntoSelect(selectStatus,'select status',statuses,'name');
-
-
 });
-
+//define function for refresh user table
 const refreshUserTable = ()=>{
-    users=[
-        {employee:'value1',username:'kawshan',password:'kawshan1234',repassword:'kawshan1234',email:'kawshan@gmail.com',role_id:{id:1,name:'owner'},userstatus_id:{id:1,name: 'working'}},
-        {employee:'value1',username:'galapatha',password:'galapatha1234',repassword:'galapatha1234',email:'galapatha@gmail.com',role_id:{id:2,name:'manager'},userstatus_id:{id:2,name: 'resign'}},
-        {employee:'value1',username:'doti',password:'doti1234',repassword:'doti1234',email:'doti@gmail.com',role_id:{id:3,name:'cashier'},userstatus_id:{id:3,name: 'delete'}}
-    ];
+    users=ajaxGetRequest("/user/findall");
 
 
     const displayProperty=[
-        {dataType:'text',propertyName:'employee'},
+        {dataType:'function',propertyName:getEmployee},
         {dataType:'text',propertyName:'username'},
-        {dataType:'text',propertyName:'password'},
-        {dataType:'text',propertyName:'repassword'},
+        // {dataType:'text',propertyName:'password'},
+        // {dataType:'text',propertyName:'repassword'},
         {dataType:'text',propertyName:'email'},
         {dataType:'function',propertyName:getUserRole},
         {dataType:'function',propertyName:getUserStatus},
@@ -45,24 +28,55 @@ const refreshUserTable = ()=>{
 
 }
 
+
+
+//define function for refresh user form
+const refreshUserForm = ()=>{
+
+    user = new Object();
+    formUser.reset();
+
+    employeeWithoutUserAccount=ajaxGetRequest("/employee/withoutuseraccount")
+    fillDataIntoSelect(selectEmployee,'select employee',employeeWithoutUserAccount,'fullname')
+
+    roles=ajaxGetRequest("/role/findall")
+    fillDataIntoSelect(selectRole,'select role',roles,'name');
+
+    statuses=[
+        {id:1,name:'active'},
+        {id:2,name:'not-active'},
+    ];
+
+    fillDataIntoSelect(selectStatus,'select status',statuses,'name');
+
+
+    selectEmployee.style.border='2px solid #ced4da';
+    textUserName.style.border='2px solid #ced4da';
+    textPassword.style.border='2px solid #ced4da';
+    textRePassword.style.border='2px solid #ced4da';
+    textEmail.style.border='2px solid #ced4da';
+    selectRole.style.border='2px solid #ced4da';
+    selectStatus.style.border='2px solid #ced4da';
+}
+
 //create function for get user status
 const getUserStatus = (ob)=>{
-    if (ob.userstatus_id.name == 'working'){
-        return '<p class="status-working">'+ob.userstatus_id.name+'</p>';
-    }
-    if (ob.userstatus_id.name == 'resign'){
-        return '<p class="status-resign">'+ob.userstatus_id.name+'</p>';
-
-    }
-    if (ob.userstatus_id.name == 'delete'){
-        return '<p class="status-delete">'+ob.userstatus_id.name+'</p>';
+    if (ob.status == '1'){
+        return '<p class="status-working">'+'active'+'</p>';
+    }else {
+        return '<p class="status-working">'+   'not-active'   +'</p>';
     }
 }
 
 
+//define function for get employee
+const getEmployee = (ob)=>{
+   return ob.employee_id.fullname;
+}
+
 //create function for get user role
 const getUserRole =(ob) =>{
-    return ob.role_id.name;
+    return 'role';
 }
 
 //create function for user form refill
@@ -79,10 +93,9 @@ const deleteUser=(ob,rowIndex)=>{
 
     setTimeout(function (){
     const userConfirm = confirm('are you sure to delete following user \n'
-    + 'employee is'+ob.employee
-    + 'user name is'+ob.username
-    + 'role is'+ob.role_id.name
-    + 'status is'+ob.userstatus_id.name
+    + '\n employee is '+ob.employee
+    + '\n user name is '+ob.username
+    + '\n status is '+ob.status
     );
     if (userConfirm){
         const deleteServerResponse = 'ok';
@@ -126,11 +139,11 @@ const checkFormErrors = ()=> {
         errors=errors+'email cannot be empty \n'
         textEmail.classList.add('is-invalid');
     }
-    if (user.role_id == null){
-        errors=errors+'role cannot be empty \n';
-        selectRole.classList.add('is-invalid');
-    }
-    if (user.userstatus_id == null){
+    // if (user.role_id == null){
+    //     errors=errors+'role cannot be empty \n';
+    //     selectRole.classList.add('is-invalid');
+    // }
+    if (user.status == null){
         errors=errors+'user status cannot be empty \n'
         selectStatus.classList.add('is-invalid');
     }

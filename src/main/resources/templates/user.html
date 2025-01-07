@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>user management</title>
+
+    <!--    link my styles css start -->
+    <!--    <link rel="stylesheet" href="resources/style/common.css">-->
+    <link rel="stylesheet" href="/style/button.css">
+    <link rel="stylesheet" href="/style/employee.css">
+    <!--    link my styles css end -->
+
+
+    <!--    link my js start-->
+    <script src="/commonjs/tablecommonfuntion.js"></script>
+    <script src="/commonjs/selectcommonfunction.js"></script>
+    <script src="/commonjs/validation.js"></script>
+
+    <script src="/controllerjs/user.js"></script>
+    <script src="/commonjs/ajaxcommonfunction.js"></script>
+
+
+    <!--    link my js end-->
+
+
+    <!--    link bootstrap js and css font awesome start-->
+    <link rel="stylesheet" href="/bootstrap-5.2.3/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/fontawesome-free-6.4.2/css/all.css">
+    <script src="/bootstrap-5.2.3/js/bootstrap.bundle.min.js"></script>
+    <script src="/commonjs/jquery.js"></script>
+    <!--    link bootstrap js and css font awesome end-->
+
+    <!--    jquery cdn start-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css">
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+    <!--    jquery cdn end-->
+
+    <!--    sweet alert start-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css" rel="stylesheet">
+    <!--    sweet alert end-->
+
+
+</head>
+<body style="background-color: #E0E9DD">
+<!--container fluid start-->
+<div class="container-fluid">
+
+    <!--    title area start-->
+    <div class="row mt-2">
+        <div class="col-md-12">
+            <h1 class="h1 text-center" style="background-color: #044800; color: whitesmoke; padding: 25px; border-radius: 30px;">user
+                management</h1>
+        </div>
+    </div>
+    <!--    title area end-->
+
+
+    <!--    title button area start-->
+    <div class="row mt-2">
+        <div class="col-md-8">
+            <!--            print user table button start-->
+            <div id="divPrintUserTableButton" class="">
+                <button type="button" class="btn fw-bold"
+                        style="background-color:#044800; color: whitesmoke; width: 25%; border: 1px solid black; border-radius: 30px;"
+                        onclick="printUserFullTable()">
+                    <i class="fa-solid fa-print fa-beat"></i> print user table
+                </button>
+            </div>
+            <!--            print user table button end-->
+
+        </div>
+        <div class="col-md-4">
+            <button type="button" class="btn fw-bold"
+                    style="background-color: #044800; color: whitesmoke; width: 100%; border: 1px solid black; border-radius: 30px"
+                    data-bs-toggle="modal" data-bs-target="#modalUserAdd" data-bs-backdrop="static"
+                    data-bs-keyboard="false">
+                <i class="fa-solid fa-plus fa-beat"></i> add new user
+            </button>
+        </div>
+    </div>
+    <!--    title button area end-->
+
+
+                <!--            edit delete print buttons start-->
+                <div class="row mt-2">
+                <div id="divModifyButton" class="d-none">
+                        <div class="col-md-8">
+                    <button type="button" class="btn btn-warning fw-bold"
+                            style="width: 25%; color: whitesmoke; border: 1px solid black" onclick="userFormRefill(window['editOb'],window['editRow'])">
+                        <i class="fa-solid fa-edit fa-beat"></i> edit
+                    </button>
+                    <button type="button" class="btn btn-danger fw-bold ms-2 me-2"
+                            style="width: 25%; border: 1px solid black" onclick="deleteUser(window['editOb'],window['editRow'])">
+                        <i class="fa-solid fa-trash fa-beat"></i> delete
+                    </button>
+                    <button type="button" class="btn btn-primary fw-bold"
+                            style="width: 25%; border: 1px solid black" onclick="printUser(window['editOb'],window['editRow'])">
+                        <i class="fa-solid fa-eye fa-beat"></i> print
+                    </button>
+                </div>
+                </div>
+            </div>
+                <!--            edit delete print buttons end-->
+
+
+
+
+    <!--    table area start-->
+    <div class="row mt-5">
+        <table class="table table-bordered table-striped" id="tableUser">
+            <thead class="table text-center" style="color:whitesmoke; background-color: #044800">
+            <th>id</th>
+            <th>employee</th>
+            <th>user name</th>
+<!--            <th>password</th>-->
+<!--            <th>re password</th>-->
+            <th>email</th>
+            <th>role</th>
+            <th>status</th>
+            <th>modify</th>
+
+            </thead>
+            <tbody>
+            <tr>
+                <td>1</td>
+                <td>kawshan virantha</td>
+                <td>kawshan</td>
+                <td>kawshan@gmail.com</td>
+                <td>manager</td>
+                <td>active</td>
+                <td class="text-center">
+                    <button type="button" class="btn btn-warning fw-bold" style="color: whitesmoke; border: 1px solid black;"><i class="fa-solid fa-recycle"></i> edit
+                    </button>
+                    <button type="button" class="btn btn-danger fw-bold" style="color: whitesmoke; border: 1px solid black;"><i class="fa-solid fa-trash ms-2 me-2"></i>
+                        delete
+                    </button>
+                    <button type="button" class="btn btn-primary fw-bold"style="color: whitesmoke; border: 1px solid black;"><i class="fa-solid fa-eye"> </i>  print
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <!--    table area end-->
+
+    <!--    user modal area start-->
+    <div class="modal modal-xl" id="modalUserAdd" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #044800; color: whitesmoke">
+                    <h2 class="h2">add new user</h2>
+                    <button class="btn btn-danger" data-bs-dismiss="modal"
+                            style="color: whitesmoke; border: 1px solid black; border-radius: 25%">
+                            <i class="fa-solid fa-xmark"> </i> close
+                    </button>
+                </div>
+                <!--                form area start-->
+                <div class="modal-body" style="background-color: #E0E9DD">
+                    <form onsubmit="return false" id="formUser">
+                        <!--                        required mark start-->
+                        <div class="row mt-2">
+                            <div class="col-md-12 text-start">
+                                <span class="text-danger fw-bold">required *</span>
+                            </div>
+                        </div>
+                        <!--                        required mark end-->
+
+
+                        <!--                        user start-->
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="selectEmployee" class="form-label fw-bold">employee <i
+                                        class="text-danger">*</i> </label>
+                            </div>
+                            <div class="col-md-6">
+                                <select id="selectEmployee" class="form-select text-center" required onchange="selectValidator(this,'','user','employee')">
+                                    <option value="" selected disabled>select an option</option>
+                                    <option value="v1">value1</option>
+                                    <option value="v2">value2</option>
+                                    <option value="v3">value3</option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <!--                        user end-->
+
+<!--                        username start-->
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="textUserName" class="form-label fw-bold">user name <i class="text-danger">*</i></label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" id="textUserName" class="form-control text-center" required placeholder="enter user name" onkeyup="textValidator(this,'^[A-Z][a-z]{2,20}$','user','username')">
+                            </div>
+                        </div>
+<!--                        username end-->
+
+<!--                        password start-->
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="textPassword" class="form-label fw-bold">password <i class="text-danger">*</i></label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="password" id="textPassword" class="form-control text-center" required placeholder="enter your password" onkeyup="textValidator(this,'^.*$','user','password')">
+                            </div>
+                        </div>
+<!--                        password end-->
+
+<!--                        retype password start-->
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="textRePassword" class="form-label fw-bold">re password <i class="text-danger">*</i></label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="password" id="textRePassword" class="form-control text-center" required placeholder="retype your password" onkeyup="textValidator(this,'^.*$','user','repassword')">
+                            </div>
+                        </div>
+<!--                        retype password end-->
+
+
+<!--                        email start-->
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="textEmail" class="form-label fw-bold">email <i class="text-danger">*</i></label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" id="textEmail" class="form-control text-center" required placeholder="enter your email here" onkeyup="textValidator(this,'^[A-Za-z0-9]{6,20}[@][a-z]{3,10}[.][a-z]{2,3}$','user','email')" >
+                            </div>
+                        </div>
+<!--                        email end-->
+
+<!--                        role area start-->
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="selectRole" class="form-label fw-bold">role <i class="text-danger">*</i></label>
+                            </div>
+                            <div class="col-md-6">
+                                <select id="selectRole" class="form-select text-center" required onchange="selectDBValidator(this,'','user','role_id')">
+                                    <option value="" selected disabled>select an option</option>
+                                    <option value="owner" >owner</option>
+                                    <option value="manager" >manager</option>
+                                    <option value="student" >student</option>
+                                </select>
+                            </div>
+                        </div>
+<!--                        role area end-->
+
+<!--                        status area start-->
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="selectStatus" class="form-label fw-bold">status <i class="text-danger">*</i></label>
+                            </div>
+                            <div class="col-md-6">
+                                <select id="selectStatus" class="form-select text-center" required onchange="selectDBValidator(this,'','user','userstatus_id')">
+                                    <option value="" selected disabled >select an option</option>
+                                    <option value="working">working</option>
+                                    <option value="resign">resign</option>
+                                    <option value="delete">delete</option>
+                                </select>
+                            </div>
+                        </div>
+<!--                        status area end-->
+
+
+<!--                        button area start-->
+                        <div class="row mt-5">
+                            <div class="col-md-4">
+                                <button type="reset" class="btn btn-danger fw-bold ms-2 me-2" style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%"> <i class="fa-solid fa-trash fa-beat"></i> reset</button>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <button type="button" class="btn btn-warning fw-bold ms-2 me-2" style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%"> <i class="fa-solid fa-recycle fa-beat"></i> update</button>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <button type="submit" class="btn btn-primary fw-bold ms-2 me-2" style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%" onclick="userSubmit()"><i class="fa-solid fa-plus fa-beat"> </i>add</button>
+                            </div>
+                        </div>
+<!--                        button area end-->
+
+
+
+
+                    </form>
+                </div>
+                <!--                form area end-->
+
+            </div>
+        </div>
+    </div>
+    <!--    user modal area end-->
+
+
+</div>
+<!--container fluid end-->
+</body>
+</html>

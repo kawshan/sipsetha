@@ -745,7 +745,27 @@ const validateMobileExisting = (fieldId)=>{
 }
 
 
+const validateDobRange = (fieldID)=>{
+    console.log(fieldID.value);
+    let value = fieldID.value.split("-")
+    let year=value[0];
+    console.log(year)
+    let currentDate = new Date();
+    let currentYear=currentDate.getFullYear();
+    console.log(currentYear+" current year type of "+typeof(currentYear));  //number type
+    let balanceyear=currentYear-parseFloat(year);   //floting point walta convert karan adu karanawa naththam string value ne thiyenne ewa adukaranna bari nisa
+    console.log(balanceyear+" blance year type "+typeof (balanceyear))
+    if (balanceyear>100){
+        alert("please select valid year. your year cannot be more than 100 years");
+        textDOB.value=""    //value eka empty karanwa
+        textDOB.style.border="2px solid red";
+        student.dob=null    //student object eke date of birth kiyana property eka null karanawa
+    }
 
+
+
+
+}
 
 
 

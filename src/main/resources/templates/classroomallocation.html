@@ -129,7 +129,7 @@
                                 <label for="selectEndTime" class="form-label fw-bold">end time <i class="text-danger">*</i> </label>
                             </div>
                             <div class="col-md-6">
-                                <input type="time" id="selectEndTime" class="form-control text-center" required onchange="selectValidator(this,'','classRoomAllocation','endtime')">
+                                <input type="time" id="selectEndTime" class="form-control text-center" required onchange="selectValidator(this,'','classRoomAllocation','endtime'); validateEndTime(this)">
                             </div>
                         </div>
 

@@ -414,6 +414,29 @@ const modalPrintButton = ()=>{
 }
 
 
+const validateEndTime= (fieldId)=>{
+    let startTime=selectStartTime.value;
+    let endTime=fieldId.value;
+    console.log(startTime+" start time value type "+typeof(startTime));   //string type ekak enne
+    console.log(endTime+" end time value type "+typeof(endTime));     //string type ekek enne
+
+    // validate karanna one nisa eka flote walata convert karaganna one;
+    let sTflt= parseFloat(startTime);
+    let eTflt= parseFloat(endTime);
+
+
+    if (eTflt<sTflt){
+        alert("please select valid time end time cannot be less than start time");
+        selectEndTime.value=""
+        selectEndTime.style.border="2px solid red";
+        classRoomAllocation.endtime=null;
+    }
+
+
+
+
+}
+
 
 
 

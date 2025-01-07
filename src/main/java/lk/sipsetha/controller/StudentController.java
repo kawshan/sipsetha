@@ -60,7 +60,7 @@ public class StudentController {
             //set student number
             student.setUser_id(userDao.getUserByUserName(auth.getName()));
             String studentNextNumber= studentDao.getStudentByNextNumber();  // setting student next number to variable student next number where i got it in student dao by defining native SQL query by using max function and lpad function
-            if (studentNextNumber.equals(null) || studentNextNumber.equals("")){
+            if (studentNextNumber==null || studentNextNumber.equals("")){
                 student.setStunum("00001");
             }else {
                 student.setStunum(studentNextNumber);

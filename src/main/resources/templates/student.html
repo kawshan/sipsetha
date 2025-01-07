@@ -188,13 +188,13 @@
                         <!--                        age start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
-                                <label for="textAge" class="form-label fw-bold">
-                                    age <i class="text-danger">*</i>
+                                <label for="textDOB" class="form-label fw-bold">
+                                    dob <i class="text-danger">*</i>
                                 </label>
                             </div>
                             <div class="col-md-6">
-                                <input type="text" id="textAge" class="form-control text-center" required
-                                       placeholder="enter age" onkeyup="textValidator(this,'^(([0][56789])|([123456][0123456789]))$','student','age')">
+                                <input type="date" id="textDOB" class="form-control text-center" required
+                                       placeholder="enter age" onchange="textValidator(this,'','student','dob')">
                             </div>
                         </div>
                         <!--                        age end-->

@@ -17,7 +17,7 @@ const refreshStudentTable = ()=>{
         {dataType:'text',propertyName:'stunum'},
         {dataType:'text',propertyName:'firstname'},
         {dataType:'text',propertyName:'lastname'},
-        {dataType:'text',propertyName:'age'},
+        {dataType:'text',propertyName:'dob'},
         {dataType:'function',propertyName:getGender},
         {dataType:'text',propertyName:'address'},
         {dataType:'text',propertyName:'mobile'},
@@ -44,7 +44,7 @@ const checkPrivilege=(innerOb)=>{
 //define function for refresh student form
 const refreshStudentForm = ()=>{
     console.log('refresh success');
-
+    studentForm.reset();
     student = new Object(); //create new student object this use for front end binding
     oldStudent=null;
 
@@ -61,7 +61,7 @@ const refreshStudentForm = ()=>{
     textGuardianName.style.border='1px solid #ced4da';
     textFirstName.style.border='1px solid #ced4da';
     textLastName.style.border='1px solid #ced4da';
-    textAge.style.border='1px solid #ced4da';
+    textDOB.style.border='1px solid #ced4da';
     selectGender.style.border='1px solid #ced4da';
     textAddress.style.border='1px solid #ced4da';
     textMobile.style.border='1px solid #ced4da';
@@ -106,7 +106,7 @@ const studentFormRefill = (ob,rowIndex) =>{
 
     textFirstName.value=student.firstname;
     textLastName.value=student.lastname;
-    textAge.value=student.age;
+    textDOB.value=student.dob;
     textAddress.value=student.address;
     textMobile.value=student.mobile;
     textNote.value=student.note;
@@ -144,7 +144,7 @@ const deleteStudent = (ob,rowIndex)=>{
             +'\n first name is '+ob.firstname
             +'\n last name is '+ob.lastname
             +'\n guardian is '+ob.guardian_id.firstname
-            +'\n age is '+ob.age
+            +'\n dob is '+ob.dob
             +'\n gender is '+ob.gender
             +'\n address is '+ob.address
             +'\n grade is'+ob.grade_id.name
@@ -154,10 +154,8 @@ const deleteStudent = (ob,rowIndex)=>{
             const deleteServerResponse = ajaxDeleteRequest('/student',ob);
             if (deleteServerResponse=='ok'){
                 alert('delete successful')
-                // Swal.fire({ title:'delete successful', icon:'success'});
             }else {
                 alert('delete was unsuccessful you might have following errors \n' + deleteServerResponse)
-                // Swal.fire({ title: 'delete unsuccessful you might have following errors \n'+deleteServerResponse, icon: 'error'});
             }
         }
         refreshStudentTable();
@@ -176,7 +174,7 @@ const printStudent = (ob,rowIndex)=>{
         {dataType:'text',propertyName:'stunum'},
         {dataType:'text',propertyName:'firstname'},
         {dataType:'text',propertyName:'lastname'},
-        {dataType:'text',propertyName:'age'},
+        {dataType:'text',propertyName:'dob'},
         {dataType:'function',propertyName:getGender},
         {dataType:'text',propertyName:'address'},
         {dataType:'text',propertyName:'mobile'},
@@ -223,9 +221,9 @@ const checkFormErrors = ()=>{
         errors=errors+'last name cannot be empty \n';
         textLastName.classList.add('is-invalid');
     }
-    if (student.age == null){
-        errors=errors+'age cannot be empty \n';
-        textAge.classList.add('is-invalid')
+    if (student.dob == null){
+        errors=errors+'date of birth cannot be empty \n';
+        textDOB.classList.add('is-invalid')
     }
     if (student.gender == null){
         errors=errors+'gender cannot be empty \n';
@@ -253,7 +251,7 @@ const studentSubmit = ()=>{
         +'\n first name is '+student.firstname
         +'\n last name is '+student.lastname
         +'\n guardian is '+student.guardian_id.firstname
-        +'\n age is '+student.age
+        +'\n date of birth is '+student.dob
         +'\n gender is '+student.gender
         +'\n address is '+student.address
         +'\n grade is'+student.grade_id.name
@@ -267,7 +265,6 @@ const studentSubmit = ()=>{
                 alert("student added successfully")
                 $('#modalStudentAdd').modal('hide');
                 refreshStudentForm();
-                studentForm.reset();
                 refreshStudentTable();
             }else {
                 alert('student add unsuccessful please check again'+serverResponse);
@@ -294,8 +291,8 @@ const checkStudentFormUpdate = ()=>{
     if (student.lastname != oldStudent.lastname){
         updates=updates+"student's last name is changed \n";
     }
-    if (student.age != oldStudent.age){
-        updates=updates+"age is changed \n"
+    if (student.dob != oldStudent.dob){
+        updates=updates+"date of birth is changed \n"
     }
     if (student.gender != oldStudent.gender){
         updates=updates+"gender is changed \n"
@@ -333,7 +330,6 @@ const buttonStudentUpdate = ()=>{
             let putServiceResponse=ajaxPutRequest("/student",student);
             if (putServiceResponse=="ok"){
                 alert("update successful");
-                studentForm.reset();
                 refreshStudentForm();
                 $('#modalStudentAdd').modal('hide');
                 refreshStudentTable();
@@ -355,7 +351,7 @@ const printStudentFullTable = ()=>{
         {dataType:'text',propertyName:'stunum'},
         {dataType:'text',propertyName:'firstname'},
         {dataType:'text',propertyName:'lastname'},
-        {dataType:'text',propertyName:'age'},
+        {dataType:'text',propertyName:'dob'},
         {dataType:'function',propertyName:getGender},
         {dataType:'text',propertyName:'address'},
         {dataType:'text',propertyName:'mobile'},

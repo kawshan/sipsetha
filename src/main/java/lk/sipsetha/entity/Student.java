@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -28,8 +29,8 @@ public class Student {
     @Column(name = "lastname")
     private String lastname;
 
-    @Column(name = "age")
-    private Integer age;
+    @Column(name = "dob")
+    private LocalDate dob;
 
     @Column(name = "gender")
     private Boolean gender;

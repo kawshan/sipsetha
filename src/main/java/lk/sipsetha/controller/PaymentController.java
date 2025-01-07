@@ -60,6 +60,12 @@ public class PaymentController {
             return "cannot perform save student .. you don't have privileges";
         }
         //existing and duplicate
+        Payment exPayment=dao.checkDuplicateByStudentMonthAndRegistration(payment.getStudent_id().getId(),payment.getMonth(),payment.getStudentregistration_id().getId());
+        if (exPayment!=null){
+            return "cannot perform payment because it already exists";
+        }
+
+
         //operators
         try {
             payment.setAddeduser(userDao.getUserByUserName(auth.getName()).getId());
@@ -135,6 +141,12 @@ public class PaymentController {
     public String getMaxMonthByStudent(@PathVariable("stunum")String stunum){
         return dao.getMaxMonthPaymentByStudent(stunum);
     }
+
+    @GetMapping(value = "/getmaxmonthpayment/{stunum}/{registration}")
+    public String getMaxMonthBYPayment(@PathVariable("stunum")String stunum,@PathVariable("registration") String registration){
+        return dao.getmaxbypayment(stunum,registration);
+    }
+
 
 
 

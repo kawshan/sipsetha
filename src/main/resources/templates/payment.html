@@ -164,7 +164,7 @@
                             </div>
                             <div class="col-md-6">
                                 <select id="selectStudentRegistration" class="form-control text-center"
-                                        onchange="selectDBValidator(this,'','payment','studentregistration_id'); generateFees(this);"></select>
+                                        onchange="selectDBValidator(this,'','payment','studentregistration_id'); generateFees(this); generateMaxMonth()"></select>
                             </div>
                         </div>
                         <!--                        student registration end-->
@@ -209,6 +209,7 @@
                                 <input type="month" id="textMonth" class="form-control text-center"
                                        placeholder="enter month"
                                        onchange="textValidator(this,'','payment','month'); console.log(this.value)">
+                                <div id="divMonthText" class="form-text text-center d-none"></div>
                             </div>
                         </div>
                         <!--                        month end-->

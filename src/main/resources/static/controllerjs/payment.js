@@ -236,6 +236,7 @@ const btnStudentPaymentSubmit = () => {
                 setTimeout(function () {
                     clickRadioButton(); //mili seconds 500 parakku kara ee mokada hariyata refresh payment table eka load vela enna one nisa
                 }, 500)
+                printBTNPayment.className='d-none';
             } else {
                 alert("save not complete you might have some errors \n " + postServerResponse);
             }
@@ -513,10 +514,53 @@ const getPaymentCategory = (fieldId) => {
 
 
 const clickRadioButton = () => {
-    tableStudentPayment.children[1].children[0].children[6].children[0].click();
-    printBTNPayment.click();
+    tableStudentPayment.children[1].children[0].children[6].children[0].click();    //table eke check box eka eka auto click venna hadanawa
+    printBTNPayment.click();    //print button eka click karanwa;
 }
 
+const generateMaxMonth = ()=>{
+    let student=textStudent.value.split(" ");//split eken ven karanawa space eken iita passe apita hambenne array ekak
+    let stuNumber=student[0];//ee array eke 0 veni index eka gannawa
+    console.log(stuNumber)//for testing;
+
+    let selectedValueStuReg=JSON.parse(selectStudentRegistration.value)//json string ekak JS object ekakata convert karagannawa
+    console.log(selectedValueStuReg.id+" type of "+typeof (selectedValueStuReg.id))//testing
+
+    console.log(textStudent.value);
+
+    let serverResponse=ajaxGetRequest("/payment/getmaxmonthpayment/"+stuNumber+"/"+selectedValueStuReg.id);
+    console.log(serverResponse);
+
+    let maxMonth=serverResponse;
+
+    let currentMonth=new Date().getMonth();
+    if (currentMonth<9){
+        currentMonth='0'+(currentMonth+1)
+    }else {
+        currentMonth=currentMonth+1;
+    }
+    console.log(currentMonth+" current month");
+
+    let MMVal=maxMonth.split('-');  //server ekan enne 2024-05 wage format ekekin ena value ekak ekayi meka split kare MM type ekata haro ganna one niss
+    if (maxMonth==""){  //max valu eka empty ekak da kiyala balanawa ee mokada kiyanne meeta kalin student payemnet ekak karala na kiyan eka
+        console.log("first monthly payment")
+        divMonthText.innerText="Student's first monthly payment ";
+        divMonthText.style.color="green";
+        divMonthText.className="d-block"
+        divMonthText.classList.add("d-block","text-center","fw-bold");
+    }else {
+        if (MMVal[1]<currentMonth){
+            console.log("student last payed month was "+maxMonth);
+            divMonthText.innerText="student last payed month was "+maxMonth;
+            divMonthText.style.color="orange";
+            divMonthText.className="d-block"
+            divMonthText.classList.add("d-block","text-center","fw-bold");
+        }
+    }
+
+
+
+}
 
 
 

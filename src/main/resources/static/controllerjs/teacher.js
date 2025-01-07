@@ -599,7 +599,25 @@ const buttonBranchSubmit = ()=>{
 }
 
 
+const checkExistingByNIC = (fieldId)=>{
+    let nicValue=fieldId.value;
+    if (new RegExp('^(([0-9]{9}[VvXxSs])|([0-9]{12}))$').test(nicValue)){
+        console.log("good nic to validate existing");
 
+        let getServerResponse=ajaxGetRequest("/teacher/toverifyexistence/"+nicValue);
+        if (getServerResponse==true){
+            divNicText.classList.remove("d-none");
+            divNicText.innerText="nic "+nicValue+" is already exists please recheck"
+            divNicText.style.color="red";
+        }else {
+            divNicText.classList.remove("d-none");
+            divNicText.innerText="nic "+nicValue+" is good it is not previously entered";
+            divNicText.style.color="green";
+        }
+
+
+    }
+}
 
 
 

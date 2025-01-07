@@ -127,5 +127,16 @@ public class TeacherController {
     }
 
 
+    @GetMapping(value = "/toverifyexistence/{nic}")
+    public Boolean checkTeacherNicExistence(@PathVariable("nic")String nic){
+        Teacher exTeacherNic = dao.getTeacherByNic(nic);
+        if (exTeacherNic!=null){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+
 
 }

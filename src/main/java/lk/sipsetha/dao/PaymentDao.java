@@ -24,5 +24,11 @@ public interface PaymentDao extends JpaRepository<Payment,Integer> {
     public String getMaxMonthPaymentByStudent(String stunum);
 
 
+   @Query(value = "SELECT MAX(month) FROM payment WHERE student_id IN (SELECT id FROM student WHERE stunum=?1) AND student_id IN (SELECT student_id FROM studentregistration WHERE studentregistration_id =?2)",nativeQuery = true)
+    public String getmaxbypayment(String stunum, String registration);
+
+
+   @Query(value = "select p from Payment p where p.student_id.id=?1 and p.month=?2 and p.studentregistration_id.id=?3")
+    public Payment checkDuplicateByStudentMonthAndRegistration(Integer id, String month, Integer reg);
 
 }

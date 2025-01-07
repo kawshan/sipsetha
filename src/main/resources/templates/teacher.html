@@ -51,15 +51,18 @@
         <div id="divModifyButton" class="d-none">
             <div class="col-md-8">
                 <button type="button" class="btn btn-warning fw-bold"
-                        style="width: 25%; color: whitesmoke; border: 1px solid black; " onclick="teacherFormRefill(window['editOb'],window['editRow'])">
+                        style="width: 25%; color: whitesmoke; border: 1px solid black; "
+                        onclick="teacherFormRefill(window['editOb'],window['editRow'])">
                     <i class="fa-solid fa-recycle fa-beat"> </i> edit
                 </button>
                 <button type="button" id="divModifyButtonDelete" class="btn btn-danger fw-bold me-2 ms-2"
-                        style="width: 25%; color: whitesmoke; border: 1px solid black; pointer-events: all" onclick="deleteTeacher(window['editOb'],window['editRow'])">
+                        style="width: 25%; color: whitesmoke; border: 1px solid black; pointer-events: all"
+                        onclick="deleteTeacher(window['editOb'],window['editRow'])">
                     <i class="fa-solid fa-trash fa-beat"> </i> delete
                 </button>
                 <button type="button" class="btn btn-primary fw-bold"
-                        style="width: 25%; color: whitesmoke; border:1px solid black" onclick="printTeacher(window['editOb'],window['editRow'])">
+                        style="width: 25%; color: whitesmoke; border:1px solid black"
+                        onclick="printTeacher(window['editOb'],window['editRow'])">
                     <i class="fa-solid fa-eye fa-beat"></i> print
                 </button>
             </div>
@@ -157,7 +160,8 @@
                             <div class="col-md-6">
                                 <input type="text" id="textNic" class="form-control text-center" required
                                        placeholder="enter nic number"
-                                       onkeyup="textValidator(this,'^(([0-9]{9}[VvXxSs])|([0-9]{12}))$','teacher','nic'); generateTeacherGender(this);">
+                                       onkeyup="textValidator(this,'^(([0-9]{9}[VvXxSs])|([0-9]{12}))$','teacher','nic'); generateTeacherGender(this);  checkExistingByNIC(this)">
+                                <div id="divNicText" class="form-text text-center d-none"></div>
                             </div>
                         </div>
                         <!--                    nic end-->
@@ -193,7 +197,6 @@
                             </div>
                         </div>
                         <!--                    land no end-->
-
 
 
                         <!--                    email start-->
@@ -272,26 +275,31 @@
                         </div>
                         <!--                    dob end-->
 
-<!--                        gender start-->
+                        <!--                        gender start-->
                         <div class="row">
                             <div class="col-md-6">
-                                <label  class="form-label fw-bold">gender <i class="text-danger">*</i> </label>
+                                <label class="form-label fw-bold">gender <i class="text-danger">*</i> </label>
                             </div>
                             <div class="col-md-6">
-                                <input type="radio" id="radioMale"  value="male" name="gender" onchange="teacher.gender=this.value"> male
-                                <input type="radio" id="radioFemale"  value="female" name="gender" onchange="teacher.gender=this.value" > female
+                                <input type="radio" id="radioMale" value="male" name="gender"
+                                       onchange="teacher.gender=this.value"> male
+                                <input type="radio" id="radioFemale" value="female" name="gender"
+                                       onchange="teacher.gender=this.value"> female
                             </div>
                         </div>
-<!--                        gender end-->
+                        <!--                        gender end-->
 
 
                         <!--                        account holder name start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
-                                <label for="textAccountName" class="form-label fw-bold">account name <i class="text-danger">*</i></label>
+                                <label for="textAccountName" class="form-label fw-bold">account name <i
+                                        class="text-danger">*</i></label>
                             </div>
                             <div class="col-md-6">
-                                <input type="text" id="textAccountName" class="form-control text-center" required placeholder="enter account holder's name" onkeyup="textValidator(this,'^.*$','teacher','accountname')">
+                                <input type="text" id="textAccountName" class="form-control text-center" required
+                                       placeholder="enter account holder's name"
+                                       onkeyup="textValidator(this,'^.*$','teacher','accountname')">
                             </div>
                         </div>
                         <!--                        account holder name end-->
@@ -300,10 +308,13 @@
                         <!--                        account no start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
-                                <label for="textAccountNo" class="form-label fw-bold">bank account no <i class="text-danger">*</i></label>
+                                <label for="textAccountNo" class="form-label fw-bold">bank account no <i
+                                        class="text-danger">*</i></label>
                             </div>
                             <div class="col-md-6">
-                                <input type="text" id="textAccountNo" class="form-control text-center" required placeholder="enter your back account number" onkeyup="textValidator(this,'^[0-9]{12}$','teacher','accountnumber')">
+                                <input type="text" id="textAccountNo" class="form-control text-center" required
+                                       placeholder="enter your back account number"
+                                       onkeyup="textValidator(this,'^[0-9]{12}$','teacher','accountnumber')">
                             </div>
                         </div>
                         <!--                        account no end-->
@@ -311,16 +322,18 @@
                         <!--                        branch name start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
-                                <label for="selectBranch" class="form-label fw-bold">select branch <i class="text-danger">*</i></label>
+                                <label for="selectBranch" class="form-label fw-bold">select branch <i
+                                        class="text-danger">*</i></label>
                             </div>
                             <div class="col-md-6">
                                 <div class="input-group">
-                                    <select id="selectBranch" class="form-control text-center" required onchange="selectDBValidator(this,'','teacher','branch_id')">
+                                    <select id="selectBranch" class="form-control text-center" required
+                                            onchange="selectDBValidator(this,'','teacher','branch_id')">
 
                                     </select>
                                     <span>
                                         <i class="btn btn-primary" data-bs-toggle="collapse" href="#collapseBranch"
-                                               role="button">add</i>
+                                           role="button">add</i>
                                         </span>
                                 </div>
                                 <!--  collapse academic year form  start  -->
@@ -329,22 +342,27 @@
                                         <form onsubmit="return false" id="BranchForm">
                                             <div class="row mt-2">
                                                 <div class="col-md-4">
-                                                    <label for="textBranchName" class="form-label fw-bold">Branch Name</label>
+                                                    <label for="textBranchName" class="form-label fw-bold">Branch
+                                                        Name</label>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <input type="text" id="textBranchName" class="form-control text-center" onkeyup="textValidator(this,'^[A-Za-z]{3,30}$','branchOB','name')">
+                                                    <input type="text" id="textBranchName"
+                                                           class="form-control text-center"
+                                                           onkeyup="textValidator(this,'^[A-Za-z]{3,30}$','branchOB','name')">
                                                 </div>
                                             </div>
 
                                             <div class="row mt-2">
                                                 <div class="col-md-4">
-                                                    <label for="textBranchCode" class="form-label fw-bold">Branch Code</label>
+                                                    <label for="textBranchCode" class="form-label fw-bold">Branch
+                                                        Code</label>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <input type="text" id="textBranchCode" class="form-control text-center" onkeyup="textValidator(this,'^[0-9]{3,30}$','branchOB','bankbranchcode')">
+                                                    <input type="text" id="textBranchCode"
+                                                           class="form-control text-center"
+                                                           onkeyup="textValidator(this,'^[0-9]{3,30}$','branchOB','bankbranchcode')">
                                                 </div>
                                             </div>
-
 
 
                                             <div class="row mt-2">
@@ -352,14 +370,16 @@
                                                     <label for="selectBank" class="form-label fw-bold">Bank name</label>
                                                 </div>
                                                 <div class="col-md-4">
-                                                    <select id="selectBank" class="form-select text-center" onchange="selectDBValidator(this,'','branchOB','bank_id')"></select>
+                                                    <select id="selectBank" class="form-select text-center"
+                                                            onchange="selectDBValidator(this,'','branchOB','bank_id')"></select>
                                                 </div>
                                             </div>
 
 
                                             <div class="row">
                                                 <div class="col-12">
-                                                    <button type="button" class="btn btn-success" onclick="buttonBranchSubmit()">
+                                                    <button type="button" class="btn btn-success"
+                                                            onclick="buttonBranchSubmit()">
                                                         add
                                                     </button>
                                                 </div>
@@ -400,13 +420,15 @@
                             </div>
                             <div class="col-md-4 text-center">
                                 <button type="button" id="btnTeacherUpdate" class="btn btn-warning fw-bold"
-                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%; pointer-events: all" onclick="buttonFormUpdate()">
+                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%; pointer-events: all"
+                                        onclick="buttonFormUpdate()">
                                     <i class="fa-solid fa-recycle fa-beat"> </i> update
                                 </button>
                             </div>
                             <div class="col-md-4 text-end">
-                                <button type="submit"  id="btnTeacherAdd" class="btn btn-primary fw-bold"
-                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%; pointer-events: all" onclick="teacherSubmit()">
+                                <button type="submit" id="btnTeacherAdd" class="btn btn-primary fw-bold"
+                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%; pointer-events: all"
+                                        onclick="teacherSubmit()">
                                     <i class="fa-solid fa-plus fa-beat"> </i> add
                                 </button>
                             </div>

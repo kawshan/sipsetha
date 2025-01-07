@@ -52,7 +52,7 @@
     <div class="row mt-2">
         <div id="divModifyButton" class="d-none">
             <div class="col-md-8">
-                <button type="button" class="btn btn-warning fw-bold"
+                <button type="button" id="divModifyButtonEdit" class="btn btn-warning fw-bold"
                         style="width: 25%; color: whitesmoke; border:1px solid black"
                         onclick="refillStudentRegistrationForm(window['editOb'],window['editRow'])"
                 >
@@ -133,7 +133,7 @@
                                 <!--                                <select id="selectStudent" class="form-select text-center" required onchange="selectDBValidator(this,'','studentRegistration','student_id')"></select>-->
                                 <input type="text" id="textStudent" list="datalistStudent"
                                        class="form-control text-center" placeholder="search and select student"
-                                       onkeyup="dataListValidator(this,'students','studentRegistration','student_id','oldStudentRegistration','stunum','lastname')"
+                                       onkeyup="dataListValidator(this,'students','studentRegistration','student_id','oldStudentRegistration','stunum','lastname'); getClassOfferingFromStuNum(this)"
                                 >
                                 <datalist id="datalistStudent">
 
@@ -227,7 +227,7 @@
                                 </button>
                             </div>
                             <div class="col-md-4 text-end">
-                                <button type="submit" id="btnStudentRegDelete" class="btn btn-primary fw-bold"
+                                <button type="submit" id="btnStudentRegADD" class="btn btn-primary fw-bold"
                                         style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%; pointer-events: all"
                                         onclick="addStudentRegistration()">
                                     <i class="fa-solid fa-plus fa-beat"> </i> add

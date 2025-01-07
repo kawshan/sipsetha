@@ -82,6 +82,12 @@ const refreshGuardianForm = ()=>{
         btnGuardAdd.style.cursor='not-allowed';
     }
 
+    //need to disable update button when form is refreshing
+    btnGuardUpdate.disabled=true;
+    btnGuardUpdate.style.cursor="not-allowed";  //ethakota cursor eka me symbol eken 🚫 pennnawa
+    //need to enable add button because we dissbled that in refill
+    btnGuardAdd.disabled=false;
+    btnGuardAdd.style.cursor="pointer"; //refill ekedi pointer not allowed dunna nisa thama methana pointer dunne ethakota cursor eka 👆 mehema pennanawa
 
 }
 
@@ -174,6 +180,12 @@ const GuardianFormRefill = (ob,rowIndex)=>{
 
     fillDataIntoSelect(selectGuardianType,'select guardian type',guardianTypes,'name',guardian.guardiantype_id.name)
 
+    //enable btn update because we disabled that in refresh
+    btnGuardUpdate.disabled=false
+    btnGuardUpdate.style.cursor="pointer";
+    //need to disable add button
+    btnGuardAdd.disabled=true;
+    btnGuardAdd.style.cursor="not-allowed";
 
 }
 
@@ -241,6 +253,7 @@ const buttonGuardianUpdate = ()=>{
                 refreshGuardianForm();
                 $('#modalGuardianAdd').modal('hide');
                 refreshGuardianTable();
+                divModifyButton.className="d-none";
             }else {
                 alert("Error happened please retry \n"+putServiceResponse);
             }
@@ -315,7 +328,7 @@ const buttonGuardianAdd = ()=>{
                 $('#modalGuardianAdd').modal('hide');
 
             }else {
-                alert("save not success"+serverResponse);
+                alert("save not success \n"+serverResponse);
             }
         }
     }else {
@@ -429,6 +442,28 @@ const validateNicExisting = (fieldId)=>{
             divNicText.classList.remove("d-none");
             divNicText.innerText="nic "+nicValue+" is good it is not previously enterd";
             divNicText.style.color="green";
+        }
+
+
+    }
+}
+
+
+
+const validateMobileExisting = (fieldId)=>{
+    let mobileValue=fieldId.value;
+    if (new RegExp('^[0][7][01245678][0-9]{7}$').test(mobileValue)){
+        console.log("good mobile to validate existing");
+
+        let getServerResponse=ajaxGetRequest("/guardian/existancebymobile/"+mobileValue);
+        if (getServerResponse==true){
+            divMobileText.classList.remove("d-none");
+            divMobileText.innerText="mobile "+mobileValue+" is already exists please recheck"
+            divMobileText.style.color="red";
+        }else {
+            divMobileText.classList.remove("d-none");
+            divMobileText.innerText="mobile "+mobileValue+" is good it is not previously entered";
+            divMobileText.style.color="green";
         }
 
 

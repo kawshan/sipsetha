@@ -69,7 +69,7 @@
     </div>
     <!--    edit delete print button end-->
 
-    <!--    table area start-->
+    <!--        table area start-->
     <div class="row mt-5">
         <table class="table table-striped table-bordered" id="tableStudent">
             <thead class="table text-center" style="background-color: #044800; color: whitesmoke;">
@@ -130,7 +130,7 @@
                                 <div class="input-group">
                                     <input list="dataListItems" type="text" required id="textGuardianName"
                                            class="form-control text-center" placeholder="type and search guardian"
-                                           onkeyup="dataListValidator(textGuardianName,'guardians','student','guardian_id','oldStudent','nic','firstname'); getMobileNumForStu(this);"
+                                           onkeyup="dataListValidator(textGuardianName,'guardians','student','guardian_id','oldStudent','nic','firstname'); getMobileNumAndAddressForStudent(this);"
                                     >
                                     <datalist id="dataListItems">
 
@@ -214,7 +214,8 @@
                                                            class="form-control text-center"
                                                            required
                                                            placeholder="enter mobile number"
-                                                           onkeyup="textValidator(this,'^[0][7][01245678][0-9]{7}$','guardian','mobile')">
+                                                           onkeyup="textValidator(this,'^[0][7][01245678][0-9]{7}$','guardian','mobile'); validateMobileExisting(this)">
+                                                    <div id="divMobileText" class="form-text text-center d-none"></div>
                                                 </div>
                                             </div>
                                             <!--                    mobile end-->
@@ -338,6 +339,35 @@
                         </div>
                         <!--                        last name end-->
 
+                        <!--                        address start-->
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="textAddress" class="form-label fw-bold">
+                                    Address
+                                </label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" id="textAddress" class="form-control text-center" required
+                                       placeholder="enter address"
+                                       onkeyup="textValidator(this,'^([Nn][Oo]\\s[0-9]{1,4}(?:\\s.*)?)|([Nn][Oo]\\s[0-9]{1,4}(?:.*)?)$','student','address')">
+                            </div>
+                        </div>
+                        <!--                        address end-->
+
+
+                        <!--                        contact number start-->
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="textMobile" class="form-label fw-bold">Mobile <i class="text-primary">(optional)</i></label>
+                            </div>
+                            <div class="col-md-6">
+                                <input type="text" id="textMobile" class="form-control text-center"
+                                       placeholder="enter your mobile number"
+                                       onkeyup="textValidator(this,'^[0][7][01245678][0-9]{7}$','student','mobile')">
+                            </div>
+                        </div>
+                        <!--                        contact number end-->
+
                         <!--                        dob start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
@@ -369,35 +399,6 @@
                             </div>
                         </div>
                         <!--                        gender end-->
-
-                        <!--                        address start-->
-                        <div class="row mt-2">
-                            <div class="col-md-6">
-                                <label for="textAddress" class="form-label fw-bold">
-                                    Address
-                                </label>
-                            </div>
-                            <div class="col-md-6">
-                                <input type="text" id="textAddress" class="form-control text-center" required
-                                       placeholder="enter address"
-                                       onkeyup="textValidator(this,'^[Nn][Oo]\\s[0-9]{1,4}(?:\\s.*)?$','student','address')">
-                            </div>
-                        </div>
-                        <!--                        address end-->
-
-
-                        <!--                        contact number start-->
-                        <div class="row mt-2">
-                            <div class="col-md-6">
-                                <label for="textMobile" class="form-label fw-bold">Mobile <i class="text-primary">(optional)</i></label>
-                            </div>
-                            <div class="col-md-6">
-                                <input type="text" id="textMobile" class="form-control text-center"
-                                       placeholder="enter your mobile number"
-                                       onkeyup="textValidator(this,'^[0][7][01245678][0-9]{7}$','student','mobile')">
-                            </div>
-                        </div>
-                        <!--                        contact number end-->
 
 
                         <!--                        grade start-->

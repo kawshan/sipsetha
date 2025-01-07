@@ -1,7 +1,9 @@
 package lk.sipsetha.controller;
 
+import lk.sipsetha.dao.ClassOfferingDao;
 import lk.sipsetha.dao.RegistrationStatusDao;
 import lk.sipsetha.dao.StudentRegistrationDao;
+import lk.sipsetha.entity.ClassOffering;
 import lk.sipsetha.entity.RegistrationStatus;
 import lk.sipsetha.entity.StudentRegistration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,9 @@ public class StudentRegistrationController {
 
     @Autowired
     private PrivilegeController privilegeController;
+
+    @Autowired//dependency injection
+    private ClassOfferingDao classOfferingDao;  //class offering dao eke instance ekak hadagena eka varible ekakta dagena thiyenawa
 
 
     @GetMapping(value = "/studentregistrationform")
@@ -126,5 +131,12 @@ public class StudentRegistrationController {
     public List<StudentRegistration> getIndexNumberFormStudentNumber(@PathVariable("indexnumb") String indexnumb){
         return dao.getIndexNumberFromStuNum(indexnumb);
     }
+
+
+    @GetMapping(value = "/getclassofferingbystudentgradefromstunum/{stunum}")
+    public List<ClassOffering> getClassOfferingFromStudentGrade(@PathVariable("stunum")String stunum){
+        return classOfferingDao.getClassOfferingsByStudentGrade(stunum);
+    }
+
 
 }

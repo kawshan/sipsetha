@@ -35,6 +35,14 @@ const refreshAttendanceForm = () => {
     attendanceStatuses = ajaxGetRequest("/attendancestatus/findall")
     fillDataIntoSelect(selectAttendanceStatus, "Select Attendance status", attendanceStatuses, 'name');
 
+//update button eka disable karala danawa
+    btnAttendanceUpdate.disabled=true;
+    btnAttendanceUpdate.style.cursor="not-allowed";
+
+//submit eka disable false kara mokada refiill ekedi eka disable karapu nisa methanadi enable karanawa
+    btnStudentSubmit.disabled=false;
+    btnStudentSubmit.style.cursor="pointer";
+
 
 }
 
@@ -112,7 +120,7 @@ const printAttendance=(ob,rowIndex)=>{
         newWindow.close();  //print rka open vela close krama close venawa
     },500);
 
-
+    divModifyButton.className="d-none";
 }
 
 
@@ -128,6 +136,15 @@ const refillAttendanceForm = (ob, rowIndex) => {
     fillDataIntoSelect(selectClassOffering, "Select Class Offerings", classOfferings, 'classname', attendance.classoffering_id.classname);
 
     fillDataIntoSelect(selectAttendanceStatus, "Select Attendance status", attendanceStatuses, 'name', attendance.attendancestatus_id.name);
+
+    //update button eka enale karanawa in other words disable ayin karanawa
+    btnAttendanceUpdate.disabled=false;
+    btnAttendanceUpdate.style.cursor="pointer";
+
+    //add button eka disable karanawa
+    btnStudentSubmit.disabled=true;
+    btnStudentSubmit.style.cursor="not-allowed";
+
 
 }
 
@@ -146,6 +163,7 @@ const deleteAttendance = (ob, rowIndex) => {
             if (deleteServerResponse == "ok") {
                 alert("Delete Successful");
                 refreshAttendanceTable();
+                divModifyButton.className="d-none";
             } else {
                 alert("Error happened please recheck \n" + deleteServerResponse);
             }
@@ -224,6 +242,7 @@ const buttonAttendanceUpdate = ()=>{
                 refreshAttendanceForm();
                 refreshAttendanceTable();
                 alert("update successful");
+                divModifyButton.className="d-none";
             }else {
                 alert("error happened please recheck");
             }

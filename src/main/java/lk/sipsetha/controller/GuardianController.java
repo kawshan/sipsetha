@@ -113,6 +113,10 @@ public class GuardianController {
 
             }
 
+            Guardian extGuardianMobile =guardianDao.getExistenceByMobile(guardian.getMobile());
+            if (extGuardianMobile!=null){
+                return "cannot perform save guardian.. guardian mobile number is already exists";
+            }
 
 
             guardian.setUser_id(userDao.getUserByUserName(auth.getName()));
@@ -142,5 +146,19 @@ public class GuardianController {
         return guardianDao.getMobileByGuardianNic(nic);
     }
 
+    @GetMapping(value = "/getaddressbynic/{nic}")
+    public String getGuardiansAddressByNic(@PathVariable("nic")String nic){
+        return guardianDao.getAddressByNic(nic);
+    }
+
+    @GetMapping(value = "/existancebymobile/{mobile}")
+    public Boolean getExistanceByMobile(@PathVariable("mobile")String mobile){
+        Guardian exGuardianByMobile =guardianDao.getExistenceByMobile(mobile);
+        if (exGuardianByMobile!=null){
+            return true;
+        }else {
+            return false;
+        }
+    }
 
 }

@@ -687,7 +687,7 @@ const validateNicExisting = (fieldId)=>{
 
 
 
-const getMobileNumForStu = (fieldId)=>{
+const getMobileNumAndAddressForStudent = (fieldId)=>{
     let selectedValue=fieldId.value;
     console.log(selectedValue);
     let valueArr=selectedValue.split(" ")
@@ -702,8 +702,39 @@ const getMobileNumForStu = (fieldId)=>{
     textMobile.style.border="2px solid green";
     textMobile.disabled=true;
 
+    let getAddressFromGuardianServiceResponse=ajaxGetRequest("/guardian/getaddressbynic/"+nicValue);
+    console.log(getAddressFromGuardianServiceResponse);
+
+    textAddress.value=getAddressFromGuardianServiceResponse;
+    student.address=textAddress.value;
+    textAddress.style.border="2px solid green";
 
 }
+
+
+const validateMobileExisting = (fieldId)=>{
+    let mobileValue=fieldId.value;
+    if (new RegExp('^[0][7][01245678][0-9]{7}$').test(mobileValue)){
+        console.log("good mobile to validate existing");
+
+        let getServerResponse=ajaxGetRequest("/guardian/existancebymobile/"+mobileValue);
+        if (getServerResponse==true){
+            divMobileText.classList.remove("d-none");
+            divMobileText.innerText="mobile "+mobileValue+" is already exists please recheck"
+            divMobileText.style.color="red";
+        }else {
+            divMobileText.classList.remove("d-none");
+            divMobileText.innerText="mobile "+mobileValue+" is good it is not previously entered";
+            divMobileText.style.color="green";
+        }
+
+
+    }
+}
+
+
+
+
 
 
 

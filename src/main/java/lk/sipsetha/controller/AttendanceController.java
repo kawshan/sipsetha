@@ -6,6 +6,7 @@ import lk.sipsetha.dao.UserDao;
 import lk.sipsetha.entity.Attendance;
 import lk.sipsetha.entity.AttendanceStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +36,7 @@ public class AttendanceController {
 
     @GetMapping(value = "/findall")
     public List<Attendance> getAllAttendance(){
-        return dao.findAll();
+        return dao.findAll(Sort.by(Sort.Direction.DESC,"id"));
     }
 
     @GetMapping(value = "/attendanceform")

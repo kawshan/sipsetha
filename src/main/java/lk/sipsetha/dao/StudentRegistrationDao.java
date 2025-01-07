@@ -1,5 +1,6 @@
 package lk.sipsetha.dao;
 
+import lk.sipsetha.entity.ClassOffering;
 import lk.sipsetha.entity.StudentRegistration;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -15,5 +16,7 @@ public interface StudentRegistrationDao extends JpaRepository<StudentRegistratio
     @Query(value = "select sr from StudentRegistration sr where sr.student_id.stunum=?1 and sr.registrationstatus_id.id=1")
 //    @Query(value = "select sr.indexnumber from StudentRegistration sr where sr.student_id=(select s.id from Student s where s.stunum=?1)")
     public List<StudentRegistration> getIndexNumberFromStuNum(String indexnumb);
+
+
 
 }

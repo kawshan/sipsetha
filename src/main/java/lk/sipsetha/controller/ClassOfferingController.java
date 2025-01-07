@@ -33,11 +33,11 @@ public class ClassOfferingController {
 
     @GetMapping(value = "/findall")
     public List<ClassOffering> getAllClassOffering(){
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        HashMap<String,Boolean> getLoggedUserPrivileges = privilegeController.getPrivilegeByUserModule(auth.getName(), "classoffering");
-        if (!getLoggedUserPrivileges.get("select")){
-            return null;
-        }
+//        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//        HashMap<String,Boolean> getLoggedUserPrivileges = privilegeController.getPrivilegeByUserModule(auth.getName(), "classoffering");
+//        if (!getLoggedUserPrivileges.get("select")){
+//            return null;
+//        }
         return dao.findAll();
     }
 

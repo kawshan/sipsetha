@@ -94,7 +94,7 @@
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #044800; color: whitesmoke;">
                     <h2 class="h2">
-                        add new class hall
+                        class hall
                     </h2>
                     <button type="button" class="btn btn btn-danger"
                             style="color: whitesmoke; border: 1px solid black; border-radius: 25%;"
@@ -105,6 +105,8 @@
                 <div class="modal-body" style="background-color: #E0E9DD">
 
                     <form onsubmit="return false" id="classHallForm">
+
+
                         <!--                    required mark start-->
                         <div class="row mt-2">
                             <div class="col-md-12 text-start">
@@ -113,6 +115,8 @@
                         </div>
                         <!--                    required mark end-->
 
+
+                        <!--name start-->
                         <div class="row mt-2">
                             <div class="col-md-4">
                                 <label for="textName" class="form-label fw-bold">name <i class="text-danger">*</i>
@@ -124,7 +128,10 @@
                                        onkeyup="textValidator(this,'^[A-Za-z0-9]{3,20}$','classhall','name')">
                             </div>
                         </div>
+                        <!--name end-->
 
+
+                        <!--location start-->
                         <div class="row mt-2">
                             <div class="col-md-4">
                                 <label for="textLocation" class="form-label fw-bold">location <i
@@ -133,34 +140,40 @@
                             <div class="col-md-8">
                                 <input type="text" id="textLocation" class="form-control text-center" required
                                        placeholder="enter location "
-                                       onkeyup="textValidator(this,'^[A-Za-z0-9]{3,10}$','classhall','location')">
+                                       onkeyup="textValidator(this,'^[A-Za-z0-9]{3,20}$','classhall','location')">
                             </div>
                         </div>
+                        <!--location end-->
 
+                        <!--min student count start-->
                         <div class="row mt-2">
                             <div class="col-md-4">
-                                <label for="textMinCount" class="form-label fw-bold">min count <i
+                                <label for="textMinCount" class="form-label fw-bold">min student count <i
                                         class="text-danger">*</i> </label>
                             </div>
                             <div class="col-md-8">
                                 <input type="number" id="textMinCount" class="form-control text-center" required
                                        placeholder="enter min count"
-                                       onkeyup="textValidator(this,'^[0-9]{1,2}$','classhall','mincount')">
+                                       onkeyup="textValidator(this,'^[1-9]{1}[0-9]{1}$','classhall','mincount')">
                             </div>
                         </div>
+                        <!--min student count end-->
 
+                        <!--max student count-->
                         <div class="row mt-2">
                             <div class="col-md-4">
-                                <label for="textMaxCount" class="form-label fw-bold">max count <i
+                                <label for="textMaxCount" class="form-label fw-bold">max student count <i
                                         class="text-danger">*</i> </label>
                             </div>
                             <div class="col-md-8">
                                 <input type="number" id="textMaxCount" class="form-control text-center" required
                                        placeholder="enter max count"
-                                       onkeyup="textValidator(this,'^[0-9]{1,2}$','classhall','maxcount')">
+                                       onkeyup="textValidator(this,'^^[1-9]{1}[0-9]{1}$','classhall','maxcount')">
                             </div>
                         </div>
+                        <!--max student count-->
 
+                        <!--table count-->
                         <div class="row mt-2">
                             <div class="col-md-4">
                                 <label for="textTableCount" class="form-label fw-bold">table count <i
@@ -169,22 +182,13 @@
                             <div class="col-md-8">
                                 <input type="number" id="textTableCount" class="form-control text-center" required
                                        placeholder="enter table count"
-                                       onkeyup="textValidator(this,'^[0-9]{1,2}$','classhall','tablecount')">
+                                       onkeyup="textValidator(this,'^[1-9]{1}[0-9]{1}$','classhall','tablecount')">
                             </div>
                         </div>
+                        <!--table count -->
 
-                        <div class="row mt-2">
-                            <div class="col-md-4">
-                                <label for="textBenchCount" class="form-label fw-bold">bench count <i
-                                        class="text-danger">*</i> </label>
-                            </div>
-                            <div class="col-md-8">
-                                <input type="number" id="textBenchCount" class="form-control text-center" required
-                                       placeholder="enter bench count"
-                                       onkeyup="textValidator(this,'^[0-9]{1,2}$','classhall','benchcount')">
-                            </div>
-                        </div>
 
+                        <!--max table count-->
                         <div class="row mt-2">
                             <div class="col-md-4">
                                 <label for="textMaxTableCount" class="form-label fw-bold">max table count <i
@@ -193,10 +197,27 @@
                             <div class="col-md-8">
                                 <input type="number" class="form-control text-center" id="textMaxTableCount" required
                                        placeholder="enter max table count"
-                                       onkeyup="textValidator(this,'^[0-9]{1,2}$','classhall','maxtablecount')">
+                                       onkeyup="textValidator(this,'^[1-9]{1}[0-9]{1}$','classhall','maxtablecount')">
                             </div>
                         </div>
+                        <!--max table count-->
 
+                        <!--bench count start-->
+                        <div class="row mt-2">
+                            <div class="col-md-4">
+                                <label for="textBenchCount" class="form-label fw-bold">bench count <i
+                                        class="text-danger">*</i> </label>
+                            </div>
+                            <div class="col-md-8">
+                                <input type="number" id="textBenchCount" class="form-control text-center" required
+                                       placeholder="enter bench count"
+                                       onkeyup="textValidator(this,'^[1-9]{1}[0-9]{1}$','classhall','benchcount')">
+                            </div>
+                        </div>
+                        <!--bench count end-->
+
+
+                        <!--max bench count-->
                         <div class="row mt-2">
                             <div class="col-md-4">
                                 <label for="textMaxBenchCount" class="form-label fa-bold"> max bench count <i
@@ -205,10 +226,12 @@
                             <div class="col-md-8">
                                 <input type="text" class="form-control text-center" id="textMaxBenchCount" required
                                        placeholder="enter max bench count"
-                                       onkeyup="textValidator(this,'^[0-9]{1,2}$','classhall','maxbenchcount')">
+                                       onkeyup="textValidator(this,'^[1-9]{1}[0-9]{1}$','classhall','maxbenchcount')">
                             </div>
                         </div>
+                        <!--max bench count-->
 
+                        <!--note start-->
                         <div class="row mt-2">
                             <div class="col-md-4">
                                 <label for="textNote" class="form-label fw-bold">note <i
@@ -220,7 +243,10 @@
                                        onkeyup="textValidator(this,'^[A-Za-z]{2,100}$','classhall','note')">
                             </div>
                         </div>
+                        <!--note end-->
 
+
+                        <!--status start-->
                         <div class="row mt-2">
                             <div class="col-md-4">
                                 <label for="selectClassHallStatus" class="form-label fw-bold">class hall status <i
@@ -233,6 +259,7 @@
                                 </select>
                             </div>
                         </div>
+                        <!--status end-->
 
 
                         <div class="row mt-2">
@@ -246,14 +273,24 @@
                             <!--                            left end-->
 
 
-<!--                            middle start-->
+                            <!--                            middle start-->
                             <div class="col-md-4">
-                                <button type="button" onclick="btnAddOneItem()" class="btn btn-success">add one item</button><br>
-                                <button type="button" onclick="btnAddAllItem()" class="btn btn-success">add all item</button><br>
-                                <button type="button" onclick="btnRemoveOneItem()" class="btn btn-success">remove one item</button><br>
-                                <button type="button" onclick="btnRemoveAllItem()" class="btn btn-success">remove all item</button><br>
+                                <button type="button" onclick="btnAddOneItem()" class="btn btn-success">add one item
+                                </button>
+                                <br>
+                                <button type="button" onclick="btnAddAllItem()" class="btn btn-success">add all item
+                                </button>
+                                <br>
+                                <button type="button" onclick="btnRemoveOneItem()" class="btn btn-success">remove one
+                                    item
+                                </button>
+                                <br>
+                                <button type="button" onclick="btnRemoveAllItem()" class="btn btn-success">remove all
+                                    item
+                                </button>
+                                <br>
                             </div>
-<!--                            middle end-->
+                            <!--                            middle end-->
 
 
                             <!--                            right start-->
@@ -334,7 +371,6 @@
         </div>
     </div>
     <!--print model area end-->
-
 
 
 </div>

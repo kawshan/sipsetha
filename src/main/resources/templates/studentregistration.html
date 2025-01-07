@@ -18,13 +18,11 @@
         <div class="col--md-12">
             <h1 class="h1 text-center"
                 style="background-color: #044800; color: whitesmoke; padding: 25px; border-radius: 30px">
-                student registration management ui
+                student class registration
             </h1>
         </div>
     </div>
     <!--  title area end-->
-
-
 
 
     <!--  title button area start-->
@@ -33,7 +31,7 @@
             <div id="divPrintClassTableButton" class="">
                 <button onclick="printStudentRegistrationFullTable()" type="button" class="btn fw-bold"
                         style="background-color: #044800; color: whitesmoke; width: 25%; border: 1px solid black; border-radius: 30px">
-                    <i class="fa-solid fa-print fa-beat"> </i> print student registration table
+                    <i class="fa-solid fa-print fa-beat"> </i> print student class registration
                 </button>
             </div>
 
@@ -43,12 +41,11 @@
                     style="background-color: #044800; color: whitesmoke; width: 100%; border: 1px solid black; border-radius: 30px"
                     data-bs-toggle="modal" data-bs-target="#modalStudentRegistration" data-bs-backdrop="static"
                     data-bs-keyboard="false">
-                <i class="fa-solid fa-plus fa-beat"></i> add new student registration
+                <i class="fa-solid fa-plus fa-beat"></i> student class registration
             </button>
         </div>
     </div>
     <!--  title button area end-->
-
 
 
     <!--      edit delete print button start-->
@@ -78,10 +75,6 @@
     <!--      edit delete print button end-->
 
 
-
-
-
-
     <!--  table area start-->
     <div class="row mt-5"></div>
     <table class="table table-bordered table-striped" id="tableStudentRegistration">
@@ -101,17 +94,15 @@
     <!--  table area end-->
 
 
-
     <!--modal area start-->
     <div class="modal modal-xl" id="modalStudentRegistration" data-bs-backdrop="static" data-bs-keyboard="false">
         <div class="modal-dialog">
 
 
-
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #044800; color: whitesmoke">
                     <h2 class="h2">
-                        add new registration
+                        student class registration
                     </h2>
                     <button type="button" class="btn btn btn-danger"
                             style="color: whitesmoke; border: 1px solid black; border-radius: 25%;"
@@ -131,87 +122,113 @@
                             </div>
                         </div>
                         <!--                    required mark end-->
-
+                        <!--select student start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
-                                <label for="textStudent" class="form-label fw-bold">select student <i class="text-danger">*</i> </label>
+                                <label for="textStudent" class="form-label fw-bold">select student <i
+                                        class="text-danger">*</i> </label>
                             </div>
                             <div class="col-md-6">
-<!--                                <select id="selectStudent" class="form-select text-center" required onchange="selectDBValidator(this,'','studentRegistration','student_id')"></select>-->
-                                <input type="text" id="textStudent" list="datalistStudent" class="form-control text-center" placeholder="search and select student"
-                                onkeyup="dataListValidator(this,'students','studentRegistration','student_id','oldStudentRegistration','stunum','lastname')"
+                                <!--                                <select id="selectStudent" class="form-select text-center" required onchange="selectDBValidator(this,'','studentRegistration','student_id')"></select>-->
+                                <input type="text" id="textStudent" list="datalistStudent"
+                                       class="form-control text-center" placeholder="search and select student"
+                                       onkeyup="dataListValidator(this,'students','studentRegistration','student_id','oldStudentRegistration','stunum','lastname')"
                                 >
                                 <datalist id="datalistStudent">
 
                                 </datalist>
                             </div>
                         </div>
+                        <!--select student end-->
 
 
+                        <!--select class offering start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
-                                <label for="selectClassOffering" class="form-label fw-bold"> select class offering <i class="text-danger">*</i> </label>
+                                <label for="selectClassOffering" class="form-label fw-bold"> select class offering <i
+                                        class="text-danger">*</i> </label>
                             </div>
                             <div class="col-md-6">
-                                <select id="selectClassOffering" class="form-select text-center" required onchange="selectDBValidator(this,'','studentRegistration','classoffering_id')"></select>
+                                <select id="selectClassOffering" class="form-select text-center" required
+                                        onchange="selectDBValidator(this,'','studentRegistration','classoffering_id')"></select>
                             </div>
                         </div>
+                        <!--select class offering end-->
 
-
-
+                        <!--fee start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
-                                <label for="textFee" class="form-label fw-bold"> fee <i class="text-danger">*</i> </label>
+                                <label for="textFee" class="form-label fw-bold"> fee <i class="text-danger">*</i>
+                                </label>
                             </div>
                             <div class="col-md-6">
-                                <input type="number" min="1000" max="9999" id="textFee" class="form-control text-center" required placeholder="enter fee" onkeyup="textValidator(this,'^[0-9]{4}[.][0]{2}$','studentRegistration','fee')">
+                                <input type="text" id="textFee" class="form-control text-center" required
+                                       placeholder="enter fee"
+                                       onkeyup="textValidator(this,'^[0-9]{4}[.][0]{2}$','studentRegistration','fee')">
                             </div>
                         </div>
-                        
+                        <!--fee start                        -->
 
+                        <!--select registration status start                        -->
                         <div class="row mt-2">
                             <div class="col-md-6">
-                                <label for="selectRegistrationStatus" class="form-label fw-bold">select registration status</label>
+                                <label for="selectRegistrationStatus" class="form-label fw-bold">select registration
+                                    status</label>
                             </div>
                             <div class="col-md-6">
-                                <select id="selectRegistrationStatus" class="form-select text-center" required onchange="selectDBValidator(this,'','studentRegistration','registrationstatus_id')"></select>
+                                <select id="selectRegistrationStatus" class="form-select text-center" required
+                                        onchange="selectDBValidator(this,'','studentRegistration','registrationstatus_id')"></select>
                             </div>
                         </div>
-                        
+                        <!--select registration status end                        -->
+
+
+                        <!--select registrated type start                        -->
                         <div class="row mt-2">
                             <div class="col-md-6">
                                 <label for="selectRegisteredType" class="form-label fw-bold">registered type</label>
                             </div>
                             <div class="col-md-6">
-                                <select id="selectRegisteredType" class="form-select text-center" required onchange="selectDBValidator(this,'','studentRegistration','registerdtype_id')"></select>
+                                <select id="selectRegisteredType" class="form-select text-center" required
+                                        onchange="selectDBValidator(this,'','studentRegistration','registerdtype_id')"></select>
                             </div>
                         </div>
+                        <!--select registrated type end-->
 
+
+                        <!--note start                        -->
                         <div class="row mt-2">
                             <div class="col-md-6">
-                                <label for="textNote" class="form-label fw-bold">note <i class="text-primary">(optional) </i> </label>
+                                <label for="textNote" class="form-label fw-bold">note <i
+                                        class="text-primary">(optional) </i> </label>
                             </div>
                             <div class="col-md-6">
-                                <textarea id="textNote" cols="" rows="3" placeholder="enter note " onkeyup="textValidator(this,'','studentRegistration','note')"></textarea>
+                                <textarea id="textNote" cols="" rows="3" placeholder="enter note "
+                                          onkeyup="textValidator(this,'','studentRegistration','note')"></textarea>
                             </div>
                         </div>
-                        
+                        <!--note end                        -->
 
 
                         <!--                    button start-->
                         <div class="row mt-5">
                             <div class="col-md-4">
-                                <button type="reset" class="btn btn-danger fw-bold" style=" width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%">
+                                <button type="reset" class="btn btn-danger fw-bold"
+                                        style=" width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%">
                                     <i class="fa-solid fa-trash fa-beat"> </i> reset
                                 </button>
                             </div>
                             <div class="col-md-4 text-center">
-                                <button type="button" id="btnStudentRegUpdate" class="btn btn-warning fw-bold" style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%; pointer-events: all" onclick="btnStudentRegistrationUpdate()" >
+                                <button type="button" id="btnStudentRegUpdate" class="btn btn-warning fw-bold"
+                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%; pointer-events: all"
+                                        onclick="btnStudentRegistrationUpdate()">
                                     <i class="fa-solid fa-recycle fa-beat"> </i> update
                                 </button>
                             </div>
                             <div class="col-md-4 text-end">
-                                <button type="submit" id="btnStudentRegDelete" class="btn btn-primary fw-bold" style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%; pointer-events: all" onclick="addStudentRegistration()">
+                                <button type="submit" id="btnStudentRegDelete" class="btn btn-primary fw-bold"
+                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%; pointer-events: all"
+                                        onclick="addStudentRegistration()">
                                     <i class="fa-solid fa-plus fa-beat"> </i> add
                                 </button>
                             </div>
@@ -219,10 +236,8 @@
                         <!--                    button end-->
 
 
-
                     </form>
                 </div>
-
 
 
             </div>

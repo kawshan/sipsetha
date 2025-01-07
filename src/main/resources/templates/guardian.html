@@ -91,7 +91,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #044800; color: whitesmoke">
-                    <h2 class="h2">add new guardian </h2>
+                    <h2 class="h2">guardian form </h2>
 
                     <button type="button" class="btn btn btn-danger"
                             style="color: whitesmoke; border: 1px solid black; border-radius: 25%;"
@@ -247,7 +247,7 @@
                             <div class="col-md-6">
                                 <input type="text" id="textWPAddress" class="form-control text-center"
                                        placeholder="enter guardian's workplace address"
-                                       onchange="textValidator(this,'^.*$','guardian','wpaddress')">
+                                       onchange="textValidator(this,'^[nN][oO][\\s][0-9]{1,3}[\\s][a-z]{3,50}$','guardian','wpaddress')">
                             </div>
                         </div>
                         <!--                        work place address end-->
@@ -277,7 +277,7 @@
                             <div class="col-md-6">
                                 <input type="text" id="textPosition" class="form-control text-center"
                                        placeholder="enter guardian's working position"
-                                       onkeyup="textValidator(this,'^.*$','guardian','position')">
+                                       onkeyup="textValidator(this,'^[A-Za-z]{3,20}$','guardian','position')">
                             </div>
                         </div>
                         <!--                        position end-->

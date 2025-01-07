@@ -108,6 +108,8 @@ public class GuardianController {
             Guardian extGuardianNic = guardianDao.getGuardianByByNic(guardian.getNic());
             if (extGuardianNic!=null){
                 return "cannot save guardian.. guardian's nic is already exists";
+            }else {
+
             }
 
 

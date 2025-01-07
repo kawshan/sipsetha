@@ -18,7 +18,7 @@
         <div class="col--md-12">
             <h1 class="h1 text-center"
                 style="background-color: #044800; color: whitesmoke; padding: 25px; border-radius: 30px">
-                student payment management ui
+                student payment management
             </h1>
         </div>
     </div>
@@ -102,7 +102,7 @@
             <div class="modal-content">
                 <div class="modal-header" style="background-color: #044800; color: whitesmoke">
                     <h2 class="h2">
-                        add new student payment
+                        student payment
                     </h2>
                     <button type="button" class="btn btn btn-danger"
                             style="color: whitesmoke; border: 1px solid black; border-radius: 25%;"
@@ -152,7 +152,7 @@
 <!--                        student registration end-->
 
 
-                        <!--                        student registration start-->
+                        <!--                        payment category start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
                                 <label for="selectPaymentCategory" class="form-label fw-bold">payment category <i
@@ -162,7 +162,7 @@
                                 <select id="selectPaymentCategory" class="form-control text-center" onchange="selectDBValidator(this,'','payment','paymentcategory_id')"></select>
                             </div>
                         </div>
-                        <!--                        student registration end-->
+                        <!--                        payment category end-->
 
 
 
@@ -189,7 +189,7 @@
                             <div class="col-md-6">
                                 <input type="text" id="textFee" class="form-control text-center"
                                        required placeholder="enter fee"
-                                       onkeyup="textValidator(this,'^[0-9]{4}[.][0]{2}$','payment','fees')">
+                                       onkeyup="textValidator(this,'^[1-9][0-9]{3,6}[.][0][0]$','payment','fees')">
                             </div>
                         </div>
                         <!--                        fees end-->
@@ -253,6 +253,7 @@
                         <!--                        reference number end-->
 
                         <!--                        card number start-->
+
                         <div class="row mt-2">
                             <div class="col-md-6">
                                 <label for="textCardNumber" class="form-label fw-bold"> card number <i

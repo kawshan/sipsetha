@@ -269,7 +269,7 @@
                         </div>
                         <!--                    address end-->
 
-
+<!--photo start-->
                         <div class="row mt-2">
                             <div class="col-md-6">
                                 <label for="fileEmpPhoto" class="form-label fw-bold">image <i class="text-danger">*</i>
@@ -289,7 +289,7 @@
                                        onchange="validateFileField(this,'employee','emp_photo','emp_photo_name','oldEmployee',imgEmpPhoto,textEmpPhoto)">
                             </div>
                         </div>
-
+<!--photo start-->
 
                         <!--                        status start-->
                         <div class="row mt-2">
@@ -458,6 +458,8 @@
         </div>
     </div>
     <!--print model area end-->
+
+    <div th:replace="~{navbar :: settingmodal}"></div>
 
 
 </div>

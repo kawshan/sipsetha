@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="~{head :: headModulesFragment}"></head>
+
+<head>
+    <script src="/controllerjs/reportworkingemployee.js"></script>
+</head>
+
+<body style="background-color: #E0E9DD">
+<div th:replace="~{navbar :: navbarFragment}"></div>
+
+<div class="container-fluid">
+
+
+    <!--  title area start-->
+    <div class="row p-2">
+        <div class="col--md-12">
+            <h1 class="h1 text-center"
+                style="background-color: #044800; color: whitesmoke; padding: 25px; border-radius: 30px">
+                employee reports
+            </h1>
+        </div>
+    </div>
+    <!--  title area end-->
+
+    <!--  title button area start-->
+    <div class="row mt-2">
+        <div class="col-md-4">
+            <div id="divPrintEmployeeTableButton" class="">
+                <button type="button" class="btn fw-bold"
+                        style="background-color: #044800; color: whitesmoke; width: 25%; border: 1px solid black; border-radius: 30px"
+                        onclick="printEmployeeFullTable()">
+                    <i class="fa-solid fa-print fa-beat"> </i> print employee table
+                </button>
+            </div>
+        </div>
+
+        <div class="col-md-2">
+            <select id="selectStatus" class="form-select text-center">
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <select id="selectDesignation" class="form-select text-center">
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <button type="button" class="btn btn-primary" onclick="generateReportBYSelectValues()">generate</button>
+        </div>
+
+
+    </div>
+    <!--  title button area end-->
+
+
+
+    <!--  table area start-->
+    <div class="row mt-5"></div>
+    <table class="table table-bordered table-striped" id="tableReportEmployee">
+        <thead class="table text-center" style="background-color: #044800; color: whitesmoke">
+        <th>#</th>
+        <th>full name</th>
+        <th>calling name</th>
+        <th>dob</th>
+        <th>nic</th>
+        <th>gender</th>
+        <th>mobile</th>
+        <th>landno</th>
+        <th>email</th>
+        <th>address</th>
+        <th>added date</th>
+        <th>photo</th>
+        <th>status</th>
+        <th>designation</th>
+        <th>civil status</th>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    <!--  table area end-->
+
+
+
+
+</div>
+</body>
+</html>

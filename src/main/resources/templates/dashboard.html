@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head th:replace="~{head :: headDashboardFragment}"></head>
+
 <body style="background-color: #E0E9DD">
 
 <div th:replace="~{navbar :: navbarFragment}"></div>
@@ -128,6 +129,11 @@
     <!--    forth row end-->
 
 
+    <div th:replace="~{navbar :: settingmodal}"></div>
+
+
 </div>
+
+<script src="/controllerjs/dashboard.js"></script>
 </body>
 </html>

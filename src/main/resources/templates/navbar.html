@@ -5,6 +5,10 @@
         <div class="container-fluid">
             <a class="navbar-brand" style="color: whitesmoke" data-bs-toggle="offcanvas"
                data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">Sipsetha</a>
+
+
+
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                     aria-expanded="false" aria-label="Toggle navigation">
@@ -12,12 +16,14 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-auto">
+
+
+
+
                     <li class="nav-item">
                         <a class="nav-link active" style="color: whitesmoke" aria-current="page" href="http://localhost:8080/dashboard">Home</a>
                     </li>
-                    <!--                    <li class="nav-item">-->
-                    <!--                        <a class="nav-link" href="#">Link</a>-->
-                    <!--                    </li>-->
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false" style="color: whitesmoke">
@@ -58,13 +64,21 @@
                             <li><a class="dropdown-item" href="/classoffering/classofferingform">class offering management</a></li>
                             <li><a class="dropdown-item" href="/classroomallocation/classroomallocationform">classroom allocation management</a></li>
                         </ul>
-
-
-
                     </li>
 
 
+                    <li class="nav-item">
+                        <a class="ms-2" onclick="refreshProfileEditForm()" data-bs-toggle="modal" data-bs-target="#modalsetting">
+                            <img src="/icons/setting.png">
+                        </a>
+                    </li>
+
+
+
                     <a class="navbar-brand" style="margin-left: 20%; color: whitesmoke;" th:text="${loggedusername}">logged user</a>
+                    <a class="navbar-brand" style="margin-left: 20%; color: whitesmoke;" th:text="${loggeduserrole}">logged role</a>
+                    <img src="/icons/employee.png" id="imguserPhoto" style="width: 50px; height: 50px; border-radius: 50%">
+
 
                     <button class="btn btn-danger"
                             onclick="let userConfirm = confirm('are you sure to logout');
@@ -82,6 +96,7 @@
 
     <!--    nav bar end-->
 
+<!--    off canvas start-->
     <div class="offcanvas offcanvas-end" style="background-color: #E0E9DD" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
         <div class="offcanvas-header">
             <h2 class="offcanvas-title" id="offcanvasExampleLabel">sipsetha institute</h2>
@@ -149,12 +164,96 @@
             </div>
 
 
+            <div class="row mt-2">
+                <div class="btn-group mt-2">
+                    <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                        report Sections
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="/reportworkingemployee">employee reports</a></li>
+                        <li><a class="dropdown-item" href="/reportstudentui">student reports</a></li>
+                    </ul>
+                </div>
+            </div>
 
 
 
 
         </div>
     </div>
+<!--    off canvas end-->
 
 
+</div>
+
+<div class="modal fade" id="modalsetting" th:fragment="settingmodal" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">change settings</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <!--                        username start-->
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <label for="txtUsrNm" class="form-label fw-bold">user name <i class="text-danger">*</i></label>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" id="txtUsrNm" class="form-control text-center" required placeholder="enter user name" onkeyup="textValidator(this,'^[A-Z][a-z]{2,20}$','loggeduser','username')">
+                    </div>
+                </div>
+                <!--                        username end-->
+
+                <!--                        password start-->
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <label for="txtPw" class="form-label fw-bold">password <i class="text-danger">*</i></label>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="password" id="txtPw" class="form-control text-center" required placeholder="enter your password" onkeyup="textValidator(this,'^.*$','loggeduser','password')">
+                    </div>
+                </div>
+                <!--                        password end-->
+
+                <!--                        email start-->
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <label for="txtEm" class="form-label fw-bold">email <i class="text-danger">*</i></label>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" id="txtEm" class="form-control text-center" required placeholder="enter your email here" onkeyup="textValidator(this,'^[A-Za-z0-9]{6,20}[@][a-z]{3,10}[.][a-z]{2,3}$','loggeduser','email')" >
+                    </div>
+                </div>
+                <!--                        email end-->
+
+                <!--photo start-->
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <label for="fileEmpPhoto" class="form-label fw-bold">image <i class="text-danger">*</i>
+                        </label>
+                        <button type="button" id="btnSelectImage" onclick="fileEmpPhoto.click()"
+                                class="btn btn-primary">select image
+                        </button>
+                        <button type="button" id="btnClearImage" onclick="btnClearImageFN()"
+                                class="btn btn-info">clear image
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <img src="/icons/no-photo.png" style="height: 75px; width: 75px" alt="default image"
+                             id="imgEmpPhoto">
+                        <input type="text" disabled class="form-control" id="textEmpPhoto">
+                        <input type="file" class="form-control d-none" id="fileEmpPhoto"
+                               onchange="validateFileField(this,'loggeduser','userphoto','','oldloggeduser',imgEmpPhoto,textEmpPhoto)">
+                    </div>
+                </div>
+                <!--photo start-->
+
+                <button type="submit" onclick="submitUserSetting()" class="btn btn-secondary">submit user setting</button>
+
+            </div>
+
+        </div>
+    </div>
 </div>

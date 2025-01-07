@@ -46,6 +46,9 @@ public class User {
     @Column(name = "note")
     private String note;
 
+    @Column(name = "userphoto")
+    private byte[] userphoto;
+
     @ManyToOne
     @JoinColumn(name = "employee_id",referencedColumnName = "id")
     private Employee employee_id;

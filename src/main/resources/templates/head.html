@@ -13,8 +13,8 @@
     <script src="/commonjs/selectcommonfunction.js"></script>
     <script src="/commonjs/validation.js"></script>
     <script src="/commonjs/tablecommonfuntion.js"></script>
-
     <script src="/commonjs/ajaxcommonfunction.js"></script>
+    <script src="/controllerjs/dashboard.js"></script>
     <!--    link my js end-->
 
 
@@ -35,6 +35,17 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.all.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.0/dist/sweetalert2.min.css" rel="stylesheet">
     <!--    sweet alert end-->
+
+
+
+    <script th:inline="javascript">
+        window.addEventListener('load',()=>{
+            let userPhoto =/*[[${loggeduserphoto}]]*/ 'loggeduserphoto';
+            if (userPhoto!=null){
+                imguserPhoto.src=atob(userPhoto) //encrptred byte code ekek enne eka decrypt karanawa
+            }
+        })
+    </script>
 </head>
 
 
@@ -53,7 +64,28 @@
     <script src="/commonjs/jquery.js"></script>
     <!--    link bootstrap js and css font awesome end-->
 
+    <!--    jquery cdn start-->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css">
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+    <!--    jquery cdn end-->
 
+
+
+    <script src="/commonjs/selectcommonfunction.js"></script>
+    <script src="/commonjs/validation.js"></script>
+    <script src="/commonjs/tablecommonfuntion.js"></script>
+    <script src="/commonjs/ajaxcommonfunction.js"></script>
+    <!--    link my js end-->
+
+
+    <script th:inline="javascript">
+        window.addEventListener('load',()=>{
+            let userPhoto =/*[[${loggeduserphoto}]]*/ 'loggeduserphoto';
+            if (userPhoto!=null){
+                imguserPhoto.src=atob(userPhoto) //encrptred byte code ekek enne eka decrypt karanawa
+            }
+        })
+    </script>
 
     <meta charset="UTF-8">
     <title>dashboard</title>

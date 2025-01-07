@@ -23,12 +23,18 @@ const refreshStudentTable = () => {
         {dataType: 'function', propertyName: getGender},
         {dataType: 'text', propertyName: 'address'},
         {dataType: 'text', propertyName: 'mobile'},
+        {dataType: 'function', propertyName: getGrade},
         {dataType: 'function', propertyName: getStatus},
 
     ];
 
     fillDataIntoTable(tableStudent, students, displayProperty, checkPrivilege, true)
 
+}
+
+
+const getGrade = (ob)=>{
+    return ob.grade_id.name;
 }
 
 const checkPrivilege = (innerOb) => {

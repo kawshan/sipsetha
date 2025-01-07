@@ -214,7 +214,7 @@ const employeeFormRefill = (ob, rowIndex) => {
         textEmpPhoto.value="";
     }else {
         imgEmpPhoto.src=atob(employee.emp_photo);//btoa eken encrypt karanawa meken decrypt karanawa
-        textEmpPhoto.value=employee=employee.emp_photo_name
+        textEmpPhoto.value=employee.emp_photo_name
     }
 
 

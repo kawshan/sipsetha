@@ -58,5 +58,32 @@ public class PaymentController {
         }
     }
 
+    @PutMapping
+    public String ModifyPayment(@RequestBody Payment payment){
+        //authentication and authorization
+        //existing check
+        //operation
+        try {
+            payment.setModifydatetime(LocalDateTime.now());
+            dao.save(payment);
+            return "ok";
+        }catch (Exception e){
+            return "modify payment is not completed "+e.getMessage();
+        }
+    }
+
+    @DeleteMapping
+    public String deletePayment(@RequestBody Payment payment){
+        //authentication and authorization
+        //existing
+        //operator
+        try {
+            dao.delete(payment);
+            return "ok";
+        }catch (Exception e){
+            return "delete payment not successful "+e.getMessage();
+        }
+    }
+
 
 }

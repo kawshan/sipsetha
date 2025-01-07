@@ -61,6 +61,44 @@ const refreshPaymentForm = ()=>{
 
 
 }
+//define function for student payment refill
+const refillPaymentForm = (ob,rowIndex)=>{
+    payment=JSON.parse(JSON.stringify(ob));
+    oldPayment=JSON.parse(JSON.stringify(ob));
+
+    console.log("refill "+ob+" "+rowIndex);
+    $('#modalStudentPayment').modal('show');
+
+    textFee.value = payment.fees
+    textMonth.value = payment.month
+    textPayedAmount.value = payment.payedamount
+    textBalanceAmount.value = payment.balanceamount
+
+    if (payment.referencenumber != null){
+        textReferenceNumber.value = payment.referencenumber
+    }else {
+        textReferenceNumber.value="";
+    }
+
+    if (payment.cardno != null){
+        textCardNumber.value = payment.cardno
+    }else {
+        textCardNumber.value = "";
+    }
+
+
+    payTypes = ajaxGetRequest("/paytype/findall");
+    fillDataIntoSelect(selectPayType,'select pay type',payTypes,'name',payment.paytype_id.name);
+
+    students = ajaxGetRequest("/student/findall");
+    fillDataIntoSelect(selectStudent,'select student',students,'firstname',payment.student_id.firstname);
+
+
+
+}
+
+
+
 
 //define function for check errors
 const checkErrors = ()=>{
@@ -90,6 +128,43 @@ const checkErrors = ()=>{
 }
 
 
+//define function for check updates
+const checkUpdates = ()=>{
+    let updates = "";
+
+    if (payment.fees != oldPayment.fees){
+        updates=updates+"fees is updated \n";
+    }
+    if (payment.month != oldPayment.month){
+        updates=updates+"payment is updated \n"
+    }
+    if (payment.payedamount != oldPayment.payedamount){
+        updates=updates+"payed amount is updated \n";
+    }
+    if (payment.balanceamount != oldPayment.balanceamount){
+        updates=updates+"balance amount is updated \n"
+    }
+    if (payment.referencenumber != oldPayment.referencenumber){
+        updates=updates+"reference number is updated \n";
+    }
+    if (payment.cardno != oldPayment.cardno){
+        updates=updates+"card no is updated \n"
+    }
+    if (payment.paytype_id.name != oldPayment.paytype_id.name){
+        updates=updates+"paytype is updated \n"
+    }
+    if (payment.student_id.firstname != oldPayment.student_id.firstname){
+        updates=updates+"studnet is updated \n"
+    }
+
+
+    return updates;
+}
+
+
+
+
+
 const btnStudentRegistrationSubmit = ()=>{
     let errors = checkErrors();
     if (errors == ""){
@@ -115,8 +190,60 @@ const btnStudentRegistrationSubmit = ()=>{
     }
 }
 
+//define function for button form update
+const buttonFormUpdate = ()=>{
+    console.log("update called");
+    let errors = checkErrors();
+    if (errors==""){
+        let updates = checkUpdates();
+        if (updates==""){
+            alert("nothing to update");
+        }else {
+            let userConfirm=confirm("are you sure to add following updates \n"+updates);
 
+            if (userConfirm){
+                let putServerResponse = ajaxPutRequest("/payment",payment);
+                if (putServerResponse=="ok"){
+                    alert("modify is successful \n"+putServerResponse);
+                    $('#modalStudentPayment').modal('hide');
+                    refreshPaymentForm();
+                    refreshPaymentTable();
+                }else {
+                    alert("modify was not successful \n"+putServerResponse);
+                }
+            }
+        }
+    }
+}
 
+//define function for delete payment
+const deletePaymentButton = (ob,rowIndex)=>{
+    console.log("delete "+ob+" "+rowIndex)
+    tableStudentPayment.children[1].children[rowIndex].style.backgroundColor="orange";
+    setTimeout(function (){
+        userConfirm =confirm("are you sure to delete following payment \n"
+            +"fees is \n"+ob.fees
+            +"month is \n"+ob.month
+            +"payed amount is \n"+ob.payedamount
+            +"balance amount is \n"+ob.balanceamount
+            +"reference number is \n"+ob.referencenumber
+            +"card number is \n"+ob.cardno
+            +"pay type is \n"+ob.paytype_id.name
+            +"student is \n"+ob.student_id.firstname
+        );
+        if (userConfirm){
+            let deleteServerResponse = ajaxDeleteRequest("/payment",ob);
+            if (deleteServerResponse=="ok"){
+                alert("delete successful \n"+deleteServerResponse)
+                refreshPaymentTable();
+            }else {
+                alert("delete unsuccessful \n"+deleteServerResponse);
+                refreshPaymentTable();
+            }
+        }
+    },500)
+
+}
 
 
 

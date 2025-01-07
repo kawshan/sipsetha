@@ -522,7 +522,7 @@ const generateGenderAndDOB = (element)=>{
     selectDOB.style.border="2px solid green";
 
 }
-
+//define function for button designation submit for to add additional items to select field
 const buttonDesignationSubmit = ()=>{
     console.log("designation submit function");
 
@@ -553,7 +553,54 @@ const buttonDesignationSubmit = ()=>{
 
 }
 
+const printEmployeeFullTable = ()=>{
+    $("#printEmployeeModel").modal('show');
+    let displayProperty = [
+        {dataType: 'text', propertyName: 'fullname'},
+        {dataType: 'text', propertyName: 'callingname'},
+        {dataType: 'text', propertyName: 'dob'},
+        {dataType: 'text', propertyName: 'nic'},
+        {dataType: 'function', propertyName: getGender},
+        {dataType: 'text', propertyName: 'mobile'},
+        {dataType: 'text', propertyName: 'landno'},
+        {dataType: 'text', propertyName: 'email'},
+        {dataType: 'text', propertyName: 'address'},
+        {dataType: 'text', propertyName: 'addeddate'},
+        // {dataType: 'function', propertyName: getHasUserAccount},
+        {dataType: 'function', propertyName: getEmployeeStatus},
+        {dataType: 'function', propertyName: getDesignation},
+        {dataType: 'text', propertyName: 'civilstatus'}
 
+    ];
+    employees = ajaxGetRequest("/employee/findall")
+    fillDataIntoTable(printEmployeeTable,employees,displayProperty,"",false);
+
+
+}
+
+
+
+const modalPrintButton = ()=>{
+    console.log("model print working");
+    let newWindow = window.open();
+    newWindow.document.write(
+        "<head>\n" +
+        "    <link rel=\"stylesheet\" href=\"/bootstrap-5.2.3/css/bootstrap.min.css\">\n" +
+        "    <script src=\"/bootstrap-5.2.3/js/bootstrap.bundle.min.js\"></script>\n" +
+        "    <link rel=\"stylesheet\" href=\"/style/common.css\">\n" +
+        "    <link rel=\"stylesheet\" href=\"/style/button.css\">\n" +
+        "    <link rel=\"stylesheet\" href=\"/style/employee.css\">\n" +
+        "</head>\n" +
+        "<body>"+printEmployeeTable.outerHTML+"</body> "
+    );
+    setTimeout(function (){ //settime out ekkk dunne uda table eka naththam print ui ea hariyata load venna one nisa thama minisecond 500 dunna ookooma bootstrap load vela ganata enna one nisa
+        newWindow.stop();   //load vena eka nawaththuwa
+        newWindow.print();  //print eka call kra
+        newWindow.close();  //print rka open vela close krama close venawa
+    },500)
+
+
+}
 
 
 

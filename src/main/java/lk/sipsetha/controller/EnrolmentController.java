@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +27,15 @@ public class EnrolmentController {
     @Autowired
     private EnrolmentStatusDao enrolmentStatusDao;
 
+    @GetMapping
+    public ModelAndView enrolmentView(){
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        ModelAndView enrolmentUI = new ModelAndView();
+        enrolmentUI.setViewName("enrolment.html");
+        enrolmentUI.addObject("loggedusername",auth.getName());
+        enrolmentUI.addObject("title","enrolment management ui");
+        return enrolmentUI;
+    }
 
     @GetMapping(value = "/findall")
     public List<Enrolment> getAllEnrolment(){

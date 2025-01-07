@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,6 +20,17 @@ public class TeacherPaymentController {
 
     @Autowired
     private PrivilegeController privilegeController;
+
+    @GetMapping
+    public ModelAndView teacherPaymentView(){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        ModelAndView teacherPaymentUI = new ModelAndView();
+        teacherPaymentUI.setViewName("teacherpayment.html");
+        teacherPaymentUI.addObject("title","teacher payment ui");
+        teacherPaymentUI.addObject("loggedusername",authentication.getName());
+        return teacherPaymentUI;
+
+    }
 
     @GetMapping(value = "/findall")
     private List<TeacherPayment> getAllTeacherPayment(){

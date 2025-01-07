@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="~{head :: headModulesFragment}"></head>
+<script src="/controllerjs/enrolment.js"></script>
+<head>
+
+</head>
+<body style="background-color: #E0E9DD">
+<div th:replace="~{navbar :: navbarFragment}"></div>
+<div class="container-fluid">
+
+
+    <!--  title area start-->
+    <div class="row p-2">
+        <div class="col--md-12">
+            <h1 class="h1 text-center"
+                style="background-color: #044800; color: whitesmoke; padding: 25px; border-radius: 30px">
+                enrolment management
+            </h1>
+        </div>
+    </div>
+    <!--  title area end-->
+
+    <!--  title button area start-->
+    <div class="row mt-2">
+        <div class="col-md-8">
+            <div id="divPrintEmployeeTableButton" class="">
+                <button type="button" class="btn fw-bold"
+                        style="background-color: #044800; color: whitesmoke; width: 25%; border: 1px solid black; border-radius: 30px">
+                    <i class="fa-solid fa-print fa-beat"> </i> print enrolment table
+                </button>
+            </div>
+
+        </div>
+        <div class="col-md-4">
+            <button type="button" class="btn fw-bold"
+                    style="background-color: #044800; color: whitesmoke; width: 100%; border: 1px solid black; border-radius: 30px"
+                    data-bs-toggle="modal" data-bs-target="#modalEmployeeAdd" data-bs-backdrop="static"
+                    data-bs-keyboard="false">
+                <i class="fa-solid fa-plus fa-beat"></i> add new enrolment
+            </button>
+        </div>
+    </div>
+    <!--  title button area end-->
+
+    <!--      edit delete print button start-->
+    <div class="row mt-2">
+        <div id="divModifyButton" class="d-none">
+            <div class="col-md-8">
+                <button type="button" class="btn btn-warning fw-bold"
+                        style="width: 25%; color: whitesmoke; border:1px solid black"
+                        onclick="employeeFormRefill(window['editOb'],window['editRow'])">
+                    <i class="fa-solid fa-recycle fa-beat"> </i> edit
+                </button>
+                <button type="button" id="divModifyButtonDelete" class="btn btn-danger fw-bold ms-2 me-2"
+                        style="width: 25%; border: 1px solid black; pointer-events: all"
+                        onclick="deleteEmployee(window['editOb'],window['editRow'])">
+                    <i class="fa-solid fa-trash fa-beat"></i> delete
+                </button>
+                <button type="button" class="btn btn-primary fw-bold" style="width: 25%; border:1px solid black"
+                        onclick="printEmployee(window['editOb'],window['editRow'])">
+                    <i class="fa-solid fa-eye fa-beat"></i> print
+                </button>
+            </div>
+        </div>
+    </div>
+    <!--      edit delete print button end-->
+
+    <!--  table area start-->
+    <div class="row mt-5"></div>
+    <table class="table table-bordered table-striped" id="tableEnrolment">
+        <thead class="table text-center" style="background-color: #044800; color: whitesmoke">
+        <th>#</th>
+        <th>enrolment number</th>
+        <th>total class income</th>
+        <th>total service charge</th>
+        <th>total additional charge</th>
+        <th>total to be payed</th>
+        <th>payed amount</th>
+        <th>status</th>
+        <th>modify</th>
+        </thead>
+        <tbody>
+
+        </tbody>
+    </table>
+    <!--  table area end-->
+
+
+    <!--enrolment modal area start-->
+    <div class="modal" id="modalEmployeeAdd" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #044800; color: whitesmoke;">
+                    <h2 class="h2">
+                        add new enrolment
+                    </h2>
+                    <button type="button" class="btn btn btn-danger"
+                            style="color: whitesmoke; border: 1px solid black; border-radius: 25%;"
+                            data-bs-dismiss="modal">
+                        <i class="fa-solid fa-xmark"> </i> close
+                    </button>
+                </div>
+                <div class="modal-body" style="background-color: #E0E9DD">
+
+                    <form onsubmit="return false">
+                        <!--                    required mark start-->
+                        <div class="row mt-2">
+                            <div class="col-md-12 text-start">
+                                <span class="text-danger">required *</span>
+                            </div>
+                        </div>
+                        <!--                    required mark end-->
+
+                        <!--                        row start-->
+                        <div class="row mt-2">
+
+                            <!--                            left side start-->
+                            <div class="col-md-6">
+
+                                <!--                                month start-->
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label for="txtMonth" class="form-label fw-bold">month <i
+                                                class="text-danger">*</i> </label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="month" class="form-control text-center" id="txtMonth"
+                                               onchange="textValidator(this,'','enrolment','month')">
+                                    </div>
+                                </div>
+                                <!--                                month end-->
+
+
+                                <!--                                total income start-->
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label for="textTotalIncome" class="form-label fw-bold">total income <i
+                                                class="text-danger">*</i></label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="number" class="form-control text-center" id="textTotalIncome"
+                                               required placeholder="enter total income"
+                                               onkeyup="textValidator(this,'^[1-9]{1}[0-9]{3,4}[.][0-9]{2}$','enrolment','totalclassincome')">
+                                    </div>
+                                </div>
+                                <!--                                total income end-->
+
+
+                                <!--                                total service charge start-->
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label for="textTotalServiceCharge" class="form-label fw-bold">service charge <i
+                                                class="text-danger">*</i></label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="number" class="form-control text-center"
+                                               id="textTotalServiceCharge"
+                                               required placeholder="enter service charge"
+                                               onkeyup="textValidator(this,'^[1-9]{1}[0-9]{3,4}[.][0-9]{2}$','enrolment','totalservicecharge')">
+                                    </div>
+                                </div>
+                                <!--                                total service charge end-->
+
+
+                                <!--                                total additional charge start-->
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label for="textTotalAdditionalCharge" class="form-label fw-bold">additional
+                                            charge
+                                            <i class="text-danger">*</i></label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="number" class="form-control text-center"
+                                               id="textTotalAdditionalCharge"
+                                               required placeholder="enter additional charge"
+                                               onkeyup="textValidator(this,'^[1-9]{1}[0-9]{3,4}[.][0-9]{2}$','enrolment','totaladditionalcharge')">
+                                    </div>
+                                </div>
+                                <!--                                total additional charge end-->
+
+
+                                <!--                                total to be payed  start-->
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label for="textToBePayed" class="form-label fw-bold">to be payed <i
+                                                class="text-danger">*</i></label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="number" class="form-control text-center" id="textToBePayed"
+                                               required placeholder="enter to be payed "
+                                               onkeyup="textValidator(this,'^[1-9]{1}[0-9]{3,4}[.][0-9]{2}$','enrolment','totaltobepayed')">
+                                    </div>
+                                </div>
+                                <!--                                total to be payed end-->
+
+                                <!--                                 payed amount start-->
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label for="textPayedAmount" class="form-label fw-bold">payed amount <i
+                                                class="text-danger">*</i></label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="number" class="form-control text-center" id="textPayedAmount"
+                                               required placeholder="payed amount "
+                                               onkeyup="textValidator(this,'^[1-9]{1}[0-9]{3,4}[.][0-9]{2}$','enrolment','payedamount')">
+                                    </div>
+                                </div>
+                                <!--                                payed amount end-->
+
+                                <!--                                enrolment status start -->
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label for="selectEnrolmentStatus" class="form-label fw-bold">enrolment status
+                                            <i class="text-danger">*</i></label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select id="selectEnrolmentStatus" class="form-select" required
+                                                onchange="selectDBValidator(this,'','enrolment','enrolmentstatus_id')"></select>
+                                    </div>
+                                </div>
+                                <!--                                enrolment status end -->
+
+                                <!--                                teacher start-->
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label for="selectTeacher" class="form-label fw-bold">teacher <i
+                                                class="text-danger">*</i> </label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select id="selectTeacher" class="form-select text-center" required
+                                                onchange="selectDBValidator(this,'','enrolment','teacher_id')"></select>
+                                    </div>
+                                </div>
+                                <!--                                teacher end-->
+
+
+                            </div>
+                            <!--                            left side end-->
+
+
+                            <!--                            right side start-->
+                            <div class="col-md-6">
+
+
+                                <!--                                class enrolment start-->
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label for="selectEnrolment" class="form-label fw-bold">enrolment <i
+                                                class="text-danger">*</i> </label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <select id="selectEnrolment" class="form-select text-center" required
+                                                onchange="selectDBValidator(this,'','enrolmentHasClassOffering','classoffering_id')"></select>
+                                    </div>
+                                </div>
+                                <!--                                class enrolment end-->
+
+                                <!--                                start class fee-->
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label for="textClassFee" class="form-label fw-bold">class fee <i
+                                                class="text-danger">*</i> </label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="number" id="textClassFee" class="form-control text-center" required
+                                               placeholder="enter class fee"
+                                               onkeyup="textValidator(this,'^[1-9]{1}[0-9]{3,4}[.][0-9]{2}$','enrolmentHasClassOffering','classfee')">
+                                    </div>
+                                </div>
+                                <!--                                end class fee-->
+
+                                <!--                                start class income-->
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label for="textClassIncome" class="form-label fw-bold">class income <i
+                                                class="text-danger">*</i> </label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="number" id="textClassIncome" class="form-control text-center"
+                                               required placeholder="enter class income"
+                                               onkeyup="textValidator(this,'^[1-9]{1}[0-9]{3,4}[.][0-9]{2}$','enrolmentHasClassOffering','classincome')">
+                                    </div>
+                                </div>
+                                <!--                                end class income-->
+
+                                <!--                                registared student count start-->
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label for="textRegisteredStudentCount" class="form-label fw-bold">registared
+                                            student count <i class="text-danger">*</i> </label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="number" id="textRegisteredStudentCount"
+                                               class="form-control text-center" required
+                                               placeholder="enter registared student count"
+                                               onkeyup="textValidator(this,'^( ([1-9]{1}{0-9}{1})  | ([1-9][1]) )$','enrolmentHasClassOffering','regstudentcount')">
+                                    </div>
+                                </div>
+                                <!--                                registered student count end-->
+
+
+                                <!--                                payed count start-->
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label for="textPayedCount" class="form-label fw-bold">payed count <i
+                                                class="text-danger">*</i> </label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="number" id="textPayedCount" class="form-control text-center"
+                                               required placeholder="enter payed count"
+                                               onkeyup="textValidator(this,'^( ([1-9]{1}{0-9}{1})  | ([1-9][1]) )$','enrolmentHasClassOffering','payedcount')">
+                                    </div>
+                                </div>
+                                <!--                                payed count end-->
+
+
+                                <!--                                free student count start-->
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label for="textFreeStudentCount" class="form-label fw-bold">free student count
+                                            <i class="text-danger">*</i> </label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="number" id="textFreeStudentCount" class="form-control text-center"
+                                               required placeholder="enter free student count"
+                                               onkeyup="textValidator(this,'^( ([1-9]{1}{0-9}{1})  | ([1-9][1]) )$','enrolmentHasClassOffering','freestudentscount')">
+                                    </div>
+                                </div>
+                                <!--                                free student count end-->
+
+
+                                <!--                                start service charge-->
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label for="textServiceCharge" class="form-label fw-bold">service charge <i
+                                                class="text-danger">*</i> </label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="number" id="textServiceCharge" class="form-control text-center"
+                                               required placeholder="enter class income"
+                                               onkeyup="textValidator(this,'^[1-9]{1}[0-9]{3,4}[.][0-9]{2}$','enrolmentHasClassOffering','servicecharge')">
+                                    </div>
+                                </div>
+                                <!--                                end service charge-->
+
+
+                                <!--                                start additional charge-->
+                                <div class="row mt-2">
+                                    <div class="col-md-6">
+                                        <label for="textAdditionalCharge" class="form-label fw-bold">additional charge
+                                            <i
+                                                    class="text-danger">*</i> </label>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <input type="number" id="textAdditionalCharge" class="form-control text-center"
+                                               required placeholder="enter class income"
+                                               onkeyup="textValidator(this,'^[1-9]{1}[0-9]{3,4}[.][0-9]{2}$','enrolmentHasClassOffering','additionalcharge')">
+                                    </div>
+                                </div>
+                                <!--                                end additional charge-->
+
+
+                                <button type="reset" class="btn btn-danger">reset</button>
+                                <button type="button" class="btn btn-warning">update</button>
+                                <button type="button" class="btn btn-primary">submit</button>
+
+
+                                <div class="row mt-5">
+                                    <table class="table table-bordered">
+                                        <thead class="table-primary">
+                                        <th>#</th>
+                                        <th>enrolment</th>
+                                        <th>class fee</th>
+                                        <th>class income</th>
+                                        <th>registared student count</th>
+                                        <th>payed count</th>
+                                        <th>free student count</th>
+                                        <th>service charge</th>
+                                        <th>additional charge</th>
+                                        <th>modify</th>
+                                        </thead>
+                                    </table>
+                                </div>
+
+
+                            </div>
+                            <!--                            right side end-->
+
+
+                        </div>
+                        <!--                        row end-->
+
+
+                        <!--                    button start-->
+                        <div class="row mt-5">
+                            <div class="col-md-4">
+                                <button type="reset" class="btn btn-danger fw-bold"
+                                        style=" width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%">
+                                    <i class="fa-solid fa-trash fa-beat"> </i> reset
+                                </button>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <button type="button" class="btn btn-warning fw-bold"
+                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%">
+                                    <i class="fa-solid fa-recycle fa-beat"> </i> update
+                                </button>
+                            </div>
+                            <div class="col-md-4 text-end">
+                                <button type="submit" class="btn btn-primary fw-bold"
+                                        style="width: 50%; color: whitesmoke; border: 1px solid black; border-radius: 10%"
+                                        onclick="employeeSubmit()">
+                                    <i class="fa-solid fa-plus fa-beat"> </i> add
+                                </button>
+                            </div>
+                        </div>
+                        <!--                    button end-->
+
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--employee modal area end-->
+
+
+</div>
+</body>
+</html>

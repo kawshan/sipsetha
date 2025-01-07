@@ -84,6 +84,7 @@
         <th>email</th>
         <th>address</th>
         <th>added date</th>
+        <th>photo</th>
         <th>has user account</th>
         <th>status</th>
         <th>designation</th>
@@ -91,35 +92,6 @@
         <th>modify</th>
         </thead>
         <tbody>
-        <tr>
-            <td>1</td>
-            <td>kawshan virantha</td>
-            <td>virantha</td>
-            <td>2000-07-13</td>
-            <td>20019502906</td>
-            <td>male</td>
-            <td>0722837355</td>
-            <td>0112345678</td>
-            <td>kawshan@gmail.com</td>
-            <td>no 46/1 n.h.s kiribathgoda</td>
-            <td>2023-11-11</td>
-            <td>false</td>
-            <td>working</td>
-            <td>manager</td>
-            <td>married</td>
-            <td class="text-center">
-                <button type="button" class="btn btn-warning fw-bold"
-                        style="color: whitesmoke; border: 1px solid black; "><i
-                        class="fa-solid fa-recycle fa-beat"> </i>edit
-                </button>
-                <button type="button" class="btn btn-danger fw-bold"
-                        style="color: whitesmoke; border: 1px solid black; "><i class="fa-solid fa-trash fa-beat"> </i>delete
-                </button>
-                <button type="button" class="btn btn-primary fw-bold"
-                        style="color: whitesmoke; border: 1px solid black; "><i class="fa-solid fa-eye fa-beat"> </i>print
-                </button>
-            </td>
-        </tr>
         </tbody>
     </table>
     <!--  table area end-->
@@ -297,18 +269,18 @@
                         <!--                    address end-->
 
 
-                        <!--                        added date start-->
-                        <!--                        <div class="row mt-2">-->
-                        <!--                            <div class="col-md-6">-->
-                        <!--                                <label for="selectDateTime" class="form-label fw-bold">added date <i-->
-                        <!--                                        class="text-danger">*</i></label>-->
-                        <!--                            </div>-->
-                        <!--                            <div class="col-md-6">-->
-                        <!--                                <input type="date" class="form-control text-center" id="selectDateTime" required-->
-                        <!--                                       placeholder="add date" onchange="textValidator(this,'','employee','addeddate')">-->
-                        <!--                            </div>-->
-                        <!--                        </div>-->
-                        <!--                        added date end-->
+                        <div class="row mt-2">
+                            <div class="col-md-6">
+                                <label for="fileEmpPhoto" class="form-label fw-bold">image <i class="text-danger">*</i> </label>
+                                <button type="button" id="btnSelectImage" onclick="fileEmpPhoto.click()" class="btn btn-primary">select image</button>
+                                <button type="button" id="btnClearImage" onclick="btnClearImageFN()" class="btn btn-info">clear image</button>
+                            </div>
+                            <div class="col-md-6">
+                                <img src="/icons/no-photo.png" style="height: 75px; width: 75px" alt="default image" id="imgEmpPhoto">
+                                <input type="text" disabled class="form-control" id="textEmpPhoto">
+                                <input type="file" class="form-control d-none" id="fileEmpPhoto" onchange="validateFileField(this,'employee','emp_photo','emp_photo_name','oldEmployee',imgEmpPhoto,textEmpPhoto)">
+                            </div>
+                        </div>
 
 
                         <!--                        status start-->

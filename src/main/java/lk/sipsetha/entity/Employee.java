@@ -79,5 +79,11 @@ public class Employee {
     @JoinColumn(name = "designation_id",referencedColumnName = "id")
     private Designation designation_id;
 
+    @Column(name = "emp_photo")
+    private byte[] emp_photo;
+
+    @Column(name = "emp_photo_name")
+    private String emp_photo_name;
+
 
 }

@@ -6,7 +6,7 @@ window.addEventListener('load', () => {
     refreshEmployeeTable();
 
     //call refresh employee form
-    refreshEmployeeForm()
+    refreshEmployeeForm();
 
     //call refresh designation for validation and refresh purpose
     refreshDesignationForm();
@@ -28,6 +28,7 @@ const refreshEmployeeTable = () => {
         {dataType: 'text', propertyName: 'email'},
         {dataType: 'text', propertyName: 'address'},
         {dataType: 'text', propertyName: 'addeddate'},
+        {dataType: 'photoarray', propertyName: 'emp_photo'},
         {dataType: 'function', propertyName: getHasUserAccount},
         {dataType: 'function', propertyName: getEmployeeStatus},
         {dataType: 'function', propertyName: getDesignation},
@@ -68,8 +69,6 @@ const refreshEmployeeForm = () => {
 
 
     genders = ajaxGetRequest("/gender/findall")
-
-
     fillDataIntoSelect(selectGender, 'select gender', genders, 'name');
 
 
@@ -104,6 +103,12 @@ const refreshEmployeeForm = () => {
     selectStatus.style.border="2px solid green";
     selectDOB.disabled=true;
     selectGender.disabled=true;
+
+
+    employee.emp_photo=null;
+    imgEmpPhoto.files=null; //files array eka empty karanawa
+    imgEmpPhoto.src="/icons/no-photo.png";
+    textEmpPhoto.value=""
 
 }
 
@@ -203,6 +208,14 @@ const employeeFormRefill = (ob, rowIndex) => {
 
 
     selectCivilStatus.value=employee.civilstatus;
+
+    if (employee.emp_photo==null){
+        imgEmpPhoto.src="/icons/no-photo.png";
+        textEmpPhoto.value="";
+    }else {
+        imgEmpPhoto.src=atob(employee.emp_photo);//btoa eken encrypt karanawa meken decrypt karanawa
+        textEmpPhoto.value=employee=employee.emp_photo_name
+    }
 
 
 }
@@ -650,7 +663,22 @@ const modalPrintButton = ()=>{
 
 
 
-
+//define function for clear button
+const btnClearImageFN = ()=>{
+    if (employee.emp_photo!=null){
+        const userConfirm = confirm("Are you sure to reset employee photo ?")
+        if (userConfirm){
+            employee.emp_photo=null;
+            imgEmpPhoto.files=null;
+            imgEmpPhoto.src="/icons/no-photo.png";
+            textEmpPhoto.value="";
+        }else {
+            employee.emp_photo=null;
+            imgEmpPhoto.src="/icons/no-photo.png";
+            textEmpPhoto.value="";
+        }
+    }
+}
 
 
 

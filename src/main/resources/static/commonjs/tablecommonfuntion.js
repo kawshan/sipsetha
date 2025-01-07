@@ -20,6 +20,21 @@ const fillDataIntoTable = (tableId,dataList,columnList,checkPrivilege, buttonVis
             if (column.dataType == 'function'){
                 td.innerHTML=column.propertyName(element);
             }
+
+            if (column.dataType=='photoarray'){
+                let img=document.createElement('img');
+                img.style.width="75px";
+                img.style.height="75px";
+                if (dataList[index][column.propertyName]==null){
+                    img.src="/icons/no-photo.png";
+                }else {
+                    img.src=atob(dataList[index][column.propertyName])//btoa eken encrypt karanawa meken decrypt karanawa
+                }
+                td.appendChild(img);
+            }
+
+
+
             tr.appendChild(td);
         });
 

@@ -156,7 +156,25 @@ const selectDBFieldValidatorWithTwoValues = (fieldId,pattern,object,property,old
 
 }
 
+const validateFileField = (fieldId,object,propertyOne,propertyTwo,oldObject,privId,nameFieldID)=>{
+    if (fieldId.value != ""){
+        console.log(fieldId.files); //files kiyane array eke 0 vena index eke thama file eka thiyenne saha file ekata adala okkoma thiyenne ex size eka name eka wage dewal thiyemme
+        let file = fieldId.files[0];    //
+        nameFieldID.value =file['name'];  //field id eke files kiyana array eken 0 veni eka access krala eke nama gannawa
+        window[object][propertyTwo]=file['name'];
 
+
+        let fileReader = new  FileReader(); //meka read karanna venne file reader objecr ekek use karagena
+        fileReader.onload = function (e) { //file reader ekata annonymous function ekak call karala thiyeneawa E kiyala aran thiyenne onload ekata pass karana parameter eka
+            privId.src=e.target.result; //preview eke source hatiyata pass wena file eke object eka thama E kiyala pass wenne. eeta passe e eke target eke result eka ganna puluwan| result eken enne image ekak image tag ekakata siuce eken set karanwa wage wadak venne
+            window[object][propertyOne]=btoa(e.target.result)   //btoa() eken venne image code eka encrypt kara gannawa
+        }
+
+        fileReader.readAsDataURL(file);// is a method in the FileReader API used to read the contents of a File or Blob object. When the read operation is complete, the result attribute contains a data URL representing the file's data. This data URL can be used as a source for images or other media elements in web applications.
+        return ; //return eka dammata passe thama read as data url eke file ekata anuwa onload eka trigger vennee
+
+    }
+}
 
 
 
